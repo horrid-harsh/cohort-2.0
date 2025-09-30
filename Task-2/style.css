@@ -1,0 +1,60 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,body {
+    height: 100%;
+    width: 100%;
+}
+
+#main {
+    height: 100%;
+    width: 100%;
+    background-image: url("./public/Ben\ 10\ Design.png");
+    background-size: cover;
+    background-position: top center;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2vw;
+    /* justify-content: space; */
+}
+
+#heading {
+  text-align: center;
+  padding-top: 10vw;
+  font-size: 70px;
+  font-family: 'Bangers', cursive;
+}
+
+.white {
+  color: #ffffff; /* white */
+}
+
+.green {
+  color: #00ff00; /* green */
+}
+
+#activate {
+    width: 10%;
+    align-items: center;
+    border: none; /* corrected */
+    padding: 10px 20px;
+    font-size: 20px;
+    font-family: 'Bangers', cursive; /* matches heading */
+    color: #ffffff;
+    background-color: #00cc44; /* Omnitrix green */
+    cursor: pointer;
+    border-radius: 8px; /* slightly rounded */
+ 
+}
+
+/* Hover effect for extra pop */
+/* #activate:hover {
+    background-color: #00ff66;
+    box-shadow: 0 0 20px #00ff66, 0 0 40px #00ff66;
+    transform: scale(1.05);
+} */
