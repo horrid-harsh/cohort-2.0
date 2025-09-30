@@ -39,22 +39,25 @@ html,body {
 }
 
 #activate {
-    width: 10%;
+    width: auto;
     align-items: center;
     border: none; /* corrected */
     padding: 10px 20px;
     font-size: 20px;
+    letter-spacing: 2px; 
     font-family: 'Bangers', cursive; /* matches heading */
-    color: #ffffff;
-    background-color: #00cc44; /* Omnitrix green */
+    color: #ffffff; /* white text looks better on green */
+    background: linear-gradient(to bottom, #006600, #00cc44); 
     cursor: pointer;
     border-radius: 8px; /* slightly rounded */
  
 }
 
 /* Hover effect for extra pop */
-/* #activate:hover {
-    background-color: #00ff66;
+#activate:hover {
+    background: linear-gradient(to bottom, #00cc44, #00ff66); /* lighter gradient on hover */
     box-shadow: 0 0 20px #00ff66, 0 0 40px #00ff66;
+    color: black; /* neon green text glow */
+    letter-spacing: 2px; 
     transform: scale(1.05);
-} */
+}
