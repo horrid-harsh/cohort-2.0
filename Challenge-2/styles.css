@@ -1,0 +1,359 @@
+@font-face {
+  font-family: "Ndot55";
+  src: url("./fonts/Ndot-55-DoenNkNm.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "korataki-1";
+  src: url("./fonts/korataki-rg-3cf0d889-B6eTgmP5.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "korataki-2";
+  src: url("./fonts/korataki-rg-3cf0d889.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Sansation";
+  src: url("./fonts/Sansation_Regular-COtNG1MQ.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  color: white;
+  user-select: none;       
+}
+
+#main {
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  /* position: relative; */
+}
+
+.store-box-nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-left: 1.5vw;
+  padding-right: 1.5vw;
+  padding-top: 1vw;
+}
+
+.nothing-svg {
+  width: 20vw;
+  display: block;
+}
+
+.nav-left {
+  position: relative; /* makes this the reference for absolute children */
+  display: inline-block; /* keeps img + header together */
+}
+#header {
+  position: absolute;
+  top: 20%;
+  left: 14%;
+  font-size: 3.5vw;
+  font-family: "Ndot55", sans-serif;
+  font-weight: 100;
+}
+
+.search-wrapper {
+  position: relative;
+  display: inline-block;
+}
+.search-svg {
+  margin-top: 1vw;
+  width: 20vw;
+  height: 4vw;
+  display: block;
+}
+.borderless-input {
+    position: absolute;
+    top: 43%;
+    left: 45%;
+    transform: translate(-50%, -50%); 
+    border: none;               /* remove border */
+    outline: none;              /* remove focus outline */
+    background-color: transparent; /* transparent background */
+    font-size: 1.3vw;            /* adjust font size */
+    font-family: 'Sansation', sans-serif; /* set font family */
+    color: #fff;                /* text color */
+    padding: 0.5rem 1rem;       /* optional padding */
+    width: 70%;               /* optional width */
+}
+
+.borderless-input::placeholder {
+    color: #999D9C;            /* desired placeholder color */
+    opacity: 1;                /* ensure full opacity */
+}
+
+
+.nav-icons {
+  display: flex;
+  flex-direction: row;
+  gap: 2vw;
+}
+
+.icon-wrapper {
+  position: relative; /* parent reference */
+  display: inline-block;
+}
+
+
+.group-svg {
+  width: 10vw;
+  height: 5vw;
+  display: block;
+}
+
+.icon-wrapper a {
+  position: absolute;
+  top: 35%;     /* adjust as needed */
+  left: 47%;   /* pushes the link to the right of the icon */
+  transform: translate(-50%, -50%);
+  text-decoration: none;
+    font-family: "korataki-1", sans-serif;
+  font-size: 1vw;
+  color: inherit;
+
+}
+
+
+/* #nav-button1 {
+  position: absolute;
+  top: 5.5%;
+  left: 67.3%;
+  font-family: "korataki-1", sans-serif;
+  font-size: 1.1vw;
+  color: inherit;
+  text-decoration: none;
+} */
+
+ /* #nav-button2 {
+  position: absolute;
+  top: 5.5%;
+  left: 78.3%;
+  font-family: "korataki-1", sans-serif;
+  font-size: 1vw;
+  color: inherit;
+  text-decoration: none;
+} */
+
+
+.line1 {
+  position: absolute;
+  top: 10.5vw;
+  left: 18vw;
+  width: 11vw;
+  height: 2px;
+  background-color: white;
+  transform: rotate(-144.95deg);
+  box-shadow: 0 0 20px rgb(255, 255, 255);
+}
+
+.line2 {
+  position: absolute;
+  top: 13.65vw;
+  left: 28vw;
+  width: 14.9vw;
+  height: 2px;
+  background-color: white;
+  box-shadow: 0 0 20px rgb(255, 255, 255);
+}
+
+.line3 {
+  position: absolute;
+  top: 15.66vw;
+  left: 42.4vw;
+  width: 8vw;
+  height: 2px;
+  background-color: white;
+  transform: rotate(-150.01deg);
+  box-shadow: 0 0 20px rgb(255, 255, 255);
+}
+
+.line4 {
+  position: absolute;
+  top: 17.65vw;
+  left: 49.9vw;
+  width: 50vw;
+  height: 2px;
+  background-color: white;
+  box-shadow: 0 0 20px rgb(255, 255, 255);
+}
+
+.line5 {
+  position: absolute;
+  top: 17.5vw;
+  left: 37.7vw;
+  width: 15vw;
+  height: 2px;
+  background-color: white;
+  transform: rotate(-149.59deg);
+  box-shadow: 0 0 20px rgb(255, 255, 255);
+}
+
+.line6 {
+  position: absolute;
+  top: 21.3vw;
+  left: 51.65vw;
+  width: 5vw;
+  height: 2px;
+  background-color: white;
+  box-shadow: 0 0 20px rgb(255, 255, 255);
+}
+
+.line7 {
+  position: absolute;
+  top: 22.7vw;
+  left: 55.99vw;
+  width: 3.9vw;
+  height: 2px;
+  background-color: white;
+  transform: rotate(49.18deg);
+  box-shadow: 0 0 20px rgb(255, 255, 255);
+}
+
+.line8 {
+  position: absolute;
+  top: 24.2vw;
+  left: 59.2vw;
+  width: 15.89vw;
+  height: 2px;
+  background-color: white;
+  box-shadow: 0 0 20px rgb(255, 255, 255);
+}
+
+.line9 {
+  position: absolute;
+  top: 22vw;
+  left: 73.8vw;
+  width: 5vw;
+  height: 2px;
+  background-color: white;
+  transform: rotate(117.7deg);
+  box-shadow: 0 0 20px rgb(255, 255, 255);
+}
+
+.line10 {
+    position: absolute;
+    top: 19.8vw;
+    left: 77.5vw;
+    width: 22.5vw;
+    height: 2px;
+    background-color: white;
+    box-shadow: 0 0 20px rgb(255, 255, 255);
+}
+
+.line11 {
+    position: absolute;
+    top: 42vw;
+    left: 0vw;
+    width: 44vw;
+    height: 2px;
+    background-color: white;
+    box-shadow: 0 0 20px rgb(255, 255, 255);
+}
+
+.line12 {
+    position: absolute;
+    top: 40.5vw;
+    left: 43.48vw;
+    width: 5vw;
+    height: 2px;
+    background-color: white;
+    transform: rotate(144.8deg);
+    box-shadow: 0 0 20px rgb(255, 255, 255);
+}
+
+.line13 {
+    position: absolute;
+    top: 39vw;
+    left: 48vw;
+    width: 52vw;
+    height: 2px;
+    background-color: white;
+    box-shadow: 0 0 20px rgb(255, 255, 255);
+}
+
+.btm {
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  justify-content: space-between;
+
+  margin-top: 18vw;
+  padding-left: 2vw;
+  /* background-color: red; */
+  position: relative;
+  height: 15vw;
+  width: 50%;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1vw;
+  color: #999D9C;
+  height: 10vw;
+  width: 50vw;
+  /* position: fixed; */
+  top: 52%;
+  left: 3%;
+  font-family: korataki-2, sans-serif;
+  font-size: 1.5vw;
+  /* background-color: red; */
+}
+
+.phone-description {
+  /* background-color: red; */
+  text-align: center;
+  width: 80%;
+}
+
+.specs-text {
+    /* position: absolute; */
+    top: 81%;
+     /* top: 50vh;  */
+    left: 6%;
+    /* left: 5vw; */
+    font-family: 'Ndot55', sans-serif;
+    font-size: 1.6vw;
+    word-spacing: 0.4vw; 
+    color: #CCCCCC;
+    text-shadow: 0 0 1px #999D9C;
+}
+
+#black {
+  height: 32vw;
+  position: absolute;
+  top: 12.5vw;
+  left: 60%;
+  transform: rotate(-32deg);
+}
+
+#white {
+  height: 29.5vw;
+  position: absolute;
+  top: 16vw;
+  left: 64.7%;
+  transform: rotate(-32deg);
+}
