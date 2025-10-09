@@ -1,27 +1,27 @@
 @font-face {
   font-family: "Ndot55";
-  src: url("./fonts/Ndot-55-DoenNkNm.ttf") format("truetype");
+  src: url("./assets/fonts/Ndot-55-DoenNkNm.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "korataki-1";
-  src: url("./fonts/korataki-rg-3cf0d889-B6eTgmP5.ttf") format("truetype");
+  src: url("./assets/fonts/korataki-rg-3cf0d889-B6eTgmP5.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "korataki-2";
-  src: url("./fonts/korataki-rg-3cf0d889.ttf") format("truetype");
+  src: url("./assets/fonts/korataki-rg-3cf0d889.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "Sansation";
-  src: url("./fonts/Sansation_Regular-COtNG1MQ.ttf") format("truetype");
+  src: url("./assets/fonts/Sansation_Regular-COtNG1MQ.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
