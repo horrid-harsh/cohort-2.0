@@ -43,7 +43,7 @@ nav {
   gap: 5px;
 }
 
-.logo img{
+.logo img {
   height: 1.2vw;
 }
 .logo h1 {
@@ -117,10 +117,10 @@ nav {
   transform: rotate(45deg); /* rotates arrow “up-right” */
 }
 
-.how-we-work-btn{
-  transition: background-color 0.4s ease, color 0.4s ease;;
+.how-we-work-btn {
+  transition: background-color 0.4s ease, color 0.4s ease;
 }
-.how-we-work-btn:hover{
+.how-we-work-btn:hover {
   color: white;
   background-color: black;
 }
@@ -133,7 +133,7 @@ nav {
   width: 3vw;
   height: 3vw;
   transition: transform 0.3s ease;
-  
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -154,7 +154,7 @@ section {
   /* background-color: red;     */
 }
 
-#dna{
+#dna {
   height: 100%;
   width: 100%;
   object-fit: cover;
@@ -176,9 +176,9 @@ section {
 }
 
 .how-we-work-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   background-color: transparent;
   color: black;
   border: 2px solid black;
@@ -192,10 +192,9 @@ section {
   vertical-align: middle;
 }
 .how-we-work-btn i {
-    font-size: 1.5em; 
-    vertical-align: middle; 
+  font-size: 1.5em;
+  vertical-align: middle;
 }
-
 
 .contact-actions {
   display: inline-flex;
@@ -216,13 +215,13 @@ section {
   transition: 0.1s;
   font-size: 1vw;
 }
-#contact-btn:hover{
+#contact-btn:hover {
   background-color: black;
 }
 
 .request-call-link {
-   position: relative;
-   text-decoration: none;
+  position: relative;
+  text-decoration: none;
   color: black;
 }
 
@@ -231,20 +230,20 @@ section {
   position: absolute;
   left: 0;
   bottom: 0;
-  width: 100%;              /* underline is visible by default */
-  height: 2px;              /* thickness of underline */
-  background-color: black;  /* underline color */
+  width: 100%; /* underline is visible by default */
+  height: 2px; /* thickness of underline */
+  background-color: black; /* underline color */
   transition: width 0.3s ease; /* smooth animation */
-  transform-origin: right;  /* shrink from right to left */
+  transform-origin: right; /* shrink from right to left */
 }
 
 .request-call-link:hover::after {
-  width: 0;                 /* hide underline on hover */
+  width: 0; /* hide underline on hover */
 }
 
-.about-description{
+.about-description {
   margin-top: 10vh;
-    width: 60%;
+  width: 60%;
 }
 
 .partner-logos {
@@ -254,49 +253,50 @@ section {
   gap: 2vw;
   width: 50%;
   margin-top: 5vh;
-
 }
 
 .logo-img {
-  width: 100px;       /* adjust as needed */
+  width: 100px; /* adjust as needed */
   /* height: auto; */
   /* opacity: 0.8; */
   /* transition: opacity 0.2s; */
 }
 
-.logo-img1{
-    height: 1.5vw;
+.logo-img1 {
+  height: 1.5vw;
 }
-.logo-img2{
-    height: 1.5vw;
+.logo-img2 {
+  height: 1.5vw;
 }
-.logo-img3{
-    height: 1.8vw;
-}.logo-img4{
-    height: 1.8vw;
+.logo-img3 {
+  height: 1.8vw;
 }
-
-
- #section-2{
-    width: 50%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    grid-template-areas: "upper upper"
-               "lower1 lower2";         
-    gap: 20px;
-    padding-top: 20px;
-    padding-bottom: 20px;
-
-    /* background-color: yellowgreen; */
-    overflow: hidden;
+.logo-img4 {
+  height: 1.8vw;
 }
 
-.upper{
-    background-color: red;
-    grid-area: upper;
-    overflow: hidden;
-    border-radius: 20px;
+#section-2 {
+  width: 50%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas:
+    "upper upper"
+    "lower1 lower2";
+  gap: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+
+  overflow: hidden;
+  transition: grid-template-rows 0.5s ease, grid-template-columns 0.5s ease;
+}
+
+.upper {
+  background-color: red;
+  grid-area: upper;
+  overflow: hidden;
+  border-radius: 20px;
+  transition: all 0.5s ease;
 }
 /* .upper img{
     height: 100%;
@@ -304,27 +304,34 @@ section {
     display: inline-block;
     object-position: center;  
 } */
-.lower-section{
-    background-color: yellow;
-    border-radius: 20px;
-    overflow: hidden;
-} 
+.lower-section {
+  background-color: yellow;
+  border-radius: 20px;
+  overflow: hidden;
+  transition: all 0.5s ease;
+}
 
-.lower-1{
-    background-color: yellow;
-    grid-area: lower1;
-    border-radius: 20px;
-} 
-.lower-2{
-    background-color: green;
-    grid-area: lower2;
-    border-radius: 20px;
-} 
+#lower-1 {
+  grid-area: lower1;
+  border-radius: 20px;
+}
+#lower-2 {
+  grid-area: lower2;
+  border-radius: 20px;
+}
 
+#section-2:has(.upper:hover) {
+  grid-template-rows: 2fr 1fr;
+}
+#section-2:has(#lower-1:hover) {
+  grid-template-columns: 2fr 1fr;
+}
+#section-2:has(#lower-2:hover) {
+  grid-template-columns: 1fr 2fr;
+}
 
 .images {
   height: 100%;
   width: 100%;
-  object-fit: cover; 
-
+  object-fit: cover;
 }
