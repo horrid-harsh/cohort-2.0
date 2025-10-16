@@ -1,0 +1,216 @@
+@font-face {
+  font-family: "Chillax";
+  src: url("./assets/fonts/63cffc0a3942456e003bc265_Chillax-Regular.woff") format("woff2");
+  font-weight: bold;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Roboto";
+  src: url("./assets/fonts/L0x5DF4xlVMF-BfR8bXMIjhLq38.woff2");
+}
+@font-face {
+  font-family: "Satoshi";
+  src: url("./assets/fonts/63cffc20aa8997095067596f_Satoshi-Light.woff");
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  font-size: clamp(14px, 1.5vw, 18px);
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  background-color: #121212;
+  padding: 0 1rem;
+}
+
+section {
+  max-width: 2000px;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 0rem;
+  align-items: center;
+  width: 100%;
+}
+main nav {
+  max-width: 2000px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 0;
+}
+main nav .nav-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+main nav .nav-buttons button:nth-child(-n+7) {
+  display: none;
+}
+main nav .nav-buttons button {
+  padding: 0.9rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  outline: none;
+  color: #f4f2ed;
+  font-family: "Roboto", sans-serif;
+  background-color: #1e1e1e;
+}
+main nav .nav-buttons .ri-circle-fill {
+  color: #ad9d49;
+}
+main nav .nav-buttons .cta {
+  color: black;
+  background-color: #ad9d49;
+}
+main nav .nav-buttons .menu {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 1rem;
+  border-radius: 1rem;
+  background-color: #1e1e1e;
+}
+main nav .nav-buttons .menu i {
+  color: white;
+  opacity: 0.7;
+  font-size: 2rem;
+}
+main section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  width: 100%;
+}
+main section .top {
+  width: 100%;
+}
+main section .top img {
+  width: 100%;
+  border-radius: 0.6rem;
+}
+main section .bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  color: #f4f2ed;
+  background-color: #161616;
+  padding: 1.5rem;
+  width: 100%;
+  border-radius: 0.7rem;
+  font-family: "Roboto", sans-serif;
+}
+main section .bottom .text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+main section .bottom .text .hero-title {
+  text-transform: uppercase;
+  font-family: "Chillax", sans-serif;
+}
+main section .bottom .text .brand-description {
+  width: 75%;
+  margin-bottom: 1.5rem;
+  opacity: 0.5;
+  line-height: 2rem;
+  font-size: 1.25rem;
+  font-family: "Satoshi", sans-serif;
+}
+main section .bottom .text .our-story {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex-direction: row;
+  align-items: center;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+main section .bottom .text .our-story i {
+  font-size: 1.2rem;
+  padding: 0.8rem;
+  border-radius: 50%;
+  opacity: 0.7;
+  cursor: pointer;
+  background-color: #292929;
+}
+main section .bottom .text .our-story p {
+  text-transform: uppercase;
+  color: #f4f2ed;
+}
+
+@media (max-width: 765px) {
+  main section .bottom .studio {
+    margin-bottom: 4.5rem;
+  }
+  main section .bottom .hero-title {
+    font-size: 2.75rem;
+  }
+}
+@media (min-width: 765px) {
+  main section .bottom .studio {
+    margin-bottom: 8rem;
+  }
+  main section .bottom .hero-title {
+    font-size: 2.5rem;
+  }
+}
+@media (min-width: 990px) {
+  main nav {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  main nav .logo {
+    width: 100%;
+  }
+  main nav .nav-buttons button:nth-child(-n+7) {
+    display: inline-block;
+  }
+  main nav .nav-buttons .menu {
+    display: none;
+  }
+  main section {
+    flex-direction: row;
+  }
+  main section .top,
+  main section .bottom {
+    width: 50%;
+  }
+  main section .top img {
+    height: 100%;
+    -o-object-fit: cover;
+       object-fit: cover;
+  }
+  main section .bottom {
+    padding: 3rem;
+    justify-content: space-between;
+  }
+  main section .bottom .studio {
+    margin-bottom: 6rem;
+  }
+  main section .bottom .text .hero-title {
+    font-size: 3.5rem;
+    line-height: 4rem;
+    width: 90%;
+  }
+  main section .bottom .text .brand-description {
+    width: 90%;
+  }
+}/*# sourceMappingURL=style.css.map */
