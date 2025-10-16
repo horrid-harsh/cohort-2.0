@@ -51,6 +51,7 @@ section {
 main {
   @include flex-column(0rem);
   align-items: center;
+  gap: 0.5rem;
   width: 100%;
 
   nav {
@@ -104,7 +105,7 @@ main {
     }
   }
 
-  section {
+  section.view-1 {
     @include flex-column(0.8rem);
     width: 100%;
 
@@ -162,6 +163,57 @@ main {
       }
     }
   }
+
+  section.view-2 {
+    background-color: transparent;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas: 
+      "top-left top-right"
+      "btm-left btm-right";
+    align-content: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    margin-top: 0.5rem;
+
+    p{
+      // opacity: 0.8;
+      color: #f4f2ed99;
+      font-family: "Roboto", sans-serif
+    }
+    h4 {
+      color: #f4f2ed;
+      font-family: "Chillax", sans-serif;
+      font-size: 2.25rem;
+    }
+    .top-left {
+      @include flex-column(0rem);
+      align-items: center;
+      grid-area: top-left;
+    }
+
+    .top-right {
+      @include flex-column(0rem);
+      align-items: center;
+      grid-area: top-right;
+    }
+
+    .bottom-left {
+      @include flex-column(0rem);
+      align-items: center;
+      grid-area: btm-left;
+    }
+
+    .bottom-right {
+      @include flex-column(0rem);
+      align-items: center;
+      grid-area: btm-right;
+    }
+}
+
+
 }
 
 @media (max-width: 765px) {
@@ -215,7 +267,7 @@ main {
         }
       }
     }
-    section {
+    section.view-1 {
       flex-direction: row;
 
       .top,
@@ -247,6 +299,15 @@ main {
             width: 90%;
           }
         }
+      }
+    }
+
+    section.view-2 {
+      display: flex;
+      justify-content: space-evenly;
+
+      h4{
+        font-size: 4rem;
       }
     }
   }

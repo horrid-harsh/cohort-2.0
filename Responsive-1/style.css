@@ -45,6 +45,7 @@ main {
   flex-direction: column;
   gap: 0rem;
   align-items: center;
+  gap: 0.5rem;
   width: 100%;
 }
 main nav {
@@ -91,20 +92,20 @@ main nav .nav-buttons .menu i {
   opacity: 0.7;
   font-size: 2rem;
 }
-main section {
+main section.view-1 {
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
   width: 100%;
 }
-main section .top {
+main section.view-1 .top {
   width: 100%;
 }
-main section .top img {
+main section.view-1 .top img {
   width: 100%;
   border-radius: 0.6rem;
 }
-main section .bottom {
+main section.view-1 .bottom {
   display: flex;
   flex-direction: column;
   gap: 3rem;
@@ -115,16 +116,16 @@ main section .bottom {
   border-radius: 0.7rem;
   font-family: "Roboto", sans-serif;
 }
-main section .bottom .text {
+main section.view-1 .bottom .text {
   display: flex;
   flex-direction: column;
   gap: 0.7rem;
 }
-main section .bottom .text .hero-title {
+main section.view-1 .bottom .text .hero-title {
   text-transform: uppercase;
   font-family: "Chillax", sans-serif;
 }
-main section .bottom .text .brand-description {
+main section.view-1 .bottom .text .brand-description {
   width: 75%;
   margin-bottom: 1.5rem;
   opacity: 0.5;
@@ -132,7 +133,7 @@ main section .bottom .text .brand-description {
   font-size: 1.25rem;
   font-family: "Satoshi", sans-serif;
 }
-main section .bottom .text .our-story {
+main section.view-1 .bottom .text .our-story {
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -141,7 +142,7 @@ main section .bottom .text .our-story {
   width: -moz-fit-content;
   width: fit-content;
 }
-main section .bottom .text .our-story i {
+main section.view-1 .bottom .text .our-story i {
   font-size: 1.2rem;
   padding: 0.8rem;
   border-radius: 50%;
@@ -149,9 +150,58 @@ main section .bottom .text .our-story i {
   cursor: pointer;
   background-color: #292929;
 }
-main section .bottom .text .our-story p {
+main section.view-1 .bottom .text .our-story p {
   text-transform: uppercase;
   color: #f4f2ed;
+}
+main section.view-2 {
+  background-color: transparent;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas: "top-left top-right" "btm-left btm-right";
+  align-content: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  margin-top: 0.5rem;
+}
+main section.view-2 p {
+  color: rgba(244, 242, 237, 0.6);
+  font-family: "Roboto", sans-serif;
+}
+main section.view-2 h4 {
+  color: #f4f2ed;
+  font-family: "Chillax", sans-serif;
+  font-size: 2.25rem;
+}
+main section.view-2 .top-left {
+  display: flex;
+  flex-direction: column;
+  gap: 0rem;
+  align-items: center;
+  grid-area: top-left;
+}
+main section.view-2 .top-right {
+  display: flex;
+  flex-direction: column;
+  gap: 0rem;
+  align-items: center;
+  grid-area: top-right;
+}
+main section.view-2 .bottom-left {
+  display: flex;
+  flex-direction: column;
+  gap: 0rem;
+  align-items: center;
+  grid-area: btm-left;
+}
+main section.view-2 .bottom-right {
+  display: flex;
+  flex-direction: column;
+  gap: 0rem;
+  align-items: center;
+  grid-area: btm-right;
 }
 
 @media (max-width: 765px) {
@@ -186,31 +236,38 @@ main section .bottom .text .our-story p {
   main nav .nav-buttons .menu {
     display: none;
   }
-  main section {
+  main section.view-1 {
     flex-direction: row;
   }
-  main section .top,
-  main section .bottom {
+  main section.view-1 .top,
+  main section.view-1 .bottom {
     width: 50%;
   }
-  main section .top img {
+  main section.view-1 .top img {
     height: 100%;
     -o-object-fit: cover;
        object-fit: cover;
   }
-  main section .bottom {
+  main section.view-1 .bottom {
     padding: 3rem;
     justify-content: space-between;
   }
-  main section .bottom .studio {
+  main section.view-1 .bottom .studio {
     margin-bottom: 6rem;
   }
-  main section .bottom .text .hero-title {
+  main section.view-1 .bottom .text .hero-title {
     font-size: 3.5rem;
     line-height: 4rem;
     width: 90%;
   }
-  main section .bottom .text .brand-description {
+  main section.view-1 .bottom .text .brand-description {
     width: 90%;
+  }
+  main section.view-2 {
+    display: flex;
+    justify-content: space-evenly;
+  }
+  main section.view-2 h4 {
+    font-size: 4rem;
   }
 }/*# sourceMappingURL=style.css.map */
