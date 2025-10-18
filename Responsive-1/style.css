@@ -37,7 +37,7 @@ body {
   padding: 0 1rem;
 }
 
-main section.view-3 .bottom, main section.view-1 .bottom {
+main section.view-4 .bottom, main section.view-3 .bottom, main section.view-1 .bottom {
   display: flex;
   flex-direction: column;
   gap: 3rem;
@@ -124,6 +124,7 @@ main section.view-1 .top {
 main section.view-1 .top img {
   width: 100%;
   border-radius: 0.7rem;
+  opacity: 0.7;
 }
 main section.view-1 .bottom .text-meta {
   margin-bottom: 4rem;
@@ -227,6 +228,7 @@ main section.view-3 .top {
 main section.view-3 .top img {
   width: 100%;
   border-radius: 0.7rem;
+  opacity: 0.7;
 }
 main section.view-3 .bottom .text-meta {
   margin-bottom: 4rem;
@@ -248,47 +250,94 @@ main section.view-3 .bottom .text .brand-description {
   font-family: "Satoshi", sans-serif;
   display: inline;
 }
+main section.view-4 {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  width: 100%;
+}
+main section.view-4 .top {
+  width: 100%;
+}
+main section.view-4 .top img {
+  width: 100%;
+  border-radius: 0.7rem;
+  opacity: 0.7;
+}
+main section.view-4 .bottom .text-meta {
+  margin-bottom: 4rem;
+}
+main section.view-4 .bottom .text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+main section.view-4 .bottom .text .hero-title {
+  text-transform: uppercase;
+  font-size: 2.25rem;
+  font-family: "Chillax", sans-serif;
+}
+main section.view-4 .bottom .text .brand-description {
+  font-size: 1.25rem;
+  line-height: 2rem;
+  opacity: 0.6;
+  font-family: "Satoshi", sans-serif;
+  display: inline;
+}
 
 /* ≥481px and ≤767px (small tablets / large phones) */
 @media (min-width: 481px) and (max-width: 767px) {
   main section.view-1 .bottom .text-meta,
-  main section.view-3 .bottom .text-meta {
+  main section.view-3 .bottom .text-meta,
+  main section.view-4 .bottom .text-meta {
     margin-bottom: 4.5rem;
   }
   main section.view-1 .bottom .text .hero-title,
-  main section.view-3 .bottom .text .hero-title {
-    font-size: 2.25rem;
+  main section.view-3 .bottom .text .hero-title,
+  main section.view-4 .bottom .text .hero-title {
+    font-size: 2.75rem;
   }
   main section.view-1 .bottom .text .brand-description,
+  main section.view-3 .bottom .text .paragraphs .brand-description,
   main section.view-3 .bottom .text .paragraphs .brand-description {
     font-size: 1.25rem;
   }
 }
 @media (min-width: 768px) and (max-width: 991px) {
   main section.view-1 .bottom,
-  main section.view-3 .bottom {
+  main section.view-3 .bottom,
+  main section.view-4 .bottom {
     padding: 2.5rem;
   }
   main section.view-1 .bottom .text-meta,
-  main section.view-3 .bottom .text-meta {
+  main section.view-3 .bottom .text-meta,
+  main section.view-4 .bottom .text-meta {
     margin-bottom: 8rem;
   }
   main section.view-1 .bottom .text .hero-title,
-  main section.view-3 .bottom .text .hero-title {
+  main section.view-3 .bottom .text .hero-title,
+  main section.view-4 .bottom .text .hero-title {
     font-size: 3.5rem;
   }
   main section.view-1 .bottom .text .brand-description,
   main section.view-1 .bottom .text .paragraphs .brand-description,
   main section.view-3 .bottom .text .brand-description,
-  main section.view-3 .bottom .text .paragraphs .brand-description {
+  main section.view-3 .bottom .text .paragraphs .brand-description,
+  main section.view-4 .bottom .text .brand-description,
+  main section.view-4 .bottom .text .paragraphs .brand-description {
     line-height: 160%;
   }
-  main section.view-3 .bottom .text .paragraphs {
+  main section.view-1 .bottom .text .hero-title {
+    width: 80%;
+  }
+  main section.view-3 .bottom .text .paragraphs,
+  main section.view-4 .bottom .text .paragraphs {
     display: flex;
     gap: 2rem;
   }
-  main section.view-3 .bottom .text .hero-title {
-    width: 96%;
+  main section.view-3 .bottom .text .hero-title,
+  main section.view-4 .bottom .text .hero-title {
+    width: 80%;
   }
 }
 /* ≥992px (desktops) */
@@ -300,23 +349,31 @@ main section.view-3 .bottom .text .brand-description {
     display: none;
   }
   main section.view-1,
-  main section.view-3 {
+  main section.view-3,
+  main section.view-4 {
     flex-direction: row;
   }
   main section.view-1 .top,
   main section.view-1 .bottom,
   main section.view-3 .top,
-  main section.view-3 .bottom {
+  main section.view-3 .bottom,
+  main section.view-4 .top,
+  main section.view-4 .bottom {
     width: 50%;
   }
   main section.view-1 .top img,
-  main section.view-3 .top img {
+  main section.view-3 .top img,
+  main section.view-4 .top img {
+    width: 100%;
     height: 100%;
     -o-object-fit: cover;
        object-fit: cover;
+    -o-object-position: 80% 30%;
+       object-position: 80% 30%;
   }
   main section.view-1 .bottom,
-  main section.view-3 .bottom {
+  main section.view-3 .bottom,
+  main section.view-4 .bottom {
     display: flex;
     flex-direction: column;
     gap: 0;
@@ -324,17 +381,21 @@ main section.view-3 .bottom .text .brand-description {
     padding: 4rem;
   }
   main section.view-1 .bottom .text-meta,
-  main section.view-3 .bottom .text-meta {
+  main section.view-3 .bottom .text-meta,
+  main section.view-4 .bottom .text-meta {
     margin-bottom: 12rem;
   }
   main section.view-1 .bottom .text .hero-title,
-  main section.view-3 .bottom .text .hero-title {
-    font-size: 4rem;
+  main section.view-3 .bottom .text .hero-title,
+  main section.view-4 .bottom .text .hero-title {
+    font-size: 3.25vw;
   }
   main section.view-1 .bottom .text .brand-description,
   main section.view-1 .bottom .text .paragraphs .brand-description,
   main section.view-3 .bottom .text .brand-description,
-  main section.view-3 .bottom .text .paragraphs .brand-description {
+  main section.view-3 .bottom .text .paragraphs .brand-description,
+  main section.view-4 .bottom .text .brand-description,
+  main section.view-4 .bottom .text .paragraphs .brand-description {
     line-height: 160%;
   }
   main section.view-3 {
@@ -343,5 +404,14 @@ main section.view-3 .bottom .text .brand-description {
   main section.view-3 .bottom .text .paragraphs {
     display: flex;
     gap: 2rem;
+  }
+  main section.view-4 .bottom .text .paragraphs {
+    display: flex;
+    gap: 2rem;
+  }
+}
+@media (min-width: 1440px) {
+  main section.view-1 .bottom .text .hero-title, main section.view-3 .bottom .text .hero-title, main section.view-4 .bottom .text .hero-title {
+    font-size: 3rem;
   }
 }/*# sourceMappingURL=style.css.map */
