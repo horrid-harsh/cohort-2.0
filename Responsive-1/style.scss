@@ -1,15 +1,16 @@
 @font-face {
   font-family: "Chillax";
-  src: url("./assets/fonts/63cffc0a3942456e003bc265_Chillax-Regular.woff")
-    format("woff2");
+  src: url("./assets/fonts/63cffc0a3942456e003bc265_Chillax-Regular.woff") format("woff2");
 
   font-weight: bold;
   font-style: normal;
 }
+
 @font-face {
   font-family: "Roboto";
   src: url("./assets/fonts/L0x5DF4xlVMF-BfR8bXMIjhLq38.woff2");
 }
+
 @font-face {
   font-family: "Satoshi";
   src: url("./assets/fonts/63cffc20aa8997095067596f_Satoshi-Light.woff");
@@ -20,6 +21,7 @@
   padding: 0;
   box-sizing: border-box;
 }
+
 html,
 body {
   height: 100%;
@@ -28,6 +30,7 @@ body {
 
   overflow-y: scroll;
   scrollbar-width: none;
+
   &::-webkit-scrollbar {
     display: none;
   }
@@ -38,10 +41,48 @@ body {
   padding: 0 1rem;
 }
 
-@mixin flex-column($gap: 0rem) {
+// =======================
+// 🔹 Global Mixins & Placeholders
+// =======================
+
+// General-purpose flex helper
+@mixin flex($direction: column, $gap: 0, $align: null, $justify: null) {
   display: flex;
-  flex-direction: column;
+  flex-direction: $direction;
   gap: $gap;
+
+  @if $align !=null {
+    align-items: $align;
+  }
+
+  @if $justify !=null {
+    justify-content: $justify;
+  }
+}
+
+// Section bottom reusable block
+%section-bottom-style {
+  @include flex(column, 3rem);
+  color: #f4f2ed;
+  background-color: #161616;
+  padding: 1.5rem;
+  width: 100%;
+  border-radius: 0.7rem;
+  font-family: "Roboto", sans-serif;
+}
+
+// Typography helpers
+@mixin hero-title($size: 2.25rem) {
+  text-transform: uppercase;
+  font-size: $size;
+  font-family: "Chillax", sans-serif;
+}
+
+@mixin brand-description($size: 1.25rem, $opacity: 0.6, $line: 2rem) {
+  font-size: $size;
+  line-height: $line;
+  opacity: $opacity;
+  font-family: "Satoshi", sans-serif;
 }
 
 section {
@@ -49,23 +90,26 @@ section {
 }
 
 main {
-  @include flex-column(0rem);
-  align-items: center;
-  gap: 0.5rem;
+
+  @include flex(column, 0rem, center);
   width: 100%;
 
   nav {
+    @include flex(row, 0rem, center, space-between);
     max-width: 2000px;
     width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    //   background-color: lightseagreen;
     padding: 1rem 0;
+
+    .logo {
+      padding-left: 1rem;
+      width: 80px;
+      height: auto;
+    }
 
     .nav-buttons {
       display: flex;
       gap: 0.5rem;
+
       button:nth-child(-n + 7) {
         display: none;
       }
@@ -75,17 +119,19 @@ main {
         border-radius: 0.5rem;
         border: none;
         outline: none;
+        cursor: pointer;
         color: #f4f2ed;
         font-family: "Roboto", sans-serif;
         background-color: #1e1e1e;
       }
 
-      .ri-circle-fill{
-        color: #ad9d49;
+      .ri-circle-fill {
+        color: #CEBD63;
       }
+
       .cta {
         color: black;
-        background-color: #ad9d49;
+        background-color: #CEBD63;
       }
 
       .menu {
@@ -93,7 +139,7 @@ main {
         outline: none;
         cursor: pointer;
         padding: 1rem;
-        border-radius: 1rem;
+        border-radius: 0.7rem;
         background-color: #1e1e1e;
 
         i {
@@ -106,7 +152,8 @@ main {
   }
 
   section.view-1 {
-    @include flex-column(0.8rem);
+    @include flex(column, 0.8rem);
+
     width: 100%;
 
     .top {
@@ -114,39 +161,35 @@ main {
 
       img {
         width: 100%;
-        border-radius: 0.6rem;
+        border-radius: 0.7rem;
       }
     }
 
     .bottom {
-      @include flex-column(3rem);
-      color: #f4f2ed;
-      background-color: #161616;
-      padding: 1.5rem;
-      width: 100%;
-      border-radius: 0.7rem;
-      font-family: "Roboto", sans-serif;
+      @extend %section-bottom-style;
+
+      .text-meta {
+        margin-bottom: 4rem;
+      }
 
       .text {
-        @include flex-column(0.7rem);
+        @include flex(column, 0.7rem);
+
         .hero-title {
-          text-transform: uppercase;
-          font-family: "Chillax", sans-serif;
+          @include hero-title(2.25rem);
         }
+
         .brand-description {
+          @include brand-description(1.25rem);
           width: 75%;
           margin-bottom: 1.5rem;
-          opacity: 0.5;
-          line-height: 2rem;
-          font-size: 1.25rem;
-          font-family: "Satoshi", sans-serif;
         }
+
         .our-story {
-          @include flex-column(1rem);
-          flex-direction: row;
-          align-items: center;
+          @include flex(row, 1rem, center);
 
           width: fit-content;
+
           i {
             font-size: 1.2rem;
             padding: 0.8rem;
@@ -155,6 +198,7 @@ main {
             cursor: pointer;
             background-color: #292929;
           }
+
           p {
             text-transform: uppercase;
             color: #f4f2ed;
@@ -170,7 +214,7 @@ main {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
-    grid-template-areas: 
+    grid-template-areas:
       "top-left top-right"
       "btm-left btm-right";
     align-content: center;
@@ -178,86 +222,139 @@ main {
     padding: 1.5rem;
     margin-top: 0.5rem;
 
-    p{
-      // opacity: 0.8;
+    p {
       color: #f4f2ed99;
       font-family: "Roboto", sans-serif
     }
+
     h4 {
       color: #f4f2ed;
       font-family: "Chillax", sans-serif;
       font-size: 2.25rem;
     }
+
     .top-left {
-      @include flex-column(0rem);
-      align-items: center;
+      @include flex(column, 0rem, center);
       grid-area: top-left;
     }
 
     .top-right {
-      @include flex-column(0rem);
-      align-items: center;
+      @include flex(column, 0rem, center);
       grid-area: top-right;
     }
 
     .bottom-left {
-      @include flex-column(0rem);
-      align-items: center;
+      @include flex(column, 0rem, center);
       grid-area: btm-left;
     }
 
     .bottom-right {
-      @include flex-column(0rem);
-      align-items: center;
+      @include flex(column, 0rem, center);
       grid-area: btm-right;
     }
-}
-
-
-}
-
-@media (max-width: 765px) {
-  main {
-    section {
-      .bottom {
-        .studio {
-          margin-bottom: 4.5rem;
-        }
-        .hero-title {
-          font-size: 2.75rem;
-        }
-      }
-    }
   }
-}
 
-@media (min-width: 765px) {
-  main {
-    section {
-      .bottom {
-        .studio {
-          margin-bottom: 8rem;
-        }
-        .hero-title {
-          font-size: 2.5rem;
-        }
-      }
-    }
-  }
-}
+  section.view-3 {
+    @include flex(column, 0.8rem);
 
-@media (min-width: 990px) {
-  main {
-    nav {
+    width: 100%;
+
+    .top {
       width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
 
-      .logo {
+      img {
         width: 100%;
+        border-radius: 0.7rem;
+      }
+    }
+
+    .bottom {
+      @extend %section-bottom-style;
+
+      .text-meta {
+        margin-bottom: 4rem;
       }
 
+      .text {
+        @include flex(column, 0.8rem);
+
+        .hero-title {
+          @include hero-title(2.25rem);
+        }
+
+        .brand-description {
+          @include brand-description(1.25rem);
+          display: inline;
+          // width: 75%;
+        }
+      }
+    }
+  }
+}
+
+/* ≥481px and ≤767px (small tablets / large phones) */
+@media (min-width: 481px) and (max-width: 767px) {
+  main {
+
+    section.view-1 .bottom .text-meta,
+    section.view-3 .bottom .text-meta {
+      margin-bottom: 4.5rem;
+    }
+
+    section.view-1 .bottom .text .hero-title,
+    section.view-3 .bottom .text .hero-title {
+      font-size: 2.25rem;
+    }
+
+    section.view-1 .bottom .text .brand-description,
+    section.view-3 .bottom .text .paragraphs .brand-description {
+      font-size: 1.25rem;
+    }
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  main {
+
+    section.view-1 .bottom,
+    section.view-3 .bottom {
+      padding: 2.5rem;
+
+      .text-meta {
+        margin-bottom: 8rem;
+      }
+
+      .text {
+        .hero-title {
+          font-size: 3.5rem;
+        }
+
+        .brand-description,
+        .paragraphs .brand-description {
+          line-height: 160%;
+        }
+      }
+    }
+
+    section.view-3 .bottom .text {
+      .paragraphs {
+        display: flex;
+        gap: 2rem;
+      }
+
+      .hero-title {
+        width: 96%;
+      }
+    }
+
+  }
+}
+
+/* ≥992px (desktops) */
+@media (min-width: 992px) {
+  main {
+    // ───── NAVIGATION ─────
+    nav {
       .nav-buttons {
         button:nth-child(-n + 7) {
           display: inline-block;
@@ -267,7 +364,10 @@ main {
         }
       }
     }
-    section.view-1 {
+
+    // ───── SECTION SHARED LAYOUT ─────
+    section.view-1,
+    section.view-3 {
       flex-direction: row;
 
       .top,
@@ -275,39 +375,41 @@ main {
         width: 50%;
       }
 
-      .top {
-        img {
-          height: 100%;
-          object-fit: cover;
-        }
+      .top img {
+        height: 100%;
+        object-fit: cover;
       }
-      .bottom {
-        padding: 3rem;
-        justify-content: space-between;
 
-        .studio {
-          margin-bottom: 6rem;
+      .bottom {
+        @include flex(column, 0, $justify: space-between);
+        padding: 4rem;
+
+        .text-meta {
+          margin-bottom: 12rem;
         }
 
         .text {
           .hero-title {
-            font-size: 3.5rem;
-            line-height: 4rem;
-            width: 90%;
+            font-size: 4rem;
           }
-          .brand-description {
-            width: 90%;
+
+          .brand-description,
+          .paragraphs .brand-description {
+            line-height: 160%;
           }
         }
       }
     }
 
-    section.view-2 {
-      display: flex;
-      justify-content: space-evenly;
+    // ───── SECTION-SPECIFIC ADJUSTMENTS ─────
+    section.view-3 {
+      flex-direction: row-reverse;
 
-      h4{
-        font-size: 4rem;
+      .bottom .text {
+        .paragraphs {
+          display: flex;
+          gap: 2rem;
+        }
       }
     }
   }

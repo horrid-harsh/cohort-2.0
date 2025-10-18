@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @font-face {
   font-family: "Chillax";
   src: url("./assets/fonts/63cffc0a3942456e003bc265_Chillax-Regular.woff") format("woff2");
@@ -36,6 +37,18 @@ body {
   padding: 0 1rem;
 }
 
+main section.view-3 .bottom, main section.view-1 .bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  color: #f4f2ed;
+  background-color: #161616;
+  padding: 1.5rem;
+  width: 100%;
+  border-radius: 0.7rem;
+  font-family: "Roboto", sans-serif;
+}
+
 section {
   max-width: 2000px;
 }
@@ -45,16 +58,22 @@ main {
   flex-direction: column;
   gap: 0rem;
   align-items: center;
-  gap: 0.5rem;
   width: 100%;
 }
 main nav {
-  max-width: 2000px;
-  width: 100%;
   display: flex;
+  flex-direction: row;
+  gap: 0rem;
   align-items: center;
   justify-content: space-between;
+  max-width: 2000px;
+  width: 100%;
   padding: 1rem 0;
+}
+main nav .logo {
+  padding-left: 1rem;
+  width: 80px;
+  height: auto;
 }
 main nav .nav-buttons {
   display: flex;
@@ -68,23 +87,24 @@ main nav .nav-buttons button {
   border-radius: 0.5rem;
   border: none;
   outline: none;
+  cursor: pointer;
   color: #f4f2ed;
   font-family: "Roboto", sans-serif;
   background-color: #1e1e1e;
 }
 main nav .nav-buttons .ri-circle-fill {
-  color: #ad9d49;
+  color: #CEBD63;
 }
 main nav .nav-buttons .cta {
   color: black;
-  background-color: #ad9d49;
+  background-color: #CEBD63;
 }
 main nav .nav-buttons .menu {
   border: none;
   outline: none;
   cursor: pointer;
   padding: 1rem;
-  border-radius: 1rem;
+  border-radius: 0.7rem;
   background-color: #1e1e1e;
 }
 main nav .nav-buttons .menu i {
@@ -103,18 +123,10 @@ main section.view-1 .top {
 }
 main section.view-1 .top img {
   width: 100%;
-  border-radius: 0.6rem;
-}
-main section.view-1 .bottom {
-  display: flex;
-  flex-direction: column;
-  gap: 3rem;
-  color: #f4f2ed;
-  background-color: #161616;
-  padding: 1.5rem;
-  width: 100%;
   border-radius: 0.7rem;
-  font-family: "Roboto", sans-serif;
+}
+main section.view-1 .bottom .text-meta {
+  margin-bottom: 4rem;
 }
 main section.view-1 .bottom .text {
   display: flex;
@@ -123,21 +135,21 @@ main section.view-1 .bottom .text {
 }
 main section.view-1 .bottom .text .hero-title {
   text-transform: uppercase;
+  font-size: 2.25rem;
   font-family: "Chillax", sans-serif;
 }
 main section.view-1 .bottom .text .brand-description {
+  font-size: 1.25rem;
+  line-height: 2rem;
+  opacity: 0.6;
+  font-family: "Satoshi", sans-serif;
   width: 75%;
   margin-bottom: 1.5rem;
-  opacity: 0.5;
-  line-height: 2rem;
-  font-size: 1.25rem;
-  font-family: "Satoshi", sans-serif;
 }
 main section.view-1 .bottom .text .our-story {
   display: flex;
-  flex-direction: column;
-  gap: 1rem;
   flex-direction: row;
+  gap: 1rem;
   align-items: center;
   width: -moz-fit-content;
   width: fit-content;
@@ -203,71 +215,133 @@ main section.view-2 .bottom-right {
   align-items: center;
   grid-area: btm-right;
 }
+main section.view-3 {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  width: 100%;
+}
+main section.view-3 .top {
+  width: 100%;
+}
+main section.view-3 .top img {
+  width: 100%;
+  border-radius: 0.7rem;
+}
+main section.view-3 .bottom .text-meta {
+  margin-bottom: 4rem;
+}
+main section.view-3 .bottom .text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+main section.view-3 .bottom .text .hero-title {
+  text-transform: uppercase;
+  font-size: 2.25rem;
+  font-family: "Chillax", sans-serif;
+}
+main section.view-3 .bottom .text .brand-description {
+  font-size: 1.25rem;
+  line-height: 2rem;
+  opacity: 0.6;
+  font-family: "Satoshi", sans-serif;
+  display: inline;
+}
 
-@media (max-width: 765px) {
-  main section .bottom .studio {
+/* ≥481px and ≤767px (small tablets / large phones) */
+@media (min-width: 481px) and (max-width: 767px) {
+  main section.view-1 .bottom .text-meta,
+  main section.view-3 .bottom .text-meta {
     margin-bottom: 4.5rem;
   }
-  main section .bottom .hero-title {
-    font-size: 2.75rem;
+  main section.view-1 .bottom .text .hero-title,
+  main section.view-3 .bottom .text .hero-title {
+    font-size: 2.25rem;
+  }
+  main section.view-1 .bottom .text .brand-description,
+  main section.view-3 .bottom .text .paragraphs .brand-description {
+    font-size: 1.25rem;
   }
 }
-@media (min-width: 765px) {
-  main section .bottom .studio {
+@media (min-width: 768px) and (max-width: 991px) {
+  main section.view-1 .bottom,
+  main section.view-3 .bottom {
+    padding: 2.5rem;
+  }
+  main section.view-1 .bottom .text-meta,
+  main section.view-3 .bottom .text-meta {
     margin-bottom: 8rem;
   }
-  main section .bottom .hero-title {
-    font-size: 2.5rem;
+  main section.view-1 .bottom .text .hero-title,
+  main section.view-3 .bottom .text .hero-title {
+    font-size: 3.5rem;
+  }
+  main section.view-1 .bottom .text .brand-description,
+  main section.view-1 .bottom .text .paragraphs .brand-description,
+  main section.view-3 .bottom .text .brand-description,
+  main section.view-3 .bottom .text .paragraphs .brand-description {
+    line-height: 160%;
+  }
+  main section.view-3 .bottom .text .paragraphs {
+    display: flex;
+    gap: 2rem;
+  }
+  main section.view-3 .bottom .text .hero-title {
+    width: 96%;
   }
 }
-@media (min-width: 990px) {
-  main nav {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  main nav .logo {
-    width: 100%;
-  }
+/* ≥992px (desktops) */
+@media (min-width: 992px) {
   main nav .nav-buttons button:nth-child(-n+7) {
     display: inline-block;
   }
   main nav .nav-buttons .menu {
     display: none;
   }
-  main section.view-1 {
+  main section.view-1,
+  main section.view-3 {
     flex-direction: row;
   }
   main section.view-1 .top,
-  main section.view-1 .bottom {
+  main section.view-1 .bottom,
+  main section.view-3 .top,
+  main section.view-3 .bottom {
     width: 50%;
   }
-  main section.view-1 .top img {
+  main section.view-1 .top img,
+  main section.view-3 .top img {
     height: 100%;
     -o-object-fit: cover;
        object-fit: cover;
   }
-  main section.view-1 .bottom {
-    padding: 3rem;
-    justify-content: space-between;
-  }
-  main section.view-1 .bottom .studio {
-    margin-bottom: 6rem;
-  }
-  main section.view-1 .bottom .text .hero-title {
-    font-size: 3.5rem;
-    line-height: 4rem;
-    width: 90%;
-  }
-  main section.view-1 .bottom .text .brand-description {
-    width: 90%;
-  }
-  main section.view-2 {
+  main section.view-1 .bottom,
+  main section.view-3 .bottom {
     display: flex;
-    justify-content: space-evenly;
+    flex-direction: column;
+    gap: 0;
+    justify-content: space-between;
+    padding: 4rem;
   }
-  main section.view-2 h4 {
+  main section.view-1 .bottom .text-meta,
+  main section.view-3 .bottom .text-meta {
+    margin-bottom: 12rem;
+  }
+  main section.view-1 .bottom .text .hero-title,
+  main section.view-3 .bottom .text .hero-title {
     font-size: 4rem;
+  }
+  main section.view-1 .bottom .text .brand-description,
+  main section.view-1 .bottom .text .paragraphs .brand-description,
+  main section.view-3 .bottom .text .brand-description,
+  main section.view-3 .bottom .text .paragraphs .brand-description {
+    line-height: 160%;
+  }
+  main section.view-3 {
+    flex-direction: row-reverse;
+  }
+  main section.view-3 .bottom .text .paragraphs {
+    display: flex;
+    gap: 2rem;
   }
 }/*# sourceMappingURL=style.css.map */
