@@ -295,7 +295,6 @@ main {
 
   section.view-4 {
     @include flex(column, 0.8rem);
-
     width: 100%;
 
     .top {
@@ -329,6 +328,40 @@ main {
         }
       }
     }
+  }
+
+  section.view-5 {
+    @include flex(row, 0rem, center, space-between);
+    padding: 1.5rem;
+    width: 100%;
+    color: #f4f2ed;
+
+    .hero-title {
+      @include hero-title(2rem)
+    }
+
+    .button-text {
+
+      @include flex(row, 0.5rem, center);
+      display: none; /* aligns icon and text */
+      font-family: 'Roboto', sans-serif;
+      font-size: 0.875rem;
+
+      .icon-wrapper {
+        display: inline-flex;
+        /* makes a proper box for background */
+        justify-content: center;
+        align-items: center;
+        background-color: #1E1E1E;
+        padding: 0.5rem;
+        /* size of circular background */
+        border-radius: 50%;
+        color: #f4f2ed;
+        /* color of SVG via currentColor */
+      }
+
+    }
+
   }
 
 }
@@ -397,18 +430,31 @@ main {
       }
     }
 
+    section.view-5 {
+      padding: 2.5rem;
+
+      .hero-title {
+          font-size: 2.5rem;
+      }
+      .button-text {
+        display: inline-flex;
+      }
+
+    }
   }
 }
 
 /* ≥992px (desktops) */
 @media (min-width: 992px) {
   main {
+
     // ───── NAVIGATION ─────
     nav {
       .nav-buttons {
         button:nth-child(-n + 7) {
           display: inline-block;
         }
+
         .menu {
           display: none;
         }
@@ -465,12 +511,19 @@ main {
         }
       }
     }
-     section.view-4 {
+
+    section.view-4 {
       .bottom .text {
         .paragraphs {
           display: flex;
           gap: 2rem;
         }
+      }
+    }
+
+    section.view-5 {
+      .button-text {
+        display: inline-flex;
       }
     }
   }
@@ -479,7 +532,10 @@ main {
 @media (min-width: 1440px) {
 
   main {
-    section.view-1, section.view-3, section.view-4 {
+
+    section.view-1,
+    section.view-3,
+    section.view-4 {
       .bottom {
         .text {
           .hero-title {
@@ -489,5 +545,5 @@ main {
       }
     }
   }
-  
+
 }

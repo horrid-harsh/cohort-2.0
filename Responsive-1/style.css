@@ -284,6 +284,42 @@ main section.view-4 .bottom .text .brand-description {
   font-family: "Satoshi", sans-serif;
   display: inline;
 }
+main section.view-5 {
+  display: flex;
+  flex-direction: row;
+  gap: 0rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem;
+  width: 100%;
+  color: #f4f2ed;
+}
+main section.view-5 .hero-title {
+  text-transform: uppercase;
+  font-size: 2rem;
+  font-family: "Chillax", sans-serif;
+}
+main section.view-5 .button-text {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  align-items: center;
+  display: none; /* aligns icon and text */
+  font-family: "Roboto", sans-serif;
+  font-size: 0.875rem;
+}
+main section.view-5 .button-text .icon-wrapper {
+  display: inline-flex;
+  /* makes a proper box for background */
+  justify-content: center;
+  align-items: center;
+  background-color: #1E1E1E;
+  padding: 0.5rem;
+  /* size of circular background */
+  border-radius: 50%;
+  color: #f4f2ed;
+  /* color of SVG via currentColor */
+}
 
 /* ≥481px and ≤767px (small tablets / large phones) */
 @media (min-width: 481px) and (max-width: 767px) {
@@ -338,6 +374,15 @@ main section.view-4 .bottom .text .brand-description {
   main section.view-3 .bottom .text .hero-title,
   main section.view-4 .bottom .text .hero-title {
     width: 80%;
+  }
+  main section.view-5 {
+    padding: 2.5rem;
+  }
+  main section.view-5 .hero-title {
+    font-size: 2.5rem;
+  }
+  main section.view-5 .button-text {
+    display: inline-flex;
   }
 }
 /* ≥992px (desktops) */
@@ -409,9 +454,14 @@ main section.view-4 .bottom .text .brand-description {
     display: flex;
     gap: 2rem;
   }
+  main section.view-5 .button-text {
+    display: inline-flex;
+  }
 }
 @media (min-width: 1440px) {
-  main section.view-1 .bottom .text .hero-title, main section.view-3 .bottom .text .hero-title, main section.view-4 .bottom .text .hero-title {
+  main section.view-1 .bottom .text .hero-title,
+  main section.view-3 .bottom .text .hero-title,
+  main section.view-4 .bottom .text .hero-title {
     font-size: 3rem;
   }
 }/*# sourceMappingURL=style.css.map */
