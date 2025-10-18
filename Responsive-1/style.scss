@@ -85,6 +85,56 @@ body {
   font-family: "Satoshi", sans-serif;
 }
 
+// Mixin for all image wrappers
+@mixin image-wrapper($bg-img, $grid-area) {
+  @include flex(column, 0rem, $justify: space-between);
+  background-image: url($bg-img);
+  background-size: cover;
+  grid-area: $grid-area;
+  padding: 1.5rem;
+  aspect-ratio: 1/1;
+  border-radius: 0.3rem;
+  overflow: hidden;
+
+  .top {
+    display: flex;
+    gap: 0.8rem;
+    justify-content: end;
+
+    .icon {
+      display: inline-flex;
+      padding: 1rem;
+      width: fit-content;
+      font-size: inherit;
+      background-color: rgba(187, 187, 187, 0.375);
+      backdrop-filter: blur(5px);
+      border-radius: 50%;
+      border: 1px solid white;
+      color: #f4f2ed;
+    }
+  }
+
+  .bottom {
+    @include flex(row, 0rem, center, space-between);
+    color: #f4f2ed;
+    background-color: rgba(187, 187, 187, 0.375);
+    backdrop-filter: blur(5px);
+    padding: 1rem 1rem;
+    border-radius: 0.3rem;
+    font-size: 1.25rem;
+    font-family: "Chillax";
+
+    .hero-title {
+      font-size: 1.25rem;
+    }
+
+    .text-meta {
+      font-size: 0.875rem;
+    }
+  }
+}
+
+
 section {
   max-width: 2000px;
 }
@@ -210,7 +260,6 @@ main {
   }
 
   section.view-2 {
-    background-color: transparent;
     width: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -225,13 +274,15 @@ main {
 
     p {
       color: #f4f2ed99;
-      font-family: "Roboto", sans-serif
+      font-size: 14px;
+      font-family: "Roboto", sans-serif;
+      letter-spacing: 0.1rem;
     }
 
     h4 {
       color: #f4f2ed;
       font-family: "Chillax", sans-serif;
-      font-size: 2.25rem;
+      font-size: 4.5vw;
     }
 
     .top-left {
@@ -343,7 +394,8 @@ main {
     .button-text {
 
       @include flex(row, 0.5rem, center);
-      display: none; /* aligns icon and text */
+      display: none;
+      /* aligns icon and text */
       font-family: 'Roboto', sans-serif;
       font-size: 0.875rem;
 
@@ -364,6 +416,34 @@ main {
 
   }
 
+  section.view-6 {
+    // background-color: lightseagreen;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+      "img-1"
+      "img-2"
+      "img-3";
+
+    gap: 0.8rem;
+    border-radius: 0.7rem;
+    overflow: hidden;
+  }
+
+  .image-wrapper1 {
+    @include image-wrapper("./assets/images/card-1.webp", img-1);
+  }
+
+  .image-wrapper2 {
+    @include image-wrapper("./assets/images/card-2.webp", img-2);
+  }
+
+  .image-wrapper3 {
+    @include image-wrapper("./assets/images/card-3.webp", img-3);
+  }
+
 }
 
 /* ≥481px and ≤767px (small tablets / large phones) */
@@ -378,7 +458,8 @@ main {
 
     section.view-1 .bottom .text .hero-title,
     section.view-3 .bottom .text .hero-title,
-    section.view-4 .bottom .text .hero-title {
+    section.view-4 .bottom .text .hero-title,
+    section.view-2 .heading-h4 {
       font-size: 2.75rem;
     }
 
@@ -418,6 +499,12 @@ main {
       width: 80%;
     }
 
+    section.view-2 {
+      .heading-h4 {
+        font-size: 3.5rem;
+      }
+    }
+
     section.view-3 .bottom .text,
     section.view-4 .bottom .text {
       .paragraphs {
@@ -434,12 +521,31 @@ main {
       padding: 2.5rem;
 
       .hero-title {
-          font-size: 2.5rem;
+        font-size: 2.5rem;
       }
+
       .button-text {
         display: inline-flex;
       }
 
+    }
+
+    section.view-6 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: auto;
+      grid-template-areas:
+        "img-1 img-2 img-3";
+
+      .top {
+        .icon {
+          padding: 0.5rem
+        }
+      }
+
+      .bottom {
+        gap: 2rem;
+      }
     }
   }
 }
@@ -501,6 +607,12 @@ main {
     }
 
     // ───── SECTION-SPECIFIC ADJUSTMENTS ─────
+
+    section.view-2 {
+      display: flex;
+      justify-content: space-around;
+    }
+
     section.view-3 {
       flex-direction: row-reverse;
 
@@ -526,6 +638,26 @@ main {
         display: inline-flex;
       }
     }
+
+    section.view-6 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: auto;
+
+      grid-template-areas:
+        "img-1 img-2 img-3";
+
+      .top {
+        .icon {
+          padding: 0.5rem
+        }
+      }
+
+      .bottom {
+        gap: 2rem;
+      }
+
+    }
   }
 }
 
@@ -542,6 +674,12 @@ main {
             font-size: 3rem;
           }
         }
+      }
+    }
+
+    section.view-2 {
+      .heading-h4 {
+        font-size: 4rem;
       }
     }
   }
