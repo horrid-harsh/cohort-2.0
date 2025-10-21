@@ -1,0 +1,54 @@
+section.view-1 {
+  width: 100%;
+  @include flex(column, center, center);
+  gap: 6rem;
+  padding: 0 $spacing-section;
+  background: linear-gradient(35deg, $color-muted-bg, $color-light-bg 60%);
+
+  .top {
+    padding: 0 1rem;
+    max-width: 1250px;
+    width: 100%;
+    @include flex(column, null, null);
+    gap: 3rem;
+
+    .media {
+      width: 100%;
+
+      img {
+        width: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .heading {
+      width: 100%;
+      text-align: center;
+      line-height: 1;
+      @include font($font-google, 1.5rem);
+    }
+  }
+
+  .bottom {
+    max-width: 1250px;
+    width: 100%;
+
+    h2 {
+      text-align: center;
+      padding: 2.5rem;
+      @include font($font-google, 2rem, lighter);
+    }
+  }
+
+  @include respond(md) {
+    .top {
+      padding: 0 5rem;
+      @include flex(row-reverse, center, center);
+
+      .heading {
+        text-align: left;
+        font-size: 2rem;
+      }
+    }
+  }
+}

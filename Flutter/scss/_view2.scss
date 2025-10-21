@@ -1,0 +1,67 @@
+section.view-2 {
+  width: 100%;
+  padding-top: 4.375rem;
+
+  .container {
+    width: 100%;
+    @include flex(column, null, null);
+    gap: 2rem;
+    padding: 0 2rem 0 2rem;
+
+    .card {
+      width: 100%;
+      border-top: 4px solid #E8EAED;
+      @include flex(column, flex-start, null);
+      padding: 1.5rem 3rem 0 0;
+
+      .mid {
+        width: 100%;
+        @include flex(column, flex-start, null);
+        gap: 1.5rem;
+        margin-bottom: 4.375rem;
+
+        h3 { @include font($font-google, 1.5rem); font-weight: bold; }
+        p { @include font($font-roboto, 1rem); color: $color-text-dark; }
+      }
+
+      .media {
+        width: 100%;
+        img {
+          max-width: 600px;
+          width: 100%;
+          object-fit: cover;
+          object-position: left;
+          display: block;
+        }
+      }
+    }
+  }
+
+  @media (min-width: 1030px) {
+    .container {
+      padding: 0 10rem 0 10rem;
+      @include flex(row, space-around, flex-start);
+      // flex-wrap: wrap;
+
+      .card {
+        width: calc(33.333% - 2rem); // 3 cards per row with spacing
+        // padding: 2rem;
+
+        .mid {
+          margin-bottom: 2rem;
+
+          h3 {
+            font-size: 1.8rem;
+          }
+          p {
+            font-size: 1.3rem;
+          }
+        }
+
+        .media img {
+          max-width: 100%;
+        }
+      }
+    }
+  }
+}

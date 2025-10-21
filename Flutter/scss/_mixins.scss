@@ -1,0 +1,24 @@
+// 💨 Flexbox helper
+@mixin flex($direction: row, $align: center, $justify: center) {
+  display: flex;
+  flex-direction: $direction;
+  align-items: $align;
+  justify-content: $justify;
+}
+
+// 🧱 Responsive mixin
+@mixin respond($breakpoint) {
+  @if $breakpoint == md {
+    @media (min-width: $bp-md) { @content; }
+  }
+  @if $breakpoint == lg {
+    @media (min-width: $bp-lg) { @content; }
+  }
+}
+
+// 🧍 Font mixin
+@mixin font($family, $size, $weight: normal) {
+  font-family: $family;
+  font-size: $size;
+  font-weight: $weight;
+}

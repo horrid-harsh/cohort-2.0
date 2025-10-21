@@ -1,0 +1,93 @@
+header {
+  width: 100%;
+  position: fixed; 
+  top: 0;
+  left: 0;
+    
+
+  .top {
+    cursor: pointer;
+    width: 100%;
+
+    p {
+      color: white;
+      text-align: center;
+      padding: 1rem 0.5rem;
+      @include font($font-google, 0.8rem, bold);
+      background: linear-gradient(124.64deg, $color-gradient-start, $color-gradient-end);
+
+      i {
+        font-weight: lighter;
+        margin-left: -0.1rem;
+      }
+    }
+  }
+
+  .bottom {
+    width: 100%;
+    @include flex(row, center, space-between);
+    padding: 1rem 1.5rem;
+    background-color: white;
+
+    .logo {
+      cursor: pointer;
+      img {
+        height: 2rem;
+      }
+    }
+
+    .nav-items {
+      @include flex(row, center, null);
+      gap: 0.5rem;
+      @include font($font-google, 1rem);
+
+      a {
+        display: none;
+        text-decoration: none;
+        font-weight: bold;
+        padding: 1rem 1.2rem;
+        color: rgb(69, 69, 69);
+
+        &:nth-of-type(3) { color: $color-primary; }
+
+        &:hover {
+          border-radius: 20rem;
+          background: rgba(170, 170, 170, 0.204);
+        }
+      }
+
+      button {
+        display: none;
+        padding: 0.7rem 2rem;
+        border: none;
+        outline: none;
+        border-radius: 10rem;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+        color: white;
+        background-color: $color-primary;
+      }
+    }
+
+    .menu {
+      font-size: 1.2rem;
+    }
+  }
+
+  @include respond(lg) {
+
+    .top {
+      border-bottom: 2px solid black;
+      p {
+        font-size: 1rem;
+      }
+    }
+    .bottom {
+      .nav-items {
+        a, button { display: block; }
+      }
+      .menu { display: none; }
+    }
+  }
+}
