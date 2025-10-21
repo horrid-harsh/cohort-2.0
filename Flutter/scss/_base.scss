@@ -1,11 +1,11 @@
 @font-face {
   font-family: "Google Sans";
-  src: url("./assets/fonts/googlesans.woff2");
+  src: url("../assets/fonts/googlesans.woff2");
 }
 
 @font-face {
   font-family: "Roboto";
-  src: url("./assets/fonts/roboto.woff2");
+  src: url("../assets/fonts/roboto.woff2");
 }
 
 * {
@@ -20,6 +20,10 @@ html, body {
   font-family: $font-google;
 }
 
-main {
-  margin-top: 8.5rem;
-}
+// main {
+//   margin-top: 1rem; // default for small devices
+
+//   @include respond(lg) {
+//     margin-top: 8.5rem; // large screens
+//   }
+// }
