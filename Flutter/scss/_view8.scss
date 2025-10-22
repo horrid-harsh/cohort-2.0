@@ -1,0 +1,130 @@
+footer.view-8 {
+    @include flex(column, center, center);
+    width: 100%;
+    padding: 4rem 3rem 4rem 3rem;
+    background-color: #F8F9FA;
+
+
+    .container {
+        @include flex(column, null, null);
+        width: 100%;
+        // max-width: 1250px;
+        // padding: 4.375rem 3.125rem 0 3.125rem;
+
+        .footer-content {
+            @include flex(column, null, null);
+            gap: 3rem;
+
+            .logo {
+                cursor: pointer;
+
+                img {
+                    width: auto;
+                    height: 2rem;
+                }
+            }
+
+            .footer-links {
+                @include flex(column, null, null);
+                gap: 3rem;
+                padding-left: 1rem;
+                // background-color: red;
+
+                .flutter-group {
+                    @include flex(column, null, null);
+                    gap: 1rem;
+                    list-style: none;
+
+                    .heading {
+                        @include font($font-google, 1rem, bold);
+                        color: black;
+                    }
+                    a {
+                        @include underline-hover(#71655B, 0.3s);
+                        color: #71655B;
+                    }
+                }
+            }
+        }
+    }
+
+    .footer-socials {
+        @include flex(row, center, space-between);
+        width: 100%;
+        margin-top: 3rem;
+        padding: 0 1rem 2rem 0;
+        border-bottom: 1px solid rgb(203, 203, 203);
+        margin-bottom: 2rem;
+
+        svg {
+            width: 1.5rem;
+            height: 1.2rem;
+            color: #4A4A4A;
+            cursor: pointer;
+        }
+    }
+
+    .footer-bottom {
+        @include flex(column, center, center);
+        width: 100%;
+        padding-bottom: 2rem;
+        gap: 2rem;
+
+        p {
+            text-align: center;
+            @include font($font-roboto, 0.9rem);
+            color: #71655B;
+        }
+
+        ul {
+            // width: 100%;
+            list-style: none;
+            @include flex(row, center);
+            gap: 2rem;
+        }
+
+        li a {
+            text-decoration: none;
+            color: #71655B;
+
+            @include underline-hover(#71655B, 0.3s);
+
+        }
+
+
+    }
+
+    @media (min-width: 770px) {
+        .container {
+            @include flex(column, null, null);
+            padding-right: 7rem;
+
+            .footer-content {
+                @include flex(row);
+                align-items: start;
+                justify-content: space-between;
+
+                .footer-links {
+                    @include flex(row, null, null);
+                    gap: 6rem;
+                }
+            }
+        }
+
+        .footer-socials {
+             @include flex(row, center, start);
+            gap: 1rem;
+        }
+
+        .footer-bottom {
+            @include flex(row, start, space-between);
+
+            p {
+                text-align: left;
+            }
+            ul {
+                @include flex(row, center, end);
+            }
+        }
+    }
+}

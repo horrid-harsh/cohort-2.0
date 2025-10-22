@@ -1,0 +1,94 @@
+section.view-3 {
+    width: 100%;
+    @include flex(column, center, center);
+    padding-top: 4.375rem;
+
+    .container {
+        width: 100%;
+        max-width: 1400px;
+        padding: 0 2rem 0 2rem;
+
+        .community-content {
+            @include flex(column, null, null);
+            gap: 5rem;
+            // max-width: 1250px;
+
+            .media {
+                width: 100%;
+                // max-width: 1250px;
+
+                img {
+                    width: 100%;
+                    max-width: 600px;
+                    // display: block;
+                    // object-fit: cover;
+                }
+            }
+
+            .text {
+                @include flex(column, null, null);
+                gap: 1rem;
+                // max-width: 1250px;
+
+                h4 {
+                    @include font($font-google, 1.3rem, bold);
+                    color: #4a4a4a;
+                }
+
+                h3 {
+                    @include font($font-google, 2.875rem, bold);
+                    white-space: nowrap;
+                }
+
+                p {
+                    @include font($font-roboto, 1.125rem);
+                    max-width: 90%;
+                    color: #4a4a4a;
+                }
+
+                .actions {
+                    @include flex(column, null, null);
+                    gap: 1rem;
+
+                    button {
+                        @include font($font-google, 1rem, bold);
+                        @include button-white(); 
+                    }
+
+                    a {
+                        @include link-arrow-hover($color: black);
+                        @include font($font-google, 1rem, bold);
+                        // text-decoration: none;
+                        white-space: nowrap;
+                    }
+                }
+
+            }
+        }
+    }
+
+    @media (min-width: 1030px) {
+        .container {
+            padding: 0 10rem 0 10rem;
+
+            .community-content {
+                @include flex(row-reverse, center, center);
+
+                .text {
+                    // width: 50%;
+                    padding-right: 6rem;
+
+                    h3 {
+                        font-size: 3.75rem;
+                    }
+                    p {
+                        margin-bottom: 2rem;
+                    }
+                    .actions {
+                        @include flex(row, center, null);
+                    }
+                }
+            }
+        }
+    }
+}

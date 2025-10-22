@@ -1,15 +1,15 @@
 section.view-1 {
   width: 100%;
   @include flex(column, center, center);
-  gap: 6rem;
-  padding: 0 $spacing-section;
+  gap: 5.5rem;
+  padding: 5rem 0 0 0;
   background: linear-gradient(35deg, $color-muted-bg, $color-light-bg 60%);
 
   .top {
-    padding: 0 1rem;
-    max-width: 1250px;
-    width: 100%;
     @include flex(column, null, null);
+    width: 100%;
+    padding: 0 1rem;
+    max-width: 1250px;  
     gap: 3rem;
 
     .media {
@@ -22,32 +22,31 @@ section.view-1 {
     }
 
     .heading {
+      @include font($font-google, 1.5rem);
       width: 100%;
       text-align: center;
       line-height: 1;
-      @include font($font-google, 1.5rem);
     }
   }
 
   .bottom {
-    // max-width: 1250px;
-    width: 80%;
-    display: flex;
-    justify-content: center;
+    max-width: 1250px;
+    width: 100%;
+    @include flex(row, null, center);
     // background-color: red;
 
     h2 {
-      max-width: 925px;  
-      text-align: center;
-      padding: 2.5rem;
       @include font($font-google, 2rem, lighter);
+      text-align: center;
+      max-width: 925px;  
+      padding: 2.5rem;
     }
   }
 
   @include respond(md) {
     .top {
-      padding: 0 5rem;
       @include flex(row-reverse, center, center);
+      padding: 0 5rem;
 
       .heading {
         text-align: left;

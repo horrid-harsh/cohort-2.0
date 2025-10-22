@@ -20,10 +20,21 @@ html, body {
   font-family: $font-google;
 }
 
-// main {
-//   margin-top: 1rem; // default for small devices
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+  margin-top: 7rem; // default for small screens
 
+  @include respond(lg) {
+    margin-top: 8rem; // larger top margin for big screens
+  }
+}
+
+
+// main {
+//   padding-top: 4rem; // same as header height
 //   @include respond(lg) {
-//     margin-top: 8.5rem; // large screens
+//     padding-top: 8.5rem; // large screens
 //   }
 // }

@@ -18,9 +18,21 @@ html, body {
   font-family: "Google Sans", sans-serif;
 }
 
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+  margin-top: 7rem;
+}
+@media (min-width: 1280px) {
+  main {
+    margin-top: 8rem;
+  }
+}
+
 header {
   width: 100%;
-  position: sticky;
+  position: fixed;
   top: 0;
   left: 0;
   z-index: 100;
@@ -50,6 +62,7 @@ header .bottom {
   justify-content: space-between;
   padding: 1rem 1.5rem;
   background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 header .bottom .logo {
   cursor: pointer;
@@ -61,10 +74,10 @@ header .bottom .nav-items {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 0.5rem;
   font-family: "Google Sans", sans-serif;
   font-size: 1rem;
   font-weight: normal;
+  gap: 0.5rem;
 }
 header .bottom .nav-items a {
   display: none;
@@ -81,16 +94,20 @@ header .bottom .nav-items a:hover {
   background: rgba(170, 170, 170, 0.204);
 }
 header .bottom .nav-items button {
-  display: none;
+  white-space: nowrap;
+  width: -moz-fit-content;
+  width: fit-content;
   padding: 0.7rem 2rem;
   border: none;
   outline: none;
   border-radius: 10rem;
-  font-size: 1rem;
-  font-weight: bold;
   cursor: pointer;
   color: white;
   background-color: #0468D7;
+  font-family: "Google Sans", sans-serif;
+  font-size: 1rem;
+  font-weight: bold;
+  display: none;
 }
 header .bottom .menu {
   font-size: 1.2rem;
@@ -116,16 +133,16 @@ section.view-1 {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 6rem;
-  padding: 0 1.5rem;
+  gap: 5.5rem;
+  padding: 5rem 0 0 0;
   background: linear-gradient(35deg, #fcdde8, #f3fcff 60%);
 }
 section.view-1 .top {
-  padding: 0 1rem;
-  max-width: 1250px;
-  width: 100%;
   display: flex;
   flex-direction: column;
+  width: 100%;
+  padding: 0 1rem;
+  max-width: 1250px;
   gap: 3rem;
 }
 section.view-1 .top .media {
@@ -137,33 +154,35 @@ section.view-1 .top .media img {
      object-fit: cover;
 }
 section.view-1 .top .heading {
-  width: 100%;
-  text-align: center;
-  line-height: 1;
   font-family: "Google Sans", sans-serif;
   font-size: 1.5rem;
   font-weight: normal;
+  width: 100%;
+  text-align: center;
+  line-height: 1;
 }
 section.view-1 .bottom {
-  width: 80%;
+  max-width: 1250px;
+  width: 100%;
   display: flex;
+  flex-direction: row;
   justify-content: center;
 }
 section.view-1 .bottom h2 {
-  max-width: 925px;
-  text-align: center;
-  padding: 2.5rem;
   font-family: "Google Sans", sans-serif;
   font-size: 2rem;
   font-weight: lighter;
+  text-align: center;
+  max-width: 925px;
+  padding: 2.5rem;
 }
 @media (min-width: 1022px) {
   section.view-1 .top {
-    padding: 0 5rem;
     display: flex;
     flex-direction: row-reverse;
     align-items: center;
     justify-content: center;
+    padding: 0 5rem;
   }
   section.view-1 .top .heading {
     text-align: left;
@@ -172,23 +191,27 @@ section.view-1 .bottom h2 {
 }
 
 section.view-2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   width: 100%;
-  padding-top: 4.375rem;
 }
 section.view-2 .container {
   width: 100%;
+  max-width: 1400px;
   display: flex;
   flex-direction: column;
   gap: 2rem;
   padding: 0 2rem 0 2rem;
 }
 section.view-2 .container .card {
-  width: 100%;
-  border-top: 4px solid #E8EAED;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  width: 100%;
   padding: 1.5rem 3rem 0 0;
+  border-top: 4px solid #E8EAED;
 }
 section.view-2 .container .card .mid {
   width: 100%;
@@ -220,15 +243,13 @@ section.view-2 .container .card .media img {
      object-fit: cover;
   -o-object-position: left;
      object-position: left;
-  display: block;
 }
 @media (min-width: 1030px) {
   section.view-2 .container {
-    padding: 0 10rem 0 10rem;
     display: flex;
     flex-direction: row;
-    align-items: space-around;
-    justify-content: flex-start;
+    justify-content: center;
+    padding: 0 10rem 0 10rem;
   }
   section.view-2 .container .card {
     width: calc(33.333% - 2rem);
@@ -244,5 +265,701 @@ section.view-2 .container .card .media img {
   }
   section.view-2 .container .card .media img {
     max-width: 100%;
+  }
+}
+
+section.view-3 {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 4.375rem;
+}
+section.view-3 .container {
+  width: 100%;
+  max-width: 1400px;
+  padding: 0 2rem 0 2rem;
+}
+section.view-3 .container .community-content {
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+}
+section.view-3 .container .community-content .media {
+  width: 100%;
+}
+section.view-3 .container .community-content .media img {
+  width: 100%;
+  max-width: 600px;
+}
+section.view-3 .container .community-content .text {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+section.view-3 .container .community-content .text h4 {
+  font-family: "Google Sans", sans-serif;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #4a4a4a;
+}
+section.view-3 .container .community-content .text h3 {
+  font-family: "Google Sans", sans-serif;
+  font-size: 2.875rem;
+  font-weight: bold;
+  white-space: nowrap;
+}
+section.view-3 .container .community-content .text p {
+  font-family: "Roboto", sans-serif;
+  font-size: 1.125rem;
+  font-weight: normal;
+  max-width: 90%;
+  color: #4a4a4a;
+}
+section.view-3 .container .community-content .text .actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+section.view-3 .container .community-content .text .actions button {
+  font-family: "Google Sans", sans-serif;
+  font-size: 1rem;
+  font-weight: bold;
+  white-space: nowrap;
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 0.7rem 2rem;
+  border: none;
+  outline: none;
+  border-radius: 10rem;
+  border: 1px solid #0468D7;
+  cursor: pointer;
+  color: #0468D7;
+  background-color: white;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+section.view-3 .container .community-content .text .actions button:hover {
+  background-color: #0468D7;
+  color: white;
+}
+section.view-3 .container .community-content .text .actions a {
+  text-decoration: none;
+  color: black;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: color 0.2s ease;
+  font-family: "Google Sans", sans-serif;
+  font-size: 1rem;
+  font-weight: bold;
+  white-space: nowrap;
+}
+section.view-3 .container .community-content .text .actions a i {
+  transition: transform 0.2s ease;
+}
+section.view-3 .container .community-content .text .actions a:hover i {
+  transform: translateX(4px);
+}
+@media (min-width: 1030px) {
+  section.view-3 .container {
+    padding: 0 10rem 0 10rem;
+  }
+  section.view-3 .container .community-content {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: center;
+  }
+  section.view-3 .container .community-content .text {
+    padding-right: 6rem;
+  }
+  section.view-3 .container .community-content .text h3 {
+    font-size: 3.75rem;
+  }
+  section.view-3 .container .community-content .text p {
+    margin-bottom: 2rem;
+  }
+  section.view-3 .container .community-content .text .actions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+section.view-4 {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 4.375rem;
+  padding-bottom: 4.375rem;
+  background: linear-gradient(35deg, #fcfce2 40%, #f5fbfe 90%);
+}
+section.view-4 .container {
+  width: 100%;
+  max-width: 1400px;
+  padding: 0 2rem 0 2rem;
+}
+section.view-4 .container .community-content {
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+}
+section.view-4 .container .community-content .media {
+  width: 100%;
+}
+section.view-4 .container .community-content .media img {
+  width: 100%;
+  max-width: 600px;
+}
+section.view-4 .container .community-content .text {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+section.view-4 .container .community-content .text h4 {
+  font-family: "Google Sans", sans-serif;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #4a4a4a;
+}
+section.view-4 .container .community-content .text h3 {
+  font-family: "Google Sans", sans-serif;
+  font-size: 2.875rem;
+  font-weight: bold;
+  line-height: 1;
+}
+section.view-4 .container .community-content .text p {
+  font-family: "Roboto", sans-serif;
+  font-size: 1.125rem;
+  font-weight: normal;
+  max-width: 90%;
+  color: #4a4a4a;
+}
+section.view-4 .container .community-content .text .actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+section.view-4 .container .community-content .text .actions button {
+  font-family: "Google Sans", sans-serif;
+  font-size: 1rem;
+  font-weight: bold;
+  white-space: nowrap;
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 0.7rem 2rem;
+  border: none;
+  outline: none;
+  border-radius: 10rem;
+  cursor: pointer;
+  color: white;
+  background-color: #0468D7;
+}
+@media (min-width: 1030px) {
+  section.view-4 .container {
+    padding: 0 10rem 0 10rem;
+  }
+  section.view-4 .container .community-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+  section.view-4 .container .community-content .text {
+    padding-left: 6rem;
+  }
+  section.view-4 .container .community-content .text h3 {
+    font-size: 3.75rem;
+  }
+  section.view-4 .container .community-content .text p {
+    margin-bottom: 2rem;
+  }
+  section.view-4 .container .community-content .text .actions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+section.view-5 {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+section.view-5 .container {
+  width: 100%;
+  max-width: 1400px;
+  padding: 0 2rem 0 2rem;
+}
+section.view-5 .container .community-content {
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+}
+section.view-5 .container .community-content .media {
+  width: 100%;
+}
+section.view-5 .container .community-content .media img {
+  width: 100%;
+  max-width: 600px;
+}
+section.view-5 .container .community-content .text {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+section.view-5 .container .community-content .text h4 {
+  font-family: "Google Sans", sans-serif;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #4a4a4a;
+}
+section.view-5 .container .community-content .text h3 {
+  font-family: "Google Sans", sans-serif;
+  font-size: 2.875rem;
+  font-weight: bold;
+  line-height: 1;
+}
+section.view-5 .container .community-content .text p {
+  font-family: "Roboto", sans-serif;
+  font-size: 1.125rem;
+  font-weight: normal;
+  max-width: 90%;
+  color: #4a4a4a;
+}
+section.view-5 .container .community-content .text .actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+section.view-5 .container .community-content .text .actions button {
+  font-family: "Google Sans", sans-serif;
+  font-size: 1rem;
+  font-weight: bold;
+  white-space: nowrap;
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 0.7rem 2rem;
+  border: none;
+  outline: none;
+  border-radius: 10rem;
+  border: 1px solid #0468D7;
+  cursor: pointer;
+  color: #0468D7;
+  background-color: white;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+section.view-5 .container .community-content .text .actions button:hover {
+  background-color: #0468D7;
+  color: white;
+}
+@media (min-width: 1030px) {
+  section.view-5 .container {
+    padding: 0 10rem 0 10rem;
+  }
+  section.view-5 .container .community-content {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: center;
+  }
+  section.view-5 .container .community-content .text {
+    padding-right: 6rem;
+  }
+  section.view-5 .container .community-content .text h3 {
+    font-size: 3.75rem;
+  }
+  section.view-5 .container .community-content .text .actions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+section.view-6 {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 4.375rem;
+  padding-bottom: 4.375rem;
+  background: linear-gradient(35deg, #fcfce2 40%, #f5fbfe 90%);
+}
+section.view-6 .container {
+  width: 100%;
+  max-width: 1400px;
+  padding: 0 2rem 0 2rem;
+}
+section.view-6 .container .community-content {
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+}
+section.view-6 .container .community-content .media {
+  width: 100%;
+}
+section.view-6 .container .community-content .media img {
+  width: 100%;
+  max-width: 600px;
+}
+section.view-6 .container .community-content .text {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+section.view-6 .container .community-content .text h4 {
+  font-family: "Google Sans", sans-serif;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #4a4a4a;
+}
+section.view-6 .container .community-content .text h3 {
+  font-family: "Google Sans", sans-serif;
+  font-size: 2.875rem;
+  font-weight: bold;
+}
+section.view-6 .container .community-content .text p {
+  font-family: "Roboto", sans-serif;
+  font-size: 1.125rem;
+  font-weight: normal;
+  max-width: 90%;
+  color: #4a4a4a;
+}
+section.view-6 .container .community-content .text .actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+section.view-6 .container .community-content .text .actions button {
+  font-family: "Google Sans", sans-serif;
+  font-size: 1rem;
+  font-weight: bold;
+  white-space: nowrap;
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 0.7rem 2rem;
+  border: none;
+  outline: none;
+  border-radius: 10rem;
+  cursor: pointer;
+  color: white;
+  background-color: #0468D7;
+}
+section.view-6 .container .community-content .text .actions a {
+  font-family: "Google Sans", sans-serif;
+  font-size: 1rem;
+  font-weight: bold;
+  color: black;
+  text-decoration: none;
+  white-space: nowrap;
+}
+@media (min-width: 1030px) {
+  section.view-6 .container {
+    padding: 0 10rem 0 10rem;
+  }
+  section.view-6 .container .community-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+  section.view-6 .container .community-content .text h3 {
+    font-size: 3.75rem;
+  }
+  section.view-6 .container .community-content .text p {
+    margin-bottom: 2rem;
+  }
+  section.view-6 .container .community-content .text .actions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+section.view-7 {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 2rem;
+}
+section.view-7 .container {
+  position: relative;
+  width: 100%;
+  max-width: 1250px;
+  background-color: #042449;
+  border-radius: 2.5rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+section.view-7 .container .text {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  z-index: 2;
+  padding: 6rem 2rem;
+}
+section.view-7 .container .text h3 {
+  font-family: "Google Sans", sans-serif;
+  font-size: 2.875rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  color: white;
+  line-height: 1;
+}
+section.view-7 .container .text p {
+  font-family: "Roboto", sans-serif;
+  font-size: 1.25rem;
+  font-weight: normal;
+  margin-bottom: 2rem;
+  max-width: 90%;
+  color: white;
+}
+section.view-7 .container .text .actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+section.view-7 .container .text .actions .button {
+  font-family: "Google Sans", sans-serif;
+  font-size: 0.7rem;
+  font-weight: bold;
+  white-space: nowrap;
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 0.7rem 2rem;
+  border: none;
+  outline: none;
+  border-radius: 10rem;
+  border: 1px solid #0468D7;
+  cursor: pointer;
+  color: #0468D7;
+  background-color: white;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  margin-bottom: 0.5rem;
+}
+section.view-7 .container .text .actions .button:hover {
+  background-color: #0468D7;
+  color: white;
+}
+section.view-7 .container .text .actions a {
+  font-family: "Google Sans", sans-serif;
+  font-size: 1rem;
+  font-weight: normal;
+  text-decoration: none;
+  color: white;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: color 0.2s ease;
+  margin-bottom: 0.5rem;
+}
+section.view-7 .container .text .actions a i {
+  transition: transform 0.2s ease;
+}
+section.view-7 .container .text .actions a:hover i {
+  transform: translateX(4px);
+}
+section.view-7 .container .media img {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+}
+@media (min-width: 1030px) {
+  section.view-7 {
+    padding: 0 10rem;
+  }
+  section.view-7 .container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+  section.view-7 .container .text {
+    width: 100%;
+    padding: 4rem 4rem;
+  }
+  section.view-7 .container .text h3 {
+    font-size: 3.75rem;
+    margin-bottom: 0.5rem;
+  }
+  section.view-7 .container .text p {
+    margin-bottom: 2rem;
+  }
+  section.view-7 .container .text .actions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  section.view-7 .container .text .actions .button {
+    font-size: 1rem;
+  }
+}
+@media (min-width: 720px) {
+  section.view-7 .container .media img {
+    width: auto;
+  }
+}
+
+footer.view-8 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 4rem 3rem 4rem 3rem;
+  background-color: #F8F9FA;
+}
+footer.view-8 .container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+footer.view-8 .container .footer-content {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+footer.view-8 .container .footer-content .logo {
+  cursor: pointer;
+}
+footer.view-8 .container .footer-content .logo img {
+  width: auto;
+  height: 2rem;
+}
+footer.view-8 .container .footer-content .footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  padding-left: 1rem;
+}
+footer.view-8 .container .footer-content .footer-links .flutter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  list-style: none;
+}
+footer.view-8 .container .footer-content .footer-links .flutter-group .heading {
+  font-family: "Google Sans", sans-serif;
+  font-size: 1rem;
+  font-weight: bold;
+  color: black;
+}
+footer.view-8 .container .footer-content .footer-links .flutter-group a {
+  text-decoration: none;
+  color: #71655B;
+  transition: color 0.3s, -webkit-text-decoration 0.3s;
+  transition: text-decoration 0.3s, color 0.3s;
+  transition: text-decoration 0.3s, color 0.3s, -webkit-text-decoration 0.3s;
+  color: #71655B;
+}
+footer.view-8 .container .footer-content .footer-links .flutter-group a:hover {
+  text-decoration: underline;
+}
+footer.view-8 .footer-socials {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 3rem;
+  padding: 0 1rem 2rem 0;
+  border-bottom: 1px solid rgb(203, 203, 203);
+  margin-bottom: 2rem;
+}
+footer.view-8 .footer-socials svg {
+  width: 1.5rem;
+  height: 1.2rem;
+  color: #4A4A4A;
+  cursor: pointer;
+}
+footer.view-8 .footer-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding-bottom: 2rem;
+  gap: 2rem;
+}
+footer.view-8 .footer-bottom p {
+  text-align: center;
+  font-family: "Roboto", sans-serif;
+  font-size: 0.9rem;
+  font-weight: normal;
+  color: #71655B;
+}
+footer.view-8 .footer-bottom ul {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+footer.view-8 .footer-bottom li a {
+  text-decoration: none;
+  color: #71655B;
+  text-decoration: none;
+  color: #71655B;
+  transition: color 0.3s, -webkit-text-decoration 0.3s;
+  transition: text-decoration 0.3s, color 0.3s;
+  transition: text-decoration 0.3s, color 0.3s, -webkit-text-decoration 0.3s;
+}
+footer.view-8 .footer-bottom li a:hover {
+  text-decoration: underline;
+}
+@media (min-width: 770px) {
+  footer.view-8 .container {
+    display: flex;
+    flex-direction: column;
+    padding-right: 7rem;
+  }
+  footer.view-8 .container .footer-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    align-items: start;
+    justify-content: space-between;
+  }
+  footer.view-8 .container .footer-content .footer-links {
+    display: flex;
+    flex-direction: row;
+    gap: 6rem;
+  }
+  footer.view-8 .footer-socials {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    gap: 1rem;
+  }
+  footer.view-8 .footer-bottom {
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    justify-content: space-between;
+  }
+  footer.view-8 .footer-bottom p {
+    text-align: left;
+  }
+  footer.view-8 .footer-bottom ul {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: end;
   }
 }/*# sourceMappingURL=style.css.map */

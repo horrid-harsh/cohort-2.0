@@ -1,18 +1,21 @@
 section.view-2 {
+  @include flex(column, center, center);  
   width: 100%;
-  padding-top: 4.375rem;
+  // padding-top: 4.375rem;
 
   .container {
     width: 100%;
+    max-width: 1400px;
+
     @include flex(column, null, null);
     gap: 2rem;
     padding: 0 2rem 0 2rem;
 
     .card {
-      width: 100%;
-      border-top: 4px solid #E8EAED;
       @include flex(column, flex-start, null);
+      width: 100%;
       padding: 1.5rem 3rem 0 0;
+      border-top: 4px solid #E8EAED;
 
       .mid {
         width: 100%;
@@ -31,7 +34,7 @@ section.view-2 {
           width: 100%;
           object-fit: cover;
           object-position: left;
-          display: block;
+          // display: block;
         }
       }
     }
@@ -39,13 +42,11 @@ section.view-2 {
 
   @media (min-width: 1030px) {
     .container {
+      @include flex(row, null, center);
       padding: 0 10rem 0 10rem;
-      @include flex(row, space-around, flex-start);
-      // flex-wrap: wrap;
 
       .card {
         width: calc(33.333% - 2rem); // 3 cards per row with spacing
-        // padding: 2rem;
 
         .mid {
           margin-bottom: 2rem;
