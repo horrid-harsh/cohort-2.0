@@ -1,0 +1,88 @@
+// General-purpose flex helper
+@mixin flex($direction: column, $gap: 0, $align: null, $justify: null) {
+  display: flex;
+  flex-direction: $direction;
+  gap: $gap;
+
+  @if $align !=null {
+    align-items: $align;
+  }
+
+  @if $justify !=null {
+    justify-content: $justify;
+  }
+}
+
+// Typography helpers
+@mixin hero-title($size: 2.25rem) {
+  text-transform: uppercase;
+  font-size: $size;
+  font-family: "Chillax", sans-serif;
+}
+
+@mixin brand-description($size: 1.25rem, $opacity: 0.6, $line: 2rem) {
+  font-size: $size;
+  line-height: $line;
+  opacity: $opacity;
+  font-family: "Satoshi", sans-serif;
+}
+
+// Mixin for all image wrappers
+@mixin image-wrapper($bg-img, $grid-area) {
+  @include flex(column, 0rem, $justify: space-between);
+  background-image: url($bg-img);
+  background-size: cover;
+  grid-area: $grid-area;
+  padding: 1.5rem;
+  aspect-ratio: 1/1;
+  border-radius: 0.3rem;
+  overflow: hidden;
+
+  .top {
+    display: flex;
+    gap: 0.8rem;
+    justify-content: end;
+
+    .icon {
+      display: inline-flex;
+      padding: 1rem;
+      width: fit-content;
+      font-size: inherit;
+      background-color: rgba(187, 187, 187, 0.375);
+      backdrop-filter: blur(5px);
+      border-radius: 50%;
+      border: 1px solid white;
+      color: #f4f2ed;
+    }
+  }
+
+  .bottom {
+    @include flex(row, 0rem, center, space-between);
+    color: #f4f2ed;
+    background-color: rgba(187, 187, 187, 0.375);
+    backdrop-filter: blur(5px);
+    padding: 1rem 1rem;
+    border-radius: 0.3rem;
+    font-size: 1.25rem;
+    font-family: "Chillax";
+
+    .hero-title {
+      font-size: 1.25rem;
+    }
+
+    .text-meta {
+      font-size: 0.875rem;
+    }
+  }
+}
+
+// Section bottom reusable block
+%section-bottom-style {
+  @include flex(column, 3rem);
+  color: #f4f2ed;
+  background-color: #161616;
+  padding: 1.5rem;
+  width: 100%;
+  border-radius: 0.7rem;
+  font-family: "Roboto", sans-serif;
+}

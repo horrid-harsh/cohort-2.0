@@ -1,0 +1,147 @@
+section.view-8 {
+    width: 100%;
+    @include flex(column, 0.7rem);
+
+    .container-1 {
+      @include flex(column, 0rem);
+      width: 100%;
+      padding: 1.5rem;
+      border-radius: 0.7rem;
+      margin-top: 0.7rem;
+      color: #f4f2ed;
+      background-color: #1E1E1E;
+
+      .logo {
+        margin-bottom: 4rem;
+      }
+
+      .icon-wrapper {
+        @include flex(row, 0.5rem, center);
+
+        .icon {
+          display: inline-flex;
+          padding: 1rem;
+          background-color: rgba(255, 255, 255, .05);
+          border: 2px solid rgba(255, 255, 255, .15);
+          border-radius: 50%;
+          cursor: pointer;
+        }
+      }
+    }
+
+    .container-2 {
+      @include flex(column, 2rem);
+      width: 100%;
+      padding: 1.5rem;
+      margin-top: 0.7rem;
+      border-radius: 0.7rem;
+      background-color: #1E1E1E;
+
+      .top {
+        @include flex(column, 1rem);
+        
+        .hero-title {
+          @include hero-title(1.25rem);
+          color: #f4f2ed;
+        }
+
+        .text-meta {
+          cursor: pointer;
+          color: rgba(244, 242, 237, .6);
+          font-family: "Roboto", sans-serif;
+        }
+
+        .button-text {
+          width: fit-content;
+          padding: 0.9rem 1rem;
+          border-radius: 0.5rem;
+          border: none;
+          outline: none;
+          cursor: pointer;
+          color: black;
+          background-color: #CEBD63;
+        }
+      }
+
+      .mid {
+        @include flex(column, 1rem);
+
+        .hero-title {
+          @include hero-title(1.25rem);
+          color: #f4f2ed;
+        }
+
+        .text-meta {
+          cursor: pointer;
+          color: rgba(244, 242, 237, .6);
+          font-family: "Roboto", sans-serif;
+        }
+      }
+
+      .bottom {
+        @include flex(column, 1rem);
+
+        .hero-title {
+          @include hero-title(1.25rem);
+          color: #f4f2ed;
+        }
+
+        .text-meta {
+          cursor: pointer;
+          color: rgba(244, 242, 237, .6);
+          font-family: "Roboto", sans-serif;
+        }
+      }
+    }
+
+    .container-3 {
+      @include flex (column, 1rem, center);
+      width: 100%;
+      padding: 1.5rem;
+      border-radius: 0.7rem;
+      background-color: #1E1E1E;
+
+      .upper {
+        text-align: center;
+        width: fit-content;
+
+        .text-meta {
+          color: rgba(244, 242, 237, 0.6);
+          font-family: "Roboto", sans-serif;
+
+          span {
+            color: #f4f2ed;
+            cursor: pointer;
+            text-decoration: underline;
+          }
+        }
+      }
+
+      .lower {
+        .text-meta {
+          @include flex(row, 0.5rem, center);
+          font-family: "Roboto", sans-serif;
+          cursor: pointer;
+          color: #f4f2ed;
+          .icon-wrapper {
+            display: inline-flex; // ensures icon centers well
+            align-items: center;
+            justify-content: center;
+            background-color: #292929;
+            padding: 0.5rem;
+            border-radius: 50%;
+            color: #f4f2ed;
+
+            // .icon {
+            //   width: 20px;
+            //   height: 20px;
+            //   padding: 0.5rem;
+            //   border-radius: 50%;
+            //   background-color: #292929;
+            //   fill: red; // 👈 Use 'fill' instead of 'color' for SVG
+            // }
+          }
+        }
+      }
+    }
+  }

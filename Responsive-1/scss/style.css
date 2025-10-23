@@ -1,17 +1,17 @@
 @charset "UTF-8";
 @font-face {
   font-family: "Chillax";
-  src: url("./assets/fonts/63cffc0a3942456e003bc265_Chillax-Regular.woff") format("woff2");
+  src: url("../assets/fonts/63cffc0a3942456e003bc265_Chillax-Regular.woff") format("woff2");
   font-weight: bold;
   font-style: normal;
 }
 @font-face {
   font-family: "Roboto";
-  src: url("./assets/fonts/L0x5DF4xlVMF-BfR8bXMIjhLq38.woff2");
+  src: url("../assets/fonts/L0x5DF4xlVMF-BfR8bXMIjhLq38.woff2");
 }
 @font-face {
   font-family: "Satoshi";
-  src: url("./assets/fonts/63cffc20aa8997095067596f_Satoshi-Light.woff");
+  src: url("../assets/fonts/63cffc20aa8997095067596f_Satoshi-Light.woff");
 }
 * {
   margin: 0;
@@ -37,7 +37,7 @@ body {
   padding: 0 1rem;
 }
 
-main section.view-4 .bottom, main section.view-3 .bottom, main section.view-1 .bottom {
+section.view-4 .bottom, section.view-3 .bottom, section.view-1 .bottom {
   display: flex;
   flex-direction: column;
   gap: 3rem;
@@ -49,18 +49,7 @@ main section.view-4 .bottom, main section.view-3 .bottom, main section.view-1 .b
   font-family: "Roboto", sans-serif;
 }
 
-section {
-  max-width: 2000px;
-}
-
-main {
-  display: flex;
-  flex-direction: column;
-  gap: 0rem;
-  align-items: center;
-  width: 100%;
-}
-main nav {
+nav {
   display: flex;
   flex-direction: row;
   gap: 0rem;
@@ -70,19 +59,19 @@ main nav {
   width: 100%;
   padding: 1rem 0;
 }
-main nav .logo {
+nav .logo {
   padding-left: 1rem;
   width: 80px;
   height: auto;
 }
-main nav .nav-buttons {
+nav .nav-buttons {
   display: flex;
   gap: 0.5rem;
 }
-main nav .nav-buttons button:nth-child(-n+7) {
+nav .nav-buttons button:nth-child(-n+7) {
   display: none;
 }
-main nav .nav-buttons button {
+nav .nav-buttons button {
   padding: 0.9rem 1rem;
   border-radius: 0.5rem;
   border: none;
@@ -92,14 +81,14 @@ main nav .nav-buttons button {
   font-family: "Roboto", sans-serif;
   background-color: #1e1e1e;
 }
-main nav .nav-buttons .ri-circle-fill {
+nav .nav-buttons .ri-circle-fill {
   color: #CEBD63;
 }
-main nav .nav-buttons .cta {
+nav .nav-buttons .cta {
   color: black;
   background-color: #CEBD63;
 }
-main nav .nav-buttons .menu {
+nav .nav-buttons .menu {
   border: none;
   outline: none;
   cursor: pointer;
@@ -107,39 +96,40 @@ main nav .nav-buttons .menu {
   border-radius: 0.7rem;
   background-color: #1e1e1e;
 }
-main nav .nav-buttons .menu i {
+nav .nav-buttons .menu i {
   color: white;
   opacity: 0.7;
   font-size: 2rem;
 }
-main section.view-1 {
+
+section.view-1 {
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
   width: 100%;
 }
-main section.view-1 .top {
+section.view-1 .top {
   width: 100%;
 }
-main section.view-1 .top img {
+section.view-1 .top img {
   width: 100%;
   border-radius: 0.7rem;
   opacity: 0.7;
 }
-main section.view-1 .bottom .text-meta {
+section.view-1 .bottom .text-meta {
   margin-bottom: 4rem;
 }
-main section.view-1 .bottom .text {
+section.view-1 .bottom .text {
   display: flex;
   flex-direction: column;
   gap: 0.7rem;
 }
-main section.view-1 .bottom .text .hero-title {
+section.view-1 .bottom .text .hero-title {
   text-transform: uppercase;
   font-size: 2.25rem;
   font-family: "Chillax", sans-serif;
 }
-main section.view-1 .bottom .text .brand-description {
+section.view-1 .bottom .text .brand-description {
   font-size: 1.25rem;
   line-height: 2rem;
   opacity: 0.6;
@@ -147,7 +137,7 @@ main section.view-1 .bottom .text .brand-description {
   width: 75%;
   margin-bottom: 1.5rem;
 }
-main section.view-1 .bottom .text .our-story {
+section.view-1 .bottom .text .our-story {
   display: flex;
   flex-direction: row;
   gap: 1rem;
@@ -155,7 +145,7 @@ main section.view-1 .bottom .text .our-story {
   width: -moz-fit-content;
   width: fit-content;
 }
-main section.view-1 .bottom .text .our-story i {
+section.view-1 .bottom .text .our-story i {
   font-size: 1.2rem;
   padding: 0.8rem;
   border-radius: 50%;
@@ -163,11 +153,12 @@ main section.view-1 .bottom .text .our-story i {
   cursor: pointer;
   background-color: #292929;
 }
-main section.view-1 .bottom .text .our-story p {
+section.view-1 .bottom .text .our-story p {
   text-transform: uppercase;
   color: #f4f2ed;
 }
-main section.view-2 {
+
+section.view-2 {
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -178,114 +169,117 @@ main section.view-2 {
   padding: 1.5rem;
   margin-top: 0.5rem;
 }
-main section.view-2 p {
+section.view-2 p {
   color: rgba(244, 242, 237, 0.6);
   font-size: 14px;
   font-family: "Roboto", sans-serif;
   letter-spacing: 0.1rem;
 }
-main section.view-2 h4 {
+section.view-2 h4 {
   color: #f4f2ed;
   font-family: "Chillax", sans-serif;
   font-size: 4.5vw;
 }
-main section.view-2 .top-left {
+section.view-2 .top-left {
   display: flex;
   flex-direction: column;
   gap: 0rem;
   align-items: center;
   grid-area: top-left;
 }
-main section.view-2 .top-right {
+section.view-2 .top-right {
   display: flex;
   flex-direction: column;
   gap: 0rem;
   align-items: center;
   grid-area: top-right;
 }
-main section.view-2 .bottom-left {
+section.view-2 .bottom-left {
   display: flex;
   flex-direction: column;
   gap: 0rem;
   align-items: center;
   grid-area: btm-left;
 }
-main section.view-2 .bottom-right {
+section.view-2 .bottom-right {
   display: flex;
   flex-direction: column;
   gap: 0rem;
   align-items: center;
   grid-area: btm-right;
 }
-main section.view-3 {
+
+section.view-3 {
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
   width: 100%;
 }
-main section.view-3 .top {
+section.view-3 .top {
   width: 100%;
 }
-main section.view-3 .top img {
+section.view-3 .top img {
   width: 100%;
   border-radius: 0.7rem;
   opacity: 0.7;
 }
-main section.view-3 .bottom .text-meta {
+section.view-3 .bottom .text-meta {
   margin-bottom: 4rem;
 }
-main section.view-3 .bottom .text {
+section.view-3 .bottom .text {
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
 }
-main section.view-3 .bottom .text .hero-title {
+section.view-3 .bottom .text .hero-title {
   text-transform: uppercase;
   font-size: 2.25rem;
   font-family: "Chillax", sans-serif;
 }
-main section.view-3 .bottom .text .brand-description {
+section.view-3 .bottom .text .brand-description {
   font-size: 1.25rem;
   line-height: 2rem;
   opacity: 0.6;
   font-family: "Satoshi", sans-serif;
   display: inline;
 }
-main section.view-4 {
+
+section.view-4 {
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
   width: 100%;
 }
-main section.view-4 .top {
+section.view-4 .top {
   width: 100%;
 }
-main section.view-4 .top img {
+section.view-4 .top img {
   width: 100%;
   border-radius: 0.7rem;
   opacity: 0.7;
 }
-main section.view-4 .bottom .text-meta {
+section.view-4 .bottom .text-meta {
   margin-bottom: 4rem;
 }
-main section.view-4 .bottom .text {
+section.view-4 .bottom .text {
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
 }
-main section.view-4 .bottom .text .hero-title {
+section.view-4 .bottom .text .hero-title {
   text-transform: uppercase;
   font-size: 2.25rem;
   font-family: "Chillax", sans-serif;
 }
-main section.view-4 .bottom .text .brand-description {
+section.view-4 .bottom .text .brand-description {
   font-size: 1.25rem;
   line-height: 2rem;
   opacity: 0.6;
   font-family: "Satoshi", sans-serif;
   display: inline;
 }
-main section.view-5 {
+
+section.view-5 {
   display: flex;
   flex-direction: row;
   gap: 0rem;
@@ -295,12 +289,12 @@ main section.view-5 {
   width: 100%;
   color: #f4f2ed;
 }
-main section.view-5 .hero-title {
+section.view-5 .hero-title {
   text-transform: uppercase;
   font-size: 2rem;
   font-family: "Chillax", sans-serif;
 }
-main section.view-5 .button-text {
+section.view-5 .button-text {
   display: flex;
   flex-direction: row;
   gap: 0.5rem;
@@ -310,7 +304,7 @@ main section.view-5 .button-text {
   font-family: "Roboto", sans-serif;
   font-size: 0.875rem;
 }
-main section.view-5 .button-text .icon-wrapper {
+section.view-5 .button-text .icon-wrapper {
   display: inline-flex;
   /* makes a proper box for background */
   justify-content: center;
@@ -322,7 +316,8 @@ main section.view-5 .button-text .icon-wrapper {
   color: #f4f2ed;
   /* color of SVG via currentColor */
 }
-main section.view-6 {
+
+section.view-6 {
   width: 100%;
   display: grid;
   grid-template-columns: 1fr;
@@ -332,12 +327,15 @@ main section.view-6 {
   border-radius: 0.7rem;
   overflow: hidden;
 }
-main .image-wrapper1 {
+section.view-6 .icon {
+  cursor: pointer;
+}
+section.view-6 .image-wrapper1 {
   display: flex;
   flex-direction: column;
   gap: 0rem;
   justify-content: space-between;
-  background-image: url("./assets/images/card-1.webp");
+  background-image: url("../assets/images/card-1.webp");
   background-size: cover;
   grid-area: img-1;
   padding: 1.5rem;
@@ -345,12 +343,12 @@ main .image-wrapper1 {
   border-radius: 0.3rem;
   overflow: hidden;
 }
-main .image-wrapper1 .top {
+section.view-6 .image-wrapper1 .top {
   display: flex;
   gap: 0.8rem;
   justify-content: end;
 }
-main .image-wrapper1 .top .icon {
+section.view-6 .image-wrapper1 .top .icon {
   display: inline-flex;
   padding: 1rem;
   width: -moz-fit-content;
@@ -363,7 +361,7 @@ main .image-wrapper1 .top .icon {
   border: 1px solid white;
   color: #f4f2ed;
 }
-main .image-wrapper1 .bottom {
+section.view-6 .image-wrapper1 .bottom {
   display: flex;
   flex-direction: row;
   gap: 0rem;
@@ -378,18 +376,18 @@ main .image-wrapper1 .bottom {
   font-size: 1.25rem;
   font-family: "Chillax";
 }
-main .image-wrapper1 .bottom .hero-title {
+section.view-6 .image-wrapper1 .bottom .hero-title {
   font-size: 1.25rem;
 }
-main .image-wrapper1 .bottom .text-meta {
+section.view-6 .image-wrapper1 .bottom .text-meta {
   font-size: 0.875rem;
 }
-main .image-wrapper2 {
+section.view-6 .image-wrapper2 {
   display: flex;
   flex-direction: column;
   gap: 0rem;
   justify-content: space-between;
-  background-image: url("./assets/images/card-2.webp");
+  background-image: url("../assets/images/card-2.webp");
   background-size: cover;
   grid-area: img-2;
   padding: 1.5rem;
@@ -397,12 +395,12 @@ main .image-wrapper2 {
   border-radius: 0.3rem;
   overflow: hidden;
 }
-main .image-wrapper2 .top {
+section.view-6 .image-wrapper2 .top {
   display: flex;
   gap: 0.8rem;
   justify-content: end;
 }
-main .image-wrapper2 .top .icon {
+section.view-6 .image-wrapper2 .top .icon {
   display: inline-flex;
   padding: 1rem;
   width: -moz-fit-content;
@@ -415,7 +413,7 @@ main .image-wrapper2 .top .icon {
   border: 1px solid white;
   color: #f4f2ed;
 }
-main .image-wrapper2 .bottom {
+section.view-6 .image-wrapper2 .bottom {
   display: flex;
   flex-direction: row;
   gap: 0rem;
@@ -430,18 +428,18 @@ main .image-wrapper2 .bottom {
   font-size: 1.25rem;
   font-family: "Chillax";
 }
-main .image-wrapper2 .bottom .hero-title {
+section.view-6 .image-wrapper2 .bottom .hero-title {
   font-size: 1.25rem;
 }
-main .image-wrapper2 .bottom .text-meta {
+section.view-6 .image-wrapper2 .bottom .text-meta {
   font-size: 0.875rem;
 }
-main .image-wrapper3 {
+section.view-6 .image-wrapper3 {
   display: flex;
   flex-direction: column;
   gap: 0rem;
   justify-content: space-between;
-  background-image: url("./assets/images/card-3.webp");
+  background-image: url("../assets/images/card-3.webp");
   background-size: cover;
   grid-area: img-3;
   padding: 1.5rem;
@@ -449,12 +447,12 @@ main .image-wrapper3 {
   border-radius: 0.3rem;
   overflow: hidden;
 }
-main .image-wrapper3 .top {
+section.view-6 .image-wrapper3 .top {
   display: flex;
   gap: 0.8rem;
   justify-content: end;
 }
-main .image-wrapper3 .top .icon {
+section.view-6 .image-wrapper3 .top .icon {
   display: inline-flex;
   padding: 1rem;
   width: -moz-fit-content;
@@ -467,7 +465,7 @@ main .image-wrapper3 .top .icon {
   border: 1px solid white;
   color: #f4f2ed;
 }
-main .image-wrapper3 .bottom {
+section.view-6 .image-wrapper3 .bottom {
   display: flex;
   flex-direction: row;
   gap: 0rem;
@@ -482,11 +480,267 @@ main .image-wrapper3 .bottom {
   font-size: 1.25rem;
   font-family: "Chillax";
 }
-main .image-wrapper3 .bottom .hero-title {
+section.view-6 .image-wrapper3 .bottom .hero-title {
   font-size: 1.25rem;
 }
-main .image-wrapper3 .bottom .text-meta {
+section.view-6 .image-wrapper3 .bottom .text-meta {
   font-size: 0.875rem;
+}
+
+section.view-7 {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.7rem;
+}
+section.view-7 .top {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  width: 100%;
+}
+section.view-7 .top .group-img {
+  height: 60vw;
+  max-height: 60vw;
+  width: 100%;
+  background-image: url("../assets/images/group.webp");
+  background-size: cover;
+  background-position: center;
+  border-radius: 0.7rem;
+}
+section.view-7 .top .container1 {
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+  justify-content: space-between;
+  height: -moz-fit-content;
+  height: fit-content;
+  width: 100%;
+  border-radius: 0.7rem;
+  padding: 1.5rem;
+  background-color: #1E1E1E;
+}
+section.view-7 .top .container1 .upper .text-meta {
+  margin-bottom: 1rem;
+  font-family: "Roboto", sans-serif;
+  color: rgba(244, 242, 237, 0.6);
+}
+section.view-7 .top .container1 .upper .hero-title {
+  text-transform: uppercase;
+  font-size: 2rem;
+  font-family: "Chillax", sans-serif;
+  color: #f4f2ed;
+  width: 100%;
+}
+section.view-7 .top .container1 .lower {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  align-items: center;
+  font-family: "Roboto", sans-serif;
+  font-size: 0.875rem;
+}
+section.view-7 .top .container1 .lower .button-text {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  align-items: center;
+  font-family: "Roboto", sans-serif;
+  font-size: 0.875rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+  color: #f4f2ed;
+}
+section.view-7 .top .container1 .lower .button-text .icon-wrapper {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #292929;
+  padding: 0.5rem;
+  border-radius: 50%;
+  color: #f4f2ed;
+}
+section.view-7 .bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  justify-content: space-between;
+  padding: 1.5rem;
+  margin-top: 0.7rem;
+  background-color: #CEBD63;
+  border-radius: 0.7rem;
+}
+section.view-7 .bottom .text-meta {
+  color: #f4f2ed;
+  font-family: "Roboto", sans-serif;
+}
+section.view-7 .bottom .hero-title {
+  text-transform: uppercase;
+  font-size: 5.5vw;
+  font-family: "Chillax", sans-serif;
+  color: #f4f2ed;
+}
+section.view-7 .bottom .cta {
+  display: inline-flex;
+  white-space: nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.9rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  color: white;
+  background-color: black;
+}
+
+section.view-8 {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+section.view-8 .container-1 {
+  display: flex;
+  flex-direction: column;
+  gap: 0rem;
+  width: 100%;
+  padding: 1.5rem;
+  border-radius: 0.7rem;
+  margin-top: 0.7rem;
+  color: #f4f2ed;
+  background-color: #1E1E1E;
+}
+section.view-8 .container-1 .logo {
+  margin-bottom: 4rem;
+}
+section.view-8 .container-1 .icon-wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  align-items: center;
+}
+section.view-8 .container-1 .icon-wrapper .icon {
+  display: inline-flex;
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  cursor: pointer;
+}
+section.view-8 .container-2 {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+  padding: 1.5rem;
+  margin-top: 0.7rem;
+  border-radius: 0.7rem;
+  background-color: #1E1E1E;
+}
+section.view-8 .container-2 .top {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+section.view-8 .container-2 .top .hero-title {
+  text-transform: uppercase;
+  font-size: 1.25rem;
+  font-family: "Chillax", sans-serif;
+  color: #f4f2ed;
+}
+section.view-8 .container-2 .top .text-meta {
+  cursor: pointer;
+  color: rgba(244, 242, 237, 0.6);
+  font-family: "Roboto", sans-serif;
+}
+section.view-8 .container-2 .top .button-text {
+  width: -moz-fit-content;
+  width: fit-content;
+  padding: 0.9rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  color: black;
+  background-color: #CEBD63;
+}
+section.view-8 .container-2 .mid {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+section.view-8 .container-2 .mid .hero-title {
+  text-transform: uppercase;
+  font-size: 1.25rem;
+  font-family: "Chillax", sans-serif;
+  color: #f4f2ed;
+}
+section.view-8 .container-2 .mid .text-meta {
+  cursor: pointer;
+  color: rgba(244, 242, 237, 0.6);
+  font-family: "Roboto", sans-serif;
+}
+section.view-8 .container-2 .bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+section.view-8 .container-2 .bottom .hero-title {
+  text-transform: uppercase;
+  font-size: 1.25rem;
+  font-family: "Chillax", sans-serif;
+  color: #f4f2ed;
+}
+section.view-8 .container-2 .bottom .text-meta {
+  cursor: pointer;
+  color: rgba(244, 242, 237, 0.6);
+  font-family: "Roboto", sans-serif;
+}
+section.view-8 .container-3 {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  width: 100%;
+  padding: 1.5rem;
+  border-radius: 0.7rem;
+  background-color: #1E1E1E;
+}
+section.view-8 .container-3 .upper {
+  text-align: center;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+section.view-8 .container-3 .upper .text-meta {
+  color: rgba(244, 242, 237, 0.6);
+  font-family: "Roboto", sans-serif;
+}
+section.view-8 .container-3 .upper .text-meta span {
+  color: #f4f2ed;
+  cursor: pointer;
+  text-decoration: underline;
+}
+section.view-8 .container-3 .lower .text-meta {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  align-items: center;
+  font-family: "Roboto", sans-serif;
+  cursor: pointer;
+  color: #f4f2ed;
+}
+section.view-8 .container-3 .lower .text-meta .icon-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #292929;
+  padding: 0.5rem;
+  border-radius: 50%;
+  color: #f4f2ed;
 }
 
 /* ≥481px and ≤767px (small tablets / large phones) */
@@ -502,10 +756,19 @@ main .image-wrapper3 .bottom .text-meta {
   main section.view-2 .heading-h4 {
     font-size: 2.75rem;
   }
+  main section.view-7 .top .container1 .upper .hero-title {
+    font-size: 2.25rem;
+  }
   main section.view-1 .bottom .text .brand-description,
   main section.view-3 .bottom .text .paragraphs .brand-description,
   main section.view-3 .bottom .text .paragraphs .brand-description {
     font-size: 1.25rem;
+  }
+  main section.view-8 .container-2 {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    justify-content: space-between;
   }
 }
 @media (min-width: 768px) and (max-width: 991px) {
@@ -567,6 +830,15 @@ main .image-wrapper3 .bottom .text-meta {
   }
   main section.view-6 .bottom {
     gap: 2rem;
+  }
+  main section.view-7 .top .container1 .upper .hero-title {
+    font-size: 2.75rem;
+  }
+  main section.view-8 .container-2 {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    justify-content: space-between;
   }
 }
 /* ≥992px (desktops) */
@@ -657,6 +929,53 @@ main .image-wrapper3 .bottom .text-meta {
   main section.view-6 .bottom {
     gap: 2rem;
   }
+  main section.view-7 .top {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+  }
+  main section.view-7 .top .group-img,
+  main section.view-7 .top .container1 {
+    height: 25rem;
+    width: 50%;
+  }
+  main section.view-7 .bottom {
+    flex-direction: row;
+    align-items: last baseline;
+  }
+  main section.view-7 .bottom .hero-title {
+    font-size: 4rem;
+  }
+  main section.view-7 .bottom .cta {
+    padding: 0.9rem 1.5rem;
+  }
+  main section.view-8 {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows: 3fr 1fr;
+    grid-template-areas: "container-1 container-2" "container-1 container-3";
+  }
+  main section.view-8 .container-1 {
+    grid-area: container-1;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    justify-content: space-between;
+  }
+  main section.view-8 .container-2 {
+    grid-area: container-2;
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    justify-content: space-between;
+  }
+  main section.view-8 .container-3 {
+    grid-area: container-3;
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    justify-content: space-between;
+  }
 }
 @media (min-width: 1440px) {
   main section.view-1 .bottom .text .hero-title,
@@ -667,4 +986,18 @@ main .image-wrapper3 .bottom .text-meta {
   main section.view-2 .heading-h4 {
     font-size: 4rem;
   }
+  main section.view-7 .bottom .hero-title {
+    font-size: 5rem;
+  }
+}
+section {
+  max-width: 2000px;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 0rem;
+  align-items: center;
+  width: 100%;
 }/*# sourceMappingURL=style.css.map */

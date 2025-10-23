@@ -1,0 +1,36 @@
+section.view-4 {
+    @include flex(column, 0.8rem);
+    width: 100%;
+
+    .top {
+        width: 100%;
+
+        img {
+            width: 100%;
+            border-radius: 0.7rem;
+            opacity: 0.7;
+        }
+    }
+
+    .bottom {
+        @extend %section-bottom-style;
+
+        .text-meta {
+            margin-bottom: 4rem;
+        }
+
+        .text {
+            @include flex(column, 0.8rem);
+
+            .hero-title {
+                @include hero-title(2.25rem);
+            }
+
+            .brand-description {
+                @include brand-description(1.25rem);
+                display: inline;
+                // width: 75%;
+            }
+        }
+    }
+}

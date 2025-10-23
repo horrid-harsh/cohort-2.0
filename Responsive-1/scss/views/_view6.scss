@@ -1,0 +1,32 @@
+section.view-6 {
+    // background-color: lightseagreen;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+        "img-1"
+        "img-2"
+        "img-3";
+
+    gap: 0.8rem;
+    border-radius: 0.7rem;
+    overflow: hidden;
+
+    .icon {
+        cursor: pointer;
+    }
+
+    .image-wrapper1 {
+        @include image-wrapper("../assets/images/card-1.webp", img-1);
+    }
+
+    .image-wrapper2 {
+        @include image-wrapper("../assets/images/card-2.webp", img-2);
+    }
+
+    .image-wrapper3 {
+        @include image-wrapper("../assets/images/card-3.webp", img-3);
+    }
+
+}

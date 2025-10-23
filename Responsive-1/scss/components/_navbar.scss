@@ -1,0 +1,56 @@
+nav {
+    @include flex(row, 0rem, center, space-between);
+    max-width: 2000px;
+    width: 100%;
+    padding: 1rem 0;
+
+    .logo {
+      padding-left: 1rem;
+      width: 80px;
+      height: auto;
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 0.5rem;
+
+      button:nth-child(-n + 7) {
+        display: none;
+      }
+
+      button {
+        padding: 0.9rem 1rem;
+        border-radius: 0.5rem;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        color: #f4f2ed;
+        font-family: "Roboto", sans-serif;
+        background-color: #1e1e1e;
+      }
+
+      .ri-circle-fill {
+        color: #CEBD63;
+      }
+
+      .cta {
+        color: black;
+        background-color: #CEBD63;
+      }
+
+      .menu {
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 1rem;
+        border-radius: 0.7rem;
+        background-color: #1e1e1e;
+
+        i {
+          color: white;
+          opacity: 0.7;
+          font-size: 2rem;
+        }
+      }
+    }
+  }

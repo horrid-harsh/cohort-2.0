@@ -1,0 +1,46 @@
+section.view-2 {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas:
+        "top-left top-right"
+        "btm-left btm-right";
+    align-content: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    margin-top: 0.5rem;
+
+    p {
+        color: #f4f2ed99;
+        font-size: 14px;
+        font-family: "Roboto", sans-serif;
+        letter-spacing: 0.1rem;
+    }
+
+    h4 {
+        color: #f4f2ed;
+        font-family: "Chillax", sans-serif;
+        font-size: 4.5vw;
+    }
+
+    .top-left {
+        @include flex(column, 0rem, center);
+        grid-area: top-left;
+    }
+
+    .top-right {
+        @include flex(column, 0rem, center);
+        grid-area: top-right;
+    }
+
+    .bottom-left {
+        @include flex(column, 0rem, center);
+        grid-area: btm-left;
+    }
+
+    .bottom-right {
+        @include flex(column, 0rem, center);
+        grid-area: btm-right;
+    }
+}

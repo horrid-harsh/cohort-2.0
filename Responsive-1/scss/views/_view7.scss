@@ -1,0 +1,110 @@
+section.view-7 {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 0.7rem;
+
+    .top {
+      // padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      width: 100%;
+
+      .group-img {
+        height: 60vw;
+        max-height: 60vw;
+        width: 100%;
+        background-image: url("../assets/images/group.webp");
+        background-size: cover;
+        background-position: center;
+        border-radius: 0.7rem;
+
+      }
+
+      .container1 {
+        @include flex(column, 5rem, $justify: space-between);
+        height: fit-content;
+        width: 100%;
+        border-radius: 0.7rem;
+        padding: 1.5rem;
+        background-color: #1E1E1E;
+
+        .upper {
+          .text-meta {
+            margin-bottom: 1rem;
+            font-family: "Roboto", sans-serif;
+            color: rgba(244, 242, 237, .6);
+          }
+
+          .hero-title {
+            @include hero-title(2rem);
+            color: #f4f2ed;
+            width: 100%;
+          }
+        }
+
+        .lower {
+          @include flex(row, 0.5rem, center);
+          font-family: 'Roboto', sans-serif;
+          font-size: 0.875rem;
+
+          .button-text {
+            @include flex(row, 0.5rem, center); // flex container with gap
+            font-family: 'Roboto', sans-serif;
+            font-size: 0.875rem;
+            white-space: nowrap; // keep text in a single line
+            overflow: hidden; // hide overflow if text is too long
+            text-overflow: ellipsis; // show "..." for overflowed text
+            cursor: pointer;
+            color: #f4f2ed;
+
+            .icon-wrapper {
+              display: inline-flex; // inline flex box
+              justify-content: center;
+              align-items: center;
+              background-color: #292929; // circular background
+              padding: 0.5rem; // padding inside circle
+              border-radius: 50%; // make it circular
+              color: #f4f2ed; // icon color
+            }
+          }
+
+        }
+
+      }
+    }
+
+    .bottom {
+      @include flex(column, 0.5rem, $justify: space-between);
+      padding: 1.5rem;
+      margin-top: 0.7rem;
+      background-color: #CEBD63;
+      border-radius: 0.7rem;
+
+      .text-meta {
+        color: #f4f2ed;
+        font-family: "Roboto", sans-serif;
+      }
+
+      .hero-title {
+        @include hero-title(5.5vw);
+        color: #f4f2ed;
+      }
+
+      .cta {
+        display: inline-flex;
+        white-space: nowrap;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.9rem 1rem;
+        border-radius: 0.5rem;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        color: white;
+        background-color: black;
+      }
+    }
+  }

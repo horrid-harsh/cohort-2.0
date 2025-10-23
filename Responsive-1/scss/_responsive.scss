@@ -1,0 +1,318 @@
+/* ≥481px and ≤767px (small tablets / large phones) */
+@media (min-width: 481px) and (max-width: 767px) {
+  main {
+
+    section.view-1 .bottom .text-meta,
+    section.view-3 .bottom .text-meta,
+    section.view-4 .bottom .text-meta {
+      margin-bottom: 4.5rem;
+    }
+
+    section.view-1 .bottom .text .hero-title,
+    section.view-3 .bottom .text .hero-title,
+    section.view-4 .bottom .text .hero-title,
+    section.view-2 .heading-h4 {
+      font-size: 2.75rem;
+    }
+
+    section.view-7 .top .container1 .upper .hero-title {
+      font-size: 2.25rem;
+    }
+
+    section.view-1 .bottom .text .brand-description,
+    section.view-3 .bottom .text .paragraphs .brand-description,
+    section.view-3 .bottom .text .paragraphs .brand-description {
+      font-size: 1.25rem;
+    }
+
+    section.view-8 {
+      .container-2 {
+        @include flex(row, 2rem, $justify: space-between);
+      }
+    }
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  main {
+
+    section.view-1 .bottom,
+    section.view-3 .bottom,
+    section.view-4 .bottom {
+      padding: 2.5rem;
+
+      .text-meta {
+        margin-bottom: 8rem;
+      }
+
+      .text {
+        .hero-title {
+          font-size: 3.5rem;
+        }
+
+        .brand-description,
+        .paragraphs .brand-description {
+          line-height: 160%;
+        }
+      }
+    }
+
+    section.view-1 .bottom .text .hero-title {
+      width: 80%;
+    }
+
+    section.view-2 {
+      .heading-h4 {
+        font-size: 3.5rem;
+      }
+    }
+
+    section.view-3 .bottom .text,
+    section.view-4 .bottom .text {
+      .paragraphs {
+        display: flex;
+        gap: 2rem;
+      }
+
+      .hero-title {
+        width: 80%;
+      }
+    }
+
+    section.view-5 {
+      padding: 2.5rem;
+
+      .hero-title {
+        font-size: 2.5rem;
+      }
+
+      .button-text {
+        display: inline-flex;
+      }
+
+    }
+
+    section.view-6 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: auto;
+      grid-template-areas:
+        "img-1 img-2 img-3";
+
+      .top {
+        .icon {
+          padding: 0.5rem
+        }
+      }
+
+      .bottom {
+        gap: 2rem;
+      }
+    }
+
+    section.view-7 .top .container1 .upper .hero-title {
+      font-size: 2.75rem;
+    }
+
+    section.view-8 {
+      .container-2 {
+        @include flex(row, 2rem, $justify: space-between);
+      }
+    }
+  }
+}
+
+/* ≥992px (desktops) */
+@media (min-width: 992px) {
+  main {
+
+    // ───── NAVIGATION ─────
+    nav {
+      .nav-buttons {
+        button:nth-child(-n + 7) {
+          display: inline-block;
+        }
+
+        .menu {
+          display: none;
+        }
+      }
+    }
+
+    // ───── SECTION SHARED LAYOUT ─────
+    section.view-1,
+    section.view-3,
+    section.view-4 {
+      flex-direction: row;
+
+      .top,
+      .bottom {
+        width: 50%;
+      }
+
+      .top img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: 80% 30%;
+      }
+
+      .bottom {
+        @include flex(column, 0, $justify: space-between);
+        padding: 4rem;
+
+        .text-meta {
+          margin-bottom: 12rem;
+        }
+
+        .text {
+          .hero-title {
+            font-size: 3.25vw;
+          }
+
+          .brand-description,
+          .paragraphs .brand-description {
+            line-height: 160%;
+          }
+        }
+      }
+    }
+
+    // ───── SECTION-SPECIFIC ADJUSTMENTS ─────
+
+    section.view-2 {
+      display: flex;
+      justify-content: space-around;
+    }
+
+    section.view-3 {
+      flex-direction: row-reverse;
+
+      .bottom .text {
+        .paragraphs {
+          display: flex;
+          gap: 2rem;
+        }
+      }
+    }
+
+    section.view-4 {
+      .bottom .text {
+        .paragraphs {
+          display: flex;
+          gap: 2rem;
+        }
+      }
+    }
+
+    section.view-5 {
+      .button-text {
+        display: inline-flex;
+      }
+    }
+
+    section.view-6 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: auto;
+
+      grid-template-areas:
+        "img-1 img-2 img-3";
+
+      .top {
+        .icon {
+          padding: 0.5rem
+        }
+      }
+
+      .bottom {
+        gap: 2rem;
+      }
+
+    }
+
+    section.view-7 {
+      .top {
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        // aspect-ratio: 1/1;
+
+        .group-img,
+        .container1 {
+          height: 25rem;
+          width: 50%;
+        }
+      }
+
+
+      .bottom {
+        flex-direction: row;
+        align-items: last baseline;
+
+        .hero-title {
+          font-size: 4rem;
+        }
+
+        .cta {
+          padding: 0.9rem 1.5rem;
+        }
+      }
+    }
+
+    section.view-8 {
+      display: grid;
+      grid-template-columns: 1fr 3fr;
+      grid-template-rows: 3fr 1fr;
+      grid-template-areas: "container-1 container-2"
+        "container-1 container-3";
+
+      .container-1 {
+        grid-area: container-1;
+        @include flex(column, 2rem, $justify: space-between);
+      } 
+      .container-2 {
+        grid-area: container-2;
+        @include flex(row, 2rem, $justify: space-between);
+      }
+      .container-3 {
+        grid-area: container-3;
+        @include flex(row, 2rem, $justify: space-between);
+      } 
+    }  
+  
+  }
+}
+
+@media (min-width: 1440px) {
+
+  main {
+
+    section.view-1,
+    section.view-3,
+    section.view-4 {
+      .bottom {
+        .text {
+          .hero-title {
+            font-size: 3rem;
+          }
+        }
+      }
+    }
+
+    section.view-2 {
+      .heading-h4 {
+        font-size: 4rem;
+      }
+    }
+
+    section.view-7 {
+      .bottom {
+        .hero-title {
+          font-size: 5rem;
+        }
+      }
+    }
+  }
+
+}

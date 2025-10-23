@@ -1,0 +1,56 @@
+section.view-1 {
+    @include flex(column, 0.8rem);
+
+    width: 100%;
+
+    .top {
+      width: 100%;
+
+      img {
+        width: 100%;
+        border-radius: 0.7rem;
+        opacity: 0.7
+      }
+    }
+
+    .bottom {
+      @extend %section-bottom-style;
+
+      .text-meta {
+        margin-bottom: 4rem;
+      }
+
+      .text {
+        @include flex(column, 0.7rem);
+
+        .hero-title {
+          @include hero-title(2.25rem);
+        }
+
+        .brand-description {
+          @include brand-description(1.25rem);
+          width: 75%;
+          margin-bottom: 1.5rem;
+        }
+
+        .our-story {
+          @include flex(row, 1rem, center);
+          width: fit-content;
+
+          i {
+            font-size: 1.2rem;
+            padding: 0.8rem;
+            border-radius: 50%;
+            opacity: 0.7;
+            cursor: pointer;
+            background-color: #292929;
+          }
+
+          p {
+            text-transform: uppercase;
+            color: #f4f2ed;
+          }
+        }
+      }
+    }
+  }
