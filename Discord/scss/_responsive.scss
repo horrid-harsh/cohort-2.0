@@ -1,0 +1,182 @@
+@media (min-width: 476px) {
+  header {
+    nav {
+      .buttons {
+        .login {
+          display: block;
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 770px) {
+  main {
+    // 🔹 Common layout for view-2, view-3, and view-4
+    section.view-2,
+    section.view-3,
+    section.view-4 {
+      padding-top: 12rem;
+
+      .container {
+        .blur {
+          height: 38rem;
+          gap: 4rem;
+          border-radius: 7rem;
+          padding: 2rem;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          .text {
+            margin: 0;
+            width: 40%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 1rem;
+
+            h2 {
+              line-height: 0.9;
+              font-size: 2.5rem;
+              margin: 0;
+            }
+
+            p {
+              max-width: 22rem;
+              font-size: 1.25rem;
+            }
+          }
+
+          .video {
+            width: 60%;
+            height: 100%;
+          }
+        }
+      }
+    }
+
+    // 🔹 Section-specific differences
+    section.view-2 {
+      .container {
+        .gif {
+          top: -11%;
+          right: 14%;
+
+          img {
+            width: 10rem;
+            height: 6rem;
+          }
+        }
+
+        .blur {
+          flex-direction: row-reverse;
+        }
+      }
+    }
+
+    section.view-3 {
+      .container {
+        .blur {
+          flex-direction: row;
+          padding: 2rem 2rem 2rem 3rem; // difference
+        }
+      }
+    }
+
+    section.view-4 {
+      .container {
+        .box {
+          display: block;
+        }
+
+        .blur {
+          flex-direction: row-reverse;
+        }
+      }
+    }
+  }
+}
+
+
+
+@media (min-width: 1080px) {
+  header {
+    nav {
+      img {
+        top: 3.5rem;
+        left: 2.8rem;
+      }
+
+      .nav-links {
+        display: flex;
+        padding-top: 1.3rem;
+      }
+
+      .buttons {
+        top: 3rem;
+        right: 2.8rem;
+
+        .hamburger {
+          display: none;
+        }
+      }
+    }
+  }
+
+  main {
+    section.view-1 {
+      margin-top: 0;
+
+      .container {
+        padding: 0 3rem 0 3rem;
+        // background-color: red;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+
+        .top {
+          flex-direction: row-reverse;
+          justify-content: space-between;
+          align-items: start;
+
+          .media {
+            img {
+              transform: scale(0.9);
+              height: 100%;
+            }
+          }
+
+          .text {
+            margin-top: 8rem;
+
+            h1 {
+              text-align: left;
+              font-size: 4rem;
+              max-width: 50rem;
+              line-height: 0.9;
+            }
+            p {
+              max-width: 35rem;
+              text-align: left;
+              font-size: 1.5rem;
+            }
+          }
+        }
+
+        .bottom {
+          flex-direction: row;
+
+          .download::after {
+            content: "Download for Windows";
+          }
+
+          .open {
+            display: block;
+          }
+        }
+      }
+    }
+  }
+}

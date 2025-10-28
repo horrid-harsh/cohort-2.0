@@ -1,0 +1,15 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  // min-height: 100vh;
+  width: 100%;
+  background-image: url("../assets/images/673df7fbe95a8e90a7571751_D-bg.png");
+  background-repeat: no-repeat;
+  background-size: cover; // makes it stretch to fill
+  // background-position: top;
+}
