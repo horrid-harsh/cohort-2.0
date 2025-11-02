@@ -1,0 +1,180 @@
+section.view-10 {
+  background-image: url("../../assets/images/footer-bg.png");
+  background-size: cover;
+  position: relative;
+  z-index: 200;
+  padding-top: 5rem;
+     display: flex;
+    align-items: center;
+    justify-content: center;
+
+  .container {
+    padding: 2rem;
+    width: 100%;
+    max-width: 1750px;
+
+    .top {
+
+      .footer-title {
+        color: #ffffff80;
+        @include font-style(1rem, "abcg-regular");
+      }
+
+      .top-left {
+        @include flex(column, null, null);
+        @include font-style(1rem, "abcg-regular");
+        gap: 2rem;
+        color: white;
+
+        // Language dropdown section
+        .second {
+          @include flex(column, null, null);
+          gap: 1rem;
+
+          .wrapper {
+            position: relative;
+            max-width: 20rem;
+            width: 100%;
+
+            .select-btn {
+              @include flex(row, center, space-between);
+              @include select-btn(#5256B4, 0 1.8rem);
+              // height: 4rem;
+              // padding: 0 1.8rem;
+              // border-radius: 1rem;
+              // background: #5256B4;
+              // cursor: pointer;
+
+              // i {
+              //   font-size: 1rem;
+              // }
+            }
+
+            &.active {
+              .content {
+                display: block;
+              }
+            }
+
+            .content {
+              @include font-style(1rem, "abcg-regular");
+              @include dropdown-content(#5256B4);
+              position: absolute;
+              z-index: 1;
+              // width: 100%;
+              // display: none;
+              // padding: 1rem;
+              // margin-top: 0.6rem;
+              // border-radius: 1.5rem;
+              // background: #5256B4;
+              // color: white;
+
+              .options {
+                @include custom-scrollbar;
+                height: 13.5rem;
+                overflow-y: auto;
+
+                // &::-webkit-scrollbar-track {
+                //   border-radius: 1.8rem;
+                //   // background: #f1f1f1;
+                // }
+
+                li {
+                  height: 3.125rem;
+                  padding: 0 0.8rem;
+                  font-size: 1rem;
+                  border-radius: inherit;
+                }
+              }
+            }
+          }
+        }
+
+        .third {
+          @include flex(column, null, null);
+          margin-top: 4rem;
+          gap: 1rem;
+
+          .icons {
+            @include flex(row, null, null);
+            gap: 1.8rem;
+            cursor: pointer;
+
+            i {
+              font-size: clamp(1rem, 5vw, 2rem);
+            }
+          }
+        }
+      }
+
+      .top-right {
+        margin-top: 5rem;
+
+        .footerDropdown {
+          position: relative;
+          width: 100%;
+
+          span {
+            @include font-style(1.2rem, "abcg-regular");
+            font-weight: 500;
+            color: #FFFFFF;
+          }
+
+          .select-btn {
+            @include flex(row, center, space-between);
+            @include select-btn($padding: 2rem 0, $radius: 0);
+            height: 4rem;
+            border-bottom: 2px solid #ffffff1a;
+
+            // &:nth-child(3) .select-btn {
+            //   border-bottom: none;
+            // }
+            // display: flex;
+            // align-items: center;
+            // justify-content: space-between;
+            // padding: 1.8rem 0;
+            // background: transparent;
+            // cursor: pointer;
+
+          }
+
+          &.active {
+            .content {
+              display: block;
+            }
+          }
+
+          .content {
+            @include font-style(1rem, "abcg-regular");
+            @include dropdown-content($extra-border: 2px solid #ffffff1a);
+            border-radius: 0;
+            margin-top: 0;
+            padding: 0;
+
+            .options {
+              li {
+                width: fit-content;
+                height: 3.125rem;
+                font-size: 0.8rem;
+                list-style: none;
+                cursor: pointer;
+              }
+            }
+          }
+
+          &:last-child .select-btn {
+            border-bottom: none;
+          }
+        }
+      }
+    }
+
+    .bottom {
+      padding-top: 5rem;
+
+      img {
+        width: 100%;
+      }
+    }
+  }
+}

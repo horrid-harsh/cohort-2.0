@@ -15,7 +15,7 @@
 html,
 body {
   width: 100%;
-  background-image: url("../assets/images/673df7fbe95a8e90a7571751_D-bg.png");
+  background-image: url("../assets/images/main-bg.png");
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -24,6 +24,7 @@ header {
   width: 100%;
   padding: 1.5rem;
   position: relative;
+  z-index: 300;
 }
 header nav {
   display: flex;
@@ -32,11 +33,22 @@ header nav {
   justify-content: center;
   position: relative;
 }
+header nav::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4rem;
+  background-color: #5865f2;
+  z-index: 100;
+}
 header nav img {
   position: fixed;
   top: 2.5%;
   left: 5%;
   z-index: 200;
+  cursor: pointer;
 }
 header nav .buttons {
   display: flex;
@@ -57,6 +69,7 @@ header nav .buttons .login {
   border-radius: 0.5rem;
   padding: 1rem;
   font-size: 1.125rem;
+  font-size: clamp(1rem, 3vw, 1.125rem);
   font-family: "abcg-regular", sans-serif;
   color: #23272a;
   background-color: #fff;
@@ -94,14 +107,16 @@ header nav .nav-links {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  max-width: 20px;
   display: none;
   list-style: none;
   font-size: clamp(0.5rem, 1vw, 1rem);
   font-family: "abcg-regular", sans-serif;
-  font-weight: bold;
+  font-weight: 600;
 }
-header nav .nav-links li a {
+header nav .nav-links > li {
+  position: relative;
+}
+header nav .nav-links > li > a {
   display: inline-flex;
   align-items: center;
   padding: 1rem;
@@ -110,11 +125,83 @@ header nav .nav-links li a {
   color: white;
   transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
-header nav .nav-links li a:hover {
+header nav .nav-links > li > a:hover {
   background-color: #5865f2;
 }
-header nav .nav-links li a .ri-arrow-down-s-line {
+header nav .nav-links > li > a .ri-arrow-down-s-line {
   opacity: 0.5;
+  margin-left: 0.3rem;
+  transition: transform 0.3s ease;
+}
+header nav .nav-links > li .dropdown {
+  display: none;
+  position: absolute;
+  top: 110%;
+  left: 50%;
+  width: -moz-fit-content;
+  width: fit-content;
+  min-width: 220px;
+  padding: 2rem 2rem;
+  transform: translateX(-50%);
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+  white-space: nowrap;
+  background: #5865f2;
+}
+header nav .nav-links > li .dropdown::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 0;
+  width: 100%;
+  height: 10px;
+  background: transparent;
+}
+header nav .nav-links > li .dropdown .dropdown-section {
+  margin-bottom: 1rem;
+}
+header nav .nav-links > li .dropdown .dropdown-section span {
+  display: block;
+  font-weight: 600;
+  color: white;
+  opacity: 0.5;
+  margin-bottom: 0.4rem;
+  font-size: inherit;
+}
+header nav .nav-links > li .dropdown .dropdown-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+header nav .nav-links > li .dropdown .dropdown-section ul li {
+  margin: 0.3rem 0;
+}
+header nav .nav-links > li .dropdown .dropdown-section ul li a {
+  padding-top: 0.5rem;
+  display: block;
+  text-decoration: none;
+  color: white;
+  border-radius: 0.4rem;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+header nav .nav-links > li .dropdown .dropdown-section:last-child {
+  margin-bottom: 0;
+}
+header nav .nav-links > li.has-dropdown:hover .dropdown {
+  display: block;
+}
+header nav .nav-links > li.has-dropdown:hover #dd-1 {
+  display: flex;
+  gap: 3rem;
+}
+header nav .nav-links > li.has-dropdown:hover #dd-5 {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+header nav .nav-links > li.has-dropdown:hover .ri-arrow-down-s-line::before {
+  content: "\ea78";
 }
 
 section.view-1 {
@@ -133,6 +220,7 @@ section.view-1 .container {
   width: 100%;
   max-width: 1350px;
   padding: 2rem;
+  gap: 3rem;
 }
 section.view-1 .container .top {
   display: flex;
@@ -149,6 +237,7 @@ section.view-1 .container .top .media .base {
   display: block;
   width: 100%;
   max-width: 750px;
+  margin-left: 2rem;
 }
 section.view-1 .container .top .media .girl {
   position: absolute;
@@ -171,20 +260,20 @@ section.view-1 .container .top .text {
   text-align: center;
 }
 section.view-1 .container .top .text h1 {
+  font-family: "abcg-bold", sans-serif;
+  font-size: 1.68rem;
+  font-weight: normal;
   margin-bottom: 1rem;
   max-width: 20rem;
   text-transform: uppercase;
   line-height: 1;
-  font-family: "abcg-bold", sans-serif;
-  font-size: 1.68rem;
-  font-weight: normal;
   color: white;
 }
 section.view-1 .container .top .text p {
-  max-width: 20rem;
   font-family: "abcg-regular", sans-serif;
   font-size: 1rem;
   font-weight: normal;
+  max-width: 20rem;
   color: white;
 }
 section.view-1 .container .bottom {
@@ -202,6 +291,7 @@ section.view-1 .container .bottom .download {
   border-radius: 0.5rem;
   padding: 1rem;
   font-size: 1.125rem;
+  font-size: clamp(1rem, 3vw, 1.125rem);
   font-family: "abcg-regular", sans-serif;
   color: #23272a;
   background-color: #fff;
@@ -210,6 +300,7 @@ section.view-1 .container .bottom .download {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
+  white-space: nowrap;
 }
 section.view-1 .container .bottom .download span {
   display: none;
@@ -227,6 +318,7 @@ section.view-1 .container .bottom .open {
   border-radius: 0.5rem;
   padding: 1rem;
   font-size: 1.125rem;
+  font-size: clamp(1rem, 3vw, 1.125rem);
   font-family: "abcg-regular", sans-serif;
   color: #fff;
   background-color: #5662EC;
@@ -234,6 +326,7 @@ section.view-1 .container .bottom .open {
   position: relative;
   overflow: hidden;
   z-index: 1;
+  white-space: nowrap;
 }
 section.view-1 .container .bottom .open:after {
   content: "";
@@ -498,19 +591,23 @@ section.view-4 .container .blur .video video {
      object-position: center;
 }
 
+section.view-5 {
+  display: none;
+}
 section.view-5 .carousel {
   background-image: url("/assets/images/marquee.webp");
   background-size: cover;
   width: 100%;
   display: flex;
   overflow-x: auto;
-  margin-top: 15rem;
+  margin-top: 11rem;
 }
 section.view-5 .carousel::-webkit-scrollbar {
   display: none;
 }
 section.view-5 .carousel .group {
   display: flex;
+  flex-direction: row;
   align-items: center;
   gap: 1em;
   animation: spin 35s infinite linear;
@@ -541,20 +638,549 @@ section.view-5 .carousel .group .card {
     translate: -100%;
   }
 }
+section.view-6 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 2rem;
+  padding-top: 3rem;
+}
+section.view-6 .container {
+  position: relative;
+  max-width: 1300px;
+  width: 100%;
+  padding-top: 1rem;
+}
+section.view-6 .container .blur {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  position: relative;
+  width: 100%;
+  padding: 1.5rem;
+  gap: 1.5rem;
+  border-radius: 3rem;
+  overflow: hidden;
+}
+section.view-6 .container .blur::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("../../assets/images/card4.png");
+  background-size: cover;
+  background-position: center;
+  -webkit-backdrop-filter: blur(6px);
+          backdrop-filter: blur(6px);
+  opacity: 1;
+}
+section.view-6 .container .blur .text {
+  margin: 0 4vw;
+  color: white;
+  z-index: 1;
+}
+section.view-6 .container .blur .text h2 {
+  font-family: "abcg-bold", sans-serif;
+  font-size: 1.6875rem;
+  font-weight: normal;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+section.view-6 .container .blur .text p {
+  font-family: "abcg-regular", sans-serif;
+  font-size: 1rem;
+  font-weight: normal;
+}
+section.view-6 .container .blur .video {
+  width: 100%;
+  border-radius: inherit;
+  overflow: hidden;
+  z-index: 1;
+}
+section.view-6 .container .blur .video video {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center;
+     object-position: center;
+}
+
+section.view-7 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 2rem;
+  padding-top: 3rem;
+}
+section.view-7 .container {
+  position: relative;
+  max-width: 1300px;
+  width: 100%;
+  padding-top: 1rem;
+}
+section.view-7 .container .men {
+  display: none;
+  position: absolute;
+  top: -28%;
+  right: 10%;
+}
+section.view-7 .container .men img {
+  width: auto;
+  height: 28rem;
+}
+section.view-7 .container .woman {
+  display: none;
+  position: absolute;
+  top: -21%;
+  right: 30%;
+  z-index: 1;
+}
+section.view-7 .container .woman img {
+  width: 15rem;
+  height: auto;
+}
+section.view-7 .container .onion {
+  display: none;
+  position: absolute;
+  bottom: -10%;
+  left: -5%;
+  z-index: 1;
+}
+section.view-7 .container .onion img {
+  width: 15rem;
+  height: auto;
+}
+section.view-7 .container .blur {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  position: relative;
+  width: 100%;
+  padding: 1.5rem;
+  border-radius: 3rem;
+  overflow: hidden;
+}
+section.view-7 .container .blur::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("../../assets/images/card5.png");
+  background-size: cover;
+  background-position: center;
+  -webkit-backdrop-filter: blur(6px);
+          backdrop-filter: blur(6px);
+  opacity: 1;
+}
+section.view-7 .container .blur .text {
+  margin: 0 4vw;
+  color: white;
+  z-index: 1;
+}
+section.view-7 .container .blur .text h2 {
+  font-family: "abcg-bold", sans-serif;
+  font-size: 1.6875rem;
+  font-weight: normal;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+section.view-7 .container .blur .text p {
+  font-family: "abcg-regular", sans-serif;
+  font-size: 1rem;
+  font-weight: normal;
+}
+section.view-7 .container .blur .video {
+  width: 100%;
+  border-radius: inherit;
+  overflow: hidden;
+  z-index: 1;
+}
+section.view-7 .container .blur .video video {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center;
+     object-position: center;
+}
+
+section.view-8 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 2rem;
+  padding-top: 3rem;
+}
+section.view-8 .container {
+  position: relative;
+  max-width: 1300px;
+  width: 100%;
+  padding-top: 1rem;
+}
+section.view-8 .container .blur {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  position: relative;
+  width: 100%;
+  padding: 1.5rem;
+  gap: 1.5rem;
+  border-radius: 3rem;
+  overflow: hidden;
+}
+section.view-8 .container .blur::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("../../assets/images/card6.png");
+  background-size: cover;
+  background-position: center;
+  -webkit-backdrop-filter: blur(6px);
+          backdrop-filter: blur(6px);
+  opacity: 1;
+}
+section.view-8 .container .blur .text {
+  margin: 0 4vw;
+  color: white;
+  z-index: 1;
+}
+section.view-8 .container .blur .text h2 {
+  font-family: "abcg-bold", sans-serif;
+  font-size: 1.6875rem;
+  font-weight: normal;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+section.view-8 .container .blur .text p {
+  font-family: "abcg-regular", sans-serif;
+  font-size: 1rem;
+  font-weight: normal;
+}
+section.view-8 .container .blur .video {
+  width: 100%;
+  border-radius: inherit;
+  overflow: hidden;
+  z-index: 1;
+}
+section.view-8 .container .blur .video video {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center;
+     object-position: center;
+}
+
+section.view-9 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 15rem;
+}
+section.view-9 .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 3rem;
+  max-width: 1300px;
+}
+section.view-9 .container .upper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+}
+section.view-9 .container .upper h2 {
+  font-family: "abcg-bold", sans-serif;
+  font-size: 1.6875rem;
+  font-weight: normal;
+  color: white;
+  text-align: center;
+  text-transform: uppercase;
+}
+section.view-9 .container .upper button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  font-size: 1.125rem;
+  font-size: clamp(1rem, 3vw, 1.125rem);
+  font-family: "abcg-regular", sans-serif;
+  color: #23272a;
+  background-color: #fff;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+}
+section.view-9 .container .upper button span {
+  display: none;
+}
+section.view-9 .container .upper button::after {
+  content: "Download from Google Play";
+}
+section.view-9 .container .upper button:hover {
+  background-color: #C7C8CE;
+}
+section.view-9 .container .lower {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  height: 400px;
+  width: 100%;
+}
+section.view-9 .container .lower .group {
+  position: absolute;
+  bottom: -3%;
+  display: none;
+  width: auto;
+  max-width: 100%;
+  max-height: 35rem;
+  z-index: 201;
+}
+section.view-9 .container .lower .solo {
+  position: absolute;
+  bottom: -16%;
+  width: auto;
+  max-width: 100%;
+  height: 28rem;
+  -o-object-fit: cover;
+     object-fit: cover;
+  z-index: 201;
+}
+
+section.view-10 {
+  background-image: url("../../assets/images/footer-bg.png");
+  background-size: cover;
+  position: relative;
+  z-index: 200;
+  padding-top: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+section.view-10 .container {
+  padding: 2rem;
+  width: 100%;
+  max-width: 1750px;
+}
+section.view-10 .container .top .footer-title {
+  color: rgba(255, 255, 255, 0.5019607843);
+  font-family: "abcg-regular", sans-serif;
+  font-size: 1rem;
+  font-weight: normal;
+}
+section.view-10 .container .top .top-left {
+  display: flex;
+  flex-direction: column;
+  font-family: "abcg-regular", sans-serif;
+  font-size: 1rem;
+  font-weight: normal;
+  gap: 2rem;
+  color: white;
+}
+section.view-10 .container .top .top-left .second {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+section.view-10 .container .top .top-left .second .wrapper {
+  position: relative;
+  max-width: 20rem;
+  width: 100%;
+}
+section.view-10 .container .top .top-left .second .wrapper .select-btn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  height: 4rem;
+  padding: 0 1.8rem;
+  background: #5256B4;
+  cursor: pointer;
+  border: none;
+  border-radius: 1rem;
+}
+section.view-10 .container .top .top-left .second .wrapper .select-btn i {
+  font-size: 1rem;
+  color: white;
+}
+section.view-10 .container .top .top-left .second .wrapper.active .content {
+  display: block;
+}
+section.view-10 .container .top .top-left .second .wrapper .content {
+  font-family: "abcg-regular", sans-serif;
+  font-size: 1rem;
+  font-weight: normal;
+  width: 100%;
+  display: none;
+  padding: 1rem;
+  margin-top: 0.6rem;
+  border-radius: 1.5rem;
+  background: #5256B4;
+  color: white;
+  border-bottom: none;
+  position: absolute;
+  z-index: 1;
+}
+section.view-10 .container .top .top-left .second .wrapper .content .options {
+  height: 13.5rem;
+  overflow-y: auto;
+}
+section.view-10 .container .top .top-left .second .wrapper .content .options::-webkit-scrollbar {
+  width: 7px;
+}
+section.view-10 .container .top .top-left .second .wrapper .content .options::-webkit-scrollbar-thumb {
+  border-radius: 1.8rem;
+  background: white;
+}
+section.view-10 .container .top .top-left .second .wrapper .content .options li {
+  height: 3.125rem;
+  padding: 0 0.8rem;
+  font-size: 1rem;
+  border-radius: inherit;
+}
+section.view-10 .container .top .top-left .third {
+  display: flex;
+  flex-direction: column;
+  margin-top: 4rem;
+  gap: 1rem;
+}
+section.view-10 .container .top .top-left .third .icons {
+  display: flex;
+  flex-direction: row;
+  gap: 1.8rem;
+  cursor: pointer;
+}
+section.view-10 .container .top .top-left .third .icons i {
+  font-size: clamp(1rem, 5vw, 2rem);
+}
+section.view-10 .container .top .top-right {
+  margin-top: 5rem;
+}
+section.view-10 .container .top .top-right .footerDropdown {
+  position: relative;
+  width: 100%;
+}
+section.view-10 .container .top .top-right .footerDropdown span {
+  font-family: "abcg-regular", sans-serif;
+  font-size: 1.2rem;
+  font-weight: normal;
+  font-weight: 500;
+  color: #FFFFFF;
+}
+section.view-10 .container .top .top-right .footerDropdown .select-btn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  height: 4rem;
+  padding: 2rem 0;
+  background: transparent;
+  cursor: pointer;
+  border: none;
+  border-radius: 0;
+  height: 4rem;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1019607843);
+}
+section.view-10 .container .top .top-right .footerDropdown .select-btn i {
+  font-size: 1rem;
+  color: white;
+}
+section.view-10 .container .top .top-right .footerDropdown.active .content {
+  display: block;
+}
+section.view-10 .container .top .top-right .footerDropdown .content {
+  font-family: "abcg-regular", sans-serif;
+  font-size: 1rem;
+  font-weight: normal;
+  width: 100%;
+  display: none;
+  padding: 1rem;
+  margin-top: 0.6rem;
+  border-radius: 1.5rem;
+  background: transparent;
+  color: white;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1019607843);
+  border-radius: 0;
+  margin-top: 0;
+  padding: 0;
+}
+section.view-10 .container .top .top-right .footerDropdown .content .options li {
+  width: -moz-fit-content;
+  width: fit-content;
+  height: 3.125rem;
+  font-size: 0.8rem;
+  list-style: none;
+  cursor: pointer;
+}
+section.view-10 .container .top .top-right .footerDropdown:last-child .select-btn {
+  border-bottom: none;
+}
+section.view-10 .container .bottom {
+  padding-top: 5rem;
+}
+section.view-10 .container .bottom img {
+  width: 100%;
+}
+
 @media (min-width: 476px) {
+  header nav::before {
+    display: none;
+  }
   header nav .buttons .login {
     display: block;
   }
 }
 @media (min-width: 770px) {
+  header {
+    z-index: 200;
+  }
+  header nav img {
+    top: 3.5rem;
+    left: 2.8rem;
+  }
+  header nav .buttons {
+    top: 3rem;
+    right: 2.8rem;
+  }
   main section.view-2,
   main section.view-3,
-  main section.view-4 {
+  main section.view-4,
+  main section.view-6,
+  main section.view-7,
+  main section.view-8 {
     padding-top: 12rem;
   }
   main section.view-2 .container .blur,
   main section.view-3 .container .blur,
-  main section.view-4 .container .blur {
+  main section.view-4 .container .blur,
+  main section.view-6 .container .blur,
+  main section.view-7 .container .blur,
+  main section.view-8 .container .blur {
     height: 38rem;
     gap: 4rem;
     border-radius: 7rem;
@@ -565,7 +1191,10 @@ section.view-5 .carousel .group .card {
   }
   main section.view-2 .container .blur .text,
   main section.view-3 .container .blur .text,
-  main section.view-4 .container .blur .text {
+  main section.view-4 .container .blur .text,
+  main section.view-6 .container .blur .text,
+  main section.view-7 .container .blur .text,
+  main section.view-8 .container .blur .text {
     margin: 0;
     width: 40%;
     height: 100%;
@@ -576,20 +1205,29 @@ section.view-5 .carousel .group .card {
   }
   main section.view-2 .container .blur .text h2,
   main section.view-3 .container .blur .text h2,
-  main section.view-4 .container .blur .text h2 {
+  main section.view-4 .container .blur .text h2,
+  main section.view-6 .container .blur .text h2,
+  main section.view-7 .container .blur .text h2,
+  main section.view-8 .container .blur .text h2 {
     line-height: 0.9;
     font-size: 2.5rem;
     margin: 0;
   }
   main section.view-2 .container .blur .text p,
   main section.view-3 .container .blur .text p,
-  main section.view-4 .container .blur .text p {
+  main section.view-4 .container .blur .text p,
+  main section.view-6 .container .blur .text p,
+  main section.view-7 .container .blur .text p,
+  main section.view-8 .container .blur .text p {
     max-width: 22rem;
     font-size: 1.25rem;
   }
   main section.view-2 .container .blur .video,
   main section.view-3 .container .blur .video,
-  main section.view-4 .container .blur .video {
+  main section.view-4 .container .blur .video,
+  main section.view-6 .container .blur .video,
+  main section.view-7 .container .blur .video,
+  main section.view-8 .container .blur .video {
     width: 60%;
     height: 100%;
   }
@@ -604,7 +1242,9 @@ section.view-5 .carousel .group .card {
   main section.view-2 .container .blur {
     flex-direction: row-reverse;
   }
-  main section.view-3 .container .blur {
+  main section.view-3 .container .blur,
+  main section.view-6 .container .blur,
+  main section.view-8 .container .blur {
     flex-direction: row;
     padding: 2rem 2rem 2rem 3rem;
   }
@@ -614,36 +1254,58 @@ section.view-5 .carousel .group .card {
   main section.view-4 .container .blur {
     flex-direction: row-reverse;
   }
+  main section.view-5 {
+    display: block;
+  }
+  main section.view-7 .container .men,
+  main section.view-7 .container .woman,
+  main section.view-7 .container .onion {
+    display: block;
+  }
+  main section.view-7 .container .blur {
+    flex-direction: row-reverse;
+  }
+  main section.view-9 .container {
+    gap: 8rem;
+  }
+  main section.view-9 .container .upper h2 {
+    font-size: 3.5rem;
+  }
+  main section.view-9 .container .lower {
+    height: 600px;
+  }
+  main section.view-9 .container .lower .group {
+    display: block;
+  }
+  main section.view-9 .container .lower .solo {
+    bottom: 0;
+    /* anchor to bottom edge */
+    left: 50%;
+    /* optional: center horizontally */
+    transform: translate(-50%, 14.5%);
+    /* moves image down by 25% of its height */
+    height: 35vw;
+    max-height: 25rem;
+    /* responsive height */
+    width: auto;
+    /* smooth resizing */
+  }
 }
 @media (min-width: 1080px) {
-  header nav img {
-    top: 3.5rem;
-    left: 2.8rem;
-  }
-  header nav .nav-links {
-    display: flex;
-    padding-top: 1.3rem;
-  }
-  header nav .buttons {
-    top: 3rem;
-    right: 2.8rem;
-  }
-  header nav .buttons .hamburger {
-    display: none;
-  }
   main section.view-1 {
     margin-top: 0;
   }
   main section.view-1 .container {
-    padding: 0 3rem 0 3rem;
-    height: auto;
     display: flex;
     flex-direction: column;
+    padding: 0 3rem 0 3rem;
+    height: auto;
   }
   main section.view-1 .container .top {
+    display: flex;
     flex-direction: row-reverse;
-    justify-content: space-between;
     align-items: start;
+    justify-content: space-between;
   }
   main section.view-1 .container .top .media img {
     transform: scale(0.9);
@@ -655,7 +1317,7 @@ section.view-5 .carousel .group .card {
   main section.view-1 .container .top .text h1 {
     text-align: left;
     font-size: 4rem;
-    max-width: 50rem;
+    max-width: 40rem;
     line-height: 0.9;
   }
   main section.view-1 .container .top .text p {
@@ -671,6 +1333,78 @@ section.view-5 .carousel .group .card {
   }
   main section.view-1 .container .bottom .open {
     display: block;
+  }
+  main section.view-10 .container .top {
+    display: flex;
+    justify-content: space-between;
+  }
+  main section.view-10 .container .top .top-left .third {
+    margin-top: 0;
+  }
+  main section.view-10 .container .top .top-right {
+    margin-top: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 5rem;
+  }
+  main section.view-10 .container .top .top-right .footer-title {
+    display: none;
+  }
+  main section.view-10 .container .top .top-right .footerDropdown {
+    width: -moz-fit-content;
+    width: fit-content;
+  }
+  main section.view-10 .container .top .top-right .footerDropdown .select-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: default;
+    border: none;
+    background: none;
+    padding: 0;
+    height: auto;
+  }
+  main section.view-10 .container .top .top-right .footerDropdown .select-btn span {
+    display: inline-block;
+    color: rgba(255, 255, 255, 0.5019607843);
+    font-size: 1.1rem;
+    font-weight: 100;
+    margin-bottom: 1rem;
+  }
+  main section.view-10 .container .top .top-right .footerDropdown .select-btn i {
+    display: none;
+  }
+  main section.view-10 .container .top .top-right .footerDropdown .content {
+    display: block !important;
+    position: static;
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin-top: 0;
+  }
+  main section.view-10 .container .top .top-right .footerDropdown .content .options {
+    display: flex;
+    flex-direction: column;
+  }
+  main section.view-10 .container .top .top-right .footerDropdown .content .options li {
+    color: white;
+    font-size: 0.9rem;
+    cursor: pointer;
+    list-style: none;
+    height: 2rem;
+  }
+  main section.view-10 .container .top .top-right .footerDropdown .content .options li:hover {
+    text-decoration: underline;
+  }
+}
+@media (min-width: 1130px) {
+  header nav .nav-links {
+    display: flex;
+    padding-top: 1.3rem;
+  }
+  header nav .buttons .hamburger {
+    display: none;
   }
 }
 main {

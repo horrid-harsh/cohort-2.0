@@ -2,11 +2,24 @@ header {
   width: 100%;
   padding: 1.5rem;
   position: relative;
-  
+  z-index: 300;
+
   nav {
     // Use our flex mixin
     @include flex(row, first baseline, center);
     position: relative;
+
+    // 🔹 Fixed background bar
+    &::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4rem; // adjust to your header height
+      background-color: #5865f2; // translucent dark bg
+      z-index: 100; // behind logo & buttons
+    }
 
     // === Fixed logo ===
     img {
@@ -14,6 +27,7 @@ header {
       top: 2.5%;
       left: 5%;
       z-index: 200;
+      cursor: pointer;
     }
 
     // === Fixed buttons ===
@@ -59,28 +73,122 @@ header {
     // === Scrollable nav links ===
     .nav-links {
       @include flex(row, center, center);
-      max-width: 20px;
       display: none;
       list-style: none;
       font-size: clamp(0.5rem, 1vw, 1rem);
       font-family: "abcg-regular", sans-serif;
-      font-weight: bold;
+      font-weight: 600;
 
-      li a {
-        display: inline-flex;
-        align-items: center;
-        padding: 1rem;
-        border-radius: 0.8rem;
-        text-decoration: none;
-        color: white;
-        @include smooth-transition(background-color, 0.3s);
+      // 🟢 Top-level navigation links
+      > li {
+        
+        position: relative; // for dropdown positioning
 
-        &:hover {
-          background-color: #5865f2;
+        > a {
+          display: inline-flex;
+          align-items: center;
+          padding: 1rem;
+          border-radius: 0.8rem;
+          text-decoration: none;
+          color: white;
+          @include smooth-transition(background-color, 0.3s);
+
+          &:hover {
+            background-color: #5865f2;
+          }
+
+          .ri-arrow-down-s-line {
+            opacity: 0.5;
+            margin-left: 0.3rem;
+            transition: transform 0.3s ease;
+          }
         }
 
-        .ri-arrow-down-s-line {
-          opacity: 0.5;
+        // 🟡 Dropdown
+        .dropdown {
+          display: none;
+          // align-items: center;
+          // justify-content: center;
+          position: absolute;
+          top: 110%;
+          left: 50%;
+          width: fit-content;
+          min-width: 220px;
+          padding: 2rem 2rem;
+          transform: translateX(-50%);
+          border-radius: 1.5rem;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+          z-index: 10;
+          white-space: nowrap;
+          background: #5865f2;
+
+          // invisible hover bridge
+          &::before {
+            content: "";
+            position: absolute;
+            top: -10px; // extend upward into the gap
+            left: 0;
+            width: 100%;
+            height: 10px; // how big the gap is
+            background: transparent;
+          }
+
+          .dropdown-section {
+            margin-bottom: 1rem;
+
+            span {
+              display: block;
+              font-weight: 600;
+              color: white;
+              opacity: 0.5;
+              margin-bottom: 0.4rem;
+              font-size: inherit; // same as links
+            }
+
+            ul {
+              list-style: none;
+              padding: 0;
+              margin: 0;
+
+              li {
+                margin: 0.3rem 0;
+
+                a {
+                  padding-top: 0.5rem;
+                  display: block;
+                  text-decoration: none;
+                  color: white;
+                  border-radius: 0.4rem;
+                  transition: background-color 0.2s ease, color 0.2s ease;
+                }
+              }
+            }
+
+            &:last-child {
+              margin-bottom: 0;
+            }
+          }
+        }
+
+        // Show dropdown on hover
+        &.has-dropdown:hover .dropdown {
+          display: block;
+        }
+
+        &.has-dropdown:hover #dd-1 {
+          display: flex;
+          gap: 3rem;
+        }
+
+        &.has-dropdown:hover #dd-5 {
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+        }
+
+        // Change arrow direction on hover
+        &.has-dropdown:hover .ri-arrow-down-s-line::before {
+          content: "\ea78"; // ri-arrow-up-s-line
         }
       }
     }

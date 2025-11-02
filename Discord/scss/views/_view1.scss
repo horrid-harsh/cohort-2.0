@@ -8,6 +8,7 @@ section.view-1 {
     width: 100%;
     max-width: 1350px;
     padding: 2rem;
+    gap: 3rem;
 
     .top {
       @include flex(column);
@@ -21,6 +22,7 @@ section.view-1 {
           display: block;
           width: 100%;
           max-width: 750px;
+          margin-left: 2rem;
         }
 
         .girl {
@@ -46,17 +48,17 @@ section.view-1 {
         text-align: center;
 
         h1 {
+          @include font-style(1.68rem, "abcg-bold");
           margin-bottom: 1rem;
           max-width: 20rem;
           text-transform: uppercase;
           line-height: 1;
-          @include font-style(1.68rem, "abcg-bold");
           color: white;
         }
 
         p {
-          max-width: 20rem;
           @include font-style(1rem, "abcg-regular");
+          max-width: 20rem;
           color: white;
         }
       }
@@ -72,6 +74,7 @@ section.view-1 {
         display: inline-flex;
         align-items: center;
         gap: 0.5rem;
+        white-space: nowrap;
 
         span {
           display: none;
@@ -91,6 +94,7 @@ section.view-1 {
         position: relative;
         overflow: hidden;
         z-index: 1;
+        white-space: nowrap;
 
         &:after {
           @include gradient-shadow(#1f1d5d);

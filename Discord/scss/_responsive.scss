@@ -1,6 +1,10 @@
 @media (min-width: 476px) {
   header {
     nav {
+      &::before {
+        display: none;
+      }
+
       .buttons {
         .login {
           display: block;
@@ -11,11 +15,30 @@
 }
 
 @media (min-width: 770px) {
+
+  header {
+    z-index: 200;
+    nav {
+      img {
+        top: 3.5rem;
+        left: 2.8rem;
+      }
+
+      .buttons {
+        top: 3rem;
+        right: 2.8rem;
+      }
+    }
+  }
+
   main {
     // 🔹 Common layout for view-2, view-3, and view-4
     section.view-2,
     section.view-3,
-    section.view-4 {
+    section.view-4,
+    section.view-6,
+    section.view-7,
+    section.view-8 {
       padding-top: 12rem;
 
       .container {
@@ -76,7 +99,9 @@
       }
     }
 
-    section.view-3 {
+    section.view-3,
+    section.view-6,
+    section.view-8 {
       .container {
         .blur {
           flex-direction: row;
@@ -96,51 +121,80 @@
         }
       }
     }
-  }
-}
 
+    section.view-5 {
+      display: block;
+    }
 
+    section.view-7 {
+      .container {
+        .men,
+        .woman,
+        .onion {
+          display: block;
+        }
 
-@media (min-width: 1080px) {
-  header {
-    nav {
-      img {
-        top: 3.5rem;
-        left: 2.8rem;
+        .blur {
+          flex-direction: row-reverse;
+        }
       }
+    }
 
-      .nav-links {
-        display: flex;
-        padding-top: 1.3rem;
-      }
+    section.view-9 {
+      .container {
+        gap: 8rem;
 
-      .buttons {
-        top: 3rem;
-        right: 2.8rem;
+        .upper {
+          h2 {
+            font-size: 3.5rem;
+          }
+        }
 
-        .hamburger {
-          display: none;
+        .lower {
+          height: 600px;
+          // background-color: red;
+
+          .group {
+            display: block;
+          }
+
+          .solo {
+            // position: absolute;
+            bottom: 0;
+            /* anchor to bottom edge */
+            left: 50%;
+            /* optional: center horizontally */
+            transform: translate(-50%, 14.5%);
+            /* moves image down by 25% of its height */
+
+            height: 35vw;
+            max-height: 25rem;
+            /* responsive height */
+            width: auto;
+
+            // transition: height 0.3s ease;
+            /* smooth resizing */
+          }
         }
       }
     }
   }
+}
+
+@media (min-width: 1080px) {
 
   main {
     section.view-1 {
       margin-top: 0;
 
       .container {
+        @include flex(column, null, null);
         padding: 0 3rem 0 3rem;
-        // background-color: red;
         height: auto;
-        display: flex;
-        flex-direction: column;
-
+   
         .top {
-          flex-direction: row-reverse;
-          justify-content: space-between;
-          align-items: start;
-
+          @include flex(row-reverse, start, space-between);
+         
           .media {
             img {
               transform: scale(0.9);
@@ -154,9 +208,10 @@
             h1 {
               text-align: left;
               font-size: 4rem;
-              max-width: 50rem;
+              max-width: 40rem;
               line-height: 0.9;
             }
+
             p {
               max-width: 35rem;
               text-align: left;
@@ -175,6 +230,126 @@
           .open {
             display: block;
           }
+        }
+      }
+    }
+
+    // section.view-10 {
+    //   .container {
+
+    //     .top {
+    //     display: flex;
+    //     justify-content: space-between;
+
+    //     .top-right {
+    //       margin-top: 0rem;
+
+    //       @include flex(row, null, space-between);
+
+    //       .footer-title {
+    //         display: none;
+    //       }
+    //     }
+    //   }
+    //   }
+      
+    // }
+
+    section.view-10 {
+      .container {
+        .top {
+          display: flex;
+          justify-content: space-between;
+          
+          .top-left {
+            .third {
+              margin-top: 0;
+            }
+          }
+
+          .top-right {
+            margin-top: 0;
+            @include flex(row, null, space-between);
+            gap: 5rem;
+
+            .footer-title {
+              display: none;
+            }
+
+            // 🧾 Make dropdowns behave like static lists
+            .footerDropdown {
+
+              width: fit-content;
+              // Hide the dropdown button UI
+              .select-btn {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                cursor: default;
+                border: none;
+                background: none;
+                padding: 0;
+                height: auto;
+
+                span {
+                  display: inline-block;
+                  color: #ffffff80;
+                  font-size: 1.1rem;
+                  font-weight: 100;
+                  margin-bottom: 1rem;
+                }
+
+                i {
+                  display: none; // hide dropdown arrow
+                }
+
+              }
+
+              // Always show the list content
+              .content {
+                display: block !important;
+                position: static;
+                background: transparent;
+                border: none;
+                padding: 0;
+                margin-top: 0;
+
+                .options {
+                  display: flex;
+                  flex-direction: column;
+
+                  li {
+                    color: white;
+                    font-size: 0.9rem;
+                    cursor: pointer;
+                    list-style: none;
+                    height: 2rem;
+
+                    &:hover {
+                      text-decoration: underline;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 1130px) {
+  header {
+    nav {
+       .nav-links {
+        display: flex;
+        padding-top: 1.3rem;
+      }
+
+      .buttons {
+        .hamburger {
+          display: none;
         }
       }
     }

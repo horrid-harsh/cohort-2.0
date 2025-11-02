@@ -1,11 +1,12 @@
 section.view-5 {
+    display: none;
     .carousel {
         background-image: url("/assets/images/marquee.webp");
         background-size: cover;
         width: 100%;
         display: flex;
         overflow-x: auto;
-        margin-top: 15rem;
+        margin-top: 11rem;
 
         &::-webkit-scrollbar {
             display: none;
@@ -16,9 +17,10 @@ section.view-5 {
                 height: 40px;
                 width: auto;
             }
-            display: flex;
-            align-items: center;
-            gap: 1em;
+            @include flex(row, center, null, 1em);
+            // display: flex;
+            // align-items: center;
+            // gap: 1em;
             animation: spin 35s infinite linear;
             padding-right: 1em;
 
