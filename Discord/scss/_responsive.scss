@@ -32,7 +32,7 @@
   }
 
   main {
-    // 🔹 Common layout for view-2, view-3, and view-4
+    
     section.view-2,
     section.view-3,
     section.view-4,
@@ -191,34 +191,6 @@
         @include flex(column, null, null);
         padding: 0 3rem 0 3rem;
         height: auto;
-   
-        .top {
-          @include flex(row-reverse, start, space-between);
-         
-          .media {
-            img {
-              transform: scale(0.9);
-              height: 100%;
-            }
-          }
-
-          .text {
-            margin-top: 8rem;
-
-            h1 {
-              text-align: left;
-              font-size: 4rem;
-              max-width: 40rem;
-              line-height: 0.9;
-            }
-
-            p {
-              max-width: 35rem;
-              text-align: left;
-              font-size: 1.5rem;
-            }
-          }
-        }
 
         .bottom {
           flex-direction: row;
@@ -233,27 +205,6 @@
         }
       }
     }
-
-    // section.view-10 {
-    //   .container {
-
-    //     .top {
-    //     display: flex;
-    //     justify-content: space-between;
-
-    //     .top-right {
-    //       margin-top: 0rem;
-
-    //       @include flex(row, null, space-between);
-
-    //       .footer-title {
-    //         display: none;
-    //       }
-    //     }
-    //   }
-    //   }
-      
-    // }
 
     section.view-10 {
       .container {
@@ -323,7 +274,7 @@
                     font-size: 0.9rem;
                     cursor: pointer;
                     list-style: none;
-                    height: 2rem;
+                    // height: 2rem;
 
                     &:hover {
                       text-decoration: underline;
@@ -350,6 +301,40 @@
       .buttons {
         .hamburger {
           display: none;
+        }
+      }
+    }
+  }
+
+  main {
+    section.view-1 {
+      .container {
+        .top {
+          @include flex(row-reverse, start, space-between);
+         
+          .media {
+            img {
+              transform: scale(0.9);
+              height: 100%;
+            }
+          }
+
+          .text {
+            margin-top: 8rem;
+
+            h1 {
+              text-align: left;
+              font-size: 4rem;
+              max-width: 40rem;
+              line-height: 0.9;
+            }
+
+            p {
+              max-width: 35rem;
+              text-align: left;
+              font-size: 1.5rem;
+            }
+          }
         }
       }
     }

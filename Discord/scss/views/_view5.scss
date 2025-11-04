@@ -5,7 +5,9 @@ section.view-5 {
         background-size: cover;
         width: 100%;
         display: flex;
-        overflow-x: auto;
+        // overflow-x: auto;
+        overflow: hidden; 
+        pointer-events: none; 
         margin-top: 11rem;
 
         &::-webkit-scrollbar {
@@ -18,12 +20,8 @@ section.view-5 {
                 width: auto;
             }
             @include flex(row, center, null, 1em);
-            // display: flex;
-            // align-items: center;
-            // gap: 1em;
             animation: spin 35s infinite linear;
             padding-right: 1em;
-
 
             .card {
                 @include font-style(5.4em, "abcg-bold");

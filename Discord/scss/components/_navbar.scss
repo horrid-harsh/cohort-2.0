@@ -4,6 +4,38 @@ header {
   position: relative;
   z-index: 300;
 
+  .blur-overlay {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    backdrop-filter: blur(30px);
+    background: rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 50;
+  }
+
+  nav,
+  .nav-links,
+  .dropdown {
+    position: relative;
+    z-index: 100;
+  }
+
+  /* 🟢 WORKING SELECTORS */
+  nav:hover+.blur-overlay {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* but hide it unless hovering on a dropdown trigger */
+  nav:hover:not(:has(.has-dropdown:hover))+.blur-overlay {
+    opacity: 0;
+    pointer-events: none;
+  }
+
   nav {
     // Use our flex mixin
     @include flex(row, first baseline, center);
@@ -16,9 +48,9 @@ header {
       top: 0;
       left: 0;
       width: 100%;
-      height: 4rem; // adjust to your header height
-      background-color: #5865f2; // translucent dark bg
-      z-index: 100; // behind logo & buttons
+      height: 4rem; 
+      background-color: #5865f2;
+      // z-index: 100;
     }
 
     // === Fixed logo ===
@@ -80,11 +112,10 @@ header {
       font-weight: 600;
 
       // 🟢 Top-level navigation links
-      > li {
-        
+      >li {
         position: relative; // for dropdown positioning
 
-        > a {
+        >a {
           display: inline-flex;
           align-items: center;
           padding: 1rem;
@@ -107,8 +138,6 @@ header {
         // 🟡 Dropdown
         .dropdown {
           display: none;
-          // align-items: center;
-          // justify-content: center;
           position: absolute;
           top: 110%;
           left: 50%;
@@ -152,6 +181,7 @@ header {
 
               li {
                 margin: 0.3rem 0;
+                width: fit-content;
 
                 a {
                   padding-top: 0.5rem;
@@ -160,6 +190,7 @@ header {
                   color: white;
                   border-radius: 0.4rem;
                   transition: background-color 0.2s ease, color 0.2s ease;
+                  cursor: pointer;
                 }
               }
             }
@@ -193,4 +224,5 @@ header {
       }
     }
   }
+
 }

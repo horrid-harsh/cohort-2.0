@@ -72,6 +72,7 @@ section.view-7 {
                     @include font-style(1.6875rem, "abcg-bold");
                     text-transform: uppercase;
                     margin-bottom: 1rem;
+                    line-height: 0.9;
                 }
                 p {
                     @include font-style(1rem, "abcg-regular");

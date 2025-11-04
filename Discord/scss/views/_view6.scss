@@ -32,7 +32,7 @@ section.view-6 {
             }
 
             .text {
-                margin: 0 4vw;
+                margin: 0 2vw;
                 color: white;
                 z-index: 1; // ensures text is above pseudo-element
 
@@ -40,6 +40,7 @@ section.view-6 {
                     @include font-style(1.6875rem, "abcg-bold");
                     text-transform: uppercase;
                     margin-bottom: 1rem;
+                    line-height: 0.9;
                 }
                 p {
                     @include font-style(1rem, "abcg-regular");
