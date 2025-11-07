@@ -1086,7 +1086,6 @@ section.view-10 .container .top .top-left .second .wrapper .content {
 section.view-10 .container .top .top-left .second .wrapper .content .options {
   display: flex;
   flex-direction: column;
-  gap: 1.8rem;
   height: 13.5rem;
   overflow-y: auto;
 }
@@ -1098,9 +1097,13 @@ section.view-10 .container .top .top-left .second .wrapper .content .options::-w
   background: white;
 }
 section.view-10 .container .top .top-left .second .wrapper .content .options li {
-  padding: 0 0.8rem;
+  padding: 0.8rem 0.8rem;
   font-size: 1rem;
-  border-radius: inherit;
+  border-radius: 1rem;
+  cursor: pointer;
+}
+section.view-10 .container .top .top-left .second .wrapper .content .options li:hover {
+  background-color: rgba(255, 255, 255, 0.164);
 }
 section.view-10 .container .top .top-left .third {
   display: flex;
@@ -1354,6 +1357,9 @@ section.view-10 .container .bottom img {
   }
   main section.view-1 .container .bottom .open {
     display: block;
+  }
+  main section.view-9 .container .upper button::after {
+    content: "Download for Windows";
   }
   main section.view-10 .container .top {
     display: flex;

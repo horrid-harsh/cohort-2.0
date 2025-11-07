@@ -55,15 +55,20 @@ section.view-10 {
 
               .options {
                 @include custom-scrollbar;
-                @include flex(column, null, null, 1.8rem);
+                @include flex(column, null, null);
                 height: 13.5rem;
                 overflow-y: auto;
 
                 li {
                   // height: 3.125rem;
-                  padding: 0 0.8rem;
+                  padding: 0.8rem 0.8rem;
                   font-size: 1rem;
-                  border-radius: inherit;
+                  border-radius: 1rem;
+                  cursor: pointer;
+
+                  &:hover {
+                    background-color: rgba(255, 255, 255, 0.164);
+                  }
                 }
               }
             }

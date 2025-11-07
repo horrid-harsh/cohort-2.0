@@ -23,6 +23,7 @@ function updateName(selectedLang) {
     wrapper.classList.remove("active");
      // button ke span me clicked language ka naam daal do
   selectBtn.firstElementChild.innerText = selectedLang.innerText;
+  arrowIcon.classList.replace("fa-angle-up", "fa-angle-down");
 }
 
 selectBtn.addEventListener("click", () => {

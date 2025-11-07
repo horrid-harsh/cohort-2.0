@@ -206,6 +206,16 @@
       }
     }
 
+    section.view-9 {
+      .container {
+        .upper {
+          button::after {
+            content: "Download for Windows";
+          }
+        }
+      }
+    }
+
     section.view-10 {
       .container {
         .top {
