@@ -1,0 +1,66 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+main {
+  background-image: url("hero.jpg");
+  background-size: cover;
+  background-position: bottom;
+  height: 100%;
+  width: 100%;
+  background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+main .card {
+  position: relative;
+  height: 380px;
+  width: 300px;
+  padding: 1rem;
+  background-color: white;
+  border-radius: 1rem;
+}
+main .card .img-container {
+  position: relative;
+  overflow: hidden;
+}
+main .card .img-container img {
+  height: 300px;
+  width: 100%;
+  border-radius: 1rem;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: bottom;
+     object-position: bottom;
+  margin-bottom: 1rem;
+}
+main .card .img-container i {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  color: white;
+  font-size: 5rem;
+  opacity: 0;
+  background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROAAUQW3gG6f1biYPU6xIL0y5UFn_iXRUerA&s);
+  background-size: cover;
+  color: transparent;
+  border: red;
+  background-clip: text;
+  -webkit-background-clip: text;
+  transform: translate(-50%, -50%) scale(0);
+  transition: all cubic-bezier(0.65, 1, 0.77, 1.44) 0.4s;
+}
+main .card h1 {
+  text-align: center;
+  font-size: 1rem;
+}/*# sourceMappingURL=style.css.map */
