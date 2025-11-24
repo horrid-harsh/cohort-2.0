@@ -31,7 +31,7 @@ main .cursor {
   height: 80px;
   width: 80px;
   position: fixed;
-  transform: translate(-50%, -50%);
+  transform: translate(-20%, -20%);
   z-index: 1;
   pointer-events: none;
 }
@@ -135,7 +135,6 @@ main .piano .key-I {
   background-size: cover;
   background-position: left;
   background-color: #B116ED;
-  background-position: center;
 }
 main .piano .key-J {
   background-image: url("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/janet.webp");
@@ -143,24 +142,17 @@ main .piano .key-J {
   background-position: left;
   background-color: #EF4140;
 }
-main .piano .key-K {
-  background: url("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/kaze.webp"), linear-gradient(to bottom, #4A005D 0%, #FFD700 50%, #00FF7F 100%);
-  background-size: cover;
-  /* This makes the gradient blend with the image instead of hiding it */
-}
 main .piano .key-L {
   background-image: url("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/leon.webp");
   background-size: cover;
   background-position: left;
   background-color: #F8C820;
-  background-position: left;
 }
 main .piano .key-M {
   background-image: url("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/melodie.webp");
   background-size: cover;
   background-position: left;
   background-color: #EF4140;
-  background-position: left;
 }
 main .piano .key-N {
   background-image: url("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/nita.webp");
@@ -172,7 +164,7 @@ main .piano .key-O {
   background-image: url("https://i.pinimg.com/736x/74/84/52/7484525f8c02c7cbb86881d72e7e6eac.jpg");
   background-size: cover;
   background-position: left;
-  background-color: none;
+  background-color: transparent;
 }
 main .piano .key-P {
   background-image: url("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/piper.webp");
@@ -184,8 +176,7 @@ main .piano .key-Q {
   background-image: url("https://i.pinimg.com/736x/af/c2/0a/afc20a91527765a2effe16965c2e8050.jpg");
   background-size: cover;
   background-position: left;
-  background-color: none;
-  background-position: center;
+  background-color: transparent;
 }
 main .piano .key-R {
   background-image: url("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/ruffs.webp");
@@ -209,14 +200,13 @@ main .piano .key-U {
   background-image: url("https://i.pinimg.com/736x/15/ac/a7/15aca7240085e4c8eabd1c373fa2783a.jpg");
   background-size: cover;
   background-position: left;
-  background-color: none;
+  background-color: transparent;
 }
 main .piano .key-V {
   background-image: url("https://i.pinimg.com/1200x/b2/f5/e8/b2f5e8a89aaad2a71e1c8b6de9443c31.jpg");
   background-size: cover;
   background-position: left;
-  background-color: none;
-  background-position: center;
+  background-color: transparent;
 }
 main .piano .key-W {
   background-image: url("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/willow.webp");
@@ -228,19 +218,23 @@ main .piano .key-X {
   background-image: url("https://i.pinimg.com/736x/e0/6b/b5/e06bb5e65b41c9c6e8ee4a7f13095b44.jpg");
   background-size: cover;
   background-position: left;
-  background-color: none;
+  background-color: transparent;
 }
 main .piano .key-Y {
   background-image: url("https://i.pinimg.com/1200x/9d/0b/c6/9d0bc64d652769d23421d7c7b8c69e03.jpg");
   background-size: cover;
   background-position: left;
-  background-color: none;
+  background-color: transparent;
 }
 main .piano .key-Z {
   background-image: url("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/ziggy.webp");
   background-size: cover;
   background-position: left;
   background-color: #EF4140;
+}
+main .piano .key-K {
+  background: url("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/kaze.webp"), linear-gradient(to bottom, #4A005D 0%, #FFD700 50%, #00FF7F 100%);
+  background-size: cover;
 }
 
 @media (max-width: 750px) {

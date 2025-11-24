@@ -16,6 +16,7 @@ body {
     cursor: none;
 }
 
+
 @mixin key-bg($img, $color) {
     background-image: url($img);
     background-size: cover;
@@ -24,7 +25,7 @@ body {
 }
 
 main {
-     position: relative;
+    position: relative;
     height: 100%;
     width: 100%;
     display: flex;
@@ -35,12 +36,12 @@ main {
     background-image: url("https://i.pinimg.com/1200x/e2/32/c8/e232c853e9f782a365ca2fff135fc43b.jpg");
     background-size: contain;
     background-position: center;
-    
+
     .cursor {
         height: 80px;
         width: 80px;
         position: fixed;
-        transform: translate(-50%, -50%);
+        transform: translate(-20%, -20%);
         z-index: 1;
         pointer-events: none;
     }
@@ -50,19 +51,18 @@ main {
         font-family: "Pixel";
         font-size: 5rem;
         color: transparent;
-        -webkit-text-stroke: 2px black; 
+        -webkit-text-stroke: 2px black;
         -webkit-backdrop-filter: blur(30px);
-         -webkit-background-clip: text;
-         background-image: url("https://i.pinimg.com/1200x/fe/50/5c/fe505c47473807a7bafc48ccfece4829.jpg");
-         background-position: center;
-         letter-spacing: 1px;
+        -webkit-background-clip: text;
+        background-image: url("https://i.pinimg.com/1200x/fe/50/5c/fe505c47473807a7bafc48ccfece4829.jpg");
+        background-position: center;
+        letter-spacing: 1px;
     }
 
     .piano {
         max-width: 1100px;
         width: 95%;
         height: fit-content;
-        // width: 70%;
         background-color: rgba(222, 173, 238, 0.301);
         backdrop-filter: blur(3px);
         -webkit-backdrop-filter: blur(3px);
@@ -87,7 +87,7 @@ main {
             height: 120px;
             border-radius: 8px;
             font-size: 1.3rem;
-            -webkit-text-stroke: 2px black; 
+            -webkit-text-stroke: 2px black;
             font-family: "Pixel";
             color: rgb(255, 251, 0);
 
@@ -96,124 +96,45 @@ main {
             }
         }
 
-        .key-A {
-            @include key-bg("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/amber.webp", #F8C820);
-        }
+        $keys: (A: ("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/amber.webp", #F8C820),
+            B: ("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/bea.webp", #B116ED),
+            C: ("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/colt.webp", #2EDD1C),
+            D: ("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/draco.webp", #F8C820),
+            E: ("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/edgar.webp", #B116ED),
+            F: ("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/fang.webp", #EF4140),
+            G: ("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/griff.webp", #B116ED),
+            H: ("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/hank.webp", #B116ED),
+            I: ("https://i.pinimg.com/736x/17/16/9b/17169b94f83d60d730ac238580f7fbd7.jpg", #B116ED),
+            J: ("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/janet.webp", #EF4140),
+            L: ("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/leon.webp", #F8C820),
+            M: ("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/melodie.webp", #EF4140),
+            N: ("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/nita.webp", #2EDD1C),
+            O: ("https://i.pinimg.com/736x/74/84/52/7484525f8c02c7cbb86881d72e7e6eac.jpg", transparent),
+            P: ("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/piper.webp", #B116ED),
+            Q: ("https://i.pinimg.com/736x/af/c2/0a/afc20a91527765a2effe16965c2e8050.jpg", transparent),
+            R: ("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/ruffs.webp", #EF4140),
+            S: ("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/surge.webp", #F8C820),
+            T: ("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/trunk.webp", #B116ED),
+            U: ("https://i.pinimg.com/736x/15/ac/a7/15aca7240085e4c8eabd1c373fa2783a.jpg", transparent),
+            V: ("https://i.pinimg.com/1200x/b2/f5/e8/b2f5e8a89aaad2a71e1c8b6de9443c31.jpg", transparent),
+            W: ("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/willow.webp", #EF4140),
+            X: ("https://i.pinimg.com/736x/e0/6b/b5/e06bb5e65b41c9c6e8ee4a7f13095b44.jpg", transparent),
+            Y: ("https://i.pinimg.com/1200x/9d/0b/c6/9d0bc64d652769d23421d7c7b8c69e03.jpg", transparent),
+            Z: ("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/ziggy.webp", #EF4140));
 
-        .key-B {
-            @include key-bg("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/bea.webp", #B116ED);
-        }
-
-        .key-C {
-            @include key-bg("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/colt.webp", #2EDD1C);
-        }
-
-        .key-D {
-            @include key-bg("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/draco.webp", #F8C820);
-        }
-
-        .key-E {
-            @include key-bg("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/edgar.webp", #B116ED);
-        }
-
-        .key-F {
-            @include key-bg("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/fang.webp", #EF4140);
-        }
-
-        .key-G {
-            @include key-bg("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/griff.webp", #B116ED);
-        }
-
-        .key-H {
-            @include key-bg("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/hank.webp", #B116ED);
-        }
-
-        .key-I {
-            @include key-bg("https://i.pinimg.com/736x/17/16/9b/17169b94f83d60d730ac238580f7fbd7.jpg", #B116ED);
-            background-position: center;
-        }
-
-        .key-J {
-            @include key-bg("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/janet.webp", #EF4140);
+        @each $lt,
+        $data in $keys {
+            .key-#{$lt} {
+                @include key-bg(nth($data, 1), nth($data, 2));
+            }
         }
 
         .key-K {
-            // @include key-bg("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/kaze.webp",
-            //     transparent);
-
             background:
                 url("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/kaze.webp"),
                 linear-gradient(to bottom, #4A005D 0%, #FFD700 50%, #00FF7F 100%);
 
             background-size: cover;
-            // background-position: left;
-
-            /* This makes the gradient blend with the image instead of hiding it */
-            // background-blend-mode: screen; // or try "multiply", "soft-light", "screen"
-        }
-
-        .key-L {
-            @include key-bg("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/leon.webp", #F8C820);
-            background-position: left;
-        }
-
-        .key-M {
-            @include key-bg("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/melodie.webp", #EF4140);
-            background-position: left;
-        }
-
-        .key-N {
-            @include key-bg("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/nita.webp", #2EDD1C);
-        }
-
-        .key-O {
-            @include key-bg("https://i.pinimg.com/736x/74/84/52/7484525f8c02c7cbb86881d72e7e6eac.jpg", none);
-        }
-
-        .key-P {
-            @include key-bg("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/piper.webp", #B116ED);
-        }
-
-        .key-Q {
-            @include key-bg("https://i.pinimg.com/736x/af/c2/0a/afc20a91527765a2effe16965c2e8050.jpg", none);
-            background-position: center;
-        }
-
-        .key-R {
-            @include key-bg("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/ruffs.webp", #EF4140);
-        }
-
-        .key-S {
-            @include key-bg("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/surge.webp", #F8C820);
-        }
-
-        .key-T {
-            @include key-bg("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/trunk.webp", #B116ED);
-        }
-
-        .key-U {
-            @include key-bg("https://i.pinimg.com/736x/15/ac/a7/15aca7240085e4c8eabd1c373fa2783a.jpg", none);
-        }
-
-        .key-V {
-            @include key-bg("https://i.pinimg.com/1200x/b2/f5/e8/b2f5e8a89aaad2a71e1c8b6de9443c31.jpg", none);
-            background-position: center;
-        }
-
-        .key-W {
-            @include key-bg("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/willow.webp", #EF4140);
-        }
-
-        .key-X {
-            @include key-bg("https://i.pinimg.com/736x/e0/6b/b5/e06bb5e65b41c9c6e8ee4a7f13095b44.jpg", none);
-        }
-
-        .key-Y {
-            @include key-bg("https://i.pinimg.com/1200x/9d/0b/c6/9d0bc64d652769d23421d7c7b8c69e03.jpg", none);
-        }
-
-        .key-Z {
-            @include key-bg("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/ziggy.webp", #EF4140);
         }
     }
 }
@@ -246,7 +167,6 @@ main {
             .row-4 {
                 gap: 5px
             }
-
             .key {
                 height: 50px;
             }
