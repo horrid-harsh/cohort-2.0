@@ -1,0 +1,58 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+main {
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.834);
+  display: grid;
+  grid-template-columns: 30% 1fr 1fr 1fr;
+  grid-template-rows: 1.5fr 1fr;
+  grid-template-areas:
+    "left center center center"
+    "left btm-1 btm-2 btm-3";
+  padding: 10px;
+  gap: 10px;
+
+  // Mixin for shared background styling
+  @mixin bg-style($url, $pos: center) {
+    background-image: url($url);
+    background-size: cover;
+    background-position: $pos;
+    border-radius: 20px;
+  }
+
+  .left {
+    grid-area: left;
+    @include bg-style("https://i.pinimg.com/1200x/9e/24/25/9e2425fa03154d687405b82403b97f72.jpg");
+  }
+
+  .center {
+    grid-area: center;
+    @include bg-style("https://i.pinimg.com/1200x/3d/93/7d/3d937d30fd9aa039ed61dc0b1d3ed463.jpg");
+  }
+
+  .btm-1 {
+    grid-area: btm-1;
+    @include bg-style("https://i.pinimg.com/736x/82/74/62/827462a88ad47ed1dc4eb29a3990a33f.jpg");
+  }
+
+  .btm-2 {
+    grid-area: btm-2;
+    @include bg-style("https://i.pinimg.com/736x/4a/1e/69/4a1e6969daa07ffdcd16d9acdafe7d82.jpg");
+  }
+
+  .btm-3 {
+    grid-area: btm-3;
+    @include bg-style("https://i.pinimg.com/736x/8e/10/04/8e10041be84fd7e34b6f824cd6f0542a.jpg");
+  }
+}

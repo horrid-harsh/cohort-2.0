@@ -1,0 +1,44 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+main {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  gap: 20px;
+}
+main section {
+  flex-grow: 1;
+  height: 100%;
+  transition: 0.7s;
+  cursor: pointer;
+  background-size: cover;
+  background-position: center;
+}
+main section:hover {
+  flex-grow: 2;
+}
+main section:nth-child(1) {
+  background-image: url("https://i.pinimg.com/736x/e6/66/15/e66615a584bf58a52e2767150ad5385c.jpg");
+}
+main section:nth-child(2) {
+  background-image: url("https://i.pinimg.com/736x/04/2c/e3/042ce35f2ebbafe51dd5ad4f22a06003.jpg");
+}
+main section:nth-child(3) {
+  background-image: url("https://i.pinimg.com/736x/1a/0f/62/1a0f62ee45366b7c69c0e7fa584a7456.jpg");
+}
+main section:nth-child(4) {
+  background-image: url("https://i.pinimg.com/736x/e3/7b/d7/e37bd7d91180c5dc06164db9e3f96351.jpg");
+}
+main section:nth-child(5) {
+  background-image: url("https://i.pinimg.com/1200x/f1/24/1d/f1241d369a63d7e57d7b6a1a6b10e9c2.jpg");
+}/*# sourceMappingURL=style.css.map */

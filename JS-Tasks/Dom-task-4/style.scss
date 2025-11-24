@@ -1,0 +1,136 @@
+@font-face {
+    font-family: "Gilroy";
+    src: url("./Gilroy-Bold.ttf") format("woff2");
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Gilroy", sans-serif;
+}
+
+html,
+body {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    overflow: hidden;
+    font-family: "Poppins", sans-serif;
+}
+
+main {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #000;
+
+    .btn {
+        display: none;
+        position: relative;
+        z-index: 99;
+        padding: 1rem 2rem;
+        border-radius: 1rem;
+        border: 2px solid transparent;
+        cursor: pointer;
+        color: white;
+        background: black;
+        font-size: 1.2rem;
+        font-weight: 600;
+
+        /* same logic as your demo */
+        --border-angle: 0turn;
+
+        --main-bg: conic-gradient(from var(--border-angle),
+                black,
+                #000000 10%,
+                #000000 60%,
+                black 90%);
+
+        --gradient-border: conic-gradient(from var(--border-angle),
+                transparent 20%,
+                white,
+                white 95%,
+                transparent);
+
+        background:
+            var(--main-bg) padding-box,
+            var(--gradient-border) border-box,
+            var(--main-bg) border-box;
+
+        background-position: center center;
+
+        animation: btn-rotate 3s linear infinite;
+        transition: transform .25s ease;
+
+        &:hover {
+            animation-play-state: paused;
+        }
+
+        &:active {
+            transform: scale(0.95);
+
+        }
+    }
+
+    img {
+        opacity: 0;
+        transform: scale(0.6);
+        transition:
+            opacity 0.4s ease-out,
+            transform 0.4s ease-out;
+
+        position: absolute;
+        // border-radius: 16px;
+        border: 6px solid white;
+        box-shadow: 0 10px 25px rgba(255, 255, 255, 0.2);
+        animation: float 3s ease-in-out infinite;
+        //   transform-origin: center;
+
+        // &:hover {
+        //     transform: scale(0.5) rotate(0deg);
+        //     z-index: 999;
+        // }
+    }
+
+}
+
+/* Floating subtle animation */
+// @keyframes float {
+//   0% { transform: translateY(0px); }
+//   50% { transform: translateY(-12px); }
+//   100% { transform: translateY(0px); }
+// }
+
+@keyframes float {
+    0% {
+        translate: 0 0;
+    }
+
+    50% {
+        translate: 0 -12px;
+    }
+
+    100% {
+        translate: 0 0;
+    }
+}
+
+@keyframes btn-rotate {
+    to {
+        --border-angle: 1turn;
+    }
+}
+
+@property --border-angle {
+    syntax: "<angle>";
+    inherits: true;
+    initial-value: 0turn;
+}

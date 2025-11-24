@@ -1,0 +1,271 @@
+@font-face {
+  font-family: "Pixel";
+  src: url("./pixel-font.TTF");
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  cursor: none;
+}
+
+main {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-image: url("https://i.pinimg.com/1200x/e2/32/c8/e232c853e9f782a365ca2fff135fc43b.jpg");
+  background-size: contain;
+  background-position: center;
+}
+main .cursor {
+  height: 80px;
+  width: 80px;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  pointer-events: none;
+}
+main h1 {
+  text-align: center;
+  font-family: "Pixel";
+  font-size: 5rem;
+  color: transparent;
+  -webkit-text-stroke: 2px black;
+  -webkit-backdrop-filter: blur(30px);
+  -webkit-background-clip: text;
+  background-image: url("https://i.pinimg.com/1200x/fe/50/5c/fe505c47473807a7bafc48ccfece4829.jpg");
+  background-position: center;
+  letter-spacing: 1px;
+}
+main .piano {
+  max-width: 1100px;
+  width: 95%;
+  height: -moz-fit-content;
+  height: fit-content;
+  background-color: rgba(222, 173, 238, 0.301);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  padding: 15px;
+  border-radius: 1rem;
+}
+main .piano .row-1,
+main .piano .row-2,
+main .piano .row-3,
+main .piano .row-4 {
+  display: flex;
+  width: 100%;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+main .piano .key {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  height: 120px;
+  border-radius: 8px;
+  font-size: 1.3rem;
+  -webkit-text-stroke: 2px black;
+  font-family: "Pixel";
+  color: rgb(255, 251, 0);
+}
+main .piano .key:active {
+  transform: scale(0.92);
+}
+main .piano .key-A {
+  background-image: url("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/amber.webp");
+  background-size: cover;
+  background-position: left;
+  background-color: #F8C820;
+}
+main .piano .key-B {
+  background-image: url("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/bea.webp");
+  background-size: cover;
+  background-position: left;
+  background-color: #B116ED;
+}
+main .piano .key-C {
+  background-image: url("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/colt.webp");
+  background-size: cover;
+  background-position: left;
+  background-color: #2EDD1C;
+}
+main .piano .key-D {
+  background-image: url("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/draco.webp");
+  background-size: cover;
+  background-position: left;
+  background-color: #F8C820;
+}
+main .piano .key-E {
+  background-image: url("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/edgar.webp");
+  background-size: cover;
+  background-position: left;
+  background-color: #B116ED;
+}
+main .piano .key-F {
+  background-image: url("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/fang.webp");
+  background-size: cover;
+  background-position: left;
+  background-color: #EF4140;
+}
+main .piano .key-G {
+  background-image: url("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/griff.webp");
+  background-size: cover;
+  background-position: left;
+  background-color: #B116ED;
+}
+main .piano .key-H {
+  background-image: url("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/hank.webp");
+  background-size: cover;
+  background-position: left;
+  background-color: #B116ED;
+}
+main .piano .key-I {
+  background-image: url("https://i.pinimg.com/736x/17/16/9b/17169b94f83d60d730ac238580f7fbd7.jpg");
+  background-size: cover;
+  background-position: left;
+  background-color: #B116ED;
+  background-position: center;
+}
+main .piano .key-J {
+  background-image: url("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/janet.webp");
+  background-size: cover;
+  background-position: left;
+  background-color: #EF4140;
+}
+main .piano .key-K {
+  background: url("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/kaze.webp"), linear-gradient(to bottom, #4A005D 0%, #FFD700 50%, #00FF7F 100%);
+  background-size: cover;
+  /* This makes the gradient blend with the image instead of hiding it */
+}
+main .piano .key-L {
+  background-image: url("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/leon.webp");
+  background-size: cover;
+  background-position: left;
+  background-color: #F8C820;
+  background-position: left;
+}
+main .piano .key-M {
+  background-image: url("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/melodie.webp");
+  background-size: cover;
+  background-position: left;
+  background-color: #EF4140;
+  background-position: left;
+}
+main .piano .key-N {
+  background-image: url("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/nita.webp");
+  background-size: cover;
+  background-position: left;
+  background-color: #2EDD1C;
+}
+main .piano .key-O {
+  background-image: url("https://i.pinimg.com/736x/74/84/52/7484525f8c02c7cbb86881d72e7e6eac.jpg");
+  background-size: cover;
+  background-position: left;
+  background-color: none;
+}
+main .piano .key-P {
+  background-image: url("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/piper.webp");
+  background-size: cover;
+  background-position: left;
+  background-color: #B116ED;
+}
+main .piano .key-Q {
+  background-image: url("https://i.pinimg.com/736x/af/c2/0a/afc20a91527765a2effe16965c2e8050.jpg");
+  background-size: cover;
+  background-position: left;
+  background-color: none;
+  background-position: center;
+}
+main .piano .key-R {
+  background-image: url("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/ruffs.webp");
+  background-size: cover;
+  background-position: left;
+  background-color: #EF4140;
+}
+main .piano .key-S {
+  background-image: url("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/surge.webp");
+  background-size: cover;
+  background-position: left;
+  background-color: #F8C820;
+}
+main .piano .key-T {
+  background-image: url("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/trunk.webp");
+  background-size: cover;
+  background-position: left;
+  background-color: #B116ED;
+}
+main .piano .key-U {
+  background-image: url("https://i.pinimg.com/736x/15/ac/a7/15aca7240085e4c8eabd1c373fa2783a.jpg");
+  background-size: cover;
+  background-position: left;
+  background-color: none;
+}
+main .piano .key-V {
+  background-image: url("https://i.pinimg.com/1200x/b2/f5/e8/b2f5e8a89aaad2a71e1c8b6de9443c31.jpg");
+  background-size: cover;
+  background-position: left;
+  background-color: none;
+  background-position: center;
+}
+main .piano .key-W {
+  background-image: url("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/willow.webp");
+  background-size: cover;
+  background-position: left;
+  background-color: #EF4140;
+}
+main .piano .key-X {
+  background-image: url("https://i.pinimg.com/736x/e0/6b/b5/e06bb5e65b41c9c6e8ee4a7f13095b44.jpg");
+  background-size: cover;
+  background-position: left;
+  background-color: none;
+}
+main .piano .key-Y {
+  background-image: url("https://i.pinimg.com/1200x/9d/0b/c6/9d0bc64d652769d23421d7c7b8c69e03.jpg");
+  background-size: cover;
+  background-position: left;
+  background-color: none;
+}
+main .piano .key-Z {
+  background-image: url("https://www.noff.gg/brawl-stars/res/img/brawler_portraits/ziggy.webp");
+  background-size: cover;
+  background-position: left;
+  background-color: #EF4140;
+}
+
+@media (max-width: 750px) {
+  main img {
+    display: none;
+  }
+  main h1 {
+    font-size: 3rem;
+  }
+  main .piano .key {
+    height: 80px;
+    font-size: 1rem;
+  }
+}
+@media (max-width: 550px) {
+  main .piano {
+    padding: 8px;
+  }
+  main .piano .row-1,
+  main .piano .row-2,
+  main .piano .row-3,
+  main .piano .row-4 {
+    gap: 5px;
+  }
+  main .piano .key {
+    height: 50px;
+  }
+}/*# sourceMappingURL=style.css.map */
