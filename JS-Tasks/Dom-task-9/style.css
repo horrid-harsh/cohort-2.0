@@ -1,0 +1,30 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family:Arial, Helvetica, sans-serif;
+}
+html,
+body {
+  height: 100%;
+  width: 100%;
+  background-image: url("./hero-bg.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+:root {
+  --x: 400px;
+  --y: 400px;
+}
+
+.spotlight {
+  height: 100%;
+  width: 100%;
+  position: relative; /* important */
+  background: radial-gradient(
+    150px at var(--x) var(--y),
+    rgba(255, 255, 255, 0),
+    rgba(0, 0, 0, 0.933)
+  );
+}
