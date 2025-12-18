@@ -1,3 +1,8 @@
+@font-face {
+    font-family: "PPSupply";
+    src: url("./PPSupplyMono-Regular.df142e.woff");
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -32,10 +37,10 @@ html, body {
   transform: translate(10px, 10px);
   pointer-events: none; /* VERY IMPORTANT */
   color: white;
-  font-weight: 500;
   letter-spacing: 0.5px;
   mix-blend-mode: difference; 
   font-size: 15px;
+  font-family: "PPSupply", sans-serif;
   z-index: 9999;
 }
 
@@ -94,7 +99,6 @@ canvas{
     left: 60vw;
     animation-delay: 0.5s;
 }
-
 
 @keyframes maskReveal {
     from {

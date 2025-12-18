@@ -40,60 +40,26 @@ video.addEventListener("canplay", ()=>{
     draw();
 })
 
-// masks.forEach((mask)=>{
-//     let isDragging = false;
-//     let offsetX, offsetY;
-
-//     mask.addEventListener("mousedown", (dets)=>{
-//         isDragging = true;
-//         mask.style.cursor = "grabbing";
-//         mask.style.zIndex = 999;
-//         offsetX = dets.clientX - mask.offsetLeft;
-//         offsetY = dets.clientY - mask.offsetTop;
-
-//         // console.log("clientX: ", dets.clientX);       
-//         // console.log("maskLeft: ", mask.offsetLeft);
-//         console.log("offsetX: ", offsetX);
-        
-//     })
-
-//     document.addEventListener("mousemove", (dets)=> {
-//         if(isDragging) {
-//             mask.style.left = dets.clientX - offsetX + "px";
-//             console.log("clientX: ", dets.clientX);
-//             console.log("offset: ", offsetX);
-
-//             mask.style.top = dets.clientY - offsetY + "px";
-//         }
-//     })
-
-//     mask.addEventListener("mouseup", ()=>{
-//         isDragging = false;
-//         mask.style.cursor = "grab";
-//         mask.style.zIndex = 1;
-//     })
-// })
-
 let topZ = 10;
 let isHoveringMask = false;
 
 document.addEventListener("mousemove", (e) => {
+    
     grab.style.display = "block";
     grab.style.left = e.clientX + 10 + "px";
     grab.style.top  = e.clientY + 10 + "px";
+
     if(!isHoveringMask){
         grab.innerHTML =
-     `X: ${e.clientX} <br> Y: ${e.clientY}`;
+     `X:${e.clientX}px <br> Y:${e.clientY}px`;
     }
-    
 });
 
 masks.forEach((mask) => {
     mask.addEventListener("mouseenter", () => {
         isHoveringMask = true;
         grab.innerHTML = "grab";
-        mask.style.cursor = "grab";
-        
+        mask.style.cursor = "grab"; 
     });
 
     mask.addEventListener("mouseleave", () => {
