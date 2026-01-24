@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Figma Style Design Tool</title>
+    <link rel="shortcut icon" href="./logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="./style.css" />
+    <link
+    href="https://cdn.jsdelivr.net/npm/remixicon@4.8.0/fonts/remixicon.css"
+    rel="stylesheet"
+/>
+  </head>
+  <body>
+    <main>
+      <div class="left">
+        <h1>Layers</h1>
+        <div class="layers"></div>
+
+        <div class="layer-controls">
+          <button id="layer-up">
+            Move Up
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12.75 5.82v8.43a.75.75 0 1 1-1.5 0V5.81L8.99 8.07A.75.75 0 1 1 7.93 7l2.83-2.83a1.75 1.75 0 0 1 2.47 0L16.06 7A.75.75 0 0 1 15 8.07l-2.25-2.25zM15 10.48l6.18 3.04a1 1 0 0 1 0 1.79l-7.86 3.86a3 3 0 0 1-2.64 0l-7.86-3.86a1 1 0 0 1 0-1.8L9 10.49v1.67L4.4 14.4l6.94 3.42c.42.2.9.2 1.32 0l6.94-3.42-4.6-2.26v-1.67z"></path></svg>
+            </button>
+          <button id="layer-down">
+            Move Down
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12.75 18.12V9.75a.75.75 0 1 0-1.5 0v8.37l-2.26-2.25a.75.75 0 0 0-1.06 1.06l2.83 2.82c.68.69 1.79.69 2.47 0l2.83-2.82A.75.75 0 0 0 15 15.87l-2.25 2.25zM15 11.85v1.67l6.18-3.04a1 1 0 0 0 0-1.79l-7.86-3.86a3 3 0 0 0-2.64 0L2.82 8.69a1 1 0 0 0 0 1.8L9 13.51v-1.67L4.4 9.6l6.94-3.42c.42-.2.9-.2 1.32 0L19.6 9.6 15 11.85z"></path></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="resizer left-resizer"></div>
+
+      <div class="middle">
+        <img class="cursor" src="./cursor-v2.png" alt="">
+        <div class="canvas">
+        </div>
+        <div class="bottom">
+            <button class="rectangle">
+                <svg width="24" height="24" fill="none" viewBox="0 0 24 24" data-fpl-icon-size="24L"><path fill="currentColor" fill-rule="evenodd" d="M18 5H6a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1M6 4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z" clip-rule="evenodd"></path></svg>
+            </button>
+            <button class="text-box">
+                <svg width="24" height="24" fill="none" viewBox="0 0 24 24" data-fpl-icon-size="24L"><path fill="currentColor" d="M19.5 4a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0V5h-6.5v14H15a.5.5 0 0 1 0 1H9a.5.5 0 0 1 0-1h2.5V5H5v2.5a.5.5 0 0 1-1 0v-3a.5.5 0 0 1 .5-.5z"></path></svg>
+            </button>
+            <button class="delete-btn" style="font-size: small; opacity: 0.8;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash2-icon lucide-trash-2"><path d="M10 11v6"/><path d="M14 11v6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            </button>
+          </div>
+      </div>
+
+      <div class="resizer right-resizer"></div>
+
+      <div class="right">
+        <div class="rect-text">
+            <h1 id="selection-title">Properties</h1>
+        </div>
+
+        <div class="position-main">
+          <h2>Position</h2>
+          <div class="pos-and-rot">
+              <h3>Position</h3>
+
+              <div class="position-div">
+                <div class="pos-x">
+                  <span style="font-size:x-small; margin-right: 0.65rem;">X</span>
+                  <input type="text" />
+                </div>
+                <div class="pos-y">
+                  <span style="font-size:x-small; margin-right: 0.65rem;">Y</span>
+                  <input type="text" />
+                </div>
+              </div>
+
+            <div class="rotation-div">
+                <h3>Rotation</h3>
+              <div class="rot-field">
+                <svg width="24" height="24" fill="none" viewBox="0 0 24 24" data-fpl-icon-size="24">
+                    <path fill="currentColor" fill-rule="evenodd" d="M9 8.5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 0-1H13a4 4 0 0 0-4-4zM9 12v3h3a3 3 0 0 0-3-3" clip-rule="evenodd" />
+                </svg>
+                <input class="rotation-input" type="text" />
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="layout-main">
+          <h2>Layout</h2>
+          <h3>Dimesions</h3>
+          <div class="layout">
+
+            <div class="width-div">
+              <span style="font-size:x-small; margin-right: 0.65rem;">W</span>
+              <input id="prop-width" type="text" />
+            </div>
+
+            <div class="height-div">
+              <span style="font-size:x-small; margin-right: 0.65rem;">H</span>
+              <input id="prop-height" type="text" />
+            </div>
+
+          </div>
+        </div>
+
+        <div class="text-properties">
+          <h2>Edit</h2>
+          <h3>Text</h3>
+          <textarea id="prop-text" rows="3"></textarea>
+        </div>
+
+        <div class="appearance-main">
+          <h2>Appearance</h2>
+          <div class="appearance-cnt">
+
+            <div class="opacity-cnt">
+              <h3>Opacity</h3>
+              <div class="appearance-1">
+                <svg width="24" height="24" fill="none" viewBox="0 0 24 24" data-fpl-icon-size="24"><path fill="currentColor" fill-rule="evenodd" d="M8 7h8a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1M6 8a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2zm9 1.5a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1M13.5 11a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0m-2 2a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0m-2 2a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0m1.5.5a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1m2-2a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1m.5 1.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0m2-4a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0m-.5 2.5a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1m.5 1.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0" clip-rule="evenodd"></path></svg>
+                <input type="text" />
+              </div>
+            </div>
+
+            <div class="corner-rad-cnt">
+              <h3>Corner radius</h3>
+              <div class="appearance-2">
+                <svg width="24" height="24" fill="none" viewBox="0 0 24 24" data-fpl-icon-size="24"><path fill="currentColor" fill-rule="evenodd" d="M8.9 6h-.02c-.403 0-.735 0-1.006.022-.28.023-.54.072-.782.196a2 2 0 0 0-.874.874c-.124.243-.173.501-.196.782C6 8.144 6 8.477 6 8.88v.62a.5.5 0 0 0 1 0v-.6c0-.428 0-.72.019-.944.018-.22.05-.332.09-.41a1 1 0 0 1 .437-.437c.078-.04.19-.072.41-.09C8.18 7 8.472 7 8.9 7h.6a.5.5 0 0 0 0-1zm6.2 0h.02c.403 0 .735 0 1.006.022.281.023.54.072.782.196a2 2 0 0 1 .874.874c.124.243.173.501.196.782.022.27.022.603.022 1.005V9.5a.5.5 0 0 1-1 0v-.6c0-.428 0-.72-.019-.944-.018-.22-.05-.332-.09-.41a1 1 0 0 0-.437-.437c-.078-.04-.19-.072-.41-.09A13 13 0 0 0 15.1 7h-.6a.5.5 0 0 1 0-1zm.02 12h-.62a.5.5 0 0 1 0-1h.6c.428 0 .72 0 .944-.019.22-.018.332-.05.41-.09a1 1 0 0 0 .437-.437c.04-.078.072-.19.09-.41.019-.225.019-.516.019-.944v-.6a.5.5 0 0 1 1 0v.62c0 .403 0 .735-.022 1.006-.023.281-.072.54-.196.782a2 2 0 0 1-.874.874c-.243.124-.501.173-.782.196-.27.022-.603.022-1.005.022M8.9 18h-.02c-.403 0-.735 0-1.006-.022-.281-.023-.54-.072-.782-.196a2 2 0 0 1-.874-.874c-.124-.243-.173-.501-.196-.782A13 13 0 0 1 6 15.12v-.62a.5.5 0 0 1 1 0v.6c0 .428 0 .72.019.944.018.22.05.332.09.41a1 1 0 0 0 .437.437c.078.04.19.072.41.09.225.019.516.019.944.019h.6a.5.5 0 0 1 0 1z" clip-rule="evenodd"></path></svg>
+                <input type="text" />
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="fill-main">
+          <h2>Fill</h2>
+          <div class="color-picker">
+            <div class="color-square"></div>
+            <input id="color-input" type="text" />
+          </div>
+        </div>
+
+        <div class="export">
+            <h2>Export</h2>
+            <div class="export-btn">
+                <button class="export-json">JSON</button>
+                <button class="export-html">HTML</button>
+            </div>
+        </div>
+
+      </div>
+    </main>
+
+    <script src="js/state.js"></script>
+    <script src="js/dom.js"></script>
+    <script src="js/cursor.js"></script>
+    <script src="js/selection.js"></script>
+    <script src="js/elements.js"></script>
+    <script src="js/interactions.js"></script>
+    <script src="js/controls.js"></script>
+    <script src="js/persistence.js"></script>
+    <script src="js/export.js"></script>
+    <script src="js/script.js"></script>
+  </body>
+</html>
