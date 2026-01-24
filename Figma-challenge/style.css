@@ -396,6 +396,7 @@ main .right .fill-main .color-picker .color-square {
   width: 15px;
   height: 15px;
   border-radius: 0.15rem;
+  margin-right: 0.65rem;
 }
 main .right .export {
   padding-inline: 0.75rem;
