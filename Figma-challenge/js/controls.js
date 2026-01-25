@@ -227,13 +227,37 @@ fillInput.addEventListener("input", () => {
   if (el.dataset.type === "text") {
     el.style.color = fillInput.value;
   }
-
   
   colorSquare.style.backgroundColor = fillInput.value;
   
-
 //   saveLayout();
 });
+
+colorSquare.addEventListener("click", () => {
+    colorPicker.click();
+  });
+
+  colorPicker.addEventListener("input", () => {
+    const el = getSelectedElement();
+    if (!el) return;
+
+    const color = colorPicker.value;
+
+    fillInput.value = color;
+    colorSquare.style.backgroundColor = color;
+
+    if (el.dataset.type === "rectangle") {
+      el.style.backgroundColor = color;
+    }
+
+    if (el.dataset.type === "text") {
+      const textNode = el.querySelector(".text-content") || el;
+      textNode.style.color = color;
+    }
+
+    // saveLayout();
+});
+
 
 textArea.addEventListener("input", () => {
   const el = getSelectedElement();

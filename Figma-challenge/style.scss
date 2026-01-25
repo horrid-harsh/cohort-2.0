@@ -439,21 +439,34 @@ main {
       border-bottom: 1px solid var(--border-light);
       padding-inline: var(--pad-md);
       padding-bottom: var(--pad-lg);
+
       .color-picker {
+        position: relative;
         width: 100%;
         @include flex-center(0px);
         @include input-bg;
         padding-inline: 0.35rem;
+
         &:hover {
           outline: 0.2px solid rgba(255, 255, 255, 0.181);
         }
 
+        #colorPicker {
+          position: absolute;
+          top: -20px;
+          left: -200px;
+          opacity: 0;
+          cursor: pointer;
+        }
+      
         .color-square {
           width: 15px;
           height: 15px;
           border-radius: 0.15rem;
           margin-right: 0.65rem;
+          background-color: var(--bg-dark);
         }
+
       }
     }
 

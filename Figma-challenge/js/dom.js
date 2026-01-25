@@ -29,8 +29,10 @@ const heightInput = document.querySelector("#prop-height");
 const opacityInput = document.querySelector(".opacity-cnt input");
 const radiusInput = document.querySelector(".corner-rad-cnt input");
 
-const fillInput = document.querySelector(".fill-main input");
+const fillInput = document.querySelector("#color-input");
 const colorSquare = document.querySelector(".color-square");
+const colorPicker = document.getElementById("colorPicker");
+
 
 const textArea = document.querySelector("#prop-text");
 

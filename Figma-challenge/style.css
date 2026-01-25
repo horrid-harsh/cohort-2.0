@@ -381,6 +381,7 @@ main .right .fill-main {
   padding-bottom: var(--pad-lg);
 }
 main .right .fill-main .color-picker {
+  position: relative;
   width: 100%;
   display: flex;
   align-items: center;
@@ -392,11 +393,19 @@ main .right .fill-main .color-picker {
 main .right .fill-main .color-picker:hover {
   outline: 0.2px solid rgba(255, 255, 255, 0.181);
 }
+main .right .fill-main .color-picker #colorPicker {
+  position: absolute;
+  top: -20px;
+  left: -200px;
+  opacity: 0;
+  cursor: pointer;
+}
 main .right .fill-main .color-picker .color-square {
   width: 15px;
   height: 15px;
   border-radius: 0.15rem;
   margin-right: 0.65rem;
+  background-color: var(--bg-dark);
 }
 main .right .export {
   padding-inline: 0.75rem;
