@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1,
+    "image": "https://i.pinimg.com/736x/e9/df/3a/e9df3aedfffd3a856fc80fe23de2445e.jpg",
+    "title": "Web-Based OS Portfolio",
+    "description": "A macOS-inspired web-based operating system built with React, featuring draggable windows, a dock, and terminal-style navigation.",
+    "tags": ["React", "CSS", "Window Manager", "UI/UX"],
+    "repoLink": "https://github.com/username/web-os-portfolio",
+    "demoLink": "https://webos-portfolio.vercel.app"
+  },
+  {
+    "id": 2,
+    "image": "https://i.pinimg.com/1200x/d7/89/39/d7893923eb163f08af690a11a3cd7454.jpg",
+    "title": "Realtime Chat Application",
+    "description": "A realtime chat application with authentication, private rooms, and message persistence using WebSockets.",
+    "tags": ["React", "Node.js", "Socket.io", "MongoDB"],
+    "repoLink": "https://github.com/username/realtime-chat-app",
+    "demoLink": "https://chatapp-demo.vercel.app"
+  },
+  {
+    "id": 3,
+    "image": "https://i.pinimg.com/1200x/88/40/88/884088224e5b43909c81469cab8c0dda.jpg",
+    "title": "E-Commerce Platform",
+    "description": "A full-stack e-commerce platform with product management, cart system, and secure payments.",
+    "tags": ["Next.js", "Stripe", "PostgreSQL", "Tailwind"],
+    "repoLink": "https://github.com/username/ecommerce-platform",
+    "demoLink": "https://ecommerce-demo.vercel.app"
+  },
+  {
+    "id": 4,
+    "image": "https://i.pinimg.com/1200x/6f/75/ff/6f75ff6ae232cdb5a0a7b47d03b014e7.jpg",
+    "title": "Terminal Portfolio",
+    "description": "A developer portfolio controlled entirely through terminal commands with autocomplete and history support.",
+    "tags": ["JavaScript", "CLI", "UX"],
+    "repoLink": "https://github.com/username/terminal-portfolio",
+    "demoLink": "https://terminal-portfolio.vercel.app"
+  },
+  {
+    "id": 5,
+    "image": "https://i.pinimg.com/736x/cc/8d/57/cc8d57dbb6ee0d16d646a12ea5b4d5e9.jpg",
+    "title": "AI Resume Analyzer",
+    "description": "An AI-powered resume analyzer that scores resumes against job descriptions and provides improvement suggestions.",
+    "tags": ["Python", "NLP", "Machine Learning", "Flask"],
+    "repoLink": "https://github.com/username/ai-resume-analyzer",
+    "demoLink": "https://resume-analyzer-demo.vercel.app"
+  }
+]
