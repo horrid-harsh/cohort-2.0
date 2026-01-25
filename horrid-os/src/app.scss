@@ -11,9 +11,11 @@ body,
 }
 
 main {
+    position: relative;
     height: 100%;
     width: 100%;
     background-image: url('/wallpaper.png');
     background-size: cover;
     background-position: center;
+  overflow: hidden;
 }

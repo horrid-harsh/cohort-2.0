@@ -1,0 +1,123 @@
+/**
+
+* @file: profile.config.ts
+* @author: CSE Final Year Student
+* @summary: Aspiring Full-Stack Developer (MERN) with a focus on modern UI/UX.
+  */
+
+// --------------------------------------------------
+// 1. CORE SKILLS & TECHNOLOGY STACK
+// --------------------------------------------------
+
+const TECH_STACK = {
+frontend: [
+"React.js",        // Actively building projects
+"Tailwind CSS",    // Primary styling framework
+"SCSS",            // Component-level styling
+"GSAP",            // Animations & interactions
+],
+backend: [
+"Node.js",
+"Express.js",
+"MongoDB",
+],
+fundamentals: [
+"Data Structures & Algorithms",
+"OOP Concepts",
+"Operating Systems",
+"DBMS",
+],
+tools: ["Git", "GitHub", "VS Code", "Figma"],
+};
+
+// --------------------------------------------------
+// 2. CURRENT STATUS & LEARNING TRACK
+// --------------------------------------------------
+
+class DeveloperProfile {
+/**
+
+* @status Final Year Undergraduate
+* @degree B.Tech (Computer Science & Engineering)
+  */
+  public academicStatus() {
+  return {
+  role: "CSE Final Year Student",
+  stack: "MERN Stack",
+  focus: "Web Development & System Design",
+  };
+  }
+
+/**
+
+* @learning Ongoing Skill Development
+  */
+  public learningRoadmap() {
+  return [
+  "Advanced React Patterns",
+  "Backend APIs with Express",
+  "Authentication & Authorization",
+  "GSAP Performance Animations",
+  "Basic DevOps & Deployment",
+  ];
+  }
+  }
+
+// --------------------------------------------------
+// 3. PROJECT EXPERIENCE (ACADEMIC + PERSONAL)
+// --------------------------------------------------
+
+interface Project {
+title: string;
+description: string;
+tech: string[];
+}
+
+const projects: Project[] = [
+{
+title: "Web-Based OS Portfolio",
+description: "A macOS-inspired web OS portfolio with draggable windows, dock, and terminal-like UI.",
+tech: ["React", "SCSS", "GSAP"],
+},
+{
+title: "MERN Stack Application",
+description: "Full-stack CRUD application with authentication and REST APIs.",
+tech: ["MongoDB", "Express", "React", "Node.js"],
+},
+];
+
+// --------------------------------------------------
+// 4. ACADEMIC BACKGROUND
+// --------------------------------------------------
+
+const education = {
+college: "Institute of Engineering & Technology (IET)",
+university: "Mohanlal Sukhadia University (MLSU)",
+degree: "B.Tech - Computer Science & Engineering",
+status: "Final Year",
+};
+
+// --------------------------------------------------
+// 5. CAREER OBJECTIVE
+// --------------------------------------------------
+
+const careerObjective = `Motivated Computer Science undergraduate aiming to start a career as a
+Full-Stack Web Developer. Passionate about building interactive user
+interfaces, learning scalable backend systems, and writing clean,
+maintainable code.`;
+
+export default new DeveloperProfile();
+
+````
+
+```bash
+# TERMINAL OUTPUT
+# ---------------------------------------
+$ user --profile
+> Role: CSE Final Year Student
+> Stack: MERN (Learning)
+> College: IET | University: MLSU
+> Status: Open to Internships & Entry-Level Roles
+> Mode: Learning → Building → Improving
+> Ready.
+````

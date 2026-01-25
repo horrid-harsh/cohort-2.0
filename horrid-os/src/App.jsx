@@ -4,6 +4,8 @@ import Dock from './components/dock'
 import Navbar from './components/Navbar'
 import MacWindow from './components/windows/MacWindow'
 import GitHub from './components/windows/GitHub'
+import Note from './components/windows/Note'
+import Resume from './components/windows/Resume'
 
 function App() {
 
@@ -13,6 +15,8 @@ function App() {
       <Navbar />
       <Dock />
       <GitHub />
+      <Note />
+      <Resume />
     </main>
    </>
   )
