@@ -19,4 +19,11 @@ main {
     background-size: cover;
     background-position: center;
   overflow: hidden;
+
+  #desktop {
+  position: relative;
+  height: 100%; /* navbar height */
+  overflow: hidden;
+}
+
 }

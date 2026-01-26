@@ -25,12 +25,15 @@ function App() {
    <>
     <main>
       <Navbar />
-      <Dock windowsState={windowsState} setWindowsState={setWindowsState} />
-      { windowsState.github && <GitHub windowName="github" setWindowsState={setWindowsState} topZIndex={topZIndex} setTopZIndex={setTopZIndex} />}
-      { windowsState.note && <Note windowName="note" setWindowsState={setWindowsState} topZIndex={topZIndex} setTopZIndex={setTopZIndex} />}
-      { windowsState.resume && <Resume windowName="resume" setWindowsState={setWindowsState} topZIndex={topZIndex} setTopZIndex={setTopZIndex} />}
-      { windowsState.spotify && <Spotify windowName="spotify" setWindowsState={setWindowsState} topZIndex={topZIndex} setTopZIndex={setTopZIndex} />}
-      { windowsState.cli && <Cli windowName="cli" setWindowsState={setWindowsState} topZIndex={topZIndex} setTopZIndex={setTopZIndex} />}
+      <div id="desktop">
+         <Dock windowsState={windowsState} setWindowsState={setWindowsState} />
+        { windowsState.github && <GitHub windowName="github" setWindowsState={setWindowsState} topZIndex={topZIndex} setTopZIndex={setTopZIndex} />}
+        { windowsState.note && <Note windowName="note" setWindowsState={setWindowsState} topZIndex={topZIndex} setTopZIndex={setTopZIndex} />}
+        { windowsState.resume && <Resume windowName="resume" setWindowsState={setWindowsState} topZIndex={topZIndex} setTopZIndex={setTopZIndex} />}
+        { windowsState.spotify && <Spotify windowName="spotify" setWindowsState={setWindowsState} topZIndex={topZIndex} setTopZIndex={setTopZIndex} />}
+        { windowsState.cli && <Cli windowName="cli" setWindowsState={setWindowsState} topZIndex={topZIndex} setTopZIndex={setTopZIndex} />}
+
+      </div>
     </main>
    </>
   )
