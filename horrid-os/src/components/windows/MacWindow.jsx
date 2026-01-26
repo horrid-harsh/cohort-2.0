@@ -1,8 +1,8 @@
 import { Rnd } from "react-rnd";
 import "./window.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const MacWindow = ({ children, width='40vw', height='60vh', windowName, setWindowsState  }) => {
+const MacWindow = ({ children, width='40vw', height='60vh', windowName, setWindowsState, topZIndex, setTopZIndex  }) => {
 
   const vwToPx = (vw) => (window.innerWidth * parseFloat(vw)) / 100;
   const vhToPx = (vh) => (window.innerHeight * parseFloat(vh)) / 100;
@@ -28,6 +28,20 @@ const MacWindow = ({ children, width='40vw', height='60vh', windowName, setWindo
 
 const [{ x, y }] = useState(getRandomPosition);
 
+const [zIndex, setZIndex] = useState(1);
+
+const bringToFront = () => {
+  setTopZIndex(prev => {
+    const next = prev + 1;
+    setZIndex(next);
+    return next;
+  });
+};
+
+useEffect(() => {
+  bringToFront();
+}, []);
+
   return (
     <Rnd 
         default={{
@@ -36,10 +50,12 @@ const [{ x, y }] = useState(getRandomPosition);
             x: x,
             y: y
         }}
+        style={{ zIndex }}
+        onMouseDown={bringToFront}
 
         dragHandleClassName="window-drag-handle"
     >
-      <div className="window">
+      <div className={`window`}>
         <div className="nav window-drag-handle">
           <div className="dots">
             <div 

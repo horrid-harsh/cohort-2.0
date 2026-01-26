@@ -5,7 +5,7 @@ import './note.scss'
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
-const Note = ({ windowName, setWindowsState }) => {
+const Note = ({ windowName, setWindowsState, topZIndex, setTopZIndex }) => {
 
     const [markdown, setMarkdown] = useState(null);
 
@@ -20,7 +20,7 @@ const Note = ({ windowName, setWindowsState }) => {
 
 
   return (
-    <MacWindow windowName={windowName} setWindowsState={setWindowsState} >
+    <MacWindow windowName={windowName} setWindowsState={setWindowsState} topZIndex={topZIndex} setTopZIndex={setTopZIndex} >
         <div className="note-window">
             {markdown ? <SyntaxHighlighter language="typescript" style={docco}>{markdown}</SyntaxHighlighter> : <p>Loading...</p>}
         </div>

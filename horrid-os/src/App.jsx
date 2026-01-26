@@ -19,16 +19,18 @@ function App() {
     cli: false
   })
 
+  const [topZIndex, setTopZIndex] = useState(1)
+
   return (
    <>
     <main>
       <Navbar />
       <Dock windowsState={windowsState} setWindowsState={setWindowsState} />
-      { windowsState.github && <GitHub windowName="github" setWindowsState={setWindowsState} />}
-      { windowsState.note && <Note windowName="note" setWindowsState={setWindowsState} />}
-      { windowsState.resume && <Resume windowName="resume" setWindowsState={setWindowsState} />}
-      { windowsState.spotify && <Spotify windowName="spotify" setWindowsState={setWindowsState} />}
-      { windowsState.cli && <Cli windowName="cli" setWindowsState={setWindowsState} />}
+      { windowsState.github && <GitHub windowName="github" setWindowsState={setWindowsState} topZIndex={topZIndex} setTopZIndex={setTopZIndex} />}
+      { windowsState.note && <Note windowName="note" setWindowsState={setWindowsState} topZIndex={topZIndex} setTopZIndex={setTopZIndex} />}
+      { windowsState.resume && <Resume windowName="resume" setWindowsState={setWindowsState} topZIndex={topZIndex} setTopZIndex={setTopZIndex} />}
+      { windowsState.spotify && <Spotify windowName="spotify" setWindowsState={setWindowsState} topZIndex={topZIndex} setTopZIndex={setTopZIndex} />}
+      { windowsState.cli && <Cli windowName="cli" setWindowsState={setWindowsState} topZIndex={topZIndex} setTopZIndex={setTopZIndex} />}
     </main>
    </>
   )

@@ -16,6 +16,10 @@ nav {
     .left {
         display: flex;
         gap: 1rem;  
+
+        .apple-icon {
+            display: flex;
+        }
     }
     .right {
         display: flex;
@@ -24,8 +28,6 @@ nav {
 
         .nav-icon {
             display: flex;
-            // flex-direction: column;
-            // align-items: center;
         }
     }
     
