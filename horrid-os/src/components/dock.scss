@@ -10,10 +10,12 @@
   transform: translateX(-50%);
   background: rgba(53, 53, 53, 0.65);
   backdrop-filter: blur(8px);
-  padding-inline: 1rem;
-  padding-block: 0.75rem;
+  
+  padding-inline: 0.75rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.75rem;
   border: 1px solid rgba(255, 255, 255, 0.25);
-  border-radius: 0.75rem;
+  border-radius: 1rem;
   transition: gap 0.25s ease;
 
   &:hover {
@@ -21,15 +23,26 @@
   }
 
   .icon {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
+
     padding: 0.65rem;
-    border-radius: 0.5rem;
+    border-radius: 0.75rem;
     aspect-ratio: 1/1;
     width: 3.75rem;
     cursor: pointer;
     transition: all 0.2s linear;
+
+    .active-dot {
+      position: absolute;
+      bottom: -10px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: white;
+    }
   }
 
   .icon:hover {
@@ -67,8 +80,17 @@
     background: linear-gradient(145deg, #1db954, #159643);
   }
 
-  .link {
-    background: linear-gradient(to bottom, rgb(163, 97, 170), rgb(142, 33, 150));
+  .linkedin {
+          padding: 0;
+    img {
+          background: #0077B7;
+          border-radius: 0.75rem;
+          height: 100%;
+    }
   }
 
+}
+
+.dock.has-active {
+  padding-bottom: 1rem;
 }

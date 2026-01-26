@@ -7,8 +7,8 @@ const DateTime = () => {
     const updateDateTime = () => {
       const now = new Date()
       
-      const dayOfWeek = now.toLocaleDateString('en-US', { weekday: 'short' }).toLowerCase()
-      const month = now.toLocaleDateString('en-US', { month: 'short' }).toLowerCase()
+      const dayOfWeek = now.toLocaleDateString('en-US', { weekday: 'short' })
+      const month = now.toLocaleDateString('en-US', { month: 'short' })
       const day = now.getDate()
       const time = now.toLocaleTimeString('en-US', { 
         hour: 'numeric', 
