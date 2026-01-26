@@ -72,45 +72,48 @@ useEffect(() => {
 
   return (
     <Rnd 
-    ref={rndRef}
-    className="mac-window-rnd"
-        default={{
-          width,
-          height,
-          x,
-          y
-        }}
-        enableResizing={!isMaximized}
-        onDragStart={() => setIsInteracting(true)}
-        onDragStop={(e, d) => {
-          setIsInteracting(false);
-          // Enforce top boundary - window cannot go above y = 0 (like macOS)
-          const constrainedY = Math.max(0, d.y);
-          const finalPosition = { x: d.x, y: constrainedY };
-          
-          // Update the position if it was constrained
-          if (constrainedY !== d.y) {
-            rndRef.current.updatePosition({ x: d.x, y: constrainedY });
-          }
-          
-          setPosition(finalPosition);
-        }}
+      ref={rndRef}
+      className="mac-window-rnd"
+      default={{
+        width,
+        height,
+        x,
+        y
+      }}
+      minWidth={320}
+      minHeight={220}
+      enableResizing={!isMaximized}
+      onDragStart={() => setIsInteracting(true)}
+      onDragStop={(e, d) => {
+        setIsInteracting(false);
+        // Enforce top boundary - window cannot go above y = 0 (like macOS)
+        const constrainedY = Math.max(0, d.y);
+        const finalPosition = { x: d.x, y: constrainedY };
 
-        onResizeStart={() => setIsInteracting(true)}
-        onResizeStop={(e, dir, ref, delta, pos) => {
-          setIsInteracting(false);
-          setSize({
-            width: ref.style.width,
-            height: ref.style.height
-          });
-          setPosition(pos);
-        }}
+        // Update the position if it was constrained
+        if (constrainedY !== d.y) {
+          rndRef.current.updatePosition({ x: d.x, y: constrainedY });
+        }
 
-        style={{ zIndex, transition: isInteracting 
-          ? 'none' 
-          : 'width 0.28s cubic-bezier(0.4,0,0.2,1), height 0.28s cubic-bezier(0.4,0,0.2,1), transform 0.28s cubic-bezier(0.4,0,0.2,1)' }}
-        onMouseDown={bringToFront}
-        dragHandleClassName="window-drag-handle"
+        setPosition(finalPosition);
+      }}
+      onResizeStart={() => setIsInteracting(true)}
+      onResizeStop={(e, dir, ref, delta, pos) => {
+        setIsInteracting(false);
+        setSize({
+          width: ref.style.width,
+          height: ref.style.height
+        });
+        setPosition(pos);
+      }}
+      style={{
+        zIndex,
+        transition: isInteracting
+          ? 'none'
+          : 'width 0.28s cubic-bezier(0.4,0,0.2,1), height 0.28s cubic-bezier(0.4,0,0.2,1), transform 0.28s cubic-bezier(0.4,0,0.2,1)'
+      }}
+      onMouseDown={bringToFront}
+      dragHandleClassName="window-drag-handle"
     >
       <div className="window">
         <div className="nav window-drag-handle">
