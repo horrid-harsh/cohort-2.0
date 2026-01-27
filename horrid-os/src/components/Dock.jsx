@@ -67,7 +67,7 @@ const Dock = ({ windowsState, setWindowsState, setMinimizedWindows }) => {
 
         <div
           onClick={()=>{window.open("https://calendar.google.com/","_blank")}} 
-          className='icon calender'><img src="/doc-icons/calender.svg" alt="" />
+          className='icon calendar'><img src="/doc-icons/calendar.svg" alt="" />
           </div>
 
         <div

@@ -30,8 +30,8 @@
 
     padding: 0.65rem;
     border-radius: 0.75rem;
-    aspect-ratio: 1/1;
-    width: 3.75rem;
+    height: 2.75rem;
+    width: 2.75rem;
     cursor: pointer;
     transition: all 0.2s linear;
 
@@ -71,7 +71,7 @@
     background: linear-gradient(145deg, #ff4b4b, #c62828);
   }
 
-  .calender,
+  .calendar,
   .mail {
     background: linear-gradient(to bottom, rgb(105, 94, 255), rgb(66, 52, 255));
   }
