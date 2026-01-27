@@ -3,7 +3,15 @@ import "./window.scss";
 import { useEffect, useState } from "react";
 import { useRef } from "react";
 
-const MacWindow = ({ children, width='40vw', height='60vh', windowName, setWindowsState, topZIndex, setTopZIndex  }) => {
+const MacWindow = ({ children, width='40vw', height='60vh', windowName, windowProps }) => {
+
+  const {
+    setWindowsState,
+    topZIndex,
+    setTopZIndex,
+    minimizedWindows,
+    setMinimizedWindows
+  } = windowProps;
 
   const vwToPx = (vw) => (window.innerWidth * parseFloat(vw)) / 100;
   const vhToPx = (vh) => (window.innerHeight * parseFloat(vh)) / 100;
@@ -70,6 +78,13 @@ useEffect(() => {
   bringToFront();
 }, []);
 
+// useEffect(() => {
+//   if (!minimizedWindows[windowName]) {
+//     bringToFront();
+//   }
+// }, [minimizedWindows[windowName]]);
+
+
   return (
     <Rnd 
       ref={rndRef}
@@ -107,6 +122,7 @@ useEffect(() => {
         setPosition(pos);
       }}
       style={{
+        display: minimizedWindows[windowName] ? 'none' : 'block',
         zIndex,
         transition: isInteracting
           ? 'none'
@@ -132,7 +148,11 @@ useEffect(() => {
               </svg>
             </div>
 
-            <div className="dot yellow">
+            <div onClick={()=> 
+              setMinimizedWindows(state => ({
+              ...state, [windowName]: true
+            }))} 
+            className="dot yellow">
               <svg
                 width="7"
                 height="7"

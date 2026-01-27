@@ -1,9 +1,9 @@
 import MacWindow from './MacWindow';
 import './resume.scss';
 
-const Resume = ({ windowName, setWindowsState, topZIndex, setTopZIndex }) => {
+const Resume = ({ windowName, windowProps }) => {
   return (
-    <MacWindow windowName={windowName} windowState={setWindowsState} topZIndex={topZIndex} setTopZIndex={setTopZIndex} >
+    <MacWindow windowName={windowName} windowProps={windowProps} >
         <div className='resume-window'>
             <embed src="/Resume-MERN_v2.pdf"></embed>    
         </div>

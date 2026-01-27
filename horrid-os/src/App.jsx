@@ -19,21 +19,56 @@ function App() {
     cli: false
   })
 
+  const [minimizedWindows, setMinimizedWindows] = useState({
+    github: false,
+    note: false,
+    resume: false,
+    spotify: false,
+    cli: false
+  });
+
   const [topZIndex, setTopZIndex] = useState(1)
+
+  const windowsConfig = [
+    { key: 'github', component: GitHub },
+    { key: 'note', component: Note },
+    { key: 'resume', component: Resume },
+    { key: 'spotify', component: Spotify },
+    { key: 'cli', component: Cli }
+  ];
+
+  const windowProps = {
+    setWindowsState,
+    topZIndex,
+    setTopZIndex,
+    minimizedWindows,
+    setMinimizedWindows
+  };
 
   return (
    <>
     <main>
       <Navbar />
-      <div id="desktop">
-         <Dock windowsState={windowsState} setWindowsState={setWindowsState} />
-        { windowsState.github && <GitHub windowName="github" setWindowsState={setWindowsState} topZIndex={topZIndex} setTopZIndex={setTopZIndex} />}
-        { windowsState.note && <Note windowName="note" setWindowsState={setWindowsState} topZIndex={topZIndex} setTopZIndex={setTopZIndex} />}
-        { windowsState.resume && <Resume windowName="resume" setWindowsState={setWindowsState} topZIndex={topZIndex} setTopZIndex={setTopZIndex} />}
-        { windowsState.spotify && <Spotify windowName="spotify" setWindowsState={setWindowsState} topZIndex={topZIndex} setTopZIndex={setTopZIndex} />}
-        { windowsState.cli && <Cli windowName="cli" setWindowsState={setWindowsState} topZIndex={topZIndex} setTopZIndex={setTopZIndex} />}
+     <div id="desktop">
+  <Dock
+    windowsState={windowsState}
+    setWindowsState={setWindowsState}
+    setMinimizedWindows={setMinimizedWindows}
+  />
 
-      </div>
+  {windowsConfig.map(({ key, component: WindowComponent }) => {
+    console.log(key, windowsState[key]); // debugging is fine here
+
+    return windowsState[key] ? (
+      <WindowComponent
+        key={key}
+        windowName={key}
+        windowProps={windowProps}
+      />
+    ) : null;
+  })}
+</div>
+
     </main>
    </>
   )

@@ -2,7 +2,7 @@ import Terminal from 'react-console-emulator';
 import MacWindow from './MacWindow';
 import './cli.scss'
 
-const Cli = ({ windowName, setWindowsState, topZIndex, setTopZIndex }) => {
+const Cli = ({ windowName, windowProps }) => {
 
     const commands = {
         about: {
@@ -90,7 +90,7 @@ Type 'help' to see all available commands, or try:
 Happy exploring! 🚀
 `
   return (
-    <MacWindow windowName={windowName} setWindowsState={setWindowsState} topZIndex={topZIndex} setTopZIndex={setTopZIndex}>
+    <MacWindow windowName={windowName} windowProps={windowProps}>
         <div className="cli-window">
             <Terminal 
                 commands={commands}
