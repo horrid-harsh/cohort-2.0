@@ -4,52 +4,63 @@ const Dock = ({ windowsState, setWindowsState, setMinimizedWindows }) => {
 
   const isAnyWindowOpen = Object.values(windowsState).some(Boolean);
 
-  // const handleDockClick = (app) => {
-  //   setWindowsState(state => {
-  //     if (!state[app]) {
-  //       return { ...state, [app]: true };
-  //     }
-  //     return state;
-  //   });
+  const handleDockClick = (app) => {
+    setWindowsState(state => {
+      if (!state[app]) {
+        return { ...state, [app]: true };
+      }
+      return state;
+    });
 
-  //   setMinimizedWindows(state => {
-  //     if (!windowsState[app]) {
-  //       return { ...state, [app]: false };
-  //     }
+    setMinimizedWindows(state => {
 
-  //     if (state[app]) {
-  //       return { ...state, [app]: false };
-  //     }
+      // CASE 1:
+      // If the app was CLOSED before this click,
+      // we are opening it for the first time.
+      // So the window should NOT be minimized.
+      if (!windowsState[app]) {
+        return { 
+          ...state, 
+          [app]: false  // visible window
+        };
+      }
 
-  //     return { ...state, [app]: true };
-  //   });
-  // };
+      // CASE 2:
+      // If the app is already OPEN but currently MINIMIZED,
+      // clicking the dock icon should RESTORE the window.
+      if (state[app]) {
+        return { 
+          ...state, 
+          [app]: false  // un-minimize (show window)
+        };
+      }
+
+      // CASE 3:
+      // If the app is OPEN and currently VISIBLE,
+      // clicking the dock icon should MINIMIZE it.
+      return { 
+        ...state, 
+        [app]: true   // hide window
+      };
+    });
+  };
 
   return (
     <footer className={`dock ${isAnyWindowOpen ? 'has-active' : ''}`}>
         <div 
-          onClick={() => {
-            setWindowsState(state => ({ ...state, github: true }));
-            setMinimizedWindows(state => ({ ...state, github: false }));
-          }}
+          onClick={() => handleDockClick('github')}
           className='icon github'><img src="/doc-icons/github.svg" alt="" />
           {windowsState.github && <span className="active-dot"></span>}
           </div>
 
         <div
-          onClick={() => { 
-            setWindowsState(state => ({ ...state, note: true }));
-            setMinimizedWindows(state => ({ ...state, note: false }));
-           }} 
+          onClick={() => handleDockClick('note')} 
           className='icon note'><img src="/doc-icons/note.svg" alt="" />
           {windowsState.note && <span className="active-dot"></span>}
           </div>
 
         <div
-          onClick={() => { 
-            setWindowsState(state => ({ ...state, resume: true }));
-            setMinimizedWindows(state => ({ ...state, resume: false }));
-           }} 
+          onClick={() => handleDockClick('resume')}
           className='icon pdf'><img src="/doc-icons/pdf.svg" alt="" />
           {windowsState.resume && <span className="active-dot"></span>}
           </div>
@@ -60,10 +71,7 @@ const Dock = ({ windowsState, setWindowsState, setMinimizedWindows }) => {
           </div>
 
         <div
-          onClick={() => { 
-            setWindowsState(state => ({ ...state, spotify: true }));
-            setMinimizedWindows(state => ({ ...state, spotify: false }))
-         }}
+          onClick={() => handleDockClick('spotify')}
           className='icon spotify'><img src="/doc-icons/spotify.svg" alt="" />
           {windowsState.spotify && <span className="active-dot"></span>}
           </div>
@@ -77,10 +85,7 @@ const Dock = ({ windowsState, setWindowsState, setMinimizedWindows }) => {
           className='icon linkedin'><img src="/doc-icons/linkedin_v2.svg" alt="" /></div>
 
         <div
-         onClick={() => { 
-          setWindowsState(state => ({ ...state, cli: true }));
-          setMinimizedWindows(state => ({...state, cli: false}));
-        }}
+         onClick={() => handleDockClick('cli')}
           className='icon cli'><img src="/doc-icons/cli.svg" alt="" />
           {windowsState.cli && <span className="active-dot"></span>}
           </div>
