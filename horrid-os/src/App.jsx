@@ -1,40 +1,39 @@
-import './app.scss'
-import Dock from './components/dock'
-import Navbar from './components/Navbar'
-import MacWindow from './components/windows/MacWindow'
-import GitHub from './components/windows/GitHub'
-import Note from './components/windows/Note'
-import Resume from './components/windows/Resume'
-import Spotify from './components/windows/Spotify'
-import Cli from './components/windows/Cli'
-import { useState } from 'react'
+import "./app.scss";
+import Dock from "./components/Dock";
+import Navbar from "./components/Navbar";
+import MacWindow from "./components/windows/MacWindow";
+import GitHub from "./components/windows/GitHub";
+import Note from "./components/windows/Note";
+import Resume from "./components/windows/Resume";
+import Spotify from "./components/windows/Spotify";
+import Cli from "./components/windows/Cli";
+import { useState } from "react";
 
 function App() {
-
   const [windowsState, setWindowsState] = useState({
     github: false,
     note: false,
     resume: false,
     spotify: false,
-    cli: false
-  })
+    cli: false,
+  });
 
   const [minimizedWindows, setMinimizedWindows] = useState({
     github: false,
     note: false,
     resume: false,
     spotify: false,
-    cli: false
+    cli: false,
   });
 
-  const [topZIndex, setTopZIndex] = useState(1)
+  const [topZIndex, setTopZIndex] = useState(1);
 
   const windowsConfig = [
-    { key: 'github', component: GitHub },
-    { key: 'note', component: Note },
-    { key: 'resume', component: Resume },
-    { key: 'spotify', component: Spotify },
-    { key: 'cli', component: Cli }
+    { key: "github", component: GitHub },
+    { key: "note", component: Note },
+    { key: "resume", component: Resume },
+    { key: "spotify", component: Spotify },
+    { key: "cli", component: Cli },
   ];
 
   const windowProps = {
@@ -42,36 +41,35 @@ function App() {
     topZIndex,
     setTopZIndex,
     minimizedWindows,
-    setMinimizedWindows
+    setMinimizedWindows,
   };
 
   return (
-   <>
-    <main>
-      <Navbar />
-     <div id="desktop">
-  <Dock
-    windowsState={windowsState}
-    setWindowsState={setWindowsState}
-    setMinimizedWindows={setMinimizedWindows}
-  />
+    <>
+      <main>
+        <Navbar />
+        <div id="desktop">
+          <Dock
+            windowsState={windowsState}
+            setWindowsState={setWindowsState}
+            setMinimizedWindows={setMinimizedWindows}
+          />
 
-  {windowsConfig.map(({ key, component: WindowComponent }) => {
-    console.log(key, windowsState[key]); // debugging is fine here
+          {windowsConfig.map(({ key, component: WindowComponent }) => {
+            console.log(key, windowsState[key]); // debugging is fine here
 
-    return windowsState[key] ? (
-      <WindowComponent
-        key={key}
-        windowName={key}
-        windowProps={windowProps}
-      />
-    ) : null;
-  })}
-</div>
-
-    </main>
-   </>
-  )
+            return windowsState[key] ? (
+              <WindowComponent
+                key={key}
+                windowName={key}
+                windowProps={windowProps}
+              />
+            ) : null;
+          })}
+        </div>
+      </main>
+    </>
+  );
 }
 
-export default App
+export default App;

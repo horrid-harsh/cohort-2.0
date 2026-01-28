@@ -5,6 +5,9 @@ import { useRef } from "react";
 
 const MacWindow = ({ children, width='40vw', height='60vh', windowName, windowProps }) => {
 
+  const MENU_BAR_HEIGHT = 28;
+
+
   const {
     setWindowsState,
     topZIndex,
@@ -24,7 +27,7 @@ const MacWindow = ({ children, width='40vw', height='60vh', windowName, windowPr
     typeof height === 'string' ? vhToPx(height) : height;
 
   const minX = 80;
-  const minY = 80;
+  const minY = MENU_BAR_HEIGHT + 20;
 
   const maxX = window.innerWidth - windowWidthPx - 80;
   const maxY = window.innerHeight - windowHeightPx - 120;
@@ -37,10 +40,10 @@ const MacWindow = ({ children, width='40vw', height='60vh', windowName, windowPr
 
 const toggleMaximize = () => {
   if (!isMaximized) {
-    rndRef.current.updatePosition({ x: 0, y: 0 });
+    rndRef.current.updatePosition({ x: 0, y: MENU_BAR_HEIGHT  });
     rndRef.current.updateSize({
       width: window.innerWidth,
-      height: window.innerHeight
+      height: window.innerHeight - MENU_BAR_HEIGHT
     });
   } else {
     rndRef.current.updateSize({
@@ -102,7 +105,7 @@ useEffect(() => {
       onDragStop={(e, d) => {
         setIsInteracting(false);
         // Enforce top boundary - window cannot go above y = 0 (like macOS)
-        const constrainedY = Math.max(0, d.y);
+        const constrainedY = Math.max(MENU_BAR_HEIGHT, d.y);
         const finalPosition = { x: d.x, y: constrainedY };
 
         // Update the position if it was constrained
