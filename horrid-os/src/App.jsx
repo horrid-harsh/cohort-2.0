@@ -8,8 +8,15 @@ import Resume from "./components/windows/Resume";
 import Spotify from "./components/windows/Spotify";
 import Cli from "./components/windows/Cli";
 import { useState } from "react";
+import DesktopContextMenu from "./components/DesktopContextMenu";
+import BootScreen from "./components/BootScreen";
 
 function App() {
+
+  const [booting, setBooting] = useState(true);
+
+  const [desktopMenuPos, setDesktopMenuPos] = useState(null);
+
   const [windowsState, setWindowsState] = useState({
     github: false,
     note: false,
@@ -44,32 +51,81 @@ function App() {
     setMinimizedWindows,
   };
 
-  return (
-    <>
-      <main>
-        <Navbar />
-        <div id="desktop">
-          <Dock
-            windowsState={windowsState}
-            setWindowsState={setWindowsState}
-            setMinimizedWindows={setMinimizedWindows}
+  const handleDesktopContextMenu = (e) => {
+  // only right click
+  e.preventDefault();
+
+  // ignore right-clicks on windows or dock
+  if (e.target.closest(".mac-window-rnd") || e.target.closest(".dock")) {
+    return;
+  }
+
+  setDesktopMenuPos({
+    x: e.clientX,
+    y: e.clientY,
+  });
+};
+const closeDesktopMenu = () => {
+  setDesktopMenuPos(null);
+};
+
+return (
+<>
+  {booting && <BootScreen onFinish={() => setBooting(false)} />}
+
+  <main className={booting ? "app-hidden" : ""}>
+    <Navbar />
+    <div id="desktop">
+      <Dock
+        windowsState={windowsState}
+        setWindowsState={setWindowsState}
+        setMinimizedWindows={setMinimizedWindows}
+      />
+
+      {windowsConfig.map(({ key, component: WindowComponent }) =>
+        windowsState[key] ? (
+          <WindowComponent
+            key={key}
+            windowName={key}
+            windowProps={windowProps}
           />
+        ) : null
+      )}
+    </div>
+  </main>
+</>
+)
+    
+  
 
-          {windowsConfig.map(({ key, component: WindowComponent }) => {
-            console.log(key, windowsState[key]); // debugging is fine here
 
-            return windowsState[key] ? (
-              <WindowComponent
-                key={key}
-                windowName={key}
-                windowProps={windowProps}
-              />
-            ) : null;
-          })}
-        </div>
-      </main>
-    </>
-  );
+  // return (
+  //   <>
+  //     <main onClick={closeDesktopMenu} onContextMenu={handleDesktopContextMenu}>
+  //       <Navbar />
+  //       <div id="desktop">
+  //         <Dock
+  //           windowsState={windowsState}
+  //           setWindowsState={setWindowsState}
+  //           setMinimizedWindows={setMinimizedWindows}
+  //         />
+
+  //         {windowsConfig.map(({ key, component: WindowComponent }) => {
+  //           console.log(key, windowsState[key]); // debugging is fine here
+
+  //           return windowsState[key] ? (
+  //             <WindowComponent
+  //               key={key}
+  //               windowName={key}
+  //               windowProps={windowProps}
+  //             />
+  //           ) : null;
+  //         })}
+  //       </div>
+  //       <DesktopContextMenu position={desktopMenuPos} onClose={closeDesktopMenu} />
+  //     </main>
+  //   </>
+  // );
 }
 
 export default App;

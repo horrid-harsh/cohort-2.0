@@ -92,86 +92,91 @@
   }
 }
 
-  /* =========================
+/* =========================
    MENU DROPDOWN (PORTAL)
    ========================= */
 
-  .menu-dropdown-portal {
-    position: fixed;
-    min-width: 240px;
-    padding: 6px;
+.menu-dropdown-portal {
+  position: fixed;
+  min-width: 240px;
+  padding: 6px;
 
-    border-radius: 5px;
-    overflow: hidden;
-    isolation: isolate;
+  border-radius: 5px;
+  overflow: hidden;
+  isolation: isolate;
 
-    z-index: 9999;
+  z-index: 9999;
 
-    /* NO COLOR HERE */
-    background: transparent;
+  /* NO COLOR HERE */
+  background: transparent;
 
-    font-family:
-      -apple-system, BlinkMacSystemFont, "San Francisco", "Helvetica Neue",
-      sans-serif;
-  }
+  font-family:
+    -apple-system, BlinkMacSystemFont, "San Francisco", "Helvetica Neue",
+    sans-serif;
 
-  /* MAIN GLASS */
-  .menu-dropdown-portal::before {
-    content: "";
-    position: absolute;
-    inset: 0;
+  box-shadow:
+    0 12px 24px rgba(0, 0, 0, 0.727),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+  user-select: none;
+}
 
-    /* THIS IS CRITICAL */
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
+/* MAIN GLASS */
+.menu-dropdown-portal::before {
+  content: "";
+  position: absolute;
+  inset: 0;
 
-    /* VERY SUBTLE DARK TINT (NOT WHITE) */
-    background: rgba(255, 255, 255, 0);
+  /* THIS IS CRITICAL */
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
 
-    z-index: -2;
-  }
+  /* VERY SUBTLE DARK TINT (NOT WHITE) */
+  background: rgba(255, 255, 255, 0);
 
-  /* INNER BORDER (macOS look) */
-  .menu-dropdown-portal::after {
-    content: "";
-    position: absolute;
-    inset: 0;
+  z-index: -2;
+}
 
-    border-radius: 5px;
+/* INNER BORDER (macOS look) */
+.menu-dropdown-portal::after {
+  content: "";
+  position: absolute;
+  inset: 0;
 
-    /* subtle highlight */
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+  border-radius: 5px;
 
-    pointer-events: none;
-    z-index: -1;
-  }
+  /* subtle highlight */
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.15);
 
-  /* =========================
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* =========================
    DROPDOWN ITEMS
    ========================= */
 
-  .dropdown-item {
-    padding: 3px 8px;
+.dropdown-item {
+  padding: 3px 8px;
 
-    font-size: 13px;
-    font-weight: 500;
-    color: rgba(255, 255, 255, 0.9); // macOS menu text on dark glass
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9); // macOS menu text on dark glass
 
-    border-radius: 6px;
+  border-radius: 6px;
 
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 
-    &:hover {
-      background: #66d4ff;
-      color: black;
-    }
-
-    &.disabled {
-      opacity: 0.45;
-      pointer-events: none;
-    }
+  &:hover {
+    background: #66d4ff;
+    color: black;
   }
+
+  &.disabled {
+    opacity: 0.45;
+    pointer-events: none;
+  }
+}
 
 /* =========================
    ANIMATIONS
