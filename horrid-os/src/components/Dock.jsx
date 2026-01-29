@@ -1,10 +1,15 @@
+import { useRef } from 'react';
 import './dock.scss'
 
 const Dock = ({ windowsState, setWindowsState, setMinimizedWindows }) => {
 
+  const dockRefs = useRef({});
+
   const isAnyWindowOpen = Object.values(windowsState).some(Boolean);
 
   const handleDockClick = (app) => {
+    const wasClosed = !windowsState[app];
+
     setWindowsState(state => {
       if (!state[app]) {
         return { ...state, [app]: true };
@@ -43,23 +48,37 @@ const Dock = ({ windowsState, setWindowsState, setMinimizedWindows }) => {
         [app]: true   // hide window
       };
     });
-  };
+
+      // 🔴 BOUNCE ONLY HERE
+    if (wasClosed) {
+      const el = dockRefs.current[app];
+      if (!el) return;
+
+      el.classList.add("dock-bounce");
+      setTimeout(() => {
+        el.classList.remove("dock-bounce");
+      }, 800);
+    }
+  }
 
   return (
     <footer className={`dock ${isAnyWindowOpen ? 'has-active' : ''}`}>
         <div 
+        ref={el => (dockRefs.current.github = el)}
           onClick={() => handleDockClick('github')}
           className='icon github'><img src="/doc-icons/github.svg" alt="" />
           {windowsState.github && <span className="active-dot"></span>}
           </div>
 
         <div
+        ref={el => (dockRefs.current.note = el)}
           onClick={() => handleDockClick('note')} 
           className='icon note'><img src="/doc-icons/note.svg" alt="" />
           {windowsState.note && <span className="active-dot"></span>}
           </div>
 
         <div
+        ref={el => (dockRefs.current.resume = el)}
           onClick={() => handleDockClick('resume')}
           className='icon pdf'><img src="/doc-icons/pdf.svg" alt="" />
           {windowsState.resume && <span className="active-dot"></span>}
@@ -71,10 +90,11 @@ const Dock = ({ windowsState, setWindowsState, setMinimizedWindows }) => {
           </div>
 
         <div
+        ref={el => (dockRefs.current.spotify = el)}
           onClick={() => handleDockClick('spotify')}
           className='icon spotify'><img src="/doc-icons/spotify.svg" alt="" />
           {windowsState.spotify && <span className="active-dot"></span>}
-          </div>
+        </div>
 
         <div
          onClick={()=>{window.open("mailto:lalitasolanki2577@gmail.com","_blank")}}
@@ -85,6 +105,7 @@ const Dock = ({ windowsState, setWindowsState, setMinimizedWindows }) => {
           className='icon linkedin'><img src="/doc-icons/linkedin_v2.svg" alt="" /></div>
 
         <div
+        ref={el => (dockRefs.current.cli = el)}
          onClick={() => handleDockClick('cli')}
           className='icon cli'><img src="/doc-icons/cli.svg" alt="" />
           {windowsState.cli && <span className="active-dot"></span>}

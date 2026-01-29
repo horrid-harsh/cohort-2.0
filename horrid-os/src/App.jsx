@@ -71,7 +71,7 @@ const closeDesktopMenu = () => {
 
 return (
 <>
-  {booting && <BootScreen onFinish={() => setBooting(false)} />}
+  {/* {booting && <BootScreen onFinish={() => setBooting(false)} />} */}
 
   <main className={booting ? "app-hidden" : ""}>
     <Navbar />

@@ -94,3 +94,23 @@
 .dock.has-active {
   padding-bottom: 1rem;
 }
+
+@keyframes dockBounce {
+  0% {
+    transform: translateY(0) scale(1.25);
+  }
+
+  45% {
+    transform: translateY(-50px) scale(1.25);
+  }
+
+  100% {
+    transform: translateY(0) scale(1.25);
+  }
+}
+
+.dock-bounce {
+  animation: dockBounce 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+
