@@ -1,13 +1,12 @@
 import "./app.scss";
+import { useState } from "react";
 import Dock from "./components/Dock";
 import Navbar from "./components/Navbar";
-import MacWindow from "./components/windows/MacWindow";
 import GitHub from "./components/windows/GitHub";
 import Note from "./components/windows/Note";
 import Resume from "./components/windows/Resume";
 import Spotify from "./components/windows/Spotify";
 import Cli from "./components/windows/Cli";
-import { useState } from "react";
 import DesktopContextMenu from "./components/DesktopContextMenu";
 import BootScreen from "./components/BootScreen";
 
@@ -96,34 +95,6 @@ return (
   </main>
 </>
 )
-
-  // return (
-  //   <>
-  //     <main onClick={closeDesktopMenu} onContextMenu={handleDesktopContextMenu}>
-  //       <Navbar />
-  //       <div id="desktop">
-  //         <Dock
-  //           windowsState={windowsState}
-  //           setWindowsState={setWindowsState}
-  //           setMinimizedWindows={setMinimizedWindows}
-  //         />
-
-  //         {windowsConfig.map(({ key, component: WindowComponent }) => {
-  //           console.log(key, windowsState[key]); // debugging is fine here
-
-  //           return windowsState[key] ? (
-  //             <WindowComponent
-  //               key={key}
-  //               windowName={key}
-  //               windowProps={windowProps}
-  //             />
-  //           ) : null;
-  //         })}
-  //       </div>
-  //       <DesktopContextMenu position={desktopMenuPos} onClose={closeDesktopMenu} />
-  //     </main>
-  //   </>
-  // );
 }
 
 export default App;
