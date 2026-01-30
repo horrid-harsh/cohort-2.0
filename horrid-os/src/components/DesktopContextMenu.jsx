@@ -1,5 +1,5 @@
-import { createPortal } from "react-dom"
-import './desktop-context-menu.scss'
+import { createPortal } from "react-dom";
+import "./desktop-context-menu.scss";
 
 const MENU_ITEMS = [
   "New Folder",
@@ -23,12 +23,14 @@ export default function DesktopContextMenu({ position, onClose }) {
         left: position.x,
       }}
     >
-      {MENU_ITEMS.map((item) => (
-        <div key={item} className="dropdown-item">
-          {item}
-        </div>
-      ))}
+      <div className="d-c-container">
+        {MENU_ITEMS.map((item) => (
+          <div key={item} className="dropdown-item">
+            {item}
+          </div>
+        ))}
+      </div>
     </div>,
-    document.body
+    document.body,
   );
 }

@@ -10,8 +10,10 @@ export default function MenuDropdown({ rect, children }) {
         top: rect.bottom,
         left: rect.left,
       }}
-    >
+    ><div className="m-d-container">
       {children}
+
+    </div>
     </div>,
     document.body
   );

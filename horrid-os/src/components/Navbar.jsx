@@ -8,7 +8,7 @@ const MENU = [
     {
     title: "Apple",
     icon: AppleIcon,
-    items: ["About This Mac", "System Settings", "Sleep", "Restart", "Shut Down"],
+    items: ["About This Mac", "System Settings", "Sleep", "Restart...", "Shut Down..."],
   },
   {
     title: "Finder",
@@ -25,19 +25,19 @@ const MENU = [
   },
   {
     title: "View",
-    items: ["Show Toolbar", "Hide Sidebar"],
+    items: ["As Icons", "As List", "As Gallery", "Use Stacks", "Sort By", "Customize Toolbar", "Show View Options", "Enter Full Screen"],
   },
   {
     title: "Go",
-    items: ["Show Toolbar", "Hide Sidebar"],
+    items: ["Back", "Forward", "Recents", "Documents", "Desktop", "Downloads", "Home", "Go To Folder"],
   },
   {
     title: "Window",
-    items: ["Show Toolbar", "Hide Sidebar"],
+    items: ["Minimize", "Zoom", "Move Window to Left Side of Screen", "Move Window to Right Side of Screen", "Cycle Through Windows"],
   },
   {
     title: "Help",
-    items: ["Show Toolbar", "Hide Sidebar"],
+    items: ["Send Finder Feedback", "macOS Help"],
   },
   
 ];

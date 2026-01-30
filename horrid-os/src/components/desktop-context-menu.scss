@@ -1,24 +1,30 @@
 .desktop-context-menu {
   position: fixed;
   min-width: 220px;
-  padding: 6px;
-
   border-radius: 6px;
   overflow: hidden;
   isolation: isolate;
+  padding: 1px;
 
   z-index: 9999;
   background: transparent;
 
-   /* 👇 requested fixes */
+  /* 👇 requested fixes */
   user-select: none;
-  font-family: -apple-system, BlinkMacSystemFont, "San Francisco",
-    "Helvetica Neue", sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "San Francisco", "Helvetica Neue",
+    sans-serif;
 
   /* subtle separation from background */
   box-shadow:
     0 12px 24px rgba(0, 0, 0, 0.727),
     inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+
+  .d-c-container {
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    padding: 6px;
+    border-radius: inherit;
+  }
 }
 
 .desktop-context-menu::before {
