@@ -18,7 +18,6 @@ const Note = ({ windowName, windowProps }) => {
             .then(text => setMarkdown(text))
     }, [])
 
-
   return (
     <MacWindow windowName={windowName} windowProps={windowProps} >
         <div className="note-window">

@@ -7,7 +7,6 @@ const MacWindow = ({ children, width='40vw', height='60vh', windowName, windowPr
 
   const MENU_BAR_HEIGHT = 28;
 
-
   const {
     setWindowsState,
     topZIndex,
@@ -78,14 +77,10 @@ const bringToFront = () => {
 };
 
 useEffect(() => {
-  bringToFront();
-}, []);
-
-// useEffect(() => {
-//   if (!minimizedWindows[windowName]) {
-//     bringToFront();
-//   }
-// }, [minimizedWindows[windowName]]);
+  if (!minimizedWindows[windowName]) {
+    bringToFront();
+  }
+}, [minimizedWindows[windowName]]);
 
 
   return (

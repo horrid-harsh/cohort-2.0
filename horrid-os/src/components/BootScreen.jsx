@@ -1,48 +1,6 @@
-// import { useEffect, useRef, useState } from "react";
-// import "./BootScreen.scss";
-// import AppleIcon from "../../public/boot-logo.png";
-
-
-// export default function BootScreen({ onFinish }) {
-//   const progressRef = useRef(null);
-
-//   useEffect(() => {
-//     let start = null;
-//     const DURATION = 700; // ms (fast & smooth)
-
-//     const animate = (timestamp) => {
-//       if (!start) start = timestamp;
-//       const elapsed = timestamp - start;
-
-//       const progress = Math.min((elapsed / DURATION) * 100, 100);
-//       progressRef.current.style.width = `${progress}%`;
-
-//       if (elapsed < DURATION) {
-//         requestAnimationFrame(animate);
-//       } else {
-//         onFinish(); // no pause
-//       }
-//     };
-
-//     requestAnimationFrame(animate);
-//   }, [onFinish]);
-
-//   return (
-//     <div className="boot-screen">
-//       <img src={'https://upload.wikimedia.org/wikipedia/commons/3/31/Apple_logo_white.svg'} alt="Apple" className="boot-logo" />
-
-//       <div className="boot-progress">
-//                 <div ref={progressRef} className="boot-progress-fill" />
-//       </div>
-//     </div>
-//   );
-// }
-
-
-
 import { useEffect, useRef, useState } from "react";
 import "./BootScreen.scss";
-import AppleIcon from "../assets/cursors/apple.svg";
+import AppleIcon from "../../public/nav-icons/apple.svg";
 
 export default function BootScreen({ onFinish }) {
   const progressRef = useRef(null);

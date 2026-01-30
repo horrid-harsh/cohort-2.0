@@ -1,13 +1,6 @@
-// .mac-window-rnd {
-//   transition:
-//     width 0.28s cubic-bezier(0.4, 0, 0.2, 1),
-//     height 0.28s cubic-bezier(0.4, 0, 0.2, 1),
-//     transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);  
-// }
 .mac-window-rnd.dragging .main-content {
   pointer-events: none;
 }
-
 
 .window {
 
