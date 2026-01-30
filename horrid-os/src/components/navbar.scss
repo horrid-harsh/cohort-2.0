@@ -160,7 +160,7 @@
 
   font-size: 13px;
   font-weight: 500;
-  color: rgba(255, 255, 255, 0.9); // macOS menu text on dark glass
+  color: #111; // macOS menu text on dark glass
 
   border-radius: 6px;
 
@@ -168,8 +168,8 @@
   text-rendering: optimizeLegibility;
 
   &:hover {
-    background: #66d4ff;
-    color: black;
+    background: #00b7ff;
+    color: rgb(255, 255, 255);
   }
 
   &.disabled {

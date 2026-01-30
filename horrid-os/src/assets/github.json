@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "image": "https://cdn.dribbble.com/userupload/13463011/file/original-30d79fa4e29c68ecca9486feb2ca2c45.jpg?resize=1504x1306&vertical=center",
+    "image": "https://i.pinimg.com/1200x/b9/3a/60/b93a607f7ee3d21fb6fb7a4f3eb89bbb.jpg",
     "title": "Web-Based OS Portfolio",
     "description": "A macOS-inspired web-based operating system built with React, featuring draggable windows, a dock, and terminal-style navigation.",
     "tags": ["React", "CSS", "Window Manager", "UI/UX"],
