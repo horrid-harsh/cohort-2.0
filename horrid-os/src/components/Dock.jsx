@@ -61,8 +61,40 @@ const Dock = ({ windowsState, setWindowsState, setMinimizedWindows }) => {
     }
   }
 
+  const maxScale = 1.6;
+  const minScale = 1;
+  const influenceRadius = 120;
+
+  const handleMouseMove = (e) => {
+  Object.values(dockRefs.current).forEach(icon => {
+    if (!icon) return;
+
+    const rect = icon.getBoundingClientRect();
+    const iconCenter = rect.left + rect.width / 2;
+    const distance = Math.abs(e.clientX - iconCenter);
+    
+
+    let scale =
+      maxScale - (distance / influenceRadius) * (maxScale - minScale);
+
+    scale = Math.max(minScale, scale);
+
+    icon.style.transform = `
+      scale(${scale})
+      translateY(${-(scale - 1) * 25}px)
+    `;
+  });
+};
+const resetDock = () => {
+  Object.values(dockRefs.current).forEach(icon => {
+    if (!icon) return;
+    icon.style.transform = 'scale(1)';
+  });
+};
+
   return (
-    <footer className={`dock ${isAnyWindowOpen ? 'has-active' : ''}`}>
+    <footer onMouseMove={handleMouseMove} onMouseLeave={resetDock}
+      className={`dock ${isAnyWindowOpen ? 'has-active' : ''}`}>
         <div 
         ref={el => (dockRefs.current.github = el)}
           onClick={() => handleDockClick('github')}
@@ -84,7 +116,8 @@ const Dock = ({ windowsState, setWindowsState, setMinimizedWindows }) => {
           {windowsState.resume && <span className="active-dot"></span>}
           </div>
 
-        <div
+        <div 
+        ref={el => (dockRefs.current.calendar = el)}
           onClick={()=>{window.open("https://calendar.google.com/","_blank")}} 
           className='icon calendar'><img src="/doc-icons/calendar.svg" alt="" />
           </div>
@@ -97,10 +130,12 @@ const Dock = ({ windowsState, setWindowsState, setMinimizedWindows }) => {
         </div>
 
         <div
+        ref={el => (dockRefs.current.mail = el)}
          onClick={()=>{window.open("mailto:lalitasolanki2577@gmail.com","_blank")}}
           className='icon mail'><img src="/doc-icons/mail.svg" alt="" /></div>
 
         <div
+        ref={el => (dockRefs.current.linkedin = el)}
           onClick={()=>{window.open("https://www.linkedin.com/in/harsh-solanki-cse/","_blank")}}
           className='icon linkedin'><img src="/doc-icons/linkedin_v2.svg" alt="" /></div>
 

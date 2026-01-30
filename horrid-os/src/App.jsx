@@ -71,9 +71,9 @@ const closeDesktopMenu = () => {
 
 return (
 <>
-  {/* {booting && <BootScreen onFinish={() => setBooting(false)} />} */}
+  {booting && <BootScreen onFinish={() => setBooting(false)} />}
 
-  <main className={booting ? "app-hidden" : ""}>
+  <main onClick={closeDesktopMenu} onContextMenu={handleDesktopContextMenu} className={booting ? "app-hidden" : ""}>
     <Navbar />
     <div id="desktop">
       <Dock
@@ -92,12 +92,10 @@ return (
         ) : null
       )}
     </div>
+    <DesktopContextMenu position={desktopMenuPos} onClose={closeDesktopMenu} />
   </main>
 </>
 )
-    
-  
-
 
   // return (
   //   <>
