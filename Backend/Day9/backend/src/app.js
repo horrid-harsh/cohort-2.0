@@ -6,6 +6,9 @@ const cors = require('cors')
 app.use(express.json());
 app.use(cors());
 
+/*
+POST
+*/
 app.post("/api/notes", async (req, res) => {
   const { title, description } = req.body;
   const note = await noteModel.create({
@@ -18,6 +21,9 @@ app.post("/api/notes", async (req, res) => {
   });
 });
 
+/*
+GET
+*/
 app.get("/api/notes", async (req, res) => {
   const notes = await noteModel.find();
   res.status(200).json({
@@ -26,6 +32,9 @@ app.get("/api/notes", async (req, res) => {
   });
 });
 
+/*
+DELETE
+*/
 app.delete("/api/notes/:id", async (req, res) => {
   const id = req.params.id;
   await noteModel.findByIdAndDelete(id);
@@ -34,9 +43,24 @@ app.delete("/api/notes/:id", async (req, res) => {
   });
 });
 
+/*
+UPDATE
+*/
 app.patch("/api/notes/:id", async (req, res) => {
   const id = req.params.id;
   const { description } = req.body;
+  const note = await noteModel.findById(id);
+
+  if (!note) {
+    return res.status(404).json({ message: "Note not found" });
+  }
+
+  // 🔑 THIS is the key check
+  if (note.description === description) {
+    return res.status(200).json({
+      message: "No changes detected"
+    });
+  }
 
   await noteModel.findByIdAndUpdate(id, { description });
   res.status(200).json({
