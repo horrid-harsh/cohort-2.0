@@ -11,7 +11,7 @@ const App = () => {
   const [editDescription, setEditDescription] = useState('');
 
   function fetchNotes() {
-    axios.get('http://localhost:3000/api/notes')
+    axios.get('https://cohort-2-0-pxv0.onrender.com/api/notes')
     .then((res)=>{
       setNotes(res.data.notes);
       console.log(res.data);    
@@ -23,7 +23,7 @@ const App = () => {
 
     console.log(title);
     console.log(description);
-    axios.post('http://localhost:3000/api/notes', {
+    axios.post('https://cohort-2-0-pxv0.onrender.com/api/notes', {
       title: title,
       description: description
     })
@@ -39,8 +39,8 @@ const App = () => {
   }
 
   const handleDelete = (noteId)=> {
-    // axios.delete(`http://localhost:3000/api/notes/${noteId}`)
-    axios.delete(`http://localhost:3000/api/notes/`+noteId)
+    // axios.delete(`https://cohort-2-0-pxv0.onrender.com/api/notes/${noteId}`)
+    axios.delete(`https://cohort-2-0-pxv0.onrender.com/api/notes/`+noteId)
     .then((res)=>{
       console.log(res.data);
       fetchNotes();
@@ -48,7 +48,7 @@ const App = () => {
   }
 
   const handleUpdate = (noteId)=> {
-    axios.patch(`http://localhost:3000/api/notes/`+noteId, {
+    axios.patch(`https://cohort-2-0-pxv0.onrender.com/api/notes/`+noteId, {
       title: editTitle,
       description: editDescription
     })
