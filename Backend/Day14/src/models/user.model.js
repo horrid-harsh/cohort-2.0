@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema({
   email: {
     type: String,
     unique: [true, "Email already exists!!"],
-    required: [true, "Email is required"]
+    required: [true, "Email is required"],
   },
   password: {
     type: String,
@@ -18,9 +18,11 @@ const userSchema = new mongoose.Schema({
   bio: String,
   profileImage: {
     type: String,
-    default: 'https://ik.imagekit.io/lazzzyBug/avatar-default-user-profile-icon-social-media-vector-57234208.webp'
-  }
+    default:
+      "https://ik.imagekit.io/lazzzyBug/avatar-default-user-profile-icon-social-media-vector-57234208.webp",
+  },
+  posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "posts" }],
 });
 
-const userModel = mongoose.model('users', userSchema);
+const userModel = mongoose.model("users", userSchema);
 module.exports = userModel;
