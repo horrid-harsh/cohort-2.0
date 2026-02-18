@@ -25,4 +25,11 @@ userRouter.post('/unfollow/:username', authUser, userController.unfollowUserCont
  */
 userRouter.post('/like/:postId', authUser, postController.likePostController);
 
+/**
+ * @route POST /api/users/dislike/:postId [protected]
+ * @description dislike a post
+ * @access protected
+ */
+userRouter.post('/dislike/:postId', authUser, postController.dislikePostController);
+
 module.exports = userRouter;

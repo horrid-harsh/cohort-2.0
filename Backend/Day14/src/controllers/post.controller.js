@@ -161,9 +161,50 @@ async function likePostController(req, res) {
     }
 }
 
+async function dislikePostController(req, res) {
+  try {
+    const userId = req.user.id;
+    const postId = req.params.postId;
+
+    const post = await postModel.findById(postId);
+        if(!post){
+            return res.status(404).json({
+                message: "Post not found",
+            });
+        }
+
+        const isAlreadyLiked = await likeModel.findOne({
+          user: userId,
+          post: postId
+        })
+
+        if(!isAlreadyLiked) {
+          return res.status(400).json({
+            message: "You haven't liked this post"
+          })
+        }
+
+        await likeModel.deleteOne({
+          user: userId,
+          post: postId,
+        })
+
+        return res.status(200).json({
+          message: "Post disliked successfully",
+        })
+
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: "Internal server error",
+    });
+  } 
+}
+
 module.exports = {
   createPostController,
   getPostController,
   getPostDetailsController,
   likePostController,
+  dislikePostController,
 };
