@@ -1,6 +1,12 @@
 const userModel = require("../models/user.model");
 const followModel = require("../models/follow.model");
 
+/**
+ * Follow a user
+ *
+ * @route   POST /api/users/follow/:username
+ * @access  Private
+ */
 async function followUserController(req, res) {
     try {
         const followerId = req.user.id;
@@ -49,6 +55,53 @@ async function followUserController(req, res) {
     }
 }
 
+/**
+ * Unfollow a user
+ *
+ * @route   POST /api/users/unfollow/:username
+ * @access  Private
+ */
+async function unfollowUserController(req, res) {
+    const followerId = req.user.id;
+    const followerUsername = req.user.username;
+    const followeeUsername = req.params.username;
+
+    if(followerUsername === followeeUsername){
+        return res.status(400).json({
+            message: "You cannot unfollow yourself"
+        })
+    }
+
+    const followeeUser = await userModel.findOne({username: followeeUsername});
+
+    if(!followeeUser){
+        return res.status(404).json({
+            message: "User not found"
+        })
+    }
+
+    const isAlreadyFollowing = await followModel.findOne({
+        follower: followerId,
+        following: followeeUser._id
+    });
+
+    if(!isAlreadyFollowing){
+        return res.status(400).json({
+            message: "You are not following this user"
+        })
+    }
+
+    await followModel.deleteOne({
+        follower: followerId,
+        following: followeeUser._id
+    });
+
+    return res.status(200).json({
+        message: `You have unfollowed ${followeeUsername}`,
+    });
+}
+
 module.exports = {
-    followUserController
+    followUserController,
+    unfollowUserController
 }
