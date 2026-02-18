@@ -3,12 +3,18 @@ const authRouter = express.Router();
 const authController = require('../controllers/auth.controller');
 
 /**
- * POST /api/auth/register
+ * Register a new user
+ *
+ * @route   POST /api/auth/register
+ * @access  Public
  */
 authRouter.post("/register", authController.registerController);
 
 /**
- * POST /api/auth/login
+ * Login a user
+ *
+ * @route   POST /api/auth/login
+ * @access  Public
  */
 authRouter.post('/login', authController.loginController);
 

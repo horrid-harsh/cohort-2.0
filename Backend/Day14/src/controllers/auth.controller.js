@@ -1,8 +1,13 @@
 const userModel = require("../models/user.model");
-const crypto = require("crypto");
+// const crypto = require("crypto");
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
 
+/**
+ * Handles user registration
+ * @route POST /api/auth/register
+ * @access Public
+ */
 async function registerController(req, res) {
   const { username, email, password, bio, profileImage } = req.body;
 
@@ -32,6 +37,7 @@ async function registerController(req, res) {
   const token = jwt.sign(
     {
       id: user._id,
+      username: user.username,
     },
     process.env.JWT_SECRET,
     { expiresIn: "1d" },
@@ -45,6 +51,11 @@ async function registerController(req, res) {
   });
 }
 
+/**
+ * Handles user login
+ * @route POST /api/auth/login
+ * @access Public
+ */
 async function loginController(req, res) {
   const { username, email, password } = req.body;
   const user = await userModel.findOne({
@@ -70,6 +81,7 @@ async function loginController(req, res) {
   const token = jwt.sign(
     {
       id: user._id,
+      username: user.username,
     },
     process.env.JWT_SECRET,
     { expiresIn: "1d" },

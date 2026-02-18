@@ -8,6 +8,11 @@ const imageKit = new ImageKit({
   privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
 });
 
+/**
+ * Handles post creation
+ * @route POST /api/posts
+ * @access Private
+ */
 async function createPostController(req, res) {
   try {
     const compressedBuffer = await sharp(req.file.buffer)
@@ -38,46 +43,74 @@ async function createPostController(req, res) {
       post,
     });
   } catch (error) {
-    return res.status(401).json({
-      message: "User not authorized",
+    console.error(error);
+
+    return res.status(500).json({
+      message: "Failed to create post",
     });
   }
 }
 
+/**
+ * Handles post fetching
+ * @route GET /api/posts
+ * @access Private
+ */
 async function getPostController(req, res) {
-  const userId = req.user.id;
-  const posts = await postModel.find({
-    user: userId,
-  });
+  try {
+    const userId = req.user.id;
+    const posts = await postModel.find({
+      user: userId,
+    });
 
-  return res.status(200).json({
-    message: "Posts fetched successfully",
-    posts,
-  });
+    return res.status(200).json({
+      message: "Posts fetched successfully",
+      posts,
+    });
+  } catch (error) {
+    console.error(error);
+
+    return res.status(500).json({
+      message: "Failed to fetch posts",
+    });
+  }
 }
 
+/**
+ * Handles post details fetching
+ * @route GET /api/posts/:postId
+ * @access Private
+ */
 async function getPostDetailsController(req, res) {
-  const postId = req.params.postId;
-  const userId = req.user.id;
+  try {
+    const postId = req.params.postId;
+    const userId = req.user.id;
 
-  const post = await postModel.findById(postId);
+    const post = await postModel.findById(postId);
 
-  if (!post)
-    return res.status(404).json({
-      mesage: "Post not found",
+    if (!post)
+      return res.status(404).json({
+        message: "Post not found",
+      });
+
+    const isValidUser = post.user.toString() === userId;
+
+    if (!isValidUser)
+      return res.status(403).json({
+        message: "Forbidden Content",
+      });
+
+    return res.status(200).json({
+      message: "Post fetched successully",
+      post,
     });
+  } catch (error) {
+    console.error(error);
 
-  const isValidUser = post.user.toString() === userId;
-
-  if (!isValidUser)
-    return res.status(403).json({
-      message: "Forbidden Content",
+    return res.status(500).json({
+      message: "Failed to fetch post details",
     });
-
-  return res.status(200).json({
-    message: "Post fetched successully",
-    post,
-  });
+  }
 }
 
 module.exports = {
