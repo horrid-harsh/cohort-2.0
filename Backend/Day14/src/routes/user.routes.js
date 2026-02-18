@@ -1,6 +1,7 @@
 const express = require("express");
 const userRouter = express.Router();
 const userController = require("../controllers/user.controller");
+const postController = require("../controllers/post.controller");
 const authUser = require("../middlewares/auth.middleware");
 
 /**
@@ -16,5 +17,12 @@ userRouter.post('/follow/:username', authUser, userController.followUserControll
  * @access protected
  */
 userRouter.post('/unfollow/:username', authUser, userController.unfollowUserController);
+
+/**
+ * @route POST /api/users/like/:postId [protected]
+ * @description like a post
+ * @access protected
+ */
+userRouter.post('/like/:postId', authUser, postController.likePostController);
 
 module.exports = userRouter;

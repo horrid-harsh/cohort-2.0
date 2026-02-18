@@ -1,5 +1,6 @@
 const postModel = require("../models/post.model");
 const userModel = require("../models/user.model");
+const likeModel = require("../models/like.model");
 const ImageKit = require("@imagekit/nodejs");
 const { toFile } = require("@imagekit/nodejs");
 const sharp = require("sharp");
@@ -113,8 +114,56 @@ async function getPostDetailsController(req, res) {
   }
 }
 
+/**
+ * Like a post
+ *
+ * @route   POST /api/users/like/:postId
+ * @access  Private
+ */
+async function likePostController(req, res) {
+    try {
+        const userId = req.user.id;
+        const postId = req.params.postId;
+
+        const post = await postModel.findById(postId);
+        if(!post){
+            return res.status(404).json({
+                message: "Post not found",
+            });
+        }
+
+        const isAlreadyLiked = await likeModel.findOne({
+            user: userId,
+            post: postId,
+        });
+
+        if(isAlreadyLiked){
+            return res.status(400).json({
+                message: "You have already liked this post",
+            });
+        }
+
+        const likeRecord = await likeModel.create({
+            user: userId,
+            post: postId,
+        });
+
+        return res.status(201).json({
+            message: "Post liked successfully",
+            like: likeRecord,
+        });
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            message: "Internal server error",
+        });
+    }
+}
+
 module.exports = {
   createPostController,
   getPostController,
   getPostDetailsController,
+  likePostController,
 };
