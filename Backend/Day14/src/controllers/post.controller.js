@@ -1,5 +1,4 @@
 const postModel = require("../models/post.model");
-const userModel = require("../models/user.model");
 const likeModel = require("../models/like.model");
 const ImageKit = require("@imagekit/nodejs");
 const { toFile } = require("@imagekit/nodejs");
@@ -33,10 +32,6 @@ async function createPostController(req, res) {
       caption: req.body.caption,
       imgUrl: uploadResponse.url,
       user: req.user.id,
-    });
-
-    await userModel.findByIdAndUpdate(req.user.id, {
-      $push: { posts: post._id },
     });
 
     return res.status(201).json({
@@ -161,6 +156,12 @@ async function likePostController(req, res) {
     }
 }
 
+/**
+ * Dislike a post
+ *
+ * @route   POST /api/users/dislike/:postId
+ * @access  Private
+ */
 async function dislikePostController(req, res) {
   try {
     const userId = req.user.id;

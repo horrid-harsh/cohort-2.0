@@ -12,6 +12,14 @@ const followSchema = new mongoose.Schema(
       ref: "users",
       required: [true, "Following is required"],
     },
+    status: {
+      type: String,
+      default: "pending",
+      enum: {
+        values: ["pending", "accepted"],
+        message: "Status can only be pending or accepted",
+      },
+    },
   },
   { timestamps: true },
 );
