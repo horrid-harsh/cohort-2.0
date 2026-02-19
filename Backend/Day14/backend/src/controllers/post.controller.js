@@ -26,7 +26,7 @@ async function createPostController(req, res) {
       folder: "cohort-2-insta-clone-posts",
     });
 
-    console.log(uploadResponse);
+    // console.log(uploadResponse);
 
     const post = await postModel.create({
       caption: req.body.caption,
