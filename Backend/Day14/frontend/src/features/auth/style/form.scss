@@ -1,0 +1,176 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Grand+Hotel&display=swap"); // Import cursive font
+
+main {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Instagram", sans-serif;
+
+  .left {
+    width: 60%;
+    height: 100%;
+
+    background-color: #0c1014;
+
+    .logo {
+      width: fit-content;
+      img {
+        width: 8vw;
+      }
+    }
+    .promotional-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      .logo {
+        width: 25vw;
+      }
+
+      h1 {
+        text-align: center;
+        font-size: 2.8vw;
+        font-weight: 300;
+        line-height: 1.5;
+        color: white;
+
+        span {
+          background-image: linear-gradient(
+            to right,
+            #ff5c00,
+            #ff0069,
+            #d300c5
+          );
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+      }
+
+      .promo-img {
+        width: 50%;
+        height: auto;
+        object-fit: cover;
+        opacity: 0;
+        transition: opacity 200ms ease-out;
+      }
+      .promo-img.show {
+        opacity: 1;
+      }
+    }
+  }
+  .right {
+    width: 40%;
+    height: 100%;
+    padding: 4rem;
+    background-color: #152127;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .cursive {
+      font-size: 4rem;
+      font-weight: 300;
+      line-height: 1.5;
+      color: white;
+      font-family: "Grand Hotel", cursive;
+    }
+
+    .form-container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+      color: white;
+
+      form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+
+        input {
+          width: 100%;
+          padding: 1.2rem;
+          border-radius: 1rem;
+          border: 1px solid rgba(255, 255, 255, 0.351);
+          background-color: transparent;
+          color: white;
+
+          &:focus {
+            outline: none;
+            border-color: #ffffffa5;
+          }
+          &::placeholder {
+            color: #8b9ba8;
+          }
+          font-size: 1rem;
+          font-weight: 300;
+          line-height: 1.5;
+        }
+        .password-field {
+          position: relative;
+          width: 100%;
+        }
+        .password-field input {
+          width: 100%;
+        //   padding-right: 40px;
+        }
+
+        .eye-btn {
+          position: absolute;
+          right: 20px;
+          top: 50%;
+          transform: translateY(-50%);
+          background: none;
+          border: none;
+          cursor: pointer;
+          color: #555;
+        //   font-size: 1.5rem;
+        }
+
+        .eye-btn:hover {
+          color: #000;
+        }
+        .auth-btn {
+          width: 100%;
+          padding: 1rem;
+          border-radius: 2rem;
+          border: none;
+          background-color: #1a74e3;
+          cursor: pointer;
+          font-size: 1rem;
+          color: white;
+        }
+      }
+
+      .login-container {
+        p {
+          a {
+            color: #1a74e3;
+            text-decoration: none;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  main {
+    .left {
+      display: none;
+    }
+    .right {
+      width: 100%;
+    }
+  }
+}

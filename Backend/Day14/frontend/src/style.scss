@@ -1,0 +1,19 @@
+@font-face {
+  font-family: 'Instagram';
+  src: url('./assets/fonts/6YirsaXqsap.woff2');
+}
+@font-face {
+  font-family: 'Instagram-Bold';
+  src: url('./assets/fonts/WXBYOaYZuYu.woff2');
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html, body,
+#root {
+  height: 100%;
+  width: 100%;
+}
