@@ -1,0 +1,21 @@
+@font-face {
+  font-family: 'Instagram';
+  src: url('../../assets/fonts/6YirsaXqsap.woff2') format('woff2'), url('../../assets/fonts/6YirsaXqsap.woff') format('woff');
+}
+@font-face {
+  font-family: 'Instagram-Bold';
+  src: url('../../assets/fonts/WXBYOaYZuYu.woff2') format('woff2'), url('../../assets/fonts/WXBYOaYZuYu.woff') format('woff');
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html, body,
+#root {
+  width: 100%;
+  background-color: #1d1d1d;
+  color: rgb(246, 234, 234);
+  font-family: 'Instagram';
+}

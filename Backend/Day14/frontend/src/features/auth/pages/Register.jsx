@@ -1,9 +1,9 @@
 import "../style/form.scss";
 import AuthLayout from "../components/layouts/AuthLayout";
-import { Link } from "react-router"; // Ensure correct import for react-router v6/7
+import { Link, useNavigate } from "react-router"; // Ensure correct import for react-router v6/7
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import axios from "axios";
+import { useAuth } from "../hooks/useAuth";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -12,22 +12,23 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const { handleRegister, loading } = useAuth();
+  const navigate = useNavigate();
+
+  if(loading) return <p>Loading...</p>
+
   async function handleSubmit(e) {
     e.preventDefault();
 
-    const response = await axios.post("http://localhost:3000/api/auth/register", {
-      username,
-      email,
-      password,
-    }, {
-      withCredentials: true,
-    });
-
-    console.log(response.data);
-
-    setUsername("");
-    setEmail("");
-    setPassword("");
+    try {
+      const res = await handleRegister(username, email, password);
+      navigate("/");
+      setUsername("");
+      setEmail("");
+      setPassword("");
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
@@ -39,6 +40,7 @@ const Register = () => {
             onInput={(e) => {
               setUsername(e.target.value);
             }}
+            value={username}
             required
             type="text"
             placeholder="Username"
@@ -47,6 +49,7 @@ const Register = () => {
             onInput={(e) => {
               setEmail(e.target.value);
             }}
+            value={email}
             required
             type="text"
             placeholder="Email address"
@@ -56,6 +59,7 @@ const Register = () => {
               onInput={(e) => {
                 setPassword(e.target.value);
               }}
+              value={password}
               required
               type={showPassword ? "text" : "password"}
               placeholder="Password"

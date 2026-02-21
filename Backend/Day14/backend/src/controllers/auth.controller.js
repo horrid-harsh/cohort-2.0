@@ -57,14 +57,21 @@ async function registerController(req, res) {
  * @access Public
  */
 async function loginController(req, res) {
-  const { username, email, password } = req.body;
+  const { identifier, password } = req.body;
+
+  if (!identifier || !password) {
+    return res.status(400).json({
+      message: "All fields are required",
+    });
+  }
+
   const user = await userModel.findOne({
-    $or: [{ username }, { email }],
+    $or: [{ username: identifier }, { email: identifier }],
   });
 
   if (!user) {
     return res.status(401).json({
-      message: "Invalid email or password",
+      message: "Invalid credentials",
     });
   }
 
@@ -74,7 +81,7 @@ async function loginController(req, res) {
 
   if (!ispasswordValid) {
     return res.status(401).json({
-      message: "Invalid email or password",
+      message: "Invalid credentials",
     });
   }
 
@@ -100,6 +107,26 @@ async function loginController(req, res) {
   });
 }
 
+/**
+ * Handles user profile fetch
+ * @route GET /api/auth/me
+ * @access Private
+ */
+async function getMeController(req, res) {
+  const userId = req.user.id;
+  const user = await userModel.findById(userId);
+
+  return res.status(200).json({
+    message: "User fetched successfully",
+    user: {
+      username: user.username,
+      email: user.email,
+      bio: user.bio,
+      profileImage: user.profileImage,
+    },
+  });
+}
+
 module.exports = {
-    registerController, loginController
+    registerController, loginController, getMeController
 }

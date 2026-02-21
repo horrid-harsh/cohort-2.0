@@ -1,12 +1,18 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Grand+Hotel&display=swap"); // Import cursive font
 
+@mixin flex-center($direction: row, $gap: 0) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: center;
+  align-items: center;
+  gap: $gap;
+}
+
 main {
   width: 100%;
   height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include flex-center;
   font-family: "Instagram", sans-serif;
 
   .left {
@@ -22,10 +28,7 @@ main {
       }
     }
     .promotional-container {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+      @include flex-center(column);
       .logo {
         width: 25vw;
       }
@@ -66,10 +69,7 @@ main {
     height: 100%;
     padding: 4rem;
     background-color: #152127;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    @include flex-center(column);
 
     .cursive {
       font-size: 4rem;
@@ -82,20 +82,12 @@ main {
     .form-container {
       width: 100%;
       height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 2rem;
+      @include flex-center(column, 2rem);
       color: white;
 
       form {
         width: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 1rem;
+        @include flex-center(column, 1rem);
 
         input {
           width: 100%;
@@ -122,7 +114,7 @@ main {
         }
         .password-field input {
           width: 100%;
-        //   padding-right: 40px;
+          //   padding-right: 40px;
         }
 
         .eye-btn {
@@ -134,7 +126,7 @@ main {
           border: none;
           cursor: pointer;
           color: #555;
-        //   font-size: 1.5rem;
+          //   font-size: 1.5rem;
         }
 
         .eye-btn:hover {
@@ -149,6 +141,10 @@ main {
           cursor: pointer;
           font-size: 1rem;
           color: white;
+          transition: all 0.2s ease-in-out;
+          &:active {
+            transform: scale(0.95);
+          }
         }
       }
 
