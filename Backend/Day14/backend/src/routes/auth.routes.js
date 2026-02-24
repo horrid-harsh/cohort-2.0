@@ -20,6 +20,13 @@ authRouter.post("/register", authController.registerController);
 authRouter.post('/login', authController.loginController);
 
 /**
+ * Logout a user
+ * @route POST /api/auth/logout
+ * @access Private
+ */
+authRouter.post('/logout', authUser, authController.logoutController);
+
+/**
  * Get current user
  * @route GET /api/auth/me
  * @access Private

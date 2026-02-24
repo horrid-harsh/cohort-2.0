@@ -32,6 +32,16 @@ export const loginApi = async (identifier, password) => {
   }
 };
 
+export const logoutApi = async () => {
+  try {
+    const response = await authApi.post("/logout");
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
 export const getMeApi = async () => {
   try {
     const response = await authApi.get("/me");

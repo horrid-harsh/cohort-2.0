@@ -108,6 +108,18 @@ async function loginController(req, res) {
 }
 
 /**
+ * Handles user logout
+ * @route POST /api/auth/logout
+ * @access Private
+ */
+async function logoutController(req, res) {
+  res.clearCookie("token");
+  return res.status(200).json({
+    message: "User logged out successfully",
+  });
+}
+
+/**
  * Handles user profile fetch
  * @route GET /api/auth/me
  * @access Private
@@ -128,5 +140,5 @@ async function getMeController(req, res) {
 }
 
 module.exports = {
-    registerController, loginController, getMeController
+    registerController, loginController, logoutController, getMeController
 }
