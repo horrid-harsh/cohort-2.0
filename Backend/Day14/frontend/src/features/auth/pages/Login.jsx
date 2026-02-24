@@ -35,7 +35,7 @@ const Login = () => {
       <div className="form-container">
         <form onSubmit={handleSubmit}>
           <input
-            onInput={(e) => {
+            onChange={(e) => {
               setIdentifier(e.target.value);
             }}
             value={identifier}
@@ -46,7 +46,7 @@ const Login = () => {
 
           <div className="password-field">
             <input
-              onInput={(e) => {
+              onChange={(e) => {
                 setPassword(e.target.value);
               }}
               value={password}

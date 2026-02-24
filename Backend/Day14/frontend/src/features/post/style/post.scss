@@ -1,0 +1,196 @@
+@use "sass:color";
+
+// Mixins
+@mixin flex-center($gap: 0, $justify: center) {
+  display: flex;
+  align-items: center;
+  justify-content: $justify;
+  gap: $gap;
+}
+
+@mixin absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@mixin icon-button($size: 26px) {
+  cursor: pointer;
+  @include flex-center;
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  svg {
+    font-size: $size;
+    display: block;
+  }
+}
+
+// Keyframes
+@keyframes heart-pop {
+  0% {
+    @include absolute-center;
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+  }
+  15% {
+    @include absolute-center;
+    transform: translate(-50%, -50%) scale(1.4);
+    opacity: 1;
+  }
+  30% {
+    @include absolute-center;
+    transform: translate(-50%, -50%) scale(0.9);
+    opacity: 1;
+  }
+  45% {
+    @include absolute-center;
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 1;
+  }
+  80% {
+    @include absolute-center;
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  100% {
+    @include absolute-center;
+    transform: translate(-50%, -50%) scale(0.5);
+    opacity: 0;
+  }
+}
+
+@keyframes like-button-pop {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.4); }
+  50% { transform: scale(0.85); }
+  75% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+// Styles
+.post-card {
+  color: #fff;
+  max-width: 500px;
+  width: 100%;
+  margin: 20px auto;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  .post-header {
+    @include flex-center($justify: space-between);
+    padding: 12px;
+
+    .header-left {
+      @include flex-center(10px);
+
+      .profile-img {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 1px solid #262626;
+      }
+
+      .username {
+        font-weight: 600;
+        font-size: 14.5px;
+        @include flex-center(4px);
+        line-height: 1;
+      }
+
+      .time-ago {
+        color: #a8a8a8;
+        font-size: 14px;
+        &::before {
+          content: "•";
+          margin: 0 4px;
+        }
+      }
+    }
+
+    .header-right {
+      @include icon-button(20px);
+      color: #fff;
+    }
+  }
+
+  .post-content {
+    .post-text {
+      padding: 0 12px 12px 12px;
+      font-size: 15px;
+      line-height: 1.4;
+    }
+
+    .post-image-container {
+      width: 100%;
+      background-color: #262626;
+      border-radius: 5px;
+      overflow: hidden;
+      position: relative;
+
+      .central-heart {
+        @include absolute-center;
+        transform: translate(-50%, -50%) scale(0);
+        color: #fff;
+        font-size: 140px;
+        pointer-events: none;
+        z-index: 10;
+        filter: drop-shadow(0 0 20px rgba(0, 0, 0, 0.4));
+
+        &.animate {
+          animation: heart-pop 0.8s ease-out forwards;
+        }
+      }
+
+      img {
+        width: 100%;
+        display: block;
+        object-fit: cover;
+      }
+    }
+  }
+
+  .post-actions {
+    @include flex-center($justify: space-between);
+    padding: 12px;
+
+    .actions-left {
+      @include flex-center(16px);
+    }
+
+    .action-btn {
+      @include icon-button;
+
+      &.pop {
+        animation: like-button-pop 0.4s ease-out;
+      }
+    }
+  }
+
+  .post-stats {
+    padding: 0 12px 4px 12px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .post-footer {
+    padding: 0 12px 12px 12px;
+    font-size: 14px;
+
+    .caption {
+      .footer-username {
+        font-weight: 600;
+        margin-right: 6px;
+        @include flex-center(3px, inline-flex);
+      }
+      
+      .caption-text {
+        font-weight: 400;
+      }
+    }
+  }
+}

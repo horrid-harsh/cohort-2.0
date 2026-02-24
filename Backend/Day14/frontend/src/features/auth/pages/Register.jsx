@@ -37,7 +37,7 @@ const Register = () => {
       <div className="form-container">
         <form onSubmit={handleSubmit}>
           <input
-            onInput={(e) => {
+            onChange={(e) => {
               setUsername(e.target.value);
             }}
             value={username}
@@ -46,7 +46,7 @@ const Register = () => {
             placeholder="Username"
           />
           <input
-            onInput={(e) => {
+            onChange={(e) => {
               setEmail(e.target.value);
             }}
             value={email}
@@ -56,7 +56,7 @@ const Register = () => {
           />
           <div className="password-field">
             <input
-              onInput={(e) => {
+              onChange={(e) => {
                 setPassword(e.target.value);
               }}
               value={password}

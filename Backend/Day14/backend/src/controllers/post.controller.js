@@ -1,8 +1,10 @@
-const postModel = require("../models/post.model");
-const likeModel = require("../models/like.model");
 const ImageKit = require("@imagekit/nodejs");
 const { toFile } = require("@imagekit/nodejs");
 const sharp = require("sharp");
+const postModel = require("../models/post.model");
+const likeModel = require("../models/like.model");
+const userModel = require("../models/user.model");
+const followModel = require("../models/follow.model");
 
 const imageKit = new ImageKit({
   privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
@@ -202,10 +204,45 @@ async function dislikePostController(req, res) {
   } 
 }
 
+/**
+ * Get feed posts
+ *
+ * @route   POST /api/users/feed
+ * @access  Private
+ */
+async function getFeedController(req, res) {
+  try {
+    const userId = req.user.id;
+
+    const followingDocs = await followModel.find({
+      follower: userId,
+      status: "accepted",
+    }).select("following");
+
+    const followingIds = followingDocs.map(doc => doc.following);
+
+    const feedPosts = await postModel
+    .find({ user: { $in: followingIds } })
+    .populate("user", "username profileImage")
+    .sort({ createdAt: -1 });
+
+    return res.status(200).json({
+      message: "Feed posts fetched successfully",
+      posts: feedPosts,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: "Internal server error",
+    });
+  }
+}
+
 module.exports = {
   createPostController,
   getPostController,
   getPostDetailsController,
   likePostController,
   dislikePostController,
+  getFeedController,
 };

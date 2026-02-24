@@ -26,4 +26,25 @@ postRouter.get('/', authUser, postController.getPostController);
  */
 postRouter.get('/details/:postId', authUser, postController.getPostDetailsController);
 
+/**
+ * @route POST /api/posts/like/:postId [protected]
+ * @description like a post
+ * @access protected
+ */
+postRouter.post('/like/:postId', authUser, postController.likePostController);
+
+/**
+ * @route POST /api/posts/dislike/:postId [protected]
+ * @description dislike a post
+ * @access protected
+ */
+postRouter.post('/dislike/:postId', authUser, postController.dislikePostController);
+
+/**
+ * @route GET /api/posts/feed [protected]
+ * @description get feed
+ * @access protected
+ */
+postRouter.get('/feed', authUser, postController.getFeedController);
+
 module.exports = postRouter;

@@ -40,18 +40,4 @@ userRouter.post('/accept-follow-request/:id', authUser, userController.acceptFol
  */
 userRouter.post('/reject-follow-request/:id', authUser, userController.rejectFollowRequest);
 
-/**
- * @route POST /api/users/like/:postId [protected]
- * @description like a post
- * @access protected
- */
-userRouter.post('/like/:postId', authUser, postController.likePostController);
-
-/**
- * @route POST /api/users/dislike/:postId [protected]
- * @description dislike a post
- * @access protected
- */
-userRouter.post('/dislike/:postId', authUser, postController.dislikePostController);
-
 module.exports = userRouter;
