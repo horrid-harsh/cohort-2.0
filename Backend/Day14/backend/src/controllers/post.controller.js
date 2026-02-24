@@ -118,44 +118,43 @@ async function getPostDetailsController(req, res) {
  * @access  Private
  */
 async function likePostController(req, res) {
-    try {
-        const userId = req.user.id;
-        const postId = req.params.postId;
+  try {
+    const userId = req.user.id;
+    const postId = req.params.postId;
 
-        const post = await postModel.findById(postId);
-        if(!post){
-            return res.status(404).json({
-                message: "Post not found",
-            });
-        }
-
-        const isAlreadyLiked = await likeModel.findOne({
-            user: userId,
-            post: postId,
-        });
-
-        if(isAlreadyLiked){
-            return res.status(400).json({
-                message: "You have already liked this post",
-            });
-        }
-
-        const likeRecord = await likeModel.create({
-            user: userId,
-            post: postId,
-        });
-
-        return res.status(201).json({
-            message: "Post liked successfully",
-            like: likeRecord,
-        });
-
-    } catch (error) {
-        console.log(error);
-        return res.status(500).json({
-            message: "Internal server error",
-        });
+    const post = await postModel.findById(postId);
+    if (!post) {
+      return res.status(404).json({
+        message: "Post not found",
+      });
     }
+
+    const isAlreadyLiked = await likeModel.findOne({
+      user: userId,
+      post: postId,
+    });
+
+    if (isAlreadyLiked) {
+      return res.status(400).json({
+        message: "You have already liked this post",
+      });
+    }
+
+    const likeRecord = await likeModel.create({
+      user: userId,
+      post: postId,
+    });
+
+    return res.status(201).json({
+      message: "Post liked successfully",
+      like: likeRecord,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: "Internal server error",
+    });
+  }
 }
 
 /**
@@ -170,38 +169,37 @@ async function dislikePostController(req, res) {
     const postId = req.params.postId;
 
     const post = await postModel.findById(postId);
-        if(!post){
-            return res.status(404).json({
-                message: "Post not found",
-            });
-        }
+    if (!post) {
+      return res.status(404).json({
+        message: "Post not found",
+      });
+    }
 
-        const isAlreadyLiked = await likeModel.findOne({
-          user: userId,
-          post: postId
-        })
+    const isAlreadyLiked = await likeModel.findOne({
+      user: userId,
+      post: postId,
+    });
 
-        if(!isAlreadyLiked) {
-          return res.status(400).json({
-            message: "You haven't liked this post"
-          })
-        }
+    if (!isAlreadyLiked) {
+      return res.status(400).json({
+        message: "You haven't liked this post",
+      });
+    }
 
-        await likeModel.deleteOne({
-          user: userId,
-          post: postId,
-        })
+    await likeModel.deleteOne({
+      user: userId,
+      post: postId,
+    });
 
-        return res.status(200).json({
-          message: "Post disliked successfully",
-        })
-
+    return res.status(200).json({
+      message: "Post disliked successfully",
+    });
   } catch (error) {
     console.log(error);
     return res.status(500).json({
       message: "Internal server error",
     });
-  } 
+  }
 }
 
 /**
@@ -214,21 +212,40 @@ async function getFeedController(req, res) {
   try {
     const userId = req.user.id;
 
-    const followingDocs = await followModel.find({
-      follower: userId,
-      status: "accepted",
-    }).select("following");
+    const followingDocs = await followModel
+      .find({
+        follower: userId,
+        status: "accepted",
+      })
+      .select("following");
 
-    const followingIds = followingDocs.map(doc => doc.following);
+    const followingIds = followingDocs.map((doc) => doc.following);
 
     const feedPosts = await postModel
-    .find({ user: { $in: followingIds } })
-    .populate("user", "username profileImage")
-    .sort({ createdAt: -1 });
+      .find({ user: { $in: followingIds } })
+      .populate("user", "username profileImage")
+      .sort({ createdAt: -1 })
+      .lean();
+
+    const postsWithLikes = await Promise.all(
+      feedPosts.map(async (post) => {
+        const likesCount = await likeModel.countDocuments({ post: post._id });
+        const isLiked = await likeModel.findOne({
+          user: userId,
+          post: post._id,
+        });
+
+        return {
+          ...post,
+          likesCount,
+          isLiked: !!isLiked,
+        };
+      }),
+    );
 
     return res.status(200).json({
       message: "Feed posts fetched successfully",
-      posts: feedPosts,
+      posts: postsWithLikes,
     });
   } catch (error) {
     console.log(error);

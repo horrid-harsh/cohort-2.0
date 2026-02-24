@@ -157,6 +157,12 @@
 
     .actions-left {
       @include flex-center(16px);
+
+      .likes-count-text {
+        font-size: 14px;
+        font-weight: 600;
+        margin-left: -8px; // Pull closer to the heart
+      }
     }
 
     .action-btn {

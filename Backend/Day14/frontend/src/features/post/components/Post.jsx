@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { IoEllipsisHorizontal, IoHeart } from "react-icons/io5";
+import { likePostApi, dislikePostApi } from "../services/post.api";
 import "../style/post.scss";
 
 // Custom Instagram SVGs
@@ -94,15 +95,17 @@ const SaveIcon = () => (
 );
 
 const Post = ({
-  username = "collegefessing",
-  profileImage = "https://i.pinimg.com/736x/c4/38/39/c4383975961c52b00487a6d26922c0de.jpg",
-  postImage = "https://scontent-bom5-1.cdninstagram.com/v/t51.82787-15/639461893_18097166615501990_4899306567846093972_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=105&ig_cache_key=MzgzNTc3NzgyNzg3MDY2NDI5NQ%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6InhwaWRzLjEyMDB4MTU5Mi5zZHIuQzMifQ%3D%3D&_nc_ohc=kkr5VOuMHHUQ7kNvwGdU9Qw&_nc_oc=AdkPYutEieKlnPEFzFu6mEuFOn6CmIOMj-OWJamMQoyIKogu5Epej74ReDIJSmSp3MI&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent-bom5-1.cdninstagram.com&_nc_gid=9A_MGEI0Okk04PTRF4GZ2A&oh=00_Afvdi27D5fNDjkPQJZG4pDCun_gqBJtmte6uC643Amf4PQ&oe=69A3285D",
-  caption = "Only if I can see a bit more of it 😭",
-  timeAgo = "38 m",
-  likesCount = "1,234",
-  isVerified = true,
+  postId,
+  username,
+  profileImage,
+  postImage,
+  caption,
+  timeAgo,
+  initialLikesCount,
+  initialIsLiked,
 }) => {
-  const [isLiked, setIsLiked] = useState(false);
+  const [isLiked, setIsLiked] = useState(initialIsLiked);
+  const [likesCount, setLikesCount] = useState(initialLikesCount);
   const [animateLike, setAnimateLike] = useState(false);
   const [showCentralHeart, setShowCentralHeart] = useState(false);
 
@@ -111,18 +114,39 @@ const Post = ({
     setTimeout(() => setAnimateLike(false), 400);
   };
 
-  const handleDoubleClick = () => {
+  const handleDoubleClick = async () => {
     if (!isLiked) {
       setIsLiked(true);
+      setLikesCount((prev) => prev + 1);
       triggerPop();
+      try {
+        await likePostApi(postId);
+      } catch (error) {
+        setIsLiked(false);
+        setLikesCount((prev) => prev - 1);
+      }
     }
     setShowCentralHeart(true);
     setTimeout(() => setShowCentralHeart(false), 800);
   };
 
-  const handleToggleLike = () => {
-    setIsLiked(!isLiked);
-    if (!isLiked) triggerPop();
+  const handleToggleLike = async () => {
+    const nextLiked = !isLiked;
+    setIsLiked(nextLiked);
+    setLikesCount((prev) => (nextLiked ? prev + 1 : prev - 1));
+
+    if (nextLiked) triggerPop();
+
+    try {
+      if (nextLiked) {
+        await likePostApi(postId);
+      } else {
+        await dislikePostApi(postId);
+      }
+    } catch (error) {
+      setIsLiked(!nextLiked);
+      setLikesCount((prev) => (!nextLiked ? prev + 1 : prev - 1));
+    }
   };
 
   return (
@@ -132,6 +156,7 @@ const Post = ({
         <div className="header-left">
           <img src={profileImage} alt={username} className="profile-img" />
           <span className="username">{username}</span>
+          {timeAgo && <span className="time-ago">{timeAgo}</span>}
         </div>
         <div className="header-right">
           <IoEllipsisHorizontal size={20} />
@@ -157,6 +182,7 @@ const Post = ({
           >
             <LikeIcon filled={isLiked} />
           </div>
+          <div className="likes-count-text">{likesCount}</div>
           <div className="action-btn">
             <CommentIcon />
           </div>

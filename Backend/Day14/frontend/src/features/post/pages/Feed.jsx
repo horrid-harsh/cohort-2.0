@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Post from "../components/Post";
 import { getFeedApi } from "../services/post.api";
 import { useAuth } from "../../auth/hooks/useAuth";
+import { formatTimeAgo } from "../../shared/utils/timeAgo";
 import "../style/feed.scss";
 
 const Feed = () => {
@@ -53,12 +54,14 @@ const Feed = () => {
         posts.map((post) => (
           <Post
             key={post._id}
+            postId={post._id}
             username={post.user?.username}
             profileImage={post.user?.profileImage}
             postImage={post.imgUrl}
             caption={post.caption}
-            likesCount={post.likesCount || "0"} // You might need a way to fetch actual likes
-            timeAgo="Just now" // Simplified for now
+            initialLikesCount={post.likesCount || 0}
+            initialIsLiked={post.isLiked}
+            timeAgo={formatTimeAgo(post.createdAt)}
           />
         ))
       ) : (
