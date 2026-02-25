@@ -39,6 +39,16 @@ export const createPostApi = async (formData) => {
   }
 };
 
+export const deletePostApi = async (postId) => {
+  try {
+    const response = await postApi.delete(`/${postId}`);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
 export const likePostApi = async (postId) => {
   try {
     const response = await postApi.post(`/like/${postId}`);

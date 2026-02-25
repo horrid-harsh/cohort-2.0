@@ -10,6 +10,10 @@ const postSchema = new mongoose.Schema(
       type: String,
       required: [true, "imgUrl is required"],
     },
+    fileId: {
+      type: String,
+      required: [true, "fileId is required"],
+    },
     user: {
       ref: "users",
       type: mongoose.Schema.Types.ObjectId,

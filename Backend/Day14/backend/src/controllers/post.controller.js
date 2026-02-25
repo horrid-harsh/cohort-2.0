@@ -28,11 +28,12 @@ async function createPostController(req, res) {
       folder: "cohort-2-insta-clone-posts",
     });
 
-    // console.log(uploadResponse);
+    console.log(uploadResponse);
 
     const post = await postModel.create({
       caption: req.body.caption,
       imgUrl: uploadResponse.url,
+      fileId: uploadResponse.fileId,
       user: req.user.id,
     });
 
@@ -45,6 +46,58 @@ async function createPostController(req, res) {
 
     return res.status(500).json({
       message: "Failed to create post",
+    });
+  }
+}
+
+/**
+ * Handles post deletion
+ * @route DELETE /api/posts/:postId
+ * @access Private
+ */
+async function deletePostController(req, res) {
+  try {
+    const userId = req.user.id;
+    const postId = req.params.postId;
+
+    // Find post and check ownership
+    const post = await postModel.findById(postId);
+
+    if (!post) {
+      return res.status(404).json({
+        message: "Post not found",
+      });
+    }
+
+    if (post.user.toString() !== userId) {
+      return res.status(403).json({
+        message: "You are not authorized to delete this post",
+      });
+    }
+
+    // Delete image from ImageKit
+    if (post.fileId) {
+      try {
+        await imageKit.files.delete(post.fileId);
+      } catch (ikError) {
+        console.error("Failed to delete image from ImageKit:", ikError);
+        // Continue with database deletion even if IK fails
+      }
+    }
+
+    // Delete associated likes
+    await likeModel.deleteMany({ post: postId });
+
+    // Delete the post
+    await postModel.findByIdAndDelete(postId);
+
+    return res.status(200).json({
+      message: "Post deleted successfully",
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      message: "Internal server error",
     });
   }
 }
@@ -264,4 +317,5 @@ module.exports = {
   likePostController,
   dislikePostController,
   getFeedController,
+  deletePostController,
 };

@@ -3,6 +3,7 @@ import { useAuth } from "../../auth/hooks/useAuth";
 import { getMyPostsApi } from "../services/post.api";
 import CreatePost from "../components/CreatePost";
 import ImageModal from "../components/ImageModal";
+import { deletePostApi } from "../services/post.api";
 import "../style/profile.scss";
 
 const Profile = () => {
@@ -11,6 +12,7 @@ const Profile = () => {
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [activeOptions, setActiveOptions] = useState(null);
 
   const fetchMyPosts = async () => {
     try {
@@ -23,9 +25,23 @@ const Profile = () => {
     }
   };
 
+  const deleteMyPost = async (postId) => {
+    try {
+      await deletePostApi(postId);
+      fetchMyPosts();
+    } catch (error) {
+      console.error("Failed to delete post:", error);
+    }
+  };
+
   useEffect(() => {
     fetchMyPosts();
   }, []);
+
+  const toggleOptions = (e, postId) => {
+    e.stopPropagation();
+    setActiveOptions(activeOptions === postId ? null : postId);
+  };
 
   return (
     <div className="profile-page">
@@ -65,6 +81,45 @@ const Profile = () => {
               style={{ cursor: "pointer" }}
               onClick={() => setSelectedImage(post.imgUrl)}
             >
+              <div
+                className="post-options-btn"
+                onClick={(e) => toggleOptions(e, post._id)}
+              >
+                <svg
+                  stroke="currentColor"
+                  fill="currentColor"
+                  strokeWidth="0"
+                  viewBox="0 0 512 512"
+                  height="20"
+                  width="20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <circle cx="256" cy="256" r="48"></circle>
+                  <circle cx="416" cy="256" r="48"></circle>
+                  <circle cx="96" cy="256" r="48"></circle>
+                </svg>
+
+                {activeOptions === post._id && (
+                  <div className="options-dropdown">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (
+                          window.confirm(
+                            "Are you sure you want to delete this post?",
+                          )
+                        ) {
+                          deleteMyPost(post._id);
+                          setActiveOptions(null);
+                        }
+                      }}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                )}
+              </div>
+
               <img src={post.imgUrl} alt={post.caption} />
               <p className="caption">{post.caption}</p>
             </div>

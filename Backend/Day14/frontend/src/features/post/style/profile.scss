@@ -51,6 +51,52 @@
       aspect-ratio: 1 / 1;
       overflow: hidden;
       border-radius: 4px;
+      position: relative;
+
+      .post-options-btn {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        z-index: 10;
+        color: #fff;
+        background: rgba(0, 0, 0, 0.4);
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        @include flex-center;
+        cursor: pointer;
+        transition: background 0.2s;
+
+        &:hover {
+          background: rgba(0, 0, 0, 0.7);
+        }
+
+        .options-dropdown {
+          position: absolute;
+          top: 35px;
+          right: 0;
+          background: #000;
+          border: 1px solid #363636;
+          border-radius: 4px;
+          min-width: 100px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+
+          &:hover {
+            transform: scale(1.02);
+          }
+
+          button {
+            width: 100%;
+            padding: 10px;
+            background: none;
+            border: none;
+            color: #ff3040;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+          }
+        }
+      }
 
       img {
         @include image-cover;
