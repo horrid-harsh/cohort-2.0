@@ -1,0 +1,54 @@
+@use "sass:color";
+
+@mixin flex-center($direction: row, $justify: center, $align: center, $gap: 0) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+  gap: $gap;
+}
+
+@mixin modal-overlay($bg: rgba(0, 0, 0, 0.75)) {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: $bg;
+  @include flex-center;
+  z-index: 1000;
+}
+
+@mixin btn-primary($bg: #0095f6) {
+  background: $bg;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    opacity 0.2s;
+
+  &:hover:not(:disabled) {
+    background: color.scale($bg, $lightness: -10%);
+  }
+
+  &:disabled {
+    opacity: 0.3;
+    cursor: default;
+  }
+}
+
+@mixin grid-layout($cols: 3, $gap: 10px) {
+  display: grid;
+  grid-template-columns: repeat($cols, 1fr);
+  gap: $gap;
+}
+
+@mixin image-cover($width: 100%, $height: 100%) {
+  width: $width;
+  height: $height;
+  object-fit: cover;
+}

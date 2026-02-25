@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { IoEllipsisHorizontal, IoHeart } from "react-icons/io5";
-import { likePostApi, dislikePostApi } from "../services/post.api";
+import { usePosts } from "../hooks/usePosts";
+import ImageModal from "./ImageModal";
 import "../style/post.scss";
 
 // Custom Instagram SVGs
@@ -104,105 +105,96 @@ const Post = ({
   initialLikesCount,
   initialIsLiked,
 }) => {
-  const [isLiked, setIsLiked] = useState(initialIsLiked);
-  const [likesCount, setLikesCount] = useState(initialLikesCount);
+  const { updatePostLike } = usePosts();
   const [animateLike, setAnimateLike] = useState(false);
   const [showCentralHeart, setShowCentralHeart] = useState(false);
+  const [showFullImage, setShowFullImage] = useState(false);
 
   const triggerPop = () => {
     setAnimateLike(true);
     setTimeout(() => setAnimateLike(false), 400);
   };
 
-  const handleDoubleClick = async () => {
-    if (!isLiked) {
-      setIsLiked(true);
-      setLikesCount((prev) => prev + 1);
+  const handleDoubleClick = () => {
+    if (!initialIsLiked) {
+      updatePostLike(postId, false);
       triggerPop();
-      try {
-        await likePostApi(postId);
-      } catch (error) {
-        setIsLiked(false);
-        setLikesCount((prev) => prev - 1);
-      }
     }
     setShowCentralHeart(true);
     setTimeout(() => setShowCentralHeart(false), 800);
   };
 
-  const handleToggleLike = async () => {
-    const nextLiked = !isLiked;
-    setIsLiked(nextLiked);
-    setLikesCount((prev) => (nextLiked ? prev + 1 : prev - 1));
-
-    if (nextLiked) triggerPop();
-
-    try {
-      if (nextLiked) {
-        await likePostApi(postId);
-      } else {
-        await dislikePostApi(postId);
-      }
-    } catch (error) {
-      setIsLiked(!nextLiked);
-      setLikesCount((prev) => (!nextLiked ? prev + 1 : prev - 1));
-    }
+  const handleToggleLike = () => {
+    updatePostLike(postId, initialIsLiked);
+    if (!initialIsLiked) triggerPop();
   };
 
   return (
-    <div className="post-card">
-      {/* Header */}
-      <div className="post-header">
-        <div className="header-left">
-          <img src={profileImage} alt={username} className="profile-img" />
-          <span className="username">{username}</span>
-          {timeAgo && <span className="time-ago">{timeAgo}</span>}
-        </div>
-        <div className="header-right">
-          <IoEllipsisHorizontal size={20} />
-        </div>
-      </div>
-
-      {/* Content */}
-      <div className="post-content" onDoubleClick={handleDoubleClick}>
-        <div className="post-image-container">
-          <div className={`central-heart ${showCentralHeart ? "animate" : ""}`}>
-            <IoHeart style={{ fill: "url(#heart-gradient)" }} />
+    <>
+      <ImageModal
+        imageUrl={showFullImage ? postImage : null}
+        onClose={() => setShowFullImage(false)}
+      />
+      <div className="post-card">
+        {/* Header */}
+        <div className="post-header">
+          <div className="header-left">
+            <img src={profileImage} alt={username} className="profile-img" />
+            <span className="username">{username}</span>
+            {timeAgo && <span className="time-ago">{timeAgo}</span>}
           </div>
-          <img src={postImage} alt="Post content" />
+          <div className="header-right">
+            <IoEllipsisHorizontal size={20} />
+          </div>
         </div>
-      </div>
 
-      {/* Actions */}
-      <div className="post-actions">
-        <div className="actions-left">
+        {/* Content */}
+        <div className="post-content" onDoubleClick={handleDoubleClick}>
           <div
-            className={`action-btn ${animateLike ? "pop" : ""}`}
-            onClick={handleToggleLike}
+            className="post-image-container"
+            onClick={() => setShowFullImage(true)}
+            style={{ cursor: "pointer" }}
           >
-            <LikeIcon filled={isLiked} />
-          </div>
-          <div className="likes-count-text">{likesCount}</div>
-          <div className="action-btn">
-            <CommentIcon />
-          </div>
-          <div className="action-btn">
-            <ShareIcon />
+            <div
+              className={`central-heart ${showCentralHeart ? "animate" : ""}`}
+            >
+              <IoHeart style={{ fill: "url(#heart-gradient)" }} />
+            </div>
+            <img src={postImage} alt="Post content" />
           </div>
         </div>
-        <div className="action-btn save">
-          <SaveIcon />
-        </div>
-      </div>
 
-      {/* Footer / Caption */}
-      <div className="post-footer">
-        <div className="caption">
-          <span className="footer-username">{username}</span>
-          <span className="caption-text">{caption}</span>
+        {/* Actions */}
+        <div className="post-actions">
+          <div className="actions-left">
+            <div
+              className={`action-btn ${animateLike ? "pop" : ""}`}
+              onClick={handleToggleLike}
+            >
+              <LikeIcon filled={initialIsLiked} />
+            </div>
+            <div className="likes-count-text">{initialLikesCount}</div>
+            <div className="action-btn">
+              <CommentIcon />
+            </div>
+            <div className="action-btn">
+              <ShareIcon />
+            </div>
+          </div>
+          <div className="action-btn save">
+            <SaveIcon />
+          </div>
+        </div>
+
+        {/* Footer / Caption */}
+        <div className="post-footer">
+          <div className="caption">
+            <span className="footer-username">{username}</span>
+            <span className="caption-text">{caption}</span>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

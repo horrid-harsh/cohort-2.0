@@ -1,0 +1,66 @@
+@use "mixins" as *;
+
+.profile-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  color: #fff;
+
+  .profile-header {
+    @include flex-center;
+    margin-top: 20px;
+    margin-bottom: 40px;
+
+    .create-post-btn {
+      @include btn-primary;
+      padding: 10px 20px;
+    }
+  }
+
+  .user-profile-info {
+    @include flex-center($direction: column, $gap: 15px);
+    margin-bottom: 30px;
+    border-bottom: 1px solid #262626;
+    padding-bottom: 30px;
+
+    img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: 1px solid #363636;
+    }
+
+    h2 {
+      font-size: 24px;
+      font-weight: 600;
+    }
+  }
+
+  .posts-grid {
+    @include grid-layout;
+
+    @media (max-width: 768px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: 480px) {
+      grid-template-columns: 1fr;
+    }
+
+    .post-item {
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      border-radius: 4px;
+
+      img {
+        @include image-cover;
+      }
+
+      .caption {
+        font-size: 14px;
+        color: #fff;
+        margin-top: 5px;
+      }
+    }
+  }
+}

@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import Login from "./features/auth/pages/Login";
 import Register from "./features/auth/pages/Register";
 import Feed from "./features/post/pages/Feed";
+import Profile from "./features/post/pages/Profile";
 import { ProtectedRoute, PublicRoute } from "./features/auth/components/Guards";
 
 export const router = createBrowserRouter([
@@ -26,6 +27,14 @@ export const router = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <Feed />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/posts",
+    element: (
+      <ProtectedRoute>
+        <Profile />
       </ProtectedRoute>
     ),
   },

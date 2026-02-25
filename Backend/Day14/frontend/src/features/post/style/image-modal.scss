@@ -1,0 +1,41 @@
+@use "mixins" as *;
+
+.image-modal-overlay {
+  @include modal-overlay(rgba(0, 0, 0, 0.85));
+  backdrop-filter: blur(8px);
+  cursor: zoom-out;
+  padding: 40px;
+
+  .close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    z-index: 1010;
+    @include flex-center;
+    transition: transform 0.2s;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+
+  .image-modal-content {
+    width: 90%;
+    height: 90%;
+    cursor: default;
+    overflow: hidden;
+    @include flex-center;
+
+    img {
+      max-width: 100%;
+      height: 100%;
+      object-fit: cover;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+      border-radius: 4px;
+    }
+  }
+}

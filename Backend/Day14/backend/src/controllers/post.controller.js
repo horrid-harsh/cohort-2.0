@@ -57,9 +57,11 @@ async function createPostController(req, res) {
 async function getPostController(req, res) {
   try {
     const userId = req.user.id;
-    const posts = await postModel.find({
-      user: userId,
-    });
+    const posts = await postModel
+      .find({
+        user: userId,
+      })
+      .sort({ createdAt: -1 });
 
     return res.status(200).json({
       message: "Posts fetched successfully",

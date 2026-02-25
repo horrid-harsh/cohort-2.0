@@ -1,23 +1,73 @@
+@use "mixins" as m; // Using m prefix to avoid collision or keep it clear
 @use "sass:color";
 
-// Mixins
-@mixin flex-center($gap: 0, $justify: center) {
-  display: flex;
-  align-items: center;
-  justify-content: $justify;
-  gap: $gap;
+// Keyframes
+@keyframes heart-pop {
+  0% {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+  }
+  15% {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1.4);
+    opacity: 1;
+  }
+  30% {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9);
+    opacity: 1;
+  }
+  45% {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 1;
+  }
+  80% {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  100% {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.5);
+    opacity: 0;
+  }
 }
 
-@mixin absolute-center {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+@keyframes like-button-pop {
+  0% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.4);
+  }
+  50% {
+    transform: scale(0.85);
+  }
+  75% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 @mixin icon-button($size: 26px) {
   cursor: pointer;
-  @include flex-center;
+  @include m.flex-center;
   transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
   &:hover {
@@ -28,48 +78,6 @@
     font-size: $size;
     display: block;
   }
-}
-
-// Keyframes
-@keyframes heart-pop {
-  0% {
-    @include absolute-center;
-    transform: translate(-50%, -50%) scale(0);
-    opacity: 0;
-  }
-  15% {
-    @include absolute-center;
-    transform: translate(-50%, -50%) scale(1.4);
-    opacity: 1;
-  }
-  30% {
-    @include absolute-center;
-    transform: translate(-50%, -50%) scale(0.9);
-    opacity: 1;
-  }
-  45% {
-    @include absolute-center;
-    transform: translate(-50%, -50%) scale(1.1);
-    opacity: 1;
-  }
-  80% {
-    @include absolute-center;
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 1;
-  }
-  100% {
-    @include absolute-center;
-    transform: translate(-50%, -50%) scale(0.5);
-    opacity: 0;
-  }
-}
-
-@keyframes like-button-pop {
-  0% { transform: scale(1); }
-  30% { transform: scale(1.4); }
-  50% { transform: scale(0.85); }
-  75% { transform: scale(1.1); }
-  100% { transform: scale(1); }
 }
 
 // Styles
@@ -83,11 +91,11 @@
     sans-serif;
 
   .post-header {
-    @include flex-center($justify: space-between);
+    @include m.flex-center($justify: space-between);
     padding: 12px;
 
     .header-left {
-      @include flex-center(10px);
+      @include m.flex-center($gap: 10px);
 
       .profile-img {
         width: 32px;
@@ -100,7 +108,7 @@
       .username {
         font-weight: 600;
         font-size: 14.5px;
-        @include flex-center(4px);
+        @include m.flex-center($gap: 4px);
         line-height: 1;
       }
 
@@ -130,7 +138,9 @@
       position: relative;
 
       .central-heart {
-        @include absolute-center;
+        position: absolute;
+        top: 50%;
+        left: 50%;
         transform: translate(-50%, -50%) scale(0);
         color: #fff;
         font-size: 140px;
@@ -152,16 +162,16 @@
   }
 
   .post-actions {
-    @include flex-center($justify: space-between);
+    @include m.flex-center($justify: space-between);
     padding: 12px;
 
     .actions-left {
-      @include flex-center(16px);
+      @include m.flex-center($gap: 16px);
 
       .likes-count-text {
         font-size: 14px;
         font-weight: 600;
-        margin-left: -8px; // Pull closer to the heart
+        margin-left: -8px;
       }
     }
 
@@ -179,11 +189,11 @@
     font-size: 14px;
 
     .caption {
-      @include flex-center(0, start);
+      @include m.flex-center(row, start);
       .footer-username {
         font-weight: 600;
         margin-right: 6px;
-        @include flex-center(3px, inline-flex);
+        @include m.flex-center(row, inline-flex, center, 3px);
       }
 
       .caption-text {
