@@ -18,6 +18,13 @@ postRouter.post(
 ); // (upload.single("image")) Extracts the uploaded file from the "image" field and attaches it to req.file
 
 /**
+ * @route DELETE /api/posts/:postId [protected]
+ * @description delete a post
+ * @access protected
+ */
+postRouter.delete("/:postId", authUser, postController.deletePostController);
+
+/**
  * Handles post fetching
  * @route GET /api/posts
  * @access Private
@@ -59,12 +66,5 @@ postRouter.post(
  * @access protected
  */
 postRouter.get("/feed", authUser, postController.getFeedController);
-
-/**
- * @route DELETE /api/posts/:postId [protected]
- * @description delete a post
- * @access protected
- */
-postRouter.delete("/:postId", authUser, postController.deletePostController);
 
 module.exports = postRouter;

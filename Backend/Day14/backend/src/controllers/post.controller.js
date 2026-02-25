@@ -75,10 +75,12 @@ async function deletePostController(req, res) {
       });
     }
 
+
     // Delete image from ImageKit
     if (post.fileId) {
       try {
         await imageKit.files.delete(post.fileId);
+        console.log("Image deleted from ImageKit");
       } catch (ikError) {
         console.error("Failed to delete image from ImageKit:", ikError);
         // Continue with database deletion even if IK fails
