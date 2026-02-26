@@ -22,6 +22,9 @@ const userSchema = new mongoose.Schema({
     default:
       "https://ik.imagekit.io/lazzzyBug/avatar-default-user-profile-icon-social-media-vector-57234208.webp",
   },
+  profileImageFileId: {
+    type: String,
+  },
   isPrivate: {
     type: Boolean,
     default: false,

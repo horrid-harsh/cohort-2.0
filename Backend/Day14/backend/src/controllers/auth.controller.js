@@ -1,7 +1,7 @@
 const userModel = require("../models/user.model");
 // const crypto = require("crypto");
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 /**
  * Handles user registration
@@ -47,7 +47,14 @@ async function registerController(req, res) {
 
   return res.status(201).json({
     message: "User registered successfully",
-    user,
+    user: {
+      id: user._id,
+      username: user.username,
+      email: user.email,
+      bio: user.bio,
+      profileImage: user.profileImage,
+      isPrivate: user.isPrivate,
+    },
   });
 }
 
@@ -65,9 +72,11 @@ async function loginController(req, res) {
     });
   }
 
-  const user = await userModel.findOne({
-    $or: [{ username: identifier }, { email: identifier }],
-  }).select("+password");
+  const user = await userModel
+    .findOne({
+      $or: [{ username: identifier }, { email: identifier }],
+    })
+    .select("+password");
 
   if (!user) {
     return res.status(401).json({
@@ -99,10 +108,12 @@ async function loginController(req, res) {
   return res.status(200).json({
     message: "User login succesful",
     user: {
+      id: user._id,
       username: user.username,
       email: user.email,
       bio: user.bio,
       profileImage: user.profileImage,
+      isPrivate: user.isPrivate,
     },
   });
 }
@@ -131,14 +142,19 @@ async function getMeController(req, res) {
   return res.status(200).json({
     message: "User fetched successfully",
     user: {
+      id: user._id,
       username: user.username,
       email: user.email,
       bio: user.bio,
       profileImage: user.profileImage,
+      isPrivate: user.isPrivate,
     },
   });
 }
 
 module.exports = {
-    registerController, loginController, logoutController, getMeController
-}
+  registerController,
+  loginController,
+  logoutController,
+  getMeController,
+};

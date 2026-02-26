@@ -3,6 +3,7 @@ import { useAuth } from "../../auth/hooks/useAuth";
 import { getMyPostsApi } from "../services/post.api";
 import CreatePost from "../components/CreatePost";
 import ImageModal from "../components/ImageModal";
+import EditProfile from "../components/EditProfile";
 import { usePosts } from "../hooks/usePosts";
 import "../style/profile.scss";
 
@@ -12,6 +13,7 @@ const Profile = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [activeOptions, setActiveOptions] = useState(null);
 
@@ -61,6 +63,11 @@ const Profile = () => {
         onPostCreated={fetchMyPosts}
       />
 
+      <EditProfile
+        isOpen={isEditModalOpen}
+        onClose={() => setIsEditModalOpen(false)}
+      />
+
       <ImageModal
         imageUrl={selectedImage}
         onClose={() => setSelectedImage(null)}
@@ -74,7 +81,12 @@ const Profile = () => {
         <div className="profile-details">
           <div className="username-row">
             <h2>{user?.username}</h2>
-            <button className="edit-profile-btn">Edit Profile</button>
+            <button
+              className="edit-profile-btn"
+              onClick={() => setIsEditModalOpen(true)}
+            >
+              Edit Profile
+            </button>
           </div>
 
           <div className="stats-row">
@@ -90,8 +102,14 @@ const Profile = () => {
           </div>
 
           <div className="bio-section">
-            <p>🖤 #F*King bitches keep distance 🖤</p>
-            <p>☠️ No love No pain stay single only gain ☠️</p>
+            {user?.bio ? (
+              <p>{user.bio}</p>
+            ) : (
+              <>
+                <p>🖤 #F*King bitches keep distance 🖤</p>
+                <p>☠️ No love No pain stay single only gain ☠️</p>
+              </>
+            )}
           </div>
         </div>
       </div>

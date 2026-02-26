@@ -59,4 +59,19 @@ userRouter.post(
   userController.rejectFollowRequest,
 );
 
+const multer = require("multer");
+const upload = multer({ storage: multer.memoryStorage() });
+
+/**
+ * @route PATCH /api/users/update-profile [protected]
+ * @description update user profile (username, bio, profile image)
+ * @access protected
+ */
+userRouter.patch(
+  "/update-profile",
+  authUser,
+  upload.single("profileImage"),
+  userController.updateProfileController,
+);
+
 module.exports = userRouter;

@@ -1,5 +1,13 @@
 const userModel = require("../models/user.model");
 const followModel = require("../models/follow.model");
+const ImageKit = require("@imagekit/nodejs");
+const { toFile } = require("@imagekit/nodejs");
+const sharp = require("sharp");
+const jwt = require("jsonwebtoken");
+
+const imageKit = new ImageKit({
+  privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
+});
 
 /**
  * Follow a user
@@ -228,10 +236,101 @@ async function toggleAccountPrivacy(req, res) {
   }
 }
 
+/**
+ * Update user profile
+ * @route PATCH /api/users/update-profile
+ * @access Private
+ */
+async function updateProfileController(req, res) {
+  try {
+    const userId = req.user.id;
+    const { username, bio, isPrivate } = req.body;
+    let updateData = {};
+
+    if (username) updateData.username = username;
+    if (bio) updateData.bio = bio;
+    if (isPrivate !== undefined) updateData.isPrivate = isPrivate;
+
+    const user = await userModel.findById(userId);
+
+    if (req.file) {
+      // Compress and upload new profile image
+      const compressedBuffer = await sharp(req.file.buffer)
+        .resize({ width: 400, height: 400, fit: "cover" })
+        .jpeg({ quality: 80 })
+        .toBuffer();
+
+      const uploadResponse = await imageKit.files.upload({
+        file: await toFile(compressedBuffer, "profile.jpg"),
+        fileName: `profile-${userId}-${Date.now()}.jpg`,
+        folder: "insta-clone-profiles",
+      });
+
+      updateData.profileImage = uploadResponse.url;
+      updateData.profileImageFileId = uploadResponse.fileId;
+
+      // Delete old profile image if it exists (Non-blocking)
+      if (user.profileImageFileId) {
+        imageKit.files.delete(user.profileImageFileId).catch((err) => {
+          console.error("Failed to delete old profile image:", err);
+        });
+      }
+    }
+
+    const updatedUser = await userModel.findByIdAndUpdate(userId, updateData, {
+      returnDocument: "after",
+    });
+
+    if (!updatedUser) {
+      throw new Error("User not found after update");
+    }
+
+    // Only re-issue token if username actually changed
+    if (username && username !== user.username) {
+      try {
+        const newToken = jwt.sign(
+          {
+            id: updatedUser._id,
+            username: updatedUser.username,
+          },
+          process.env.JWT_SECRET,
+          { expiresIn: "1d" },
+        );
+        res.cookie("token", newToken);
+      } catch (tokenErr) {
+        console.error("Token generation failed:", tokenErr);
+      }
+    }
+
+    return res.status(200).json({
+      message: "Profile updated successfully",
+      user: {
+        id: updatedUser._id,
+        username: updatedUser.username,
+        email: updatedUser.email,
+        bio: updatedUser.bio,
+        profileImage: updatedUser.profileImage,
+        isPrivate: updatedUser.isPrivate,
+      },
+    });
+  } catch (error) {
+    console.error("Profile update error details:", error);
+    if (error.code === 11000) {
+      return res.status(400).json({
+        message: "Username already taken",
+      });
+    }
+    return res.status(500).json({
+      message: error.message || "Failed to update profile",
+    });
+  }
+}
+
 module.exports = {
   followUserController,
   unfollowUserController,
   acceptFollowRequest,
   rejectFollowRequest,
   toggleAccountPrivacy,
+  updateProfileController,
 };
