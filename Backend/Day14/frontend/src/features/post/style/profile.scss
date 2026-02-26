@@ -7,14 +7,23 @@
   color: #fff;
   min-height: 100vh;
 
-  .profile-header {
-    @include flex-center;
-    margin-top: 20px;
-    margin-bottom: 40px;
+  .back-nav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    margin-bottom: 24px;
+    color: #efefef;
+    transition: color 0.2s;
+    width: fit-content;
 
-    .create-post-btn {
-      @include btn-primary;
-      padding: 10px 20px;
+    &:hover {
+      color: #0095f6;
+    }
+
+    span {
+      font-size: 16px;
+      font-weight: 500;
     }
   }
 
@@ -99,6 +108,13 @@
 
           &:hover {
             background: #262626;
+          }
+        }
+
+        .create-post-btn {
+          background: #0095f6;
+          &:hover {
+            background: #1877f2;
           }
         }
       }

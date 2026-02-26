@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { IoArrowBack } from "react-icons/io5";
 import { useAuth } from "../../auth/hooks/useAuth";
 import { getMyPostsApi } from "../services/post.api";
 import { getUserProfileApi } from "../../auth/services/user.api";
@@ -9,6 +11,7 @@ import { usePosts } from "../hooks/usePosts";
 import "../style/profile.scss";
 
 const Profile = () => {
+  const navigate = useNavigate();
   const { user } = useAuth();
   const { deletePost } = usePosts();
   const [posts, setPosts] = useState([]);
@@ -71,15 +74,10 @@ const Profile = () => {
 
   return (
     <div className="profile-page">
-      <div className="profile-header">
-        <button
-          className="create-post-btn"
-          onClick={() => setIsModalOpen(true)}
-        >
-          Create New Post
-        </button>
+      <div className="back-nav" onClick={() => navigate(-1)}>
+        <IoArrowBack size={24} />
+        <span>Go back</span>
       </div>
-
       <CreatePost
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
@@ -109,6 +107,12 @@ const Profile = () => {
               onClick={() => setIsEditModalOpen(true)}
             >
               Edit Profile
+            </button>
+            <button
+              className="edit-profile-btn create-post-btn"
+              onClick={() => setIsModalOpen(true)}
+            >
+              Create Post
             </button>
           </div>
 
