@@ -39,7 +39,7 @@ userRouter.post(
 
 /**
  * @route POST /api/users/accept-follow-request/:id [protected]
- * @description accept a follow request
+ * @description accept a follow req uest
  * @access protected
  */
 userRouter.post(
@@ -72,6 +72,17 @@ userRouter.patch(
   authUser,
   upload.single("profileImage"),
   userController.updateProfileController,
+);
+
+/**
+ * @route GET /api/users/profile/:username [protected]
+ * @description get user profile details and stats
+ * @access protected
+ */
+userRouter.get(
+  "/profile/:username",
+  authUser,
+  userController.getUserProfileController,
 );
 
 module.exports = userRouter;

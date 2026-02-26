@@ -1,5 +1,6 @@
 const userModel = require("../models/user.model");
 const followModel = require("../models/follow.model");
+const postModel = require("../models/post.model");
 const ImageKit = require("@imagekit/nodejs");
 const { toFile } = require("@imagekit/nodejs");
 const sharp = require("sharp");
@@ -326,6 +327,50 @@ async function updateProfileController(req, res) {
   }
 }
 
+/**
+ * Get user profile stats and info
+ * @route GET /api/users/profile/:username
+ * @access Private
+ */
+async function getUserProfileController(req, res) {
+  try {
+    const { username } = req.params;
+    const user = await userModel.findOne({ username });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const postsCount = await postModel.countDocuments({ user: user._id });
+    const followersCount = await followModel.countDocuments({
+      following: user._id,
+      status: "accepted",
+    });
+    const followingCount = await followModel.countDocuments({
+      follower: user._id,
+      status: "accepted",
+    });
+
+    return res.status(200).json({
+      user: {
+        id: user._id,
+        username: user.username,
+        bio: user.bio,
+        profileImage: user.profileImage,
+        isPrivate: user.isPrivate,
+      },
+      stats: {
+        postsCount,
+        followersCount,
+        followingCount,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+}
+
 module.exports = {
   followUserController,
   unfollowUserController,
@@ -333,4 +378,5 @@ module.exports = {
   rejectFollowRequest,
   toggleAccountPrivacy,
   updateProfileController,
+  getUserProfileController,
 };

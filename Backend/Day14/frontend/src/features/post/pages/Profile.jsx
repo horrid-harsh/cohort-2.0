@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../auth/hooks/useAuth";
 import { getMyPostsApi } from "../services/post.api";
+import { getUserProfileApi } from "../../auth/services/user.api";
 import CreatePost from "../components/CreatePost";
 import ImageModal from "../components/ImageModal";
 import EditProfile from "../components/EditProfile";
@@ -11,6 +12,11 @@ const Profile = () => {
   const { user } = useAuth();
   const { deletePost } = usePosts();
   const [posts, setPosts] = useState([]);
+  const [stats, setStats] = useState({
+    postsCount: 0,
+    followersCount: 0,
+    followingCount: 0,
+  });
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -28,18 +34,35 @@ const Profile = () => {
     }
   };
 
-  const deleteMyPost = async (postId) => {
+  const fetchProfileStats = async () => {
+    if (!user?.username) return;
     try {
-      await deletePost(postId);
-      fetchMyPosts();
+      const data = await getUserProfileApi(user.username);
+      setStats(data.stats);
     } catch (error) {
-      console.error("Failed to delete post:", error);
+      console.error("Failed to fetch stats:", error);
     }
+  };
+
+  const handlePostCreated = () => {
+    fetchMyPosts();
+    fetchProfileStats();
   };
 
   useEffect(() => {
     fetchMyPosts();
-  }, []);
+    fetchProfileStats();
+  }, [user?.username]);
+
+  const deleteMyPost = async (postId) => {
+    try {
+      await deletePost(postId);
+      fetchMyPosts();
+      fetchProfileStats();
+    } catch (error) {
+      console.error("Failed to delete post:", error);
+    }
+  };
 
   const toggleOptions = (e, postId) => {
     e.stopPropagation();
@@ -60,7 +83,7 @@ const Profile = () => {
       <CreatePost
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        onPostCreated={fetchMyPosts}
+        onPostCreated={handlePostCreated}
       />
 
       <EditProfile
@@ -91,13 +114,13 @@ const Profile = () => {
 
           <div className="stats-row">
             <span>
-              <strong>{posts.length}</strong> posts
+              <strong>{stats.postsCount}</strong> posts
             </span>
             <span>
-              <strong>39</strong> followers
+              <strong>{stats.followersCount}</strong> followers
             </span>
             <span>
-              <strong>65</strong> following
+              <strong>{stats.followingCount}</strong> following
             </span>
           </div>
 

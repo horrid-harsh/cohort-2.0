@@ -7,10 +7,6 @@ export const userApi = axios.create({
 
 export const updateProfileApi = async (formData) => {
   try {
-    console.log(
-      "DEBUG: Sending profile update request...",
-      Array.from(formData.entries()),
-    );
     const response = await userApi.patch("/update-profile", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -19,9 +15,19 @@ export const updateProfileApi = async (formData) => {
     return response.data;
   } catch (error) {
     console.error(
-      "DEBUG: Profile update API error:",
+      "Profile update API error:",
       error.response?.data || error.message,
     );
+    throw error;
+  }
+};
+
+export const getUserProfileApi = async (username) => {
+  try {
+    const response = await userApi.get(`/profile/${username}`);
+    return response.data;
+  } catch (error) {
+    console.log(error);
     throw error;
   }
 };
