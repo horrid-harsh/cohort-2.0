@@ -67,8 +67,33 @@ const Profile = () => {
       />
 
       <div className="user-profile-info">
-        <img src={user?.profileImage} alt={user?.username} />
-        <h2>{user?.username}</h2>
+        <div className="profile-image-container">
+          <img src={user?.profileImage} alt={user?.username} />
+        </div>
+
+        <div className="profile-details">
+          <div className="username-row">
+            <h2>{user?.username}</h2>
+            <button className="edit-profile-btn">Edit Profile</button>
+          </div>
+
+          <div className="stats-row">
+            <span>
+              <strong>{posts.length}</strong> posts
+            </span>
+            <span>
+              <strong>39</strong> followers
+            </span>
+            <span>
+              <strong>65</strong> following
+            </span>
+          </div>
+
+          <div className="bio-section">
+            <p>🖤 #F*King bitches keep distance 🖤</p>
+            <p>☠️ No love No pain stay single only gain ☠️</p>
+          </div>
+        </div>
       </div>
 
       <div className="posts-grid">
