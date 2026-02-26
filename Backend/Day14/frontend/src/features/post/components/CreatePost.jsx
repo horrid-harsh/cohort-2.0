@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { IoClose, IoImagesOutline } from "react-icons/io5";
-import { createPostApi } from "../services/post.api";
+import { usePosts } from "../hooks/usePosts";
 import "../style/create-post.scss";
 
 const CreatePost = ({ isOpen, onClose, onPostCreated }) => {
+  const { createPost } = usePosts();
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState("");
   const [caption, setCaption] = useState("");
@@ -31,7 +32,7 @@ const CreatePost = ({ isOpen, onClose, onPostCreated }) => {
       formData.append("image", file);
       formData.append("caption", caption);
 
-      await createPostApi(formData);
+      await createPost(formData);
       if (onPostCreated) onPostCreated();
       onClose();
       // Reset

@@ -3,11 +3,12 @@ import { useAuth } from "../../auth/hooks/useAuth";
 import { getMyPostsApi } from "../services/post.api";
 import CreatePost from "../components/CreatePost";
 import ImageModal from "../components/ImageModal";
-import { deletePostApi } from "../services/post.api";
+import { usePosts } from "../hooks/usePosts";
 import "../style/profile.scss";
 
 const Profile = () => {
   const { user } = useAuth();
+  const { deletePost } = usePosts();
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -27,7 +28,7 @@ const Profile = () => {
 
   const deleteMyPost = async (postId) => {
     try {
-      await deletePostApi(postId);
+      await deletePost(postId);
       fetchMyPosts();
     } catch (error) {
       console.error("Failed to delete post:", error);

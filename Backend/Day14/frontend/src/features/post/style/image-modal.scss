@@ -3,7 +3,7 @@
 .image-modal-overlay {
   @include modal-overlay(rgba(0, 0, 0, 0.85));
   backdrop-filter: blur(8px);
-  cursor: zoom-out;
+  // cursor: zoom-out;
   padding: 40px;
 
   .close-btn {
@@ -24,7 +24,7 @@
   }
 
   .image-modal-content {
-    width: 90%;
+    width: fit-content;
     height: 90%;
     cursor: default;
     overflow: hidden;
