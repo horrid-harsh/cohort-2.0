@@ -371,6 +371,60 @@ async function getUserProfileController(req, res) {
   }
 }
 
+/**
+ * Get followers list
+ * @route GET /api/users/followers/:username
+ * @access Private
+ */
+async function getFollowersController(req, res) {
+  try {
+    const { username } = req.params;
+    const user = await userModel.findOne({ username });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const followers = await followModel
+      .find({ following: user._id, status: "accepted" })
+      .populate("follower", "username profileImage bio");
+
+    const followerUsers = followers.map((f) => f.follower);
+
+    return res.status(200).json({ followers: followerUsers });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+}
+
+/**
+ * Get following list
+ * @route GET /api/users/following/:username
+ * @access Private
+ */
+async function getFollowingController(req, res) {
+  try {
+    const { username } = req.params;
+    const user = await userModel.findOne({ username });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const following = await followModel
+      .find({ follower: user._id, status: "accepted" })
+      .populate("following", "username profileImage fullname bio");
+
+    const followingUsers = following.map((f) => f.following);
+
+    return res.status(200).json({ following: followingUsers });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+}
+
 module.exports = {
   followUserController,
   unfollowUserController,
@@ -379,4 +433,6 @@ module.exports = {
   toggleAccountPrivacy,
   updateProfileController,
   getUserProfileController,
+  getFollowersController,
+  getFollowingController,
 };

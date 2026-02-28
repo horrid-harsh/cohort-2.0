@@ -3,10 +3,15 @@ import { useNavigate } from "react-router-dom";
 import { IoArrowBack } from "react-icons/io5";
 import { useAuth } from "../../auth/hooks/useAuth";
 import { getMyPostsApi } from "../services/post.api";
-import { getUserProfileApi } from "../../auth/services/user.api";
+import {
+  getUserProfileApi,
+  getFollowersApi,
+  getFollowingApi,
+} from "../../auth/services/user.api";
 import CreatePost from "../components/CreatePost";
 import ImageModal from "../components/ImageModal";
 import EditProfile from "../components/EditProfile";
+import FollowListModal from "../components/FollowListModal";
 import { usePosts } from "../hooks/usePosts";
 import "../style/profile.scss";
 
@@ -23,6 +28,10 @@ const Profile = () => {
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isFollowModalOpen, setIsFollowModalOpen] = useState(false);
+  const [modalTitle, setModalTitle] = useState("");
+  const [followListData, setFollowListData] = useState([]);
+  const [modalLoading, setModalLoading] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [activeOptions, setActiveOptions] = useState(null);
 
@@ -72,6 +81,27 @@ const Profile = () => {
     setActiveOptions(activeOptions === postId ? null : postId);
   };
 
+  const openFollowModal = async (title) => {
+    setModalTitle(title);
+    setIsFollowModalOpen(true);
+    setModalLoading(true);
+    setFollowListData([]);
+
+    try {
+      if (title === "Followers") {
+        const data = await getFollowersApi(user.username);
+        setFollowListData(data);
+      } else {
+        const data = await getFollowingApi(user.username);
+        setFollowListData(data);
+      }
+    } catch (error) {
+      console.error(`Failed to fetch ${title.toLowerCase()}:`, error);
+    } finally {
+      setModalLoading(false);
+    }
+  };
+
   return (
     <div className="profile-page">
       <div className="back-nav" onClick={() => navigate(-1)}>
@@ -92,6 +122,14 @@ const Profile = () => {
       <ImageModal
         imageUrl={selectedImage}
         onClose={() => setSelectedImage(null)}
+      />
+
+      <FollowListModal
+        isOpen={isFollowModalOpen}
+        onClose={() => setIsFollowModalOpen(false)}
+        title={modalTitle}
+        users={followListData}
+        loading={modalLoading}
       />
 
       <div className="user-profile-info">
@@ -120,10 +158,16 @@ const Profile = () => {
             <span>
               <strong>{stats.postsCount}</strong> posts
             </span>
-            <span>
+            <span
+              className="stat-clickable"
+              onClick={() => openFollowModal("Followers")}
+            >
               <strong>{stats.followersCount}</strong> followers
             </span>
-            <span>
+            <span
+              className="stat-clickable"
+              onClick={() => openFollowModal("Following")}
+            >
               <strong>{stats.followingCount}</strong> following
             </span>
           </div>
@@ -133,8 +177,7 @@ const Profile = () => {
               <p>{user.bio}</p>
             ) : (
               <>
-                <p>🖤 #F*King bitches keep distance 🖤</p>
-                <p>☠️ No love No pain stay single only gain ☠️</p>
+                <p>No bio yet</p>
               </>
             )}
           </div>

@@ -31,3 +31,23 @@ export const getUserProfileApi = async (username) => {
     throw error;
   }
 };
+
+export const getFollowersApi = async (username) => {
+  try {
+    const response = await userApi.get(`/followers/${username}`);
+    return response.data.followers;
+  } catch (error) {
+    console.error("Fetch followers API error:", error);
+    throw error;
+  }
+};
+
+export const getFollowingApi = async (username) => {
+  try {
+    const response = await userApi.get(`/following/${username}`);
+    return response.data.following;
+  } catch (error) {
+    console.error("Fetch following API error:", error);
+    throw error;
+  }
+};

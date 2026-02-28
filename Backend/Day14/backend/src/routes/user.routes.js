@@ -76,13 +76,35 @@ userRouter.patch(
 
 /**
  * @route GET /api/users/profile/:username [protected]
- * @description get user profile details and stats
+ * @description get user profile
  * @access protected
  */
 userRouter.get(
   "/profile/:username",
   authUser,
   userController.getUserProfileController,
+);
+
+/**
+ * @route GET /api/users/followers/:username [protected]
+ * @description get followers list
+ * @access protected
+ */
+userRouter.get(
+  "/followers/:username",
+  authUser,
+  userController.getFollowersController,
+);
+
+/**
+ * @route GET /api/users/following/:username [protected]
+ * @description get following list
+ * @access protected
+ */
+userRouter.get(
+  "/following/:username",
+  authUser,
+  userController.getFollowingController,
 );
 
 module.exports = userRouter;
