@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const userModel = require("../models/user.model");
 const refreshTokenModel = require("../models/refreshToken.model");
+const redis = require("../config/cache");
 
 const registerController = async (req, res) => {
   try {
@@ -61,14 +62,13 @@ const loginController = async (req, res) => {
       return res.status(404).json({ message: "Invalid credentials" });
     }
 
-    const isPasswordValid = await user.comparePassword(password);
-    if (!isPasswordValid) {
-      return res.status(401).json({ message: "Invalid credentials" });
-    }
-
-    const accessToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "15m",
-    });
+    const accessToken = jwt.sign(
+      { id: user._id, username: user.username },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "15m",
+      },
+    );
 
     const refreshToken = jwt.sign(
       { id: user._id },
@@ -98,6 +98,43 @@ const loginController = async (req, res) => {
   }
 };
 
+const getMeController = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const user = await userModel.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    return res.status(200).json({
+      message: "User fetched successfully",
+      user,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+const logoutController = async (req, res) => {
+  try {
+    const refreshToken = req.cookies.refreshToken;
+    if (!refreshToken) {
+      return res.status(200).json({ message: "Logged out" });
+    }
+    await refreshTokenModel.deleteOne({ token: refreshToken });
+
+    res.clearCookie("accessToken");
+    res.clearCookie("refreshToken");
+    return res.status(200).json({
+      message: "User logged out successfully",
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 const refreshController = async (req, res) => {
   try {
     const { refreshToken } = req.cookies;
@@ -105,14 +142,13 @@ const refreshController = async (req, res) => {
     if (!refreshToken) {
       return res.status(401).json({ message: "Unauthorized" });
     }
+    const decoded = jwt.verify(refreshToken, process.env.REFRESH_SECRET);
 
     const tokenInDB = await refreshTokenModel.findOne({ token: refreshToken });
 
     if (!tokenInDB) {
       return res.status(403).json({ message: "Invalid refresh token" });
     }
-
-    const decoded = jwt.verify(refreshToken, process.env.REFRESH_SECRET);
 
     const newAccessToken = jwt.sign(
       { id: decoded.id },
@@ -136,4 +172,10 @@ const refreshController = async (req, res) => {
   }
 };
 
-module.exports = { registerController, loginController, refreshController };
+module.exports = {
+  registerController,
+  loginController,
+  logoutController,
+  getMeController,
+  refreshController,
+};

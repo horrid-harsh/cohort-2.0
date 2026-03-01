@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const router = Router();
-
+const authUser = require("../middlewares/auth.middleware");
 const authController = require("../controllers/auth.controller");
 
 /**
@@ -16,6 +16,20 @@ router.post("/register", authController.registerController);
  * @access Public
  */
 router.post("/login", authController.loginController);
+
+/**
+ * @route GET /api/auth/me
+ * @desc Get current user
+ * @access Private
+ */
+router.get("/me", authUser, authController.getMeController);
+
+/**
+ * @route POST /api/auth/logout
+ * @desc Logout a user
+ * @access Private
+ */
+router.post("/logout", authUser, authController.logoutController);
 
 /**
  * @route POST /api/auth/refresh

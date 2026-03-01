@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const redis = require("../config/cache");
 
 const authMiddleware = async (req, res, next) => {
   try {
