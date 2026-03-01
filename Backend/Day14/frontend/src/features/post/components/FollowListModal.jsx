@@ -1,9 +1,17 @@
 import React from "react";
 import { IoClose } from "react-icons/io5";
+import { useNavigate } from "react-router-dom";
 import "../style/follow-modal.scss";
 
 const FollowListModal = ({ isOpen, onClose, title, users = [], loading }) => {
+  const navigate = useNavigate();
+
   if (!isOpen) return null;
+
+  const handleUserClick = (username) => {
+    onClose();
+    navigate(`/profile/${username}`);
+  };
 
   return (
     <div className="follow-modal-overlay" onClick={onClose}>
@@ -24,7 +32,12 @@ const FollowListModal = ({ isOpen, onClose, title, users = [], loading }) => {
           ) : (
             <>
               {users.map((user, index) => (
-                <div key={index} className="user-item">
+                <div
+                  key={index}
+                  className="user-item"
+                  onClick={() => handleUserClick(user.username)}
+                  style={{ cursor: "pointer" }}
+                >
                   <div className="user-info">
                     <div className="avatar">
                       <img
@@ -36,7 +49,6 @@ const FollowListModal = ({ isOpen, onClose, title, users = [], loading }) => {
                     </div>
                     <div className="details">
                       <span className="username">{user.username}</span>
-                      <span className="fullname">{user.fullname}</span>
                     </div>
                   </div>
                   <button

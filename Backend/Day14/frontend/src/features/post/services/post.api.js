@@ -25,6 +25,16 @@ export const getMyPostsApi = async () => {
   }
 };
 
+export const getUserPostsApi = async (username) => {
+  try {
+    const response = await postApi.get(`/user/${username}`);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
 export const createPostApi = async (formData) => {
   try {
     const response = await postApi.post("/", formData, {

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { IoArrowBack } from "react-icons/io5";
 import { useAuth } from "../../auth/hooks/useAuth";
-import { getMyPostsApi } from "../services/post.api";
+import { getMyPostsApi, getUserPostsApi } from "../services/post.api";
 import {
   getUserProfileApi,
   getFollowersApi,
@@ -17,8 +17,12 @@ import "../style/profile.scss";
 
 const Profile = () => {
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { username } = useParams();
+  const { user: authUser } = useAuth();
+  const isOwner = !username || username === authUser?.username;
+
   const { deletePost } = usePosts();
+  const [profileUser, setProfileUser] = useState(null);
   const [posts, setPosts] = useState([]);
   const [stats, setStats] = useState({
     postsCount: 0,
@@ -35,9 +39,12 @@ const Profile = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [activeOptions, setActiveOptions] = useState(null);
 
-  const fetchMyPosts = async () => {
+  const fetchUserPosts = async () => {
+    setLoading(true);
     try {
-      const data = await getMyPostsApi();
+      const data = isOwner
+        ? await getMyPostsApi()
+        : await getUserPostsApi(username);
       setPosts(data.posts);
     } catch (error) {
       console.error("Failed to fetch posts:", error);
@@ -47,9 +54,11 @@ const Profile = () => {
   };
 
   const fetchProfileStats = async () => {
-    if (!user?.username) return;
+    const targetUsername = username || authUser?.username;
+    if (!targetUsername) return;
     try {
-      const data = await getUserProfileApi(user.username);
+      const data = await getUserProfileApi(targetUsername);
+      setProfileUser(data.user);
       setStats(data.stats);
     } catch (error) {
       console.error("Failed to fetch stats:", error);
@@ -57,14 +66,14 @@ const Profile = () => {
   };
 
   const handlePostCreated = () => {
-    fetchMyPosts();
+    fetchUserPosts();
     fetchProfileStats();
   };
 
   useEffect(() => {
-    fetchMyPosts();
+    fetchUserPosts();
     fetchProfileStats();
-  }, [user?.username]);
+  }, [username, authUser?.username]);
 
   const deleteMyPost = async (postId) => {
     try {
@@ -82,6 +91,8 @@ const Profile = () => {
   };
 
   const openFollowModal = async (title) => {
+    const targetUsername = username || authUser?.username;
+    if (!targetUsername) return;
     setModalTitle(title);
     setIsFollowModalOpen(true);
     setModalLoading(true);
@@ -89,10 +100,10 @@ const Profile = () => {
 
     try {
       if (title === "Followers") {
-        const data = await getFollowersApi(user.username);
+        const data = await getFollowersApi(targetUsername);
         setFollowListData(data);
       } else {
-        const data = await getFollowingApi(user.username);
+        const data = await getFollowingApi(targetUsername);
         setFollowListData(data);
       }
     } catch (error) {
@@ -102,22 +113,28 @@ const Profile = () => {
     }
   };
 
+  const displayUser = isOwner ? authUser : profileUser;
+
   return (
     <div className="profile-page">
       <div className="back-nav" onClick={() => navigate(-1)}>
         <IoArrowBack size={24} />
         <span>Go back</span>
       </div>
-      <CreatePost
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onPostCreated={handlePostCreated}
-      />
+      {isOwner && (
+        <>
+          <CreatePost
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            onPostCreated={handlePostCreated}
+          />
 
-      <EditProfile
-        isOpen={isEditModalOpen}
-        onClose={() => setIsEditModalOpen(false)}
-      />
+          <EditProfile
+            isOpen={isEditModalOpen}
+            onClose={() => setIsEditModalOpen(false)}
+          />
+        </>
+      )}
 
       <ImageModal
         imageUrl={selectedImage}
@@ -134,24 +151,28 @@ const Profile = () => {
 
       <div className="user-profile-info">
         <div className="profile-image-container">
-          <img src={user?.profileImage} alt={user?.username} />
+          <img src={displayUser?.profileImage} alt={displayUser?.username} />
         </div>
 
         <div className="profile-details">
           <div className="username-row">
-            <h2>{user?.username}</h2>
-            <button
-              className="edit-profile-btn"
-              onClick={() => setIsEditModalOpen(true)}
-            >
-              Edit Profile
-            </button>
-            <button
-              className="edit-profile-btn create-post-btn"
-              onClick={() => setIsModalOpen(true)}
-            >
-              Create Post
-            </button>
+            <h2>{displayUser?.username}</h2>
+            {isOwner && (
+              <>
+                <button
+                  className="edit-profile-btn"
+                  onClick={() => setIsEditModalOpen(true)}
+                >
+                  Edit Profile
+                </button>
+                <button
+                  className="edit-profile-btn create-post-btn"
+                  onClick={() => setIsModalOpen(true)}
+                >
+                  Create Post
+                </button>
+              </>
+            )}
           </div>
 
           <div className="stats-row">
@@ -173,13 +194,7 @@ const Profile = () => {
           </div>
 
           <div className="bio-section">
-            {user?.bio ? (
-              <p>{user.bio}</p>
-            ) : (
-              <>
-                <p>No bio yet</p>
-              </>
-            )}
+            {displayUser?.bio ? <p>{displayUser.bio}</p> : <p>No bio yet</p>}
           </div>
         </div>
       </div>
@@ -195,44 +210,46 @@ const Profile = () => {
               style={{ cursor: "pointer" }}
               onClick={() => setSelectedImage(post.imgUrl)}
             >
-              <div
-                className="post-options-btn"
-                onClick={(e) => toggleOptions(e, post._id)}
-              >
-                <svg
-                  stroke="currentColor"
-                  fill="currentColor"
-                  strokeWidth="0"
-                  viewBox="0 0 512 512"
-                  height="20"
-                  width="20"
-                  xmlns="http://www.w3.org/2000/svg"
+              {isOwner && (
+                <div
+                  className="post-options-btn"
+                  onClick={(e) => toggleOptions(e, post._id)}
                 >
-                  <circle cx="256" cy="256" r="48"></circle>
-                  <circle cx="416" cy="256" r="48"></circle>
-                  <circle cx="96" cy="256" r="48"></circle>
-                </svg>
+                  <svg
+                    stroke="currentColor"
+                    fill="currentColor"
+                    strokeWidth="0"
+                    viewBox="0 0 512 512"
+                    height="20"
+                    width="20"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <circle cx="256" cy="256" r="48"></circle>
+                    <circle cx="416" cy="256" r="48"></circle>
+                    <circle cx="96" cy="256" r="48"></circle>
+                  </svg>
 
-                {activeOptions === post._id && (
-                  <div className="options-dropdown">
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        if (
-                          window.confirm(
-                            "Are you sure you want to delete this post?",
-                          )
-                        ) {
-                          deleteMyPost(post._id);
-                          setActiveOptions(null);
-                        }
-                      }}
-                    >
-                      Delete
-                    </button>
-                  </div>
-                )}
-              </div>
+                  {activeOptions === post._id && (
+                    <div className="options-dropdown">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          if (
+                            window.confirm(
+                              "Are you sure you want to delete this post?",
+                            )
+                          ) {
+                            deleteMyPost(post._id);
+                            setActiveOptions(null);
+                          }
+                        }}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  )}
+                </div>
+              )}
 
               <img src={post.imgUrl} alt={post.caption} />
               <p className="caption">{post.caption}</p>
