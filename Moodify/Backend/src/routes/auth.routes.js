@@ -38,4 +38,11 @@ router.post("/logout", authUser, authController.logoutController);
  */
 router.post("/refresh", authController.refreshController);
 
+/**
+ * @route POST /api/auth/forgot-password
+ * @desc Forgot password
+ * @access Public
+ */
+router.post("/forgot-password", authController.forgotPasswordController);
+
 module.exports = router;

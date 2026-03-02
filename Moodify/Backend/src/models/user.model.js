@@ -17,6 +17,8 @@ const userSchema = new mongoose.Schema({
     required: [true, "Password is required"],
     select: false,
   },
+  resetPasswordToken: String,
+  resetPasswordExpire: Date,
 });
 
 userSchema.pre("save", async function () {
