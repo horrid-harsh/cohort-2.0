@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 const authUser = require("../middlewares/auth.middleware");
+const { authLimiter, refreshLimiter, registerLimiter } = require("../middlewares/rateLimiter");
 const authController = require("../controllers/auth.controller");
 
 /**
@@ -8,14 +9,14 @@ const authController = require("../controllers/auth.controller");
  * @desc Register a new user
  * @access Public
  */
-router.post("/register", authController.registerController);
+router.post("/register", registerLimiter, authController.registerController);
 
 /**
  * @route POST /api/auth/login
  * @desc Login a user
  * @access Public
  */
-router.post("/login", authController.loginController);
+router.post("/login", authLimiter, authController.loginController);
 
 /**
  * @route GET /api/auth/me
@@ -36,20 +37,20 @@ router.post("/logout", authUser, authController.logoutController);
  * @desc Refresh access token
  * @access Public
  */
-router.post("/refresh", authController.refreshController);
+router.post("/refresh", refreshLimiter, authController.refreshController);
 
 /**
  * @route POST /api/auth/forgot-password
  * @desc Forgot password
  * @access Public
  */
-router.post("/forgot-password", authController.forgotPasswordController);
+router.post("/forgot-password", authLimiter, authController.forgotPasswordController);
 
 /**
  * @route POST /api/auth/reset-password/:token
  * @desc Reset password
  * @access Public
  */
-router.post("/reset-password/:token", authController.resetPasswordController);
+router.post("/reset-password/:token", authLimiter, authController.resetPasswordController);
 
 module.exports = router;
