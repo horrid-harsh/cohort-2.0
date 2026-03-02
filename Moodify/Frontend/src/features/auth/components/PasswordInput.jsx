@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const PasswordInput = ({ placeholder }) => {
+const PasswordInput = ({ placeholder, ...rest }, ref) => {
       const [showPassword, setShowPassword] = useState(false);
 
   return (
@@ -8,8 +8,10 @@ const PasswordInput = ({ placeholder }) => {
           <label>Password</label>
           <div className="password-input-wrapper">
             <input
+            ref={ref}
               type={showPassword ? "text" : "password"}
               placeholder={placeholder}
+              {...rest}
             />
             <button
               type="button"

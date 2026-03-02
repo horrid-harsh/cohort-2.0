@@ -1,5 +1,6 @@
-@import "../../auth/style/variables";
-@import "../../auth/style/mixins";
+@use "sass:color";
+@use "../../auth/style/variables" as *;
+@use "../../auth/style/mixins" as *;
 
 .face-expression-container {
   min-height: 100vh;
@@ -35,7 +36,7 @@
   &::after {
     width: 350px;
     height: 350px;
-    background: darken($primary-color, 15%);
+    background: color.adjust($primary-color, $lightness: -15%);
     bottom: -80px;
     right: -80px;
     animation: floating 10s infinite alternate-reverse;
@@ -142,7 +143,7 @@
       background: linear-gradient(
         135deg,
         $primary-color 0%,
-        darken($primary-color, 10%) 100%
+        color.adjust($primary-color, $lightness: -10%) 100%
       );
       color: $white;
       border: none;

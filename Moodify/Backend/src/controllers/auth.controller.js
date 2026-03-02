@@ -40,7 +40,7 @@ const registerController = async (req, res) => {
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
 
-    return res.status(201).json({ message: "User created successfully" });
+    return res.status(201).json({ message: "User created successfully", user });
   } catch (error) {
     if (error.code === 11000) {
       return res.status(400).json({ message: "User already exists" });
@@ -60,8 +60,8 @@ const loginController = async (req, res) => {
     }
 
     const user = await userModel
-    .findOne({ $or: [{ email }, { username }] })
-    .select("+password");
+      .findOne({ $or: [{ email }, { username }] })
+      .select("+password");
     if (!user) {
       return res.status(404).json({ message: "Invalid credentials" });
     }
@@ -198,7 +198,10 @@ const forgotPasswordController = async (req, res) => {
 
     //Generate random token
     const resetPasswordToken = crypto.randomBytes(32).toString("hex");
-    const hashedToken = crypto.createHash("sha256").update(resetPasswordToken).digest("hex");
+    const hashedToken = crypto
+      .createHash("sha256")
+      .update(resetPasswordToken)
+      .digest("hex");
 
     user.resetPasswordToken = hashedToken;
     user.resetPasswordExpire = Date.now() + 15 * 60 * 1000; // 15 minutes
@@ -210,13 +213,12 @@ const forgotPasswordController = async (req, res) => {
     await sendEmail({
       to: user.email,
       subject: "Password Reset",
-      text: `Reset your password here: ${resetUrl}`
+      text: `Reset your password here: ${resetUrl}`,
     });
 
     return res.status(200).json({
       message: "If that email exists, a reset link has been sent.",
     });
-
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Internal server error" });
@@ -229,10 +231,12 @@ const resetPasswordController = async (req, res) => {
 
   const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
 
-  const user = await userModel.findOne({
-    resetPasswordToken: hashedToken,
-    resetPasswordExpire: { $gt: Date.now() },
-  }).select("+password");
+  const user = await userModel
+    .findOne({
+      resetPasswordToken: hashedToken,
+      resetPasswordExpire: { $gt: Date.now() },
+    })
+    .select("+password");
 
   if (!user) {
     return res.status(400).json({ message: "Invalid or expired token" });
@@ -244,8 +248,8 @@ const resetPasswordController = async (req, res) => {
 
   await user.save();
 
-  return res.status(200).json({ message: "Password reset successfully" });  
-}
+  return res.status(200).json({ message: "Password reset successfully" });
+};
 
 module.exports = {
   registerController,

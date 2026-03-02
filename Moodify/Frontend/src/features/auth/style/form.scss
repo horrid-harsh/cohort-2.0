@@ -1,5 +1,6 @@
-@import "variables";
-@import "mixins";
+@use "sass:color";
+@use "variables" as *;
+@use "mixins" as *;
 
 .auth-container {
   min-height: 100vh;
@@ -35,7 +36,7 @@
   &::after {
     width: 300px;
     height: 300px;
-    background: darken($primary-color, 20%);
+    background: color.adjust($primary-color, $lightness: -20%);
     bottom: -50px;
     left: -50px;
     animation: pulse 8s infinite alternate-reverse;
@@ -111,6 +112,19 @@
             box-shadow: 0 0 0 4px rgba($primary-color, 0.1);
           }
 
+          &:-webkit-autofill,
+          &:-webkit-autofill:hover,
+          &:-webkit-autofill:focus,
+          &:-webkit-autofill:active {
+            -webkit-box-shadow: 0 0 0 1000px $input-bg inset !important;
+            -webkit-text-fill-color: $white !important;
+            caret-color: $white !important;
+            color: $white !important;
+            transition:
+              background-color 50000s ease-in-out 0s,
+              color 50000s ease-in-out 0s;
+          }
+
           &::placeholder {
             color: rgba(255, 255, 255, 0.2);
           }
@@ -184,7 +198,7 @@
         background: linear-gradient(
           135deg,
           $primary-color 0%,
-          darken($primary-color, 10%) 100%
+          color.adjust($primary-color, $lightness: -10%) 100%
         );
         color: $white;
         border: none;

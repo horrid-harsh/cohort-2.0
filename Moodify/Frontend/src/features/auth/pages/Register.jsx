@@ -1,10 +1,33 @@
 import React, { useState } from "react";
 import "../style/form.scss";
+import { Link, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import useAuth from "../hooks/useAuth";
 import AuthLayout from "../components/AuthLayout";
 import PasswordInput from "../components/PasswordInput";
-import { Link } from "react-router-dom";
 
 const Register = () => {
+
+  const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const { registerUser, loading } = useAuth();
+
+  const onSubmit = async (data) => {
+    console.log("Form data register : ", data);
+    try {
+      const response = await registerUser(data);
+      console.log("Response from registerApi(jsx) : ", response);
+      navigate("/");
+    } catch (error) {
+      console.error("Error from registerApi(jsx) : ", error);
+    }
+  };
+
   return (
     <AuthLayout
       title="Moodify"
@@ -15,21 +38,29 @@ const Register = () => {
         </div>
       }
     >
-      <form className="auth-form" onSubmit={(e) => e.preventDefault()}>
+      <form className="auth-form" onSubmit={handleSubmit(onSubmit)}>
         <div className="form-group">
-          <label>Full Name</label>
-          <input type="text" placeholder="John Doe" />
+          <label>Username</label>
+          <input
+            type="text"
+            placeholder="@username"
+            {...register("username")}
+          />
         </div>
 
         <div className="form-group">
           <label>Email Address</label>
-          <input type="email" placeholder="name@example.com" />
+          <input
+            type="email"
+            placeholder="name@example.com"
+            {...register("email")}
+          />
         </div>
 
-        <PasswordInput placeholder="••••••••" />
+        <PasswordInput placeholder="••••••••" {...register("password")} />
 
-        <button type="submit" className="submit-btn">
-          Create Account
+        <button type="submit" className="submit-btn" disabled={loading}>
+          {loading ? "Creating Account..." : "Create Account"}
         </button>
 
         <div className="social-divider">Or join with</div>
