@@ -45,4 +45,11 @@ router.post("/refresh", authController.refreshController);
  */
 router.post("/forgot-password", authController.forgotPasswordController);
 
+/**
+ * @route POST /api/auth/reset-password/:token
+ * @desc Reset password
+ * @access Public
+ */
+router.post("/reset-password/:token", authController.resetPasswordController);
+
 module.exports = router;

@@ -15,6 +15,8 @@ const sendEmail = async ({ to, subject, text }) => {
     subject,
     text,
   });
+//   console.log("Reset Email Content:");
+//   console.log(text);
 };
 
 module.exports = sendEmail;

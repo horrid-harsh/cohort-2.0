@@ -59,9 +59,16 @@ const loginController = async (req, res) => {
         .json({ message: "Email or username and password are required" });
     }
 
-    const user = await userModel.findOne({ $or: [{ email }, { username }] });
+    const user = await userModel
+    .findOne({ $or: [{ email }, { username }] })
+    .select("+password");
     if (!user) {
       return res.status(404).json({ message: "Invalid credentials" });
+    }
+
+    const isPasswordValid = await user.comparePassword(password);
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: "Invalid credentials" });
     }
 
     const accessToken = jwt.sign(
@@ -203,10 +210,10 @@ const forgotPasswordController = async (req, res) => {
     await sendEmail({
       to: user.email,
       subject: "Password Reset",
-      text: `Reset your password here: ${resetUrl}`,
+      text: `Reset your password here: ${resetUrl}`
     });
 
-    res.status(200).json({
+    return res.status(200).json({
       message: "If that email exists, a reset link has been sent.",
     });
 
@@ -216,6 +223,30 @@ const forgotPasswordController = async (req, res) => {
   }
 };
 
+const resetPasswordController = async (req, res) => {
+  const { token } = req.params;
+  const { password } = req.body;
+
+  const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
+
+  const user = await userModel.findOne({
+    resetPasswordToken: hashedToken,
+    resetPasswordExpire: { $gt: Date.now() },
+  }).select("+password");
+
+  if (!user) {
+    return res.status(400).json({ message: "Invalid or expired token" });
+  }
+
+  user.password = password;
+  user.resetPasswordToken = undefined;
+  user.resetPasswordExpire = undefined;
+
+  await user.save();
+
+  return res.status(200).json({ message: "Password reset successfully" });  
+}
+
 module.exports = {
   registerController,
   loginController,
@@ -223,4 +254,5 @@ module.exports = {
   getMeController,
   refreshController,
   forgotPasswordController,
+  resetPasswordController,
 };
