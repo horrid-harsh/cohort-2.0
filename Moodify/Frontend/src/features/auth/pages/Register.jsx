@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import "../style/form.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -8,24 +8,25 @@ import PasswordInput from "../components/PasswordInput";
 import SocialAuth from "../components/SocialAuth";
 
 const Register = () => {
-
   const navigate = useNavigate();
+  const { user, registerUser, loading } = useAuth();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const { registerUser, loading } = useAuth();
+  useEffect(() => {
+    if (user && !loading) {
+      navigate("/", { replace: true });
+    }
+  }, [user, loading, navigate]);
 
   const onSubmit = async (data) => {
-    // console.log("Form data register : ", data);
     try {
-      const response = await registerUser(data);
-      // console.log("Response from registerApi(jsx) : ", response);
-      navigate("/");
+      await registerUser(data);
     } catch (error) {
-      // console.error("Error from registerApi(jsx) : ", error);
+      console.error("Register Error:", error);
     }
   };
 

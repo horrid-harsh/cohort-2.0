@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import "../style/form.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -8,22 +8,28 @@ import PasswordInput from "../components/PasswordInput";
 import SocialAuth from "../components/SocialAuth";
 
 const Login = () => {
-
   const navigate = useNavigate();
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { user, loginUser, loading, error } = useAuth();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-  const { loginUser, loading } = useAuth(); 
+  // Redirect if already logged in
+  useEffect(() => {
+    if (user && !loading) {
+      navigate("/", { replace: true });
+    }
+  }, [user, loading, navigate]);
 
   const onSubmit = async (data) => {
-    console.log("Form data : ", data);
     try {
-      const response = await loginUser(data);
-      console.log("Response from loginUser(Login.jsx) : ", response);
-      navigate("/");
+      await loginUser(data);
     } catch (error) {
-      console.log("Error from loginUser(Login.jsx) : ", error);
+      console.error("Login failed:", error);
     }
-  }
+  };
 
   return (
     <AuthLayout
@@ -38,13 +44,19 @@ const Login = () => {
       <form className="auth-form" onSubmit={handleSubmit(onSubmit)}>
         <div className="form-group">
           <label>Email or username</label>
-          <input type="text" 
-            placeholder="Enter email or username" 
-            {...register("identifier")} 
+          <input
+            type="text"
+            placeholder="Enter email or username"
+            {...register("identifier", {
+              required: "Email or username is required",
+            })}
           />
         </div>
 
-        <PasswordInput placeholder="••••••••" {...register("password")} />
+        <PasswordInput
+          placeholder="••••••••"
+          {...register("password", { required: "Password is required" })}
+        />
 
         <div className="form-options">
           <Link to="/forgot-password" className="forgot-password">
