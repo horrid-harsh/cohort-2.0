@@ -9,7 +9,7 @@ import SocialAuth from "../components/SocialAuth";
 
 const Register = () => {
   const navigate = useNavigate();
-  const { user, registerUser, loading } = useAuth();
+  const { user, handleRegisterUser, loading } = useAuth();
   const {
     register,
     handleSubmit,
@@ -24,7 +24,7 @@ const Register = () => {
 
   const onSubmit = async (data) => {
     try {
-      await registerUser(data);
+      await handleRegisterUser(data);
     } catch (error) {
       console.error("Register Error:", error);
     }

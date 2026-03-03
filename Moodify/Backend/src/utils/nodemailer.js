@@ -9,14 +9,15 @@ const sendEmail = async ({ to, subject, text }) => {
     },
   });
 
-  await transporter.sendMail({
+  const info = await transporter.sendMail({
     from: process.env.EMAIL_USER,
     to,
     subject,
     text,
   });
-//   console.log("Reset Email Content:");
-//   console.log(text);
+  console.log("Email sent successfully to: " + to, info.messageId);
+  //   console.log("Reset Email Content:");
+  //   console.log(text);
 };
 
 module.exports = sendEmail;

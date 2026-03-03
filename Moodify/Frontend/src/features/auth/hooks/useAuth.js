@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { registerApi, loginApi } from "../services/auth.api";
+import { registerApi, loginApi, forgotPasswordApi } from "../services/auth.api";
 import AuthContext from "../auth.context";
 
 const useAuth = () => {
@@ -11,7 +11,7 @@ const useAuth = () => {
 
   const { user, setUser, loading, setLoading, error, setError } = context;
 
-  const registerUser = async (userData) => {
+  const handleRegisterUser = async (userData) => {
     setLoading(true);
     setError(null);
     try {
@@ -27,7 +27,7 @@ const useAuth = () => {
     }
   };
 
-  const loginUser = async (userData) => {
+  const handleLoginUser = async (userData) => {
     setLoading(true);
     setError(null);
     try {
@@ -43,13 +43,29 @@ const useAuth = () => {
     }
   };
 
+  const handleForgotPasswordUser = async (email) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await forgotPasswordApi(email);
+      console.log("Response from forgotPasswordApi(useAuth.js) : ", response);
+      return response;
+    } catch (error) {
+      setError(error);
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return {
     loading,
     error,
     user,
-    registerUser,
-    loginUser,
     setUser,
+    handleRegisterUser,
+    handleLoginUser,
+    handleForgotPasswordUser,
   };
 };
 

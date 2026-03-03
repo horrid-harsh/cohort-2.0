@@ -19,3 +19,8 @@ export const getMeApi = async () => {
     const response = await authApi.get(`/me`);
     return response.data;
 }
+
+export const forgotPasswordApi = async (email) => {
+    const response = await authApi.post(`/forgot-password`, { email });
+    return response.data;
+}

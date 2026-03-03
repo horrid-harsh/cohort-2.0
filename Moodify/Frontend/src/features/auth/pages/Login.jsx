@@ -9,7 +9,7 @@ import SocialAuth from "../components/SocialAuth";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { user, loginUser, loading, error } = useAuth();
+  const { user, handleLoginUser, handleForgotPasswordUser, loading, error } = useAuth();
   const {
     register,
     handleSubmit,
@@ -25,7 +25,7 @@ const Login = () => {
 
   const onSubmit = async (data) => {
     try {
-      await loginUser(data);
+      await handleLoginUser(data);
     } catch (error) {
       console.error("Login failed:", error);
     }

@@ -100,7 +100,9 @@ const loginController = async (req, res) => {
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
 
-    return res.status(200).json({ message: "User logged in successfully", user });
+    return res
+      .status(200)
+      .json({ message: "User logged in successfully", user });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Internal server error" });
@@ -210,17 +212,23 @@ const forgotPasswordController = async (req, res) => {
 
     const resetUrl = `${process.env.CLIENT_URL}/reset-password/${resetPasswordToken}`;
 
-    await sendEmail({
-      to: user.email,
-      subject: "Password Reset",
-      text: `Reset your password here: ${resetUrl}`,
-    });
+    try {
+      await sendEmail({
+        to: user.email,
+        subject: "Password Reset",
+        text: `Reset your password here: ${resetUrl}`,
+      });
+      console.log("Forgot password email sent successfully to " + user.email);
+    } catch (emailError) {
+      console.error("Error sending forgot password email:", emailError);
+      return res.status(500).json({ message: "Error sending reset email." });
+    }
 
     return res.status(200).json({
       message: "If that email exists, a reset link has been sent.",
     });
   } catch (error) {
-    console.error(error);
+    console.error("Forgot password controller error:", error);
     return res.status(500).json({ message: "Internal server error" });
   }
 };
