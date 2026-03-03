@@ -52,15 +52,16 @@ const registerController = async (req, res) => {
 
 const loginController = async (req, res) => {
   try {
-    const { username, email, password } = req.body;
-    if ((!username && !email) || !password) {
+    const { identifier, password } = req.body;
+
+    if (!identifier || !password) {
       return res
         .status(400)
         .json({ message: "Email or username and password are required" });
     }
 
     const user = await userModel
-      .findOne({ $or: [{ email }, { username }] })
+      .findOne({ $or: [{ email: identifier }, { username: identifier }] })
       .select("+password");
     if (!user) {
       return res.status(404).json({ message: "Invalid credentials" });

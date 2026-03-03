@@ -19,13 +19,13 @@ const Register = () => {
   const { registerUser, loading } = useAuth();
 
   const onSubmit = async (data) => {
-    console.log("Form data register : ", data);
+    // console.log("Form data register : ", data);
     try {
       const response = await registerUser(data);
-      console.log("Response from registerApi(jsx) : ", response);
+      // console.log("Response from registerApi(jsx) : ", response);
       navigate("/");
     } catch (error) {
-      console.error("Error from registerApi(jsx) : ", error);
+      // console.error("Error from registerApi(jsx) : ", error);
     }
   };
 

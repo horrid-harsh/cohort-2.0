@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { registerApi } from "../services/auth.api";
+import { registerApi, loginApi } from "../services/auth.api";
 import AuthContext from "../auth.context";
 
 const useAuth = () => {
@@ -21,13 +21,27 @@ const useAuth = () => {
         }
     };
 
-    
+    const loginUser = async (userData) => {
+        setLoading(true);
+        try {
+            const response = await loginApi(userData);
+            console.log("Response from loginApi(useAuth.js) : ", response);
+            setUser(response.user);
+            return response;
+        } catch (error) {
+            setError(error);
+            throw error;
+        } finally {
+            setLoading(false);
+        }
+    };    
 
     return {
         loading,
         error,
         user,
-        registerUser
+        registerUser,
+        loginUser
     };
 };
 

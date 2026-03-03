@@ -1,16 +1,28 @@
 import React, { useState } from "react";
 import "../style/form.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import useAuth from "../hooks/useAuth";
 import AuthLayout from "../components/AuthLayout";
 import PasswordInput from "../components/PasswordInput";
 import SocialAuth from "../components/SocialAuth";
 
 const Login = () => {
+
+  const navigate = useNavigate();
   const { register, handleSubmit, formState: { errors } } = useForm();
+
+  const { loginUser, loading } = useAuth(); 
 
   const onSubmit = async (data) => {
     console.log("Form data : ", data);
+    try {
+      const response = await loginUser(data);
+      console.log("Response from loginUser(Login.jsx) : ", response);
+      navigate("/");
+    } catch (error) {
+      console.log("Error from loginUser(Login.jsx) : ", error);
+    }
   }
 
   return (
@@ -40,8 +52,8 @@ const Login = () => {
           </Link>
         </div>
 
-        <button type="submit" className="submit-btn">
-          Sign In
+        <button type="submit" className="submit-btn" disabled={loading}>
+          {loading ? "Logging in..." : "Sign In"}
         </button>
 
         <SocialAuth dividerText="Or continue with" />
