@@ -1,14 +1,13 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { registerApi } from "../services/auth.api";
+import AuthContext from "../auth.context";
 
 const useAuth = () => {
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
-    const [user, setUser] = useState(null);
+    const context = useContext(AuthContext);
+    const { user, setUser, loading, setLoading, error, setError } = context;
 
     const registerUser = async (userData) => {
         setLoading(true);
-        setError(null);
         try {
             const response = await registerApi(userData);
             console.log("Response from registerApi(useAuth.js) : ", response);
@@ -21,6 +20,8 @@ const useAuth = () => {
             setLoading(false);
         }
     };
+
+    
 
     return {
         loading,
