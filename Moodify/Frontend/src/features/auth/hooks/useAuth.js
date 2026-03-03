@@ -1,5 +1,10 @@
 import { useContext } from "react";
-import { registerApi, loginApi, forgotPasswordApi } from "../services/auth.api";
+import {
+  registerApi,
+  loginApi,
+  forgotPasswordApi,
+  resetPasswordApi,
+} from "../services/auth.api";
 import AuthContext from "../auth.context";
 
 const useAuth = () => {
@@ -58,6 +63,21 @@ const useAuth = () => {
     }
   };
 
+  const handleResetPasswordUser = async (token, password) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await resetPasswordApi(token, password);
+      console.log("Response from resetPasswordApi(useAuth.js) : ", response);
+      return response;
+    } catch (error) {
+      setError(error);
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return {
     loading,
     error,
@@ -66,6 +86,7 @@ const useAuth = () => {
     handleRegisterUser,
     handleLoginUser,
     handleForgotPasswordUser,
+    handleResetPasswordUser,
   };
 };
 

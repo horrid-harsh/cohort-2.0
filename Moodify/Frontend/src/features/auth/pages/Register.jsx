@@ -59,7 +59,7 @@ const Register = () => {
           />
         </div>
 
-        <PasswordInput placeholder="••••••••" {...register("password")} />
+        <PasswordInput placeholder="••••••••" label="Password" {...register("password")} />
 
         <button type="submit" className="submit-btn" disabled={loading}>
           {loading ? "Creating Account..." : "Create Account"}

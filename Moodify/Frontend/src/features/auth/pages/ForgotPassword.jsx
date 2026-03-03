@@ -58,17 +58,6 @@ const ForgotPassword = () => {
               If an account exists for that email, we've sent instructions to
               reset your password.
             </p>
-            <Link
-              to="/login"
-              className="submit-btn"
-              style={{
-                display: "block",
-                textDecoration: "none",
-                textAlign: "center",
-              }}
-            >
-              Back to Login
-            </Link>
           </div>
         ) : (
           <form className="auth-form" onSubmit={handleSubmit(onSubmit)}>
@@ -85,7 +74,6 @@ const ForgotPassword = () => {
                   },
                 })}
               />
-              
             </div>
 
             <button

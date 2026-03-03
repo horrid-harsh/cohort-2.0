@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 
-const PasswordInput = ({ placeholder, ...rest }, ref) => {
+const PasswordInput = ({ placeholder, label, ...rest }, ref) => {
       const [showPassword, setShowPassword] = useState(false);
 
   return (
    <div className="form-group">
-          <label>Password</label>
+          <label>{label}</label>
           <div className="password-input-wrapper">
             <input
             ref={ref}

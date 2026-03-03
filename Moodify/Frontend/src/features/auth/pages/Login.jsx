@@ -55,6 +55,7 @@ const Login = () => {
 
         <PasswordInput
           placeholder="••••••••"
+          label="Password"
           {...register("password", { required: "Password is required" })}
         />
 
