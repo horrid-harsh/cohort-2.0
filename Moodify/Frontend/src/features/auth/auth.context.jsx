@@ -5,12 +5,15 @@ import { getMeApi } from "./services/auth.api";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [loading, setLoading] = useState(true);
+  const [isInitializing, setIsInitializing] = useState(true); // Specific for initial load
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [user, setUser] = useState(null);
 
-  const handleGetMe = useCallback(async () => {
-    setLoading(true);
+  const handleGetMe = useCallback(async (initial = false) => {
+    if (initial) setIsInitializing(true);
+    else setLoading(true);
+
     try {
       const response = await getMeApi();
       setUser(response.user);
@@ -18,12 +21,13 @@ export const AuthProvider = ({ children }) => {
       setError(error);
       setUser(null);
     } finally {
-      setLoading(false);
+      if (initial) setIsInitializing(false);
+      else setLoading(false);
     }
   }, []);
 
   useEffect(() => {
-    handleGetMe();
+    handleGetMe(true);
   }, [handleGetMe]);
 
   return (
@@ -33,6 +37,7 @@ export const AuthProvider = ({ children }) => {
         setUser,
         loading,
         setLoading,
+        isInitializing,
         error,
         setError,
         handleGetMe,
