@@ -247,35 +247,42 @@
         }
       }
 
-      .social-icons {
-        display: flex;
-        justify-content: center;
-        gap: 16px;
+      .social-auth-container {
+        width: 100%;
         margin-bottom: 30px;
 
-        .social-icon {
-          width: 50px;
-          height: 50px;
+        .google-auth-btn {
+          width: 100%;
+          padding: 14px;
           @include flex-center;
+          gap: 12px;
           background: rgba(255, 255, 255, 0.03);
-          border: 1px solid rgba(255, 255, 255, 0.05);
-          border-radius: 14px;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          border-radius: 12px;
           cursor: pointer;
-          transition: all 0.3s ease;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          color: $white;
+          font-size: 15px;
+          font-weight: 500;
 
           &:hover {
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.06);
             border-color: rgba(255, 255, 255, 0.2);
-            transform: scale(1.05);
-            svg {
-              opacity: 1;
-            }
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+          }
+
+          &:active {
+            transform: translateY(0);
           }
 
           svg {
-            width: 30px;
-            height: 30px;
-            transition: 0.3s;
+            flex-shrink: 0;
+          }
+
+          span {
+            font-family: inherit;
+            letter-spacing: 0.3px;
           }
         }
       }

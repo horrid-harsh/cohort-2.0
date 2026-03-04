@@ -4,6 +4,7 @@ import {
   loginApi,
   forgotPasswordApi,
   resetPasswordApi,
+  loginWithGoogle,
 } from "../services/auth.api";
 import AuthContext from "../auth.context";
 
@@ -78,6 +79,10 @@ const useAuth = () => {
     }
   };
 
+  const handleGoogleLogin = () => {
+    loginWithGoogle();
+  };
+
   return {
     loading,
     error,
@@ -87,6 +92,7 @@ const useAuth = () => {
     handleLoginUser,
     handleForgotPasswordUser,
     handleResetPasswordUser,
+    handleGoogleLogin,
   };
 };
 

@@ -260,7 +260,7 @@ const resetPasswordController = async (req, res) => {
 };
 
 const googleAuthController = async (req, res) => {
-  console.log("GOOGLE USER:", req.user);
+  
   try {
     const { googleId, name, email } = req.user;
 
