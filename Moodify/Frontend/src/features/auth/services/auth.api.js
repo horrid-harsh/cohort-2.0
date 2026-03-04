@@ -5,6 +5,40 @@ const authApi = axios.create({
   withCredentials: true,
 });
 
+// 🔹 RESPONSE INTERCEPTOR (auto refresh tokens)
+authApi.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+
+    const originalRequest = error.config;
+
+    if (error.response?.status === 401 && !originalRequest._retry) {
+
+      originalRequest._retry = true;
+
+      try {
+
+        // call refresh endpoint
+        await axios.post(
+          "http://localhost:3000/api/auth/refresh",
+          {},
+          { withCredentials: true }
+        );
+
+        // retry original request
+        return authApi(originalRequest);
+
+      } catch (err) {
+
+        window.location.href = "/login";
+      }
+    }
+
+    return Promise.reject(error);
+  }
+);
+
+
 export const registerApi = async (userData) => {
   const response = await authApi.post(`/register`, userData);
   return response.data;
