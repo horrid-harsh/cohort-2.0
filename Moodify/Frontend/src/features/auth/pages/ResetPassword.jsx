@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import useAuth from "../hooks/useAuth";
 import AuthLayout from "../components/AuthLayout";
 import PasswordInput from "../components/PasswordInput";
+import SubmitButton from "../components/SubmitButton";
 
 const ResetPassword = () => {
   const { token } = useParams();
@@ -69,17 +70,15 @@ const ResetPassword = () => {
               Your password has been successfully updated. Redirecting you to
               the login page...
             </p>
-            
           </div>
         ) : (
           <form className="auth-form" onSubmit={handleSubmit(onSubmit)}>
             <div className="form-group">
               <PasswordInput
-                placeholder="••••••••" 
+                placeholder="••••••••"
                 label="New Password"
                 {...register("password", {
                   required: "Password is required",
-                  
                 })}
               />
               {errors.password && (
@@ -122,14 +121,12 @@ const ResetPassword = () => {
               )}
             </div>
 
-            <button
-              type="submit"
-              className="submit-btn"
-              disabled={loading}
+            <SubmitButton
+              label="Reset Password"
+              loading={loading}
+              loadingLabel="Updating..."
               style={{ marginTop: "10px" }}
-            >
-              {loading ? "Updating..." : "Reset Password"}
-            </button>
+            />
           </form>
         )}
       </div>

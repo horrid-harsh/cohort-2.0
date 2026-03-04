@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import useAuth from "../hooks/useAuth";
 import AuthLayout from "../components/AuthLayout";
+import SubmitButton from "../components/SubmitButton";
 
 const ForgotPassword = () => {
   const { handleForgotPasswordUser, loading, error } = useAuth();
@@ -76,14 +77,12 @@ const ForgotPassword = () => {
               />
             </div>
 
-            <button
-              type="submit"
-              className="submit-btn"
-              disabled={loading}
+            <SubmitButton
+              label="Send Reset Link"
+              loading={loading}
+              loadingLabel="Sending link..."
               style={{ marginTop: "10px" }}
-            >
-              {loading ? "Sending link..." : "Send Reset Link"}
-            </button>
+            />
           </form>
         )}
       </div>

@@ -6,10 +6,12 @@ import useAuth from "../hooks/useAuth";
 import AuthLayout from "../components/AuthLayout";
 import PasswordInput from "../components/PasswordInput";
 import SocialAuth from "../components/SocialAuth";
+import SubmitButton from "../components/SubmitButton";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { user, handleLoginUser, handleForgotPasswordUser, loading, error } = useAuth();
+  const { user, handleLoginUser, handleForgotPasswordUser, loading, error } =
+    useAuth();
   const {
     register,
     handleSubmit,
@@ -65,11 +67,13 @@ const Login = () => {
           </Link>
         </div>
 
-        <button type="submit" className="submit-btn" disabled={loading}>
-          {loading ? "Logging in..." : "Sign In"}
-        </button>
+        <SubmitButton
+          label="Sign In"
+          loading={loading}
+          loadingLabel="Logging in..."
+        />
 
-        <SocialAuth dividerText="Or continue with" />
+        <SocialAuth dividerText="Or" />
       </form>
     </AuthLayout>
   );

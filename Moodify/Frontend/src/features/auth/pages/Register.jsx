@@ -6,6 +6,7 @@ import useAuth from "../hooks/useAuth";
 import AuthLayout from "../components/AuthLayout";
 import PasswordInput from "../components/PasswordInput";
 import SocialAuth from "../components/SocialAuth";
+import SubmitButton from "../components/SubmitButton";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -59,13 +60,19 @@ const Register = () => {
           />
         </div>
 
-        <PasswordInput placeholder="••••••••" label="Password" {...register("password")} />
+        <PasswordInput
+          placeholder="••••••••"
+          label="Password"
+          {...register("password")}
+        />
 
-        <button type="submit" className="submit-btn" disabled={loading}>
-          {loading ? "Creating Account..." : "Create Account"}
-        </button>
+        <SubmitButton
+          label="Register Now"
+          loading={loading}
+          loadingLabel="Creating Account..."
+        />
 
-        <SocialAuth dividerText="Or join with" />
+        <SocialAuth dividerText="Or" />
       </form>
     </AuthLayout>
   );
