@@ -218,9 +218,9 @@ const forgotPasswordController = async (req, res) => {
         subject: "Password Reset",
         text: `Reset your password here: ${resetUrl}`,
       });
-      console.log("Forgot password email sent successfully to " + user.email);
+      // console.log("Forgot password email sent successfully to " + user.email);
     } catch (emailError) {
-      console.error("Error sending forgot password email:", emailError);
+      // console.error("Error sending forgot password email:", emailError);
       return res.status(500).json({ message: "Error sending reset email." });
     }
 
@@ -228,7 +228,7 @@ const forgotPasswordController = async (req, res) => {
       message: "If that email exists, a reset link has been sent.",
     });
   } catch (error) {
-    console.error("Forgot password controller error:", error);
+    // console.error("Forgot password controller error:", error);
     return res.status(500).json({ message: "Internal server error" });
   }
 };
@@ -259,6 +259,64 @@ const resetPasswordController = async (req, res) => {
   return res.status(200).json({ message: "Password reset successfully" });
 };
 
+const googleAuthController = async (req, res) => {
+  console.log("GOOGLE USER:", req.user);
+  try {
+    const { googleId, name, email } = req.user;
+
+    let user = await userModel.findOne({ email });
+
+    if (!user) {
+  user = await userModel.create({
+    username: name,
+    email,
+    googleId,
+    authProvider: "google",
+  });
+    } else if (!user.googleId) {
+      user.googleId = googleId;
+      await user.save();
+    }
+
+    const accessToken = jwt.sign(
+      { id: user._id },
+      process.env.JWT_SECRET,
+      { expiresIn: "15m" }
+    );
+
+    const refreshToken = jwt.sign(
+      { id: user._id },
+      process.env.REFRESH_SECRET,
+      { expiresIn: "7d" }
+    );
+
+    await refreshTokenModel.create({
+      userId: user._id,
+      token: refreshToken,
+    });
+
+    res.cookie("accessToken", accessToken, {
+      httpOnly: true,
+      secure: false, // true in production
+      sameSite: "lax",
+      maxAge: 15 * 60 * 1000,
+    });
+
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "lax",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+
+    res.redirect(process.env.CLIENT_URL + "/");
+
+  } catch (error) {
+    console.error(error);
+    res.redirect(process.env.CLIENT_URL + "/login");
+  }
+};
+
 module.exports = {
   registerController,
   loginController,
@@ -267,4 +325,5 @@ module.exports = {
   refreshController,
   forgotPasswordController,
   resetPasswordController,
+  googleAuthController,
 };

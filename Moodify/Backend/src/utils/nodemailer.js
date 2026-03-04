@@ -15,7 +15,7 @@ const sendEmail = async ({ to, subject, text }) => {
     subject,
     text,
   });
-  console.log("Email sent successfully to: " + to, info.messageId);
+  // console.log("Email sent successfully to: " + to, info.messageId);
   //   console.log("Reset Email Content:");
   //   console.log(text);
 };
