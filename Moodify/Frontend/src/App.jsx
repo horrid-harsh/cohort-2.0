@@ -1,9 +1,11 @@
 import React, { useContext } from "react";
 import "./features/shared/global.scss";
+import "remixicon/fonts/remixicon.css";
 import { RouterProvider } from "react-router-dom";
 import { router } from "./app.routes";
 import { AuthProvider } from "./features/auth/auth.context";
 import AuthContext from "./features/auth/auth.context";
+import { SongContextProvider } from "./features/home/song.context";
 import Loader from "./features/shared/components/Loader";
 
 const AppContent = () => {
@@ -19,7 +21,9 @@ const AppContent = () => {
 const App = () => {
   return (
     <AuthProvider>
-      <AppContent />
+      <SongContextProvider>
+        <AppContent />
+      </SongContextProvider>
     </AuthProvider>
   );
 };

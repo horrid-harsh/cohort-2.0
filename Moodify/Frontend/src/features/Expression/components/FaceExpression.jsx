@@ -52,8 +52,10 @@ export default function FaceExpression() {
           onClick={handleDetect}
           disabled={isDetecting}
         >
-          <span className="btn-icon">⚡</span>
-          {isDetecting ? "Scanning..." : "Detect expression"}
+          <span className="btn-icon">
+            <i className="ri-flashlight-fill"></i>
+          </span>
+          {isDetecting ? " Scanning..." : " Detect expression"}
         </button>
       </div>
     </div>

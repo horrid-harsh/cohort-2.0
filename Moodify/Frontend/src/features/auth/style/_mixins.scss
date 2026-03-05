@@ -1,19 +1,37 @@
 @use "variables" as *;
 
-@mixin flex-center {
+@mixin flex($justify: center, $align: center, $direction: row, $gap: null) {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: $justify;
+  align-items: $align;
+  flex-direction: $direction;
+  @if $gap {
+    gap: $gap;
+  }
+}
+
+@mixin flex-center {
+  @include flex(center, center, row);
+}
+
+@mixin flex-column {
+  @include flex(center, center, column);
 }
 
 @mixin mobile {
+  @media (max-width: #{$mobile}) {
+    @content;
+  }
+}
+
+@mixin tablet {
   @media (max-width: #{$tablet}) {
     @content;
   }
 }
 
 @mixin desktop {
-  @media (min-width: #{$tablet}) {
+  @media (min-width: #{$desktop}) {
     @content;
   }
 }

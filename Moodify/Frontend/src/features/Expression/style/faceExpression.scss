@@ -3,173 +3,87 @@
 @use "../../auth/style/mixins" as *;
 
 .face-expression-container {
-  min-height: 100vh;
-  background-color: $bg-color;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  overflow: hidden;
+  width: 100%;
   color: $text-color;
-
-  // Background blobs consistent with auth
-  &::before,
-  &::after {
-    content: "";
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(80px);
-    z-index: 0;
-    opacity: 0.3;
-  }
-
-  &::before {
-    width: 450px;
-    height: 450px;
-    background: $primary-color;
-    top: -150px;
-    left: -100px;
-    animation: floating 12s infinite alternate;
-  }
-
-  &::after {
-    width: 350px;
-    height: 350px;
-    background: color.adjust($primary-color, $lightness: -15%);
-    bottom: -80px;
-    right: -80px;
-    animation: floating 10s infinite alternate-reverse;
-  }
 
   .expression-card {
     position: relative;
     z-index: 10;
     width: 100%;
-    max-width: 500px;
-    background: rgba(15, 15, 15, 0.7);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 32px;
-    padding: 40px;
-    box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.6);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 30px;
-    margin: 20px;
-
-    @include mobile {
-      margin: 0;
-      border-radius: 0;
-      min-height: 100vh;
-      justify-content: center;
-      background: $bg-color;
-    }
+    @include flex(flex-start, center, column, 20px);
 
     .card-title {
-      font-size: 28px;
-      font-weight: 800;
-      color: $white;
-      text-align: center;
-      letter-spacing: -1px;
-
-      span {
-        color: $accent-color;
-      }
+      display: none; // Hidden in dashboard view
     }
 
     .video-wrapper {
       position: relative;
       width: 100%;
-      border-radius: 20px;
+      aspect-ratio: 4 / 3;
+      border-radius: 40px;
+      box-shadow: 0 0 20px rgba(#e2f1cc, 0.2);
+      border: 4px solid #e2f1cc;
+      background: #000;
+      contain: paint;
+      z-index: 1;
       overflow: hidden;
-      border: 3px solid rgba($primary-color, 0.2);
-      box-shadow: 0 0 30px rgba($primary-color, 0.1);
-      transition: all 0.4s ease;
-
-      &:hover {
-        border-color: rgba($primary-color, 0.4);
-        box-shadow: 0 0 40px rgba($primary-color, 0.2);
-      }
-
-      &::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        border: 2px solid rgba($accent-color, 0);
-        border-radius: 17px;
-        pointer-events: none;
-        transition: 0.3s;
-        z-index: 5;
-      }
-
-      &.detecting::before {
-        border-color: rgba($accent-color, 0.3);
-        animation: scans 2s infinite ease-in-out;
-      }
 
       video {
         width: 100%;
+        height: 100%;
+        object-fit: cover;
         display: block;
-        transform: scaleX(-1); // Mirror effect
+        transform: scaleX(-1);
       }
     }
 
     .expression-result {
       text-align: center;
-
       .result-label {
-        font-size: 11px;
-        text-transform: uppercase;
-        letter-spacing: 2px;
         color: $text-secondary;
-        margin-bottom: 8px;
-        font-weight: 700;
+        font-size: 0.8rem;
+        margin-bottom: 4px;
       }
-
       .result-text {
-        font-size: 32px;
-        font-weight: 800;
         color: $accent-color;
-        text-shadow: 0 0 20px rgba($accent-color, 0.3);
-        letter-spacing: -0.5px;
+        font-size: 1.5rem;
+        font-weight: 700;
       }
     }
 
     .detect-btn {
-      width: 100%;
-      padding: 18px;
-      background: linear-gradient(
-        135deg,
-        $primary-color 0%,
-        color.adjust($primary-color, $lightness: -10%) 100%
-      );
-      color: $white;
-      border: none;
-      border-radius: 18px;
-      font-size: 18px;
-      font-weight: 700;
+      width: fit-content;
+      min-width: 260px;
+      padding: 14px 40px;
+      background: #111;
+      border: 3px solid #e2f1cc;
+      color: #e2f1cc;
+      border-radius: 30px;
+      font-size: 1.4rem;
+      font-weight: 600;
       cursor: pointer;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 10px 20px -5px rgba($primary-color, 0.4);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
+      font-family: inherit;
+      transition: all 0.3s ease;
+      position: relative;
+      box-shadow: 0 0 10px rgba(#e2f1cc, 0.1);
+
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: -12px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 8px;
+        height: 8px;
+        background: $accent-color;
+        border-radius: 50%;
+        box-shadow: 0 0 10px $accent-color;
+      }
 
       &:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 15px 30px -5px rgba($primary-color, 0.6);
-        filter: brightness(1.1);
-      }
-
-      &:active {
-        transform: translateY(-1px);
-      }
-
-      .btn-icon {
-        font-size: 20px;
+        background: #222;
+        box-shadow: 0 0 20px rgba(#e2f1cc, 0.3);
+        transform: translateY(-2px);
       }
     }
   }

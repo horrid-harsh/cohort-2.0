@@ -1,0 +1,107 @@
+@use "../../auth/style/variables" as *;
+@use "../../auth/style/mixins" as *;
+
+.music-player {
+  width: 100%;
+  @include flex(flex-start, center, row, 1.5rem);
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: $radius-lg;
+
+  .poster {
+    width: 100px;
+    height: 100px;
+    border-radius: $radius-md;
+    object-fit: cover;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+  }
+
+  .details {
+    flex: 1;
+    @include flex(flex-start, stretch, column, 0.5rem);
+
+    .info {
+      h4 {
+        margin: 0;
+        font-size: 1.2rem;
+        font-weight: 700;
+      }
+      p {
+        margin: 0;
+        font-size: 0.9rem;
+        color: $text-secondary;
+      }
+    }
+
+    .controls {
+      @include flex(flex-start, center, row, 1.5rem);
+      margin-top: 0.5rem;
+
+      button {
+        background: transparent;
+        border: none;
+        color: $white;
+        font-size: 1.2rem;
+        cursor: pointer;
+        @include flex-center;
+        transition: transform 0.2s;
+
+        &:hover {
+          color: $accent-color;
+          transform: scale(1.1);
+        }
+
+        &.play-pause {
+          width: 45px;
+          height: 45px;
+          background: $white;
+          color: $bg-color;
+          border-radius: 50%;
+          font-size: 1rem;
+
+          &:hover {
+            background: $accent-color;
+          }
+        }
+      }
+    }
+  }
+
+  .volume-control {
+    @include flex(flex-start, center, row, 0.5rem);
+    color: $white;
+
+    input[type="range"] {
+      width: 60px;
+      height: 4px;
+      appearance: none;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 2px;
+      cursor: pointer;
+
+      &::-webkit-slider-thumb {
+        appearance: none;
+        width: 10px;
+        height: 10px;
+        background: $accent-color;
+        border-radius: 50%;
+      }
+    }
+  }
+
+  @media (max-width: 480px) {
+    padding: 1rem;
+    gap: 1rem;
+
+    .poster {
+      width: 60px;
+      height: 60px;
+    }
+
+    .volume-control {
+      display: none;
+    }
+  }
+}

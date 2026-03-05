@@ -1,0 +1,191 @@
+@use "../../auth/style/variables" as *;
+@use "../../auth/style/mixins" as *;
+
+.upload-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  @include flex-center;
+  z-index: 1000;
+  padding: 2rem;
+
+  .upload-modal {
+    width: 100%;
+    max-width: 500px;
+    background: #0f0f0f;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: $radius-lg;
+    padding: 3rem;
+    position: relative;
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8);
+
+    .close-btn {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: transparent;
+      border: none;
+      color: $text-secondary;
+      font-size: 1.5rem;
+      cursor: pointer;
+      &:hover {
+        color: $white;
+      }
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      letter-spacing: -1px;
+    }
+
+    .upload-form {
+      @include flex(flex-start, stretch, column, 1.5rem);
+
+      .form-group {
+        @include flex(flex-start, stretch, column, 0.5rem);
+
+        label {
+          font-size: 0.9rem;
+          font-weight: 600;
+          color: $text-secondary;
+        }
+
+        input {
+          padding: 1rem;
+          background: #1a1a1a;
+          border: 1px solid #27272a;
+          border-radius: 12px;
+          color: white;
+          font-size: 1rem;
+
+          &:focus {
+            outline: none;
+            border-color: $primary-color;
+          }
+        }
+
+        .custom-dropdown {
+          position: relative;
+          width: 100%;
+
+          .dropdown-selected {
+            padding: 1rem;
+            background: #1a1a1a;
+            border: 1px solid #27272a;
+            border-radius: 12px;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            @include flex(space-between, center);
+            transition: all 0.3s ease;
+
+            &:hover {
+              border-color: rgba(255, 255, 255, 0.2);
+            }
+
+            .chevron {
+              border: solid $text-secondary;
+              border-width: 0 2px 2px 0;
+              display: inline-block;
+              padding: 3px;
+              transition: transform 0.3s ease;
+
+              &.down {
+                transform: rotate(45deg);
+              }
+              &.up {
+                transform: rotate(-135deg);
+              }
+            }
+          }
+
+          &.active .dropdown-selected {
+            border-color: $primary-color;
+            box-shadow: 0 0 0 1px $primary-color;
+          }
+
+          .dropdown-options {
+            position: absolute;
+            top: calc(100% + 5px);
+            left: 0;
+            width: 100%;
+            background: #111;
+            border: 1px solid #27272a;
+            border-radius: 12px;
+            overflow: hidden;
+            z-index: 100;
+            animation: fadeIn 0.2s ease;
+
+            .option {
+              padding: 1rem;
+              color: $text-secondary;
+              cursor: pointer;
+              transition: all 0.2s ease;
+
+              &:hover {
+                background: rgba(255, 255, 255, 0.05);
+                color: $white;
+              }
+
+              &.selected {
+                background: rgba($primary-color, 0.1);
+                color: $primary-color;
+                font-weight: 600;
+              }
+            }
+          }
+        }
+
+        .file-input-wrapper {
+          border: 2px dashed #27272a;
+          padding: 2rem;
+          border-radius: 12px;
+          text-align: center;
+          cursor: pointer;
+          transition: all 0.3s ease;
+
+          &:hover {
+            border-color: $primary-color;
+            background: rgba($primary-color, 0.05);
+          }
+
+          p {
+            margin: 0;
+            color: $text-secondary;
+            font-size: 0.9rem;
+          }
+        }
+      }
+
+      .submit-btn {
+        margin-top: 1rem;
+        padding: 1.2rem;
+        background: $primary-color;
+        border: none;
+        border-radius: 12px;
+        color: white;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &:hover {
+          filter: brightness(1.2);
+          transform: translateY(-2px);
+        }
+      }
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

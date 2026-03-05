@@ -1,0 +1,263 @@
+@use "../../auth/style/variables" as *;
+@use "../../auth/style/mixins" as *;
+
+.home-container {
+  min-height: 100vh;
+  background-color: $bg-color;
+  color: $white;
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 1fr;
+  gap: 2rem;
+  padding: 3rem;
+  position: relative;
+  // No overflow here, let #root handle it
+
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr;
+    padding: 2rem 1.5rem;
+    gap: 3rem;
+    text-align: left;
+    align-items: flex-start;
+
+    .intro-section .title {
+      font-size: 2.5rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    padding: 1rem;
+    gap: 2rem;
+
+    .intro-section .title {
+      font-size: 2rem;
+    }
+
+    .intro-section .description {
+      font-size: 1rem;
+    }
+  }
+
+  // Background glowing blobs
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    filter: blur(100px);
+    z-index: 0;
+    opacity: 0.2;
+    pointer-events: none;
+  }
+
+  &::before {
+    background: $primary-color;
+    top: -100px;
+    left: -100px;
+  }
+
+  &::after {
+    background: $accent-color;
+    bottom: -100px;
+    right: -100px;
+  }
+
+  .glass-card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: $radius-lg;
+    padding: 2rem;
+    z-index: 10;
+    isolation: isolate; // Keep internal glows contained
+    transform: translateZ(
+      0
+    ); // Hardware acceleration to stabilize backdrop-filter
+    backface-visibility: hidden; // Prevents flickering
+    transform-style: preserve-3d;
+    background-clip: padding-box;
+    clip-path: inset(
+      0 round $radius-lg
+    ); // Strictly clip for backdrop-filter stability
+    margin: 1px;
+    transition: all 0.3s ease;
+
+    @include tablet {
+      padding: 1.5rem;
+    }
+
+    @media (max-width: 480px) {
+      padding: 1rem;
+    }
+
+    &:hover {
+      z-index: 20; // Ensure hovered card is on top
+      border-color: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+  }
+
+  // Left Section: Header & Intro
+  .intro-section {
+    flex: 1;
+    @include flex(flex-start, stretch, column, 2rem);
+    padding-top: 1rem; // Optional adjustment to match card tops
+    position: relative;
+    z-index: 5;
+
+    @media (max-width: 1024px) {
+      justify-content: center;
+      padding-top: 0;
+    }
+
+    .logo-container {
+      margin-bottom: 2rem;
+      .logo {
+        height: 100px; // Larger logo
+        width: auto;
+        object-fit: contain;
+
+        @media (max-width: 1024px) {
+          height: 60px;
+          margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 480px) {
+          height: 45px;
+        }
+      }
+    }
+
+    .title {
+      font-size: 3.5rem;
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -2px;
+
+      span {
+        color: $accent-color;
+      }
+    }
+
+    .description {
+      font-size: 1.2rem;
+      color: $text-secondary;
+      line-height: 1.6;
+      max-width: 400px;
+    }
+  }
+
+  // Center Section: Detection & Player
+  .main-interaction {
+    flex: 1.5;
+    @include flex(center, center, column, 2rem);
+
+    .detector-view {
+      width: 100%;
+      background: transparent; // Let the video wrapper handle the background if needed
+      border-radius: $radius-lg;
+      @include flex(flex-start, stretch, column, 1.5rem);
+      z-index: 10;
+    }
+
+    .detect-action-btn {
+      padding: 1.2rem 3rem;
+      background: transparent;
+      border: 2px solid $white;
+      border-radius: 12px;
+      color: $white;
+      font-size: 1.2rem;
+      font-weight: 600;
+      cursor: pointer;
+      @include flex(flex-start, center, row, 1rem);
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: $white;
+        color: $bg-color;
+      }
+    }
+  }
+
+  // Right Section: Playlist
+  .playlist-section {
+    flex: 1;
+    @include flex(flex-start, stretch, column, 1.5rem);
+
+    .section-header {
+      @include flex(space-between, center);
+      margin-bottom: 0.5rem;
+
+      h3 {
+        font-size: 1.5rem;
+        color: $white;
+      }
+    }
+
+    .mood-title {
+      padding: 0.8rem 1.5rem;
+      background: rgba($primary-color, 0.2);
+      border: 1px solid rgba($primary-color, 0.3);
+      border-radius: 50px;
+      color: $accent-color;
+      font-weight: 600;
+      text-transform: capitalize;
+      align-self: flex-start;
+    }
+
+    .song-list {
+      @include flex(flex-start, stretch, column, 1rem);
+      padding-right: 0.5rem;
+
+      .song-item {
+        padding: 1rem;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        @include flex(flex-start, center, row, 1rem);
+        transition: all 0.2s ease;
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.1);
+          transform: translateX(5px);
+        }
+
+        .song-poster-placeholder {
+          width: 40px;
+          height: 40px;
+          background: #222;
+          border-radius: 8px;
+        }
+
+        .song-info {
+          .song-title {
+            font-weight: 600;
+            margin: 0;
+          }
+          .song-artist {
+            font-size: 0.8rem;
+            color: #a1a1aa;
+            margin: 0;
+          }
+        }
+      }
+    }
+
+    .upload-action-btn {
+      margin-top: auto;
+      padding: 1.5rem;
+      border: 2px dashed rgba(255, 255, 255, 0.2);
+      background: transparent;
+      color: $white;
+      border-radius: $radius-md;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover {
+        border-color: $accent-color;
+        background: rgba($accent-color, 0.05);
+      }
+    }
+  }
+}

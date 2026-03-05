@@ -1,5 +1,4 @@
-import React from 'react'
-import '../style/form.scss';
+import "../style/form.scss";
 
 const AuthLayout = ({ title, subtitle, children, footer }) => {
   return (
@@ -21,7 +20,7 @@ const AuthLayout = ({ title, subtitle, children, footer }) => {
         {footer}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default AuthLayout
+export default AuthLayout;
