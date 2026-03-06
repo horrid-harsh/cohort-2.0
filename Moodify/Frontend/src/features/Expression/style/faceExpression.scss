@@ -53,19 +53,24 @@
 
     .detect-btn {
       width: fit-content;
-      min-width: 260px;
-      padding: 14px 40px;
+      min-width: 200px;
+      padding: 12px 30px;
       background: #111;
       border: 3px solid #e2f1cc;
       color: #e2f1cc;
       border-radius: 30px;
-      font-size: 1.4rem;
-      font-weight: 600;
+      font-size: clamp(1.1rem, 4vw, 1.4rem);
+      font-weight: 700;
       cursor: pointer;
       font-family: inherit;
       transition: all 0.3s ease;
       position: relative;
       box-shadow: 0 0 10px rgba(#e2f1cc, 0.1);
+
+      @media (max-width: 480px) {
+        min-width: 180px;
+        padding: 10px 24px;
+      }
 
       &::after {
         content: "";

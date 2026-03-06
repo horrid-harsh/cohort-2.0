@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../../shared/style/navbar.scss";
 import logo from "../../../assets/logo_cropped.png";
+import userPlaceholder from "../../../assets/user_profile.png";
 import useAuth from "../../auth/hooks/useAuth";
 
 const Navbar = () => {
@@ -48,7 +49,7 @@ const Navbar = () => {
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
           >
             <div className="profile-icon">
-              <i className="ri-user-fill"></i>
+              <img src={userPlaceholder} alt="Profile Icon" />
             </div>
             <i
               className={`ri-arrow-down-s-line chevron ${isDropdownOpen ? "rotate" : ""}`}

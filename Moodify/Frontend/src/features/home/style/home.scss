@@ -9,13 +9,13 @@
 
 // Hero Section / Landing Page
 .hero-section {
-  height: 100vh;
+  min-height: 100vh;
   width: 100%;
   @include flex-center;
   flex-direction: column;
   position: relative;
   text-align: center;
-  padding: 0 2rem;
+  padding: 85px 2rem 0; // Top padding for fixed navbar
   overflow: hidden;
 
   .hero-content {
@@ -23,32 +23,86 @@
     max-width: 800px;
     animation: fadeInY 1s ease-out;
 
-    .hero-title {
-      font-size: clamp(4rem, 15vw, 8rem);
+    .hero-tagline {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: $accent-color;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+      animation: fadeIn 1s ease-out;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(2.5rem, 8vw, 6rem);
       font-weight: 800;
       color: transparent;
-      user-select: none;
-      -webkit-user-select: none;
       line-height: 1;
-      margin-bottom: 1rem;
-      letter-spacing: -4px;
+      margin-bottom: 2rem;
+      letter-spacing: -3px;
       background-image: url("../../../assets/text-bg.jpg");
       background-size: cover;
       background-position: center;
       background-clip: text;
       -webkit-background-clip: text;
+      user-select: none;
+      -webkit-user-select: none;
 
-      span {
-        color: inherit;
+      .mobile-break {
+        display: block;
       }
     }
 
-    .hero-subtitle {
-      font-size: clamp(1.5rem, 4vw, 3rem);
-      font-weight: 600;
-      color: $white;
-      margin-bottom: 3rem;
-      letter-spacing: -1px;
+    .hero-description {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: $text-secondary;
+      line-height: 1.6;
+      max-width: 600px;
+      margin: 0 auto 3rem;
+      padding: 0 1rem;
+    }
+
+    .hero-actions {
+      @include flex-center;
+      margin-bottom: 5rem;
+    }
+
+    .hero-features {
+      @include flex-center;
+      gap: clamp(1.5rem, 5vw, 4rem);
+      margin-top: 2rem;
+      padding-top: 3rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+
+      .feature {
+        @include flex-center;
+        flex-direction: column;
+        gap: 0.6rem;
+        transition: transform 0.3s ease;
+
+        &:hover {
+          transform: translateY(-5px);
+          i {
+            color: $white;
+            text-shadow: 0 0 15px $accent-color;
+          }
+        }
+
+        i {
+          font-size: 1.8rem;
+          color: $accent-color;
+          transition: all 0.3s ease;
+        }
+
+        span {
+          font-size: 0.75rem;
+          font-weight: 700;
+          color: rgba(255, 255, 255, 0.5);
+          text-transform: uppercase;
+          letter-spacing: 1.5px;
+        }
+      }
     }
 
     .pearl-button {
@@ -69,10 +123,14 @@
         0 1rem 3rem rgba(0, 0, 0, 0.5);
 
       .wrap {
-        font-size: 22px;
+        font-size: clamp(16px, 4vw, 22px);
         font-weight: 600;
         color: rgba(255, 255, 255, 0.9);
-        padding: 20px 45px;
+        padding: 14px 30px;
+
+        @media (max-width: 480px) {
+          padding: 12px 24px;
+        }
         border-radius: inherit;
         position: relative;
         overflow: hidden;
@@ -220,6 +278,11 @@
     }
   }
 
+  @media (max-width: 400px) {
+    padding: 5rem 1rem 1.5rem;
+    gap: 2rem;
+  }
+
   // Background glowing blobs
   &::before,
   &::after {
@@ -257,6 +320,14 @@
     -webkit-user-select: none;
     transition: all 0.3s ease;
 
+    @media (max-width: 480px) {
+      padding: 1.5rem;
+    }
+
+    @media (max-width: 350px) {
+      padding: 1.25rem;
+    }
+
     &:hover {
       border-color: rgba(255, 255, 255, 0.2);
       background: rgba(255, 255, 255, 0.05);
@@ -266,10 +337,10 @@
 
   .intro-section {
     .section-title {
-      font-size: 3rem;
+      font-size: clamp(2rem, 10vw, 3rem);
       font-weight: 800;
       line-height: 1.1;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
       letter-spacing: -1px;
 
       span {
@@ -278,9 +349,9 @@
     }
 
     .description {
-      font-size: 1.1rem;
+      font-size: clamp(0.95rem, 3vw, 1.1rem);
       color: $text-secondary;
-      line-height: 1.6;
+      line-height: 1.5;
       max-width: 450px;
     }
   }
@@ -324,11 +395,19 @@
           transform: translateX(10px);
         }
 
+        .song-poster,
         .song-poster-placeholder {
           width: 50px;
           height: 50px;
           background: rgba(255, 255, 255, 0.1);
           border-radius: 8px;
+          overflow: hidden;
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
         }
 
         .song-info {
@@ -382,5 +461,13 @@
   }
   to {
     transform: rotate(-3deg) translateY(-20px);
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
