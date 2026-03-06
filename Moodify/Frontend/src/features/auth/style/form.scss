@@ -1,6 +1,6 @@
 @use "sass:color";
-@use "variables" as *;
-@use "mixins" as *;
+@use "../../shared/style/variables" as *;
+@use "../../shared/style/mixins" as *;
 
 .auth-container {
   min-height: 100vh;

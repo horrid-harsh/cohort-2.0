@@ -1,6 +1,6 @@
 @use "sass:color";
-@use "../../auth/style/variables" as *;
-@use "../../auth/style/mixins" as *;
+@use "../../shared/style/variables" as *;
+@use "../../shared/style/mixins" as *;
 
 .face-expression-container {
   width: 100%;
