@@ -101,6 +101,11 @@ export const resetPasswordApi = async (token, password) => {
   return response.data;
 };
 
+export const logoutApi = async () => {
+  const response = await authApi.post(`/logout`);
+  return response.data;
+};
+
 export const loginWithGoogle = () => {
   window.location.href = `http://localhost:3000/api/auth/google`;
 };

@@ -1,11 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import "../style/player.scss";
+import posterImg from "../../../assets/poster_billie.png";
 
 const MusicPlayer = () => {
+  const [volume, setVolume] = useState(80);
+
+  const handleVolumeChange = (e) => {
+    setVolume(e.target.value);
+  };
+
   return (
     <div className="music-player">
       <div className="poster-container">
-        <div className="poster" style={{ background: "#222" }}></div>
+        <img src={posterImg} alt="Album Poster" className="poster" />
       </div>
 
       <div className="details">
@@ -29,7 +36,14 @@ const MusicPlayer = () => {
 
       <div className="volume-control">
         <i className="ri-volume-up-line"></i>
-        <input type="range" min="0" max="100" defaultValue="80" />
+        <input
+          type="range"
+          min="0"
+          max="100"
+          value={volume}
+          onChange={handleVolumeChange}
+          style={{ "--val": `${volume}%` }}
+        />
       </div>
     </div>
   );

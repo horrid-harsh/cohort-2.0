@@ -5,6 +5,7 @@ import {
   forgotPasswordApi,
   resetPasswordApi,
   loginWithGoogle,
+  logoutApi,
 } from "../services/auth.api";
 import AuthContext from "../auth.context";
 
@@ -83,6 +84,16 @@ const useAuth = () => {
     loginWithGoogle();
   };
 
+  const handleLogoutUser = async () => {
+    try {
+      await logoutApi();
+      setUser(null);
+      window.location.href = "/login";
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
+
   return {
     loading,
     error,
@@ -93,6 +104,7 @@ const useAuth = () => {
     handleForgotPasswordUser,
     handleResetPasswordUser,
     handleGoogleLogin,
+    handleLogoutUser,
   };
 };
 

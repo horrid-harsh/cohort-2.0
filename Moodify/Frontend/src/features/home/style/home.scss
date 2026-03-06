@@ -1,39 +1,222 @@
 @use "../../auth/style/variables" as *;
 @use "../../auth/style/mixins" as *;
 
+.home-wrapper {
+  background-color: $bg-color;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+// Hero Section / Landing Page
+.hero-section {
+  height: 100vh;
+  width: 100%;
+  @include flex-center;
+  flex-direction: column;
+  position: relative;
+  text-align: center;
+  padding: 0 2rem;
+  overflow: hidden;
+
+  .hero-content {
+    z-index: 10;
+    max-width: 800px;
+    animation: fadeInY 1s ease-out;
+
+    .hero-title {
+      font-size: clamp(4rem, 15vw, 8rem);
+      font-weight: 800;
+      color: transparent;
+      user-select: none;
+      -webkit-user-select: none;
+      line-height: 1;
+      margin-bottom: 1rem;
+      letter-spacing: -4px;
+      background-image: url("../../../assets/text-bg.jpg");
+      background-size: cover;
+      background-position: center;
+      background-clip: text;
+      -webkit-background-clip: text;
+
+      span {
+        color: inherit;
+      }
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1.5rem, 4vw, 3rem);
+      font-weight: 600;
+      color: $white;
+      margin-bottom: 3rem;
+      letter-spacing: -1px;
+    }
+
+    .pearl-button {
+      --white: #ffffff;
+      --bg: #000000;
+      --radius: 100px;
+      outline: none;
+      cursor: pointer;
+      border: 0;
+      position: relative;
+      border-radius: var(--radius);
+      background-color: var(--bg);
+      transition: all 0.2s ease;
+      box-shadow:
+        inset 0 0.3rem 0.9rem rgba(255, 255, 255, 0.2),
+        inset 0 -0.1rem 0.3rem rgba(0, 0, 0, 0.7),
+        inset 0 -0.4rem 0.9rem rgba($primary-color, 0.3),
+        0 1rem 3rem rgba(0, 0, 0, 0.5);
+
+      .wrap {
+        font-size: 22px;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.9);
+        padding: 20px 45px;
+        border-radius: inherit;
+        position: relative;
+        overflow: hidden;
+
+        p {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          margin: 0;
+          transition: all 0.2s ease;
+          transform: translateY(2%);
+          mask-image: linear-gradient(to bottom, white 40%, transparent);
+
+          span {
+            font-size: 1.2rem;
+            color: $accent-color;
+            &:nth-child(2) {
+              display: none;
+            }
+          }
+        }
+
+        &::before,
+        &::after {
+          content: "";
+          position: absolute;
+          transition: all 0.3s ease;
+        }
+
+        &::before {
+          left: -15%;
+          right: -15%;
+          bottom: 25%;
+          top: -100%;
+          border-radius: 50%;
+          background-color: rgba($primary-color, 0.15);
+        }
+
+        &::after {
+          left: 6%;
+          right: 6%;
+          top: 12%;
+          bottom: 40%;
+          border-radius: 22px 22px 0 0;
+          box-shadow: inset 0 10px 8px -10px rgba(255, 255, 255, 0.5);
+          background: linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.2) 0%,
+            rgba(0, 0, 0, 0) 50%,
+            rgba(0, 0, 0, 0) 100%
+          );
+        }
+      }
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow:
+          inset 0 0.3rem 0.5rem rgba(255, 255, 255, 0.3),
+          inset 0 -0.1rem 0.3rem rgba(0, 0, 0, 0.7),
+          inset 0 -0.4rem 0.9rem rgba($accent-color, 0.4),
+          0 1.5rem 3.5rem rgba(0, 0, 0, 0.6);
+
+        .wrap {
+          p {
+            transform: translateY(-4%);
+            span:nth-child(1) {
+              display: none;
+            }
+            span:nth-child(2) {
+              display: inline-block;
+            }
+          }
+          &::before {
+            transform: translateY(-5%);
+            background-color: rgba($accent-color, 0.15);
+          }
+          &::after {
+            opacity: 0.4;
+            transform: translateY(5%);
+          }
+        }
+      }
+
+      &:active {
+        transform: translateY(2px);
+      }
+    }
+  }
+
+  // Fade edge to next section
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 30vh;
+    background: linear-gradient(to bottom, transparent, $bg-color);
+    z-index: 5;
+    pointer-events: none;
+  }
+
+  // Wave/Blob background element
+  .hero-wave {
+    position: absolute;
+    bottom: -15%;
+    left: -10%;
+    width: 120%;
+    height: 45%;
+    background: linear-gradient(135deg, $primary-color 0%, $accent-color 100%);
+    filter: blur(100px);
+    opacity: 0.25;
+    border-radius: 50% 50% 0 0;
+    transform: rotate(-5deg);
+    z-index: 1;
+    animation: waveFloat 10s ease-in-out infinite alternate;
+  }
+}
+
+// Dashboard Section
 .home-container {
   min-height: 100vh;
-  background-color: $bg-color;
   color: $white;
   display: grid;
   grid-template-columns: 1fr 1.5fr 1fr;
   gap: 2rem;
-  padding: 3rem;
+  padding: 8rem 3rem 3rem; // Top padding for fixed navbar
   position: relative;
-  // No overflow here, let #root handle it
 
-  @media (max-width: 1024px) {
-    grid-template-columns: 1fr;
-    padding: 2rem 1.5rem;
-    gap: 3rem;
-    text-align: left;
-    align-items: flex-start;
+  @media (max-width: 1200px) {
+    grid-template-columns: 1fr 1fr;
 
-    .intro-section .title {
-      font-size: 2.5rem;
+    .playlist-section {
+      grid-column: span 2;
     }
   }
 
-  @media (max-width: 480px) {
-    padding: 1rem;
-    gap: 2rem;
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr;
+    padding: 6rem 1.5rem 2rem;
+    gap: 3rem;
 
-    .intro-section .title {
-      font-size: 2rem;
-    }
-
-    .intro-section .description {
-      font-size: 1rem;
+    .playlist-section {
+      grid-column: auto;
     }
   }
 
@@ -42,25 +225,25 @@
   &::after {
     content: "";
     position: absolute;
-    width: 400px;
-    height: 400px;
+    width: 500px;
+    height: 500px;
     border-radius: 50%;
-    filter: blur(100px);
+    filter: blur(120px);
     z-index: 0;
-    opacity: 0.2;
+    opacity: 0.15;
     pointer-events: none;
   }
 
   &::before {
     background: $primary-color;
-    top: -100px;
-    left: -100px;
+    top: 10%;
+    left: -10%;
   }
 
   &::after {
     background: $accent-color;
-    bottom: -100px;
-    right: -100px;
+    bottom: 5%;
+    right: -10%;
   }
 
   .glass-card {
@@ -68,72 +251,26 @@
     backdrop-filter: blur(15px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: $radius-lg;
-    padding: 2rem;
+    padding: 2.5rem;
     z-index: 10;
-    isolation: isolate; // Keep internal glows contained
-    transform: translateZ(
-      0
-    ); // Hardware acceleration to stabilize backdrop-filter
-    backface-visibility: hidden; // Prevents flickering
-    transform-style: preserve-3d;
-    background-clip: padding-box;
-    clip-path: inset(
-      0 round $radius-lg
-    ); // Strictly clip for backdrop-filter stability
-    margin: 1px;
+    user-select: none;
+    -webkit-user-select: none;
     transition: all 0.3s ease;
 
-    @include tablet {
-      padding: 1.5rem;
-    }
-
-    @media (max-width: 480px) {
-      padding: 1rem;
-    }
-
     &:hover {
-      z-index: 20; // Ensure hovered card is on top
       border-color: rgba(255, 255, 255, 0.2);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      background: rgba(255, 255, 255, 0.05);
+      transform: translateY(-5px);
     }
   }
 
-  // Left Section: Header & Intro
   .intro-section {
-    flex: 1;
-    @include flex(flex-start, stretch, column, 2rem);
-    padding-top: 1rem; // Optional adjustment to match card tops
-    position: relative;
-    z-index: 5;
-
-    @media (max-width: 1024px) {
-      justify-content: center;
-      padding-top: 0;
-    }
-
-    .logo-container {
-      margin-bottom: 2rem;
-      .logo {
-        height: 100px; // Larger logo
-        width: auto;
-        object-fit: contain;
-
-        @media (max-width: 1024px) {
-          height: 60px;
-          margin-bottom: 0.5rem;
-        }
-
-        @media (max-width: 480px) {
-          height: 45px;
-        }
-      }
-    }
-
-    .title {
-      font-size: 3.5rem;
+    .section-title {
+      font-size: 3rem;
       font-weight: 800;
       line-height: 1.1;
-      letter-spacing: -2px;
+      margin-bottom: 1.5rem;
+      letter-spacing: -1px;
 
       span {
         color: $accent-color;
@@ -141,48 +278,24 @@
     }
 
     .description {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       color: $text-secondary;
       line-height: 1.6;
-      max-width: 400px;
+      max-width: 450px;
     }
   }
 
-  // Center Section: Detection & Player
   .main-interaction {
-    flex: 1.5;
-    @include flex(center, center, column, 2rem);
+    @include flex(flex-start, center, column, 2rem);
 
     .detector-view {
       width: 100%;
-      background: transparent; // Let the video wrapper handle the background if needed
       border-radius: $radius-lg;
-      @include flex(flex-start, stretch, column, 1.5rem);
       z-index: 10;
-    }
-
-    .detect-action-btn {
-      padding: 1.2rem 3rem;
-      background: transparent;
-      border: 2px solid $white;
-      border-radius: 12px;
-      color: $white;
-      font-size: 1.2rem;
-      font-weight: 600;
-      cursor: pointer;
-      @include flex(flex-start, center, row, 1rem);
-      transition: all 0.3s ease;
-
-      &:hover {
-        background: $white;
-        color: $bg-color;
-      }
     }
   }
 
-  // Right Section: Playlist
   .playlist-section {
-    flex: 1;
     @include flex(flex-start, stretch, column, 1.5rem);
 
     .section-header {
@@ -195,61 +308,50 @@
       }
     }
 
-    .mood-title {
-      padding: 0.8rem 1.5rem;
-      background: rgba($primary-color, 0.2);
-      border: 1px solid rgba($primary-color, 0.3);
-      border-radius: 50px;
-      color: $accent-color;
-      font-weight: 600;
-      text-transform: capitalize;
-      align-self: flex-start;
-    }
-
     .song-list {
       @include flex(flex-start, stretch, column, 1rem);
-      padding-right: 0.5rem;
 
       .song-item {
-        padding: 1rem;
+        padding: 1.2rem;
         background: rgba(255, 255, 255, 0.05);
         border-radius: 12px;
         @include flex(flex-start, center, row, 1rem);
         transition: all 0.2s ease;
+        cursor: pointer;
 
         &:hover {
           background: rgba(255, 255, 255, 0.1);
-          transform: translateX(5px);
+          transform: translateX(10px);
         }
 
         .song-poster-placeholder {
-          width: 40px;
-          height: 40px;
-          background: #222;
+          width: 50px;
+          height: 50px;
+          background: rgba(255, 255, 255, 0.1);
           border-radius: 8px;
         }
 
         .song-info {
           .song-title {
             font-weight: 600;
-            margin: 0;
+            margin-bottom: 0.2rem;
+            color: $white;
           }
           .song-artist {
-            font-size: 0.8rem;
-            color: #a1a1aa;
-            margin: 0;
+            font-size: 0.85rem;
+            color: $text-secondary;
           }
         }
       }
     }
 
     .upload-action-btn {
-      margin-top: auto;
+      margin-top: 2rem;
       padding: 1.5rem;
-      border: 2px dashed rgba(255, 255, 255, 0.2);
+      border: 2px dashed rgba(255, 255, 255, 0.1);
       background: transparent;
-      color: $white;
-      border-radius: $radius-md;
+      color: $text-secondary;
+      border-radius: 16px;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
@@ -257,7 +359,28 @@
       &:hover {
         border-color: $accent-color;
         background: rgba($accent-color, 0.05);
+        color: $white;
       }
     }
+  }
+}
+
+@keyframes fadeInY {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes waveFloat {
+  from {
+    transform: rotate(-5deg) translateY(0);
+  }
+  to {
+    transform: rotate(-3deg) translateY(-20px);
   }
 }
