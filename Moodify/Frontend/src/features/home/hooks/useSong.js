@@ -1,6 +1,10 @@
 import { useContext, useCallback } from "react";
 import SongContext from "../song.context";
-import { getSongsApi, uploadSongApi } from "../services/song.api";
+import {
+  getSongsApi,
+  uploadSongApi,
+  deleteSongApi,
+} from "../services/song.api";
 
 const useSong = () => {
   const context = useContext(SongContext);
@@ -77,6 +81,25 @@ const useSong = () => {
     }
   };
 
+  const handleDeleteSong = async (id) => {
+    try {
+      const response = await deleteSongApi(id);
+      if (response.success) {
+        // If the song being deleted is the one playing, reset player
+        if (currentSong?._id === id) {
+          setCurrentSong(null);
+          setIsPlaying(false);
+        }
+        // Refresh the current mood's playlist
+        await handleFetchSongs(currentMood, true);
+        return { success: true };
+      }
+    } catch (err) {
+      console.error("Error deleting song:", err);
+      return { success: false, error: err.message };
+    }
+  };
+
   return {
     songsByMood,
     currentMood,
@@ -88,6 +111,7 @@ const useSong = () => {
     handleFetchSongs,
     handleUploadSong,
     handleSelectSong,
+    handleDeleteSong,
     togglePlayPause,
     setIsPlaying,
   };

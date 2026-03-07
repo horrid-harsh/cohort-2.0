@@ -64,7 +64,20 @@ const getSongController = async (req, res) => {
   }
 };
 
+const deleteSong = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await songModel.findByIdAndDelete(id);
+    res
+      .status(200)
+      .json({ success: true, message: "Song deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
 module.exports = {
   uploadSong,
   getSongController,
+  deleteSong,
 };

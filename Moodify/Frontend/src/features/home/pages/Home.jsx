@@ -18,6 +18,7 @@ const Home = () => {
     currentSong,
     handleFetchSongs,
     handleSelectSong,
+    handleDeleteSong,
   } = useSong();
 
   useEffect(() => {
@@ -150,6 +151,18 @@ const Home = () => {
                   <div className="song-duration">
                     {formatDuration(song.duration)}
                   </div>
+                  <button
+                    className="remove-song-btn"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (window.confirm("Delete this song?")) {
+                        handleDeleteSong(song._id);
+                      }
+                    }}
+                    title="Remove from playlist"
+                  >
+                    <i className="ri-close-line"></i>
+                  </button>
                 </div>
               ))
             ) : (

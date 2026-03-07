@@ -11,3 +11,8 @@ export const uploadSongApi = async (formData) => {
   });
   return response.data;
 };
+
+export const deleteSongApi = async (id) => {
+  const response = await api.delete(`/song/${id}`);
+  return response.data;
+};

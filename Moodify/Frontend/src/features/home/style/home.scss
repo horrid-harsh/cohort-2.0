@@ -524,6 +524,7 @@
       }
 
       .song-item {
+        position: relative; // Context for absolute positioned remove btn
         flex-shrink: 0; // Prevent collapsing in scrollable container
         padding: 1.2rem;
         background: rgba(255, 255, 255, 0.05);
@@ -534,6 +535,38 @@
 
         &:hover {
           background: rgba(255, 255, 255, 0.1);
+
+          .remove-song-btn {
+            opacity: 1;
+            transform: translateY(-50%) translateX(0);
+          }
+        }
+
+        .remove-song-btn {
+          position: absolute;
+          right: 1.2rem;
+          top: 50%;
+          transform: translateY(-50%) translateX(10px);
+          opacity: 0;
+          background: rgba(255, 59, 48, 0.15);
+          color: #ff3b30;
+          border: none;
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+          @include flex-center;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          font-size: 1.2rem;
+          cursor: pointer;
+          z-index: 10;
+          border: 1px solid rgba(255, 59, 48, 0.2);
+
+          &:hover {
+            background: #ff3b30;
+            color: $white;
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 4px 12px rgba(255, 59, 48, 0.3);
+          }
         }
 
         &.active {
@@ -600,6 +633,11 @@
           margin-left: auto;
           opacity: 0.8;
           letter-spacing: 0.5px;
+          transition: margin-right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        &:hover .song-duration {
+          margin-right: 2.8rem; // Make room for remove button
         }
       }
     }

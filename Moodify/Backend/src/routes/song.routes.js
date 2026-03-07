@@ -18,4 +18,11 @@ router.post("/", authUser, upload.single("song"), songController.uploadSong);
  */
 router.get("/", authUser, songController.getSongController);
 
+/**
+ * @route DELETE /api/song/:id
+ * @description Delete a song
+ * @access Private
+ */
+router.delete("/:id", authUser, songController.deleteSong);
+
 module.exports = router;
