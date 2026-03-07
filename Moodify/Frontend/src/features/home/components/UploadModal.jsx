@@ -13,21 +13,13 @@ const UploadModal = ({ isOpen, onClose }) => {
   return (
     <div className="upload-modal-overlay" onClick={onClose}>
       <div className="upload-modal" onClick={(e) => e.stopPropagation()}>
-        <button className="close-btn" onClick={onClose}>
-          ✕
-        </button>
-        <h2>Upload Music</h2>
+        <div className="modal-header">
+          <h2>Upload Music</h2>
+          <button className="close-btn" onClick={onClose}>
+            ✕
+          </button>
+        </div>
         <form className="upload-form">
-          <div className="form-group" style={{ marginBottom: "1rem" }}>
-            <label>Song Title</label>
-            <input type="text" placeholder="Enter song title" />
-          </div>
-
-          <div className="form-group" style={{ marginBottom: "1rem" }}>
-            <label>Artist</label>
-            <input type="text" placeholder="Enter artist name" />
-          </div>
-
           <div className="form-group" style={{ marginBottom: "1rem" }}>
             <label>Mood</label>
             <div className={`custom-dropdown ${isMoodOpen ? "active" : ""}`}>
