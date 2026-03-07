@@ -40,10 +40,16 @@ const uploadSong = async (req, res) => {
 const getSongController = async (req, res) => {
   try {
     const { mood } = req.query;
-    const song = await songModel.findOne({ mood });
-    res.status(200).json({ message: "Song fetched successfully", song });
+    const songs = await songModel
+      .find(mood ? { mood } : {})
+      .sort({ createdAt: -1 });
+    res.status(200).json({
+      success: true,
+      message: "Songs fetched successfully",
+      songs,
+    });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ success: false, message: error.message });
   }
 };
 

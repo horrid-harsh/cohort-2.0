@@ -49,6 +49,16 @@
     .upload-form {
       @include flex(flex-start, stretch, column, 1.5rem);
 
+      .error-message {
+        background: rgba($error-color, 0.1);
+        color: $error-color;
+        padding: 0.8rem 1rem;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        border: 1px solid rgba($error-color, 0.2);
+        animation: fadeIn 0.3s ease;
+      }
+
       .form-group {
         @include flex(flex-start, stretch, column, 0.5rem);
 
@@ -151,6 +161,32 @@
           text-align: center;
           cursor: pointer;
           transition: all 0.3s ease;
+
+          &.has-file {
+            border-color: $primary-color;
+            background: rgba($primary-color, 0.05);
+            border-style: solid;
+
+            p {
+              color: $white;
+              font-weight: 600;
+              width: 100%;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              padding: 0 1rem;
+              display: block; // Ensure it respects width
+            }
+          }
+
+          p {
+            color: $text-secondary;
+            transition: all 0.3s ease;
+            width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
 
           &:hover {
             border-color: $primary-color;

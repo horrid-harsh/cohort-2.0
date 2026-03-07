@@ -1,41 +1,37 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "../style/home.scss";
 import MusicPlayer from "../components/MusicPlayer";
 import UploadModal from "../components/UploadModal";
 import FaceExpression from "../../Expression/components/FaceExpression";
 import Navbar from "../../shared/components/Navbar";
-import song1 from "../../../assets/song1.png";
-import song2 from "../../../assets/song2.jpg";
-import song3 from "../../../assets/song3.png";
-import song4 from "../../../assets/song4.png";
-import song5 from "../../../assets/song5.jpg";
+import useSong from "../hooks/useSong";
 
 const Home = () => {
   const [isUploadModalOpen, setIsUploadModalOpen] = useState(false);
   const dashboardRef = useRef(null);
+  const {
+    songsByMood,
+    currentMood,
+    setCurrentMood,
+    loading,
+    handleFetchSongs,
+  } = useSong();
+
+  useEffect(() => {
+    handleFetchSongs(currentMood);
+  }, [currentMood, handleFetchSongs]);
 
   const scrollToDashboard = () => {
     dashboardRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const songs = [
-    {
-      id: 1,
-      title: "I Love You, I'm Sorry",
-      artist: "Gracie Abrams",
-      img: song1,
-    },
-    { id: 2, title: "FUNK OPTICA", artist: "ICEDMANE, DYSMANE", img: song2 },
-    { id: 3, title: "Bad Boy", artist: "Raaban", img: song3 },
-    { id: 4, title: "Snap", artist: "Rosa Linn", img: song4 },
-    { id: 5, title: "Royalty", artist: "Egzod", img: song5 },
-  ];
+  const currentSongs = songsByMood[currentMood] || [];
 
   return (
     <div className="home-wrapper">
       <Navbar />
 
-      {/* Hero Section / Landing Page */}
+      {/* Hero Section */}
       <section className="hero-section">
         <div className="hero-content">
           <p className="hero-tagline">✧ Personalization Redefined</p>
@@ -76,8 +72,6 @@ const Home = () => {
             </div>
           </div>
         </div>
-
-        {/* Animated Background Element */}
         <div className="hero-wave"></div>
       </section>
 
@@ -106,25 +100,46 @@ const Home = () => {
         {/* Right Section */}
         <section className="playlist-section glass-card">
           <div className="section-header">
-            <h3>Happy Playlist</h3>
+            <h3>Playlist</h3>
+            <div className="mood-tabs">
+              {["happy", "sad", "surprised"].map((mood) => (
+                <button
+                  key={mood}
+                  className={`mood-tab ${currentMood === mood ? "active" : ""}`}
+                  onClick={() => setCurrentMood(mood)}
+                >
+                  {mood.charAt(0).toUpperCase() + mood.slice(1)}
+                </button>
+              ))}
+            </div>
           </div>
 
-          <div className="song-list">
-            {songs.map((song) => (
-              <div key={song.id} className="song-item">
-                <div className="song-poster">
-                  {song.img ? (
-                    <img src={song.img} alt={song.title} />
-                  ) : (
-                    <div className="song-poster-placeholder"></div>
-                  )}
+          <div className="song-list" key={currentMood}>
+            {(loading || songsByMood[currentMood] === null) &&
+            (!songsByMood[currentMood] || currentSongs.length === 0) ? (
+              <div className="playlist-status">Loading songs...</div>
+            ) : currentSongs && currentSongs.length > 0 ? (
+              currentSongs.map((song) => (
+                <div key={song._id} className="song-item">
+                  <div className="song-poster">
+                    {song.posterUrl ? (
+                      <img src={song.posterUrl} alt={song.title} />
+                    ) : (
+                      <div className="song-poster-placeholder"></div>
+                    )}
+                  </div>
+                  <div className="song-info">
+                    <p className="song-title">{song.title}</p>
+                    <p className="song-artist">{currentMood.toUpperCase()}</p>
+                  </div>
                 </div>
-                <div className="song-info">
-                  <p className="song-title">{song.title}</p>
-                  <p className="song-artist">{song.artist}</p>
-                </div>
+              ))
+            ) : (
+              <div className="playlist-status empty">
+                No songs added yet. Upload a track to start building your
+                playlist.
               </div>
-            ))}
+            )}
           </div>
 
           <button

@@ -1,24 +1,76 @@
-import { getSongApi } from "../../auth/song.api";
 import { useContext, useCallback } from "react";
 import SongContext from "../song.context";
+import { getSongsApi, uploadSongApi } from "../services/song.api";
 
 const useSong = () => {
-    const context = useContext(SongContext);
-    const { song, setSong, loading, setLoading } = context;
+  const context = useContext(SongContext);
 
-    const handleGetSong = useCallback(async ({ mood }) => {
-        setLoading(true);
-        try {
-            const response = await getSongApi({ mood });
-            setSong(response.song);
-        } catch (error) {
-            console.error("Error fetching song:", error);           
-        } finally {
-            setLoading(false);
-        }
-    }, []);
+  if (!context) {
+    throw new Error("useSong must be used within a SongContextProvider");
+  }
 
-    return { song, loading, handleGetSong };
+  const {
+    songsByMood,
+    setSongsByMood,
+    currentMood,
+    setCurrentMood,
+    loading,
+    setLoading,
+    setError,
+  } = context;
+
+  const handleFetchSongs = useCallback(
+    async (mood, force = false) => {
+      // Avoid redundant API calls if songs are already cached (even if empty)
+      if (!force && songsByMood[mood] !== null) {
+        return;
+      }
+
+      setLoading(true);
+      try {
+        const response = await getSongsApi(mood);
+        setSongsByMood((prev) => ({
+          ...prev,
+          [mood]: response.songs || [],
+        }));
+      } catch (err) {
+        console.error(`Error fetching ${mood} songs:`, err);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [setLoading, setSongsByMood, songsByMood],
+  );
+
+  const handleUploadSong = async (formData) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await uploadSongApi(formData);
+
+      if (response.success) {
+        // Refresh the playlist for the uploaded mood
+        await handleFetchSongs(response.song.mood, true);
+        return { success: true };
+      }
+    } catch (err) {
+      const msg =
+        err.response?.data?.message || "Upload failed. Please try again.";
+      setError(msg);
+      return { success: false, error: msg };
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return {
+    songsByMood,
+    currentMood,
+    setCurrentMood,
+    loading,
+    handleFetchSongs,
+    handleUploadSong,
+  };
 };
 
 export default useSong;

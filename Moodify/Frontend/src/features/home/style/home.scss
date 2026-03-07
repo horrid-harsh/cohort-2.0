@@ -15,7 +15,10 @@
   flex-direction: column;
   position: relative;
   text-align: center;
-  padding: 85px 2rem 0; // Top padding for fixed navbar
+  padding-top: clamp(calc(85px + 5vh), 15vh, 200px);
+  padding-left: 2rem;
+  padding-right: 2rem;
+  padding-bottom: 0;
   overflow: hidden;
 
   .hero-content {
@@ -252,13 +255,20 @@
 
 // Dashboard Section
 .home-container {
+  margin-top: -1px; // Tiny overlap to prevent line artifacts
   min-height: 100vh;
   color: $white;
   display: grid;
-  grid-template-columns: 1fr 1.5fr 1fr;
+  grid-template-columns: repeat(3, minmax(0, 1fr)); // Ensure columns can shrink
+  grid-template-columns: 1fr 1.5fr 1fr; // Preferred ratios
   gap: 2rem;
-  padding: 8rem 3rem 3rem; // Top padding for fixed navbar
+  padding: 8rem 3rem 3rem;
   position: relative;
+  z-index: 10;
+  background-color: $bg-color;
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden; // Safety measure for child bleeds
 
   @media (max-width: 1200px) {
     grid-template-columns: 1fr 1fr;
@@ -269,9 +279,9 @@
   }
 
   @media (max-width: 1024px) {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     padding: 6rem 1.5rem 2rem;
-    gap: 3rem;
+    gap: 2rem; // Reduced gap for smaller screens
 
     .playlist-section {
       grid-column: auto;
@@ -335,6 +345,12 @@
     }
   }
 
+  .intro-section,
+  .main-interaction,
+  .playlist-section {
+    min-width: 0; // Crucial for grid responsiveness
+  }
+
   .intro-section {
     .section-title {
       font-size: clamp(2rem, 10vw, 3rem);
@@ -368,21 +384,97 @@
 
   .playlist-section {
     @include flex(flex-start, stretch, column, 1.5rem);
+    height: 100%; // Fill grid cell height
+    min-height: 500px; // Ensure it looks good if main-interaction is small
 
     .section-header {
-      @include flex(space-between, center);
+      flex: 0 0 auto;
+      @include flex(space-between, flex-end);
       margin-bottom: 0.5rem;
+      flex-wrap: wrap;
+      gap: 1rem;
 
       h3 {
         font-size: 1.5rem;
         color: $white;
       }
+
+      .mood-tabs {
+        display: flex;
+        gap: 0.5rem;
+        padding: 0.3rem;
+        border-radius: 100px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        width: 100%;
+
+        .mood-tab {
+          padding: 0.4rem 1rem;
+          border-radius: 100px;
+          border: none;
+          background: transparent;
+          color: $text-secondary;
+          font-size: 0.75rem;
+          font-weight: 700;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          width: 100%;
+          max-width: 300px;
+
+          &:hover {
+            color: $white;
+          }
+
+          &.active {
+            background: $primary-color;
+            color: $white;
+            box-shadow: 0 4px 12px rgba($primary-color, 0.3);
+          }
+        }
+      }
     }
 
     .song-list {
       @include flex(flex-start, stretch, column, 1rem);
+      flex: 1 1 auto; // Fill available space between header and button
+      min-height: 250px;
+      overflow-y: auto;
+      padding-right: 0.5rem;
+      animation: fadeIn 0.4s ease-out;
+
+      // Custom Scrollbar
+      &::-webkit-scrollbar {
+        width: 4px;
+      }
+      &::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      &::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        &:hover {
+          background: rgba(255, 255, 255, 0.2);
+        }
+      }
+
+      .playlist-status {
+        text-align: center;
+        padding: 4rem 2rem;
+        color: $text-secondary;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        @include flex-center;
+        height: 100%;
+
+        &.empty {
+          opacity: 0.7;
+          font-style: italic;
+        }
+      }
 
       .song-item {
+        flex-shrink: 0; // Prevent collapsing in scrollable container
         padding: 1.2rem;
         background: rgba(255, 255, 255, 0.05);
         border-radius: 12px;
@@ -392,13 +484,15 @@
 
         &:hover {
           background: rgba(255, 255, 255, 0.1);
-          transform: translateX(10px);
+          // transform: translateX(10px);
         }
 
         .song-poster,
         .song-poster-placeholder {
           width: 50px;
           height: 50px;
+          min-width: 50px; // Maintain size
+          flex-shrink: 0; // Prevent squeezing
           background: rgba(255, 255, 255, 0.1);
           border-radius: 8px;
           overflow: hidden;
@@ -411,22 +505,36 @@
         }
 
         .song-info {
+          min-width: 0;
+          flex: 1;
+
           .song-title {
             font-weight: 600;
             margin-bottom: 0.2rem;
             color: $white;
+            font-size: 0.95rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: block;
           }
           .song-artist {
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             color: $text-secondary;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: block;
           }
         }
       }
     }
 
     .upload-action-btn {
-      margin-top: 2rem;
-      padding: 1.5rem;
+      margin-top: 1rem;
+      padding: 1.2rem;
       border: 2px dashed rgba(255, 255, 255, 0.1);
       background: transparent;
       color: $text-secondary;
@@ -434,6 +542,7 @@
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
+      font-size: 0.9rem;
 
       &:hover {
         border-color: $accent-color;
