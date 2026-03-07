@@ -162,7 +162,8 @@
           cursor: pointer;
           transition: all 0.3s ease;
 
-          &.has-file {
+          &.has-file,
+          &.is-dragging {
             border-color: $primary-color;
             background: rgba($primary-color, 0.05);
             border-style: solid;

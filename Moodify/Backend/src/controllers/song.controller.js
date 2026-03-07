@@ -18,18 +18,35 @@ const uploadSong = async (req, res) => {
     const artist = tags.artist || metadata.common.artist || "Unknown Artist";
     const duration = metadata.format.duration || 0;
 
-    const [songFile, posterFile] = await Promise.all([
-      storageService.uploadFile({
+    const posterBuffer =
+      tags.image?.imageBuffer || metadata.common.picture?.[0]?.data;
+
+    let songFile, posterFile;
+
+    if (posterBuffer) {
+      const [_songFile, _posterFile] = await Promise.all([
+        storageService.uploadFile({
+          buffer: songBuffer,
+          fileName: `${title}.mp3`,
+          folder: "/cohort-2/Moodify/songs",
+        }),
+        storageService.uploadFile({
+          buffer: posterBuffer,
+          fileName: `${title}.jpeg`,
+          folder: "/cohort-2/Moodify/posters",
+        }),
+      ]);
+      songFile = _songFile;
+      posterFile = _posterFile;
+    } else {
+      songFile = await storageService.uploadFile({
         buffer: songBuffer,
         fileName: `${title}.mp3`,
         folder: "/cohort-2/Moodify/songs",
-      }),
-      storageService.uploadFile({
-        buffer: tags.image?.imageBuffer || metadata.common.picture?.[0]?.data,
-        fileName: `${title}.jpeg`,
-        folder: "/cohort-2/Moodify/posters",
-      }),
-    ]);
+      });
+      // Set the local vinyl record as default if no image exists
+      posterFile = { url: "/black-vinyl.jpg" };
+    }
 
     const song = await songModel.create({
       title,
@@ -38,6 +55,7 @@ const uploadSong = async (req, res) => {
       url: songFile.url,
       posterUrl: posterFile.url,
       mood,
+      uploadedBy: req.user.id,
     });
 
     res

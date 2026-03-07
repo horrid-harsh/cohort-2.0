@@ -38,6 +38,10 @@ app.use(passport.initialize());
 app.use("/api/auth", authRoutes);
 app.use("/api/song", songRoutes);
 
+app.use("*name", (req, res) => {
+  res.status(404).json({ success: false, message: "Route not found" });
+});
+
 connectToDB();
 
 module.exports = app;

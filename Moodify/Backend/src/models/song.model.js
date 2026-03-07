@@ -26,6 +26,11 @@ const songSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    uploadedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "user",
+      required: true,
+    },
   },
   { timestamps: true },
 );

@@ -11,12 +11,13 @@ const UploadModal = ({ isOpen, onClose }) => {
   const [error, setError] = useState("");
   const fileInputRef = useRef(null);
 
+  const [isDragging, setIsDragging] = useState(false);
+
   if (!isOpen) return null;
 
   const moods = ["Happy", "Sad", "Surprised"];
 
-  const handleFileChange = (e) => {
-    const selectedFile = e.target.files[0];
+  const validateAndSetFile = (selectedFile) => {
     if (!selectedFile) return;
 
     // Validation
@@ -34,6 +35,27 @@ const UploadModal = ({ isOpen, onClose }) => {
 
     setFile(selectedFile);
     setError("");
+  };
+
+  const handleFileChange = (e) => {
+    validateAndSetFile(e.target.files[0]);
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+    const droppedFile = e.dataTransfer.files[0];
+    validateAndSetFile(droppedFile);
   };
 
   const handleSubmit = async (e) => {
@@ -103,8 +125,11 @@ const UploadModal = ({ isOpen, onClose }) => {
 
           <div className="form-group">
             <div
-              className={`file-input-wrapper ${file ? "has-file" : ""}`}
+              className={`file-input-wrapper ${file ? "has-file" : ""} ${isDragging ? "is-dragging" : ""}`}
               onClick={() => fileInputRef.current.click()}
+              onDragOver={handleDragOver}
+              onDragLeave={handleDragLeave}
+              onDrop={handleDrop}
             >
               <p>
                 {file
