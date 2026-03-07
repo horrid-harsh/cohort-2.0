@@ -30,7 +30,7 @@ const registerController = async (req, res) => {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
-      maxAge: 15 * 60 * 1000, // 15 minutes
+      maxAge: 1 * 60 * 1000, // 15 minutes
     });
 
     res.cookie("refreshToken", refreshToken, {
@@ -75,7 +75,7 @@ const loginController = async (req, res) => {
       { id: user._id, username: user.username },
       process.env.JWT_SECRET,
       {
-        expiresIn: "15m",
+        expiresIn: "1m",
       },
     );
 
