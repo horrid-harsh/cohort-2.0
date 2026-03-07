@@ -10,6 +10,7 @@
   border-radius: $radius-lg;
   @include flex(flex-start, center, row, 2rem);
   transition: all 0.3s ease;
+  overflow: hidden; // Critical to prevent internal overflows
 
   &.disabled {
     opacity: 0.5;
@@ -317,19 +318,83 @@
     }
   }
 
-  // Small screen (380px)
+  // Small screen optimizations (< 380px)
   @media (max-width: 380px) {
-    padding: 1.2rem;
-    column-gap: 1rem;
-    row-gap: 1.2rem;
-    .controls {
-      gap: 2rem;
-    }
+    padding: 1rem;
+    column-gap: 0.8rem;
+    row-gap: 1rem;
+    grid-template-columns: 65px 1fr;
+
     .poster-container {
       .poster,
       .poster-placeholder {
-        width: 70px;
-        height: 70px;
+        width: 65px;
+        height: 65px;
+      }
+    }
+
+    .info {
+      h4 {
+        font-size: 1.15rem;
+      }
+      p {
+        font-size: 0.9rem;
+      }
+    }
+
+    .controls {
+      gap: 1.8rem;
+      .play-pause {
+        width: 60px;
+        height: 60px;
+        font-size: 1.4rem;
+      }
+      .skip-btn {
+        font-size: 1.8rem;
+      }
+    }
+  }
+
+    // Ultra-narrow screen optimizations (< 340px)
+  @media (max-width: 340px) {
+    padding: 0.7rem;
+    column-gap: 0.5rem;
+    row-gap: 0.8rem;
+    grid-template-columns: 55px 1fr;
+
+    .poster-container {
+      .poster,
+      .poster-placeholder {
+        width: 55px;
+        height: 55px;
+      }
+    }
+
+    .info {
+      h4 {
+        font-size: 1rem;
+      }
+      p {
+        font-size: 0.8rem;
+      }
+    }
+
+    .controls {
+      gap: 1.5rem;
+      .play-pause {
+        width: 55px;
+        height: 55px;
+        font-size: 1.2rem;
+      }
+      .skip-btn {
+        font-size: 1.5rem;
+      }
+    }
+
+    .progress-area {
+      .time {
+        font-size: 0.65rem;
+        min-width: 30px;
       }
     }
   }

@@ -398,6 +398,15 @@
       h3 {
         font-size: 1.5rem;
         color: $white;
+
+        @media (max-width: 485px) {
+          font-size: 1.25rem;
+        }
+
+        @media (max-width: 342px) {
+          width: 100%; // Stack h3 on very narrow devices
+          margin-bottom: -0.5rem;
+        }
       }
 
       .mood-tabs {
@@ -407,6 +416,16 @@
         border-radius: 100px;
         border: 1px solid rgba(255, 255, 255, 0.1);
         width: 100%;
+
+        @media (max-width: 375px) {
+          gap: 0.3rem;
+          padding: 0.2rem;
+        }
+
+        @media (max-width: 330px) {
+          gap: 0.1rem;
+          padding: 0.15rem;
+        }
 
         .mood-tab {
           padding: 0.4rem 1rem;
@@ -420,8 +439,22 @@
           transition: all 0.3s ease;
           text-transform: uppercase;
           letter-spacing: 0.5px;
-          width: 100%;
-          max-width: 300px;
+          white-space: nowrap;
+          flex: 1;
+          min-width: 0;
+          text-align: center;
+
+          @media (max-width: 375px) {
+            padding: 0.4rem 0.5rem;
+            font-size: 0.68rem;
+          }
+
+          @media (max-width: 330px) {
+            padding: 0.4rem 0.2rem;
+            font-size: 0.58rem;
+            text-transform: capitalize; // Narrower than uppercase
+            letter-spacing: 0;
+          }
 
           &:hover {
             color: $white;
@@ -444,6 +477,22 @@
       padding-right: 0.8rem; // Space for scrollbar
       margin-right: -0.8rem; // Counterbalance padding to maintain alignment
       animation: fadeIn 0.4s ease-out;
+
+      // Smooth Edge Fade
+      mask-image: linear-gradient(
+        to bottom,
+        transparent 0%,
+        black 3%,
+        black 97%,
+        transparent 100%
+      );
+      -webkit-mask-image: linear-gradient(
+        to bottom,
+        transparent 0%,
+        black 3%,
+        black 97%,
+        transparent 100%
+      );
 
       &::-webkit-scrollbar {
         width: 5px;
