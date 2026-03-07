@@ -12,6 +12,9 @@ export const SongContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  const [currentSong, setCurrentSong] = useState(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
   return (
     <SongContext.Provider
       value={{
@@ -23,6 +26,10 @@ export const SongContextProvider = ({ children }) => {
         setLoading,
         error,
         setError,
+        currentSong,
+        setCurrentSong,
+        isPlaying,
+        setIsPlaying,
       }}
     >
       {children}

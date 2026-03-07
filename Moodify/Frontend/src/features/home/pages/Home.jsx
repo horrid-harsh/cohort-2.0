@@ -14,7 +14,10 @@ const Home = () => {
     currentMood,
     setCurrentMood,
     loading,
+    error,
+    currentSong,
     handleFetchSongs,
+    handleSelectSong,
   } = useSong();
 
   useEffect(() => {
@@ -84,7 +87,7 @@ const Home = () => {
 
       {/* Dashboard Section */}
       <div className="home-container" ref={dashboardRef}>
-        {/* Left Section (Now simpler as logo moved to navbar) */}
+        {/* Left Section */}
         <section className="intro-section">
           <h2 className="section-title">
             Your Emotional <span>Sync.</span>
@@ -96,15 +99,14 @@ const Home = () => {
           </p>
         </section>
 
-        {/* Center Section */}
+        {/* Center Section - Mood Detection */}
         <section className="main-interaction">
           <div className="detector-view glass-card">
             <FaceExpression />
           </div>
-          <MusicPlayer />
         </section>
 
-        {/* Right Section */}
+        {/* Right Section - Playlist */}
         <section className="playlist-section glass-card">
           <div className="section-header">
             <h3>Playlist</h3>
@@ -127,7 +129,11 @@ const Home = () => {
               <div className="playlist-status">Loading songs...</div>
             ) : currentSongs && currentSongs.length > 0 ? (
               currentSongs.map((song) => (
-                <div key={song._id} className="song-item">
+                <div
+                  key={song._id}
+                  className={`song-item ${currentSong?._id === song._id ? "active" : ""}`}
+                  onClick={() => handleSelectSong(song)}
+                >
                   <div className="song-poster">
                     {song.posterUrl ? (
                       <img src={song.posterUrl} alt={song.title} />
@@ -160,6 +166,11 @@ const Home = () => {
           >
             Upload a song
           </button>
+        </section>
+
+        {/* Full Width Music Player Section */}
+        <section className="player-full-width-section">
+          <MusicPlayer />
         </section>
       </div>
 

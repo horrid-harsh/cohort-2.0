@@ -16,8 +16,22 @@ const useSong = () => {
     setCurrentMood,
     loading,
     setLoading,
+    error,
     setError,
+    currentSong,
+    setCurrentSong,
+    isPlaying,
+    setIsPlaying,
   } = context;
+
+  const handleSelectSong = (song) => {
+    setCurrentSong(song);
+    setIsPlaying(true);
+  };
+
+  const togglePlayPause = () => {
+    setIsPlaying((prev) => !prev);
+  };
 
   const handleFetchSongs = useCallback(
     async (mood, force = false) => {
@@ -68,8 +82,14 @@ const useSong = () => {
     currentMood,
     setCurrentMood,
     loading,
+    error,
+    currentSong,
+    isPlaying,
     handleFetchSongs,
     handleUploadSong,
+    handleSelectSong,
+    togglePlayPause,
+    setIsPlaying,
   };
 };
 

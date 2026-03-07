@@ -384,8 +384,9 @@
 
   .playlist-section {
     @include flex(flex-start, stretch, column, 1.5rem);
-    height: 100%; // Fill grid cell height
-    min-height: 500px; // Ensure it looks good if main-interaction is small
+    height: 750px; // Standard height for dashboard consistency
+    max-height: 85vh; // Don't exceed viewport height
+    overflow: hidden; // Keep glass card shape clean
 
     .section-header {
       flex: 0 0 auto;
@@ -437,24 +438,24 @@
 
     .song-list {
       @include flex(flex-start, stretch, column, 1rem);
-      flex: 1 1 auto; // Fill available space between header and button
-      min-height: 250px;
+      flex: 1;
+      min-height: 0; // Essential for nested flex scrolling
       overflow-y: auto;
-      padding-right: 0.5rem;
+      padding-right: 0.8rem; // Space for scrollbar
+      margin-right: -0.8rem; // Counterbalance padding to maintain alignment
       animation: fadeIn 0.4s ease-out;
 
-      // Custom Scrollbar
       &::-webkit-scrollbar {
-        width: 4px;
+        width: 5px;
       }
       &::-webkit-scrollbar-track {
         background: transparent;
       }
       &::-webkit-scrollbar-thumb {
-        background: rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.15);
         border-radius: 10px;
         &:hover {
-          background: rgba(255, 255, 255, 0.2);
+          background: rgba(255, 255, 255, 0.3);
         }
       }
 
@@ -484,7 +485,20 @@
 
         &:hover {
           background: rgba(255, 255, 255, 0.1);
-          // transform: translateX(10px);
+        }
+
+        &.active {
+          background: rgba($primary-color, 0.15);
+          border: 1px solid rgba($primary-color, 0.3);
+          box-shadow: 0 0 20px rgba($primary-color, 0.1);
+
+          .song-title {
+            color: $accent-color;
+          }
+
+          .song-poster {
+            border: 1px solid rgba($accent-color, 0.3);
+          }
         }
 
         .song-poster,
@@ -558,6 +572,18 @@
         background: rgba($accent-color, 0.05);
         color: $white;
       }
+    }
+  }
+
+  // Full Width Player Section Styling
+  .player-full-width-section {
+    grid-column: 2 / -1; // Spans across interaction and playlist columns on desktop
+    width: 100%;
+    margin-top: 2rem;
+    z-index: 20;
+
+    @media (max-width: 1200px) {
+      grid-column: 1 / -1; // Full width on tablet/mobile
     }
   }
 }
