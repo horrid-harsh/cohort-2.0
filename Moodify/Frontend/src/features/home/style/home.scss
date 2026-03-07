@@ -529,6 +529,15 @@
             display: block;
           }
         }
+
+        .song-duration {
+          font-size: 0.8rem;
+          color: $text-secondary;
+          font-weight: 500;
+          margin-left: auto;
+          opacity: 0.8;
+          letter-spacing: 0.5px;
+        }
       }
     }
 

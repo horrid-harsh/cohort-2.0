@@ -18,6 +18,14 @@ const songSchema = new mongoose.Schema(
       type: String,
       enum: { values: ["happy", "sad", "surprised"], message: "Invalid mood" },
     },
+    artist: {
+      type: String,
+      default: "Unknown Artist",
+    },
+    duration: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true },
 );

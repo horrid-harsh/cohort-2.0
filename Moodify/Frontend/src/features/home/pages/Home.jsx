@@ -27,6 +27,13 @@ const Home = () => {
 
   const currentSongs = songsByMood[currentMood] || [];
 
+  const formatDuration = (seconds) => {
+    if (!seconds) return "0:00";
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins}:${secs.toString().padStart(2, "0")}`;
+  };
+
   return (
     <div className="home-wrapper">
       <Navbar />
@@ -130,7 +137,12 @@ const Home = () => {
                   </div>
                   <div className="song-info">
                     <p className="song-title">{song.title}</p>
-                    <p className="song-artist">{currentMood.toUpperCase()}</p>
+                    <p className="song-artist">
+                      {song.artist || currentMood.toUpperCase()}
+                    </p>
+                  </div>
+                  <div className="song-duration">
+                    {formatDuration(song.duration)}
                   </div>
                 </div>
               ))
