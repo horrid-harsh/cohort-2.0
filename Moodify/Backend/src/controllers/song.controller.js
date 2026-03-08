@@ -71,9 +71,13 @@ const uploadSong = async (req, res) => {
 const getSongController = async (req, res) => {
   try {
     const { mood } = req.query;
-    const songs = await songModel
-      .find(mood ? { mood } : {})
-      .sort({ createdAt: -1 });
+    const userId = req.user.id;
+
+    const query = { uploadedBy: userId };
+    if (mood) query.mood = mood;
+
+    const songs = await songModel.find(query).sort({ createdAt: -1 });
+
     res.status(200).json({
       success: true,
       message: "Songs fetched successfully",
