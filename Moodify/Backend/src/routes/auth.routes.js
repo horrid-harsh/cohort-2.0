@@ -2,7 +2,11 @@ const passport = require("passport");
 const { Router } = require("express");
 const router = Router();
 const authUser = require("../middlewares/auth.middleware");
-const { authLimiter, refreshLimiter, registerLimiter } = require("../middlewares/rateLimiter");
+const {
+  authLimiter,
+  refreshLimiter,
+  registerLimiter,
+} = require("../middlewares/rateLimiter");
 const authController = require("../controllers/auth.controller");
 
 /**
@@ -45,14 +49,22 @@ router.post("/refresh", refreshLimiter, authController.refreshController);
  * @desc Forgot password
  * @access Public
  */
-router.post("/forgot-password", authLimiter, authController.forgotPasswordController);
+router.post(
+  "/forgot-password",
+  authLimiter,
+  authController.forgotPasswordController,
+);
 
 /**
  * @route POST /api/auth/reset-password/:token
  * @desc Reset password
  * @access Public
  */
-router.post("/reset-password/:token", authLimiter, authController.resetPasswordController);
+router.post(
+  "/reset-password/:token",
+  authLimiter,
+  authController.resetPasswordController,
+);
 
 /**
  * @route GET /api/auth/google
@@ -61,7 +73,7 @@ router.post("/reset-password/:token", authLimiter, authController.resetPasswordC
  */
 router.get(
   "/google",
-  passport.authenticate("google", { scope: ["profile", "email"] })
+  passport.authenticate("google", { scope: ["profile", "email"] }),
 );
 
 /**
@@ -71,8 +83,12 @@ router.get(
  */
 router.get(
   "/google/callback",
-  passport.authenticate("google", { session: false, failureRedirect: "/login" }),
-  authController.googleAuthController
+  passport.authenticate("google", {
+    session: false,
+    failureRedirect: `${process.env.CLIENT_URL}/login`,
+  }),
+
+  authController.googleAuthController,
 );
 
 module.exports = router;
