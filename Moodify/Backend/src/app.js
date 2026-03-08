@@ -19,7 +19,7 @@ app.use(express.static("./public"));
 
 app.use(
   cors({
-    origin: true,
+    origin: process.env.CLIENT_URL,
     credentials: true, // allow cookies
   }),
 );

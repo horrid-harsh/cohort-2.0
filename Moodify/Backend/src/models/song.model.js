@@ -26,6 +26,13 @@ const songSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    fileId: {
+      type: String,
+      required: true,
+    },
+    posterFileId: {
+      type: String,
+    },
     uploadedBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "user",

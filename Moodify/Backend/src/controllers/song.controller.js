@@ -54,6 +54,8 @@ const uploadSong = async (req, res) => {
       duration,
       url: songFile.url,
       posterUrl: posterFile.url,
+      fileId: songFile.fileId,
+      posterFileId: posterFile.fileId || null,
       mood,
       uploadedBy: req.user.id,
     });
@@ -85,7 +87,30 @@ const getSongController = async (req, res) => {
 const deleteSong = async (req, res) => {
   try {
     const { id } = req.params;
+    const song = await songModel.findById(id);
+
+    if (!song) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Song not found" });
+    }
+
+    // Optional: Check if the user is the one who uploaded the song
+    if (song.uploadedBy.toString() !== req.user.id) {
+      return res
+        .status(403)
+        .json({ success: false, message: "Unauthorized deletion" });
+    }
+
+    // Delete from ImageKit
+    await Promise.all([
+      storageService.deleteFile(song.fileId),
+      storageService.deleteFile(song.posterFileId),
+    ]);
+
+    // Delete from DB
     await songModel.findByIdAndDelete(id);
+
     res
       .status(200)
       .json({ success: true, message: "Song deleted successfully" });
