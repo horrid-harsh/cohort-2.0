@@ -20,13 +20,14 @@ const userSchema = new mongoose.Schema({
   googleId: {
     type: String,
     unique: true,
-    sparse: true
+    sparse: true,
   },
   authProvider: {
     type: String,
-    enum: ["local", "google"],
-    default: "local"
+    enum: ["local", "google", "local+google"],
+    default: "local",
   },
+
   resetPasswordToken: String,
   resetPasswordExpire: Date,
 });
