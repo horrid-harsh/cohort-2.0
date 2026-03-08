@@ -63,7 +63,7 @@ const loginController = async (req, res) => {
       .findOne({ $or: [{ email: identifier }, { username: identifier }] })
       .select("+password");
     if (!user) {
-      return res.status(404).json({ message: "Invalid credentials" });
+      return res.status(401).json({ message: "Invalid credentials" });
     }
 
     const isPasswordValid = await user.comparePassword(password);
@@ -260,34 +260,31 @@ const resetPasswordController = async (req, res) => {
 };
 
 const googleAuthController = async (req, res) => {
-  
   try {
     const { googleId, name, email } = req.user;
 
     let user = await userModel.findOne({ email });
 
     if (!user) {
-  user = await userModel.create({
-    username: name,
-    email,
-    googleId,
-    authProvider: "google",
-  });
+      user = await userModel.create({
+        username: name,
+        email,
+        googleId,
+        authProvider: "google",
+      });
     } else if (!user.googleId) {
       user.googleId = googleId;
       await user.save();
     }
 
-    const accessToken = jwt.sign(
-      { id: user._id },
-      process.env.JWT_SECRET,
-      { expiresIn: "15m" }
-    );
+    const accessToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "15m",
+    });
 
     const refreshToken = jwt.sign(
       { id: user._id },
       process.env.REFRESH_SECRET,
-      { expiresIn: "7d" }
+      { expiresIn: "7d" },
     );
 
     await refreshTokenModel.create({
@@ -310,7 +307,6 @@ const googleAuthController = async (req, res) => {
     });
 
     res.redirect(process.env.CLIENT_URL + "/");
-
   } catch (error) {
     console.error(error);
     res.redirect(process.env.CLIENT_URL + "/login");

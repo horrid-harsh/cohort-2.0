@@ -2,6 +2,7 @@ const express = require("express");
 const connectToDB = require("./config/database");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+const path = require("path");
 // const session = require("express-session");
 const passport = require("passport");
 
@@ -14,22 +15,14 @@ const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(express.static("./public"));
 
 app.use(
   cors({
-    origin: ["http://localhost:5173"], // frontend URL
+    origin: true,
     credentials: true, // allow cookies
-  })
+  }),
 );
-
-/* Session middleware (required by passport) */
-// app.use(
-//   session({
-//     secret: "google-auth-secret",
-//     resave: false,
-//     saveUninitialized: true,
-//   })
-// );
 
 /* Initialize passport */
 app.use(passport.initialize());
@@ -38,9 +31,11 @@ app.use(passport.initialize());
 app.use("/api/auth", authRoutes);
 app.use("/api/song", songRoutes);
 
-app.use("*name", (req, res) => {
-  res.status(404).json({ success: false, message: "Route not found" });
+// Catch-all route to serve the frontend (for client-side routing)
+app.use('*name', (req, res)=> {
+  res.sendFile(path.join(__dirname, "../public/index.html"))
 });
+
 
 connectToDB();
 
