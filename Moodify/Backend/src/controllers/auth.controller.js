@@ -274,6 +274,7 @@ const googleAuthController = async (req, res) => {
       });
     } else if (!user.googleId) {
       user.googleId = googleId;
+      user.authProvider = "local+google";
       await user.save();
     }
 
@@ -294,22 +295,22 @@ const googleAuthController = async (req, res) => {
 
     res.cookie("accessToken", accessToken, {
       httpOnly: true,
-      secure: false, // true in production
+      secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       maxAge: 15 * 60 * 1000,
     });
 
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
-      secure: false,
+      secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
-    res.redirect(process.env.CLIENT_URL + "/");
+    res.redirect(`${process.env.CLIENT_URL}/`);
   } catch (error) {
     console.error(error);
-    res.redirect(process.env.CLIENT_URL + "/login");
+    res.redirect(`${process.env.CLIENT_URL}/login`);
   }
 };
 
