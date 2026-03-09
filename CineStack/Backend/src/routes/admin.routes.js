@@ -9,6 +9,11 @@ const {
   deleteUser,
 } = require("../controllers/admin.controller");
 const { protect, authorizeRoles } = require("../middlewares/authMiddleware");
+const { validate } = require("../utils/validation");
+const {
+  movieValidator,
+  updateMovieValidator,
+} = require("../validators/admin.validator");
 
 const router = express.Router();
 
@@ -19,9 +24,15 @@ router.use(authorizeRoles("admin"));
 /**
  * Movie Management Routes
  */
-router.route("/movies").get(getAllAdminMovies).post(addMovie);
+router
+  .route("/movies")
+  .get(getAllAdminMovies)
+  .post(movieValidator, validate, addMovie);
 
-router.route("/movies/:id").put(updateMovie).delete(deleteMovie);
+router
+  .route("/movies/:id")
+  .put(updateMovieValidator, validate, updateMovie)
+  .delete(deleteMovie);
 
 /**
  * User Management Routes
