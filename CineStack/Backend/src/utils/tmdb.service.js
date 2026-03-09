@@ -5,13 +5,14 @@ const axios = require("axios");
  * Responsible for all outgoing requests to the TMDB API.
  * Centralizes authentication and base URL configuration.
  */
-const fetchFromTMDB = async (endpoint) => {
+const fetchFromTMDB = async (endpoint, params = {}) => {
   const options = {
     method: "GET",
     url: `${process.env.TMDB_BASE_URL}/${endpoint}`,
+    params, // Support for page, query, etc.
     headers: {
       accept: "application/json",
-      Authorization: `Bearer ${process.env.TMDB_ACCESS_TOKEN}`, // Using Access Token as it's more secure/modern
+      Authorization: `Bearer ${process.env.TMDB_ACCESS_TOKEN}`, // Using Access Token
     },
   };
 
@@ -24,9 +25,10 @@ const fetchFromTMDB = async (endpoint) => {
 
     return response.data;
   } catch (error) {
-    console.error("Error fetching data from TMDB:", error.message);
+    const errorMessage = error.response?.data?.status_message || error.message;
+    console.error("Error fetching data from TMDB:", errorMessage);
     throw new Error(
-      "Failed to fetch data from TMDB API. Please try again later.",
+      `TMDB Error: ${errorMessage || "Failed to fetch data from TMDB API."}`,
     );
   }
 };
