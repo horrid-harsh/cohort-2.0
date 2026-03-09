@@ -1,6 +1,48 @@
 const asyncHandler = require("express-async-handler");
 const { fetchFromTMDB } = require("../utils/tmdb.service");
 const { validateMediaType, validateId } = require("../utils/validation");
+const WatchHistory = require("../models/watchHistory.model");
+
+/**
+ * Internal Helper: Non-blocking History Save
+ * @param {Object} user - Authenticated user object
+ * @param {Object} content - Content details (tmdbId, title, etc)
+ */
+const autoSaveHistory = async (user, content) => {
+  if (!user) return; // Only save for logged-in users
+
+  try {
+    const { tmdbId, title, posterPath, type } = content;
+
+    // Check for existing entry to update timestamp or create new one
+    let historyEntry = await WatchHistory.findOne({ user: user._id, tmdbId });
+
+    if (historyEntry) {
+      historyEntry.watchedAt = Date.now();
+      await historyEntry.save();
+    } else {
+      await WatchHistory.create({
+        user: user._id,
+        tmdbId,
+        title,
+        posterPath,
+        type,
+      });
+
+      // Maintain 50-entry limit
+      const count = await WatchHistory.countDocuments({ user: user._id });
+      if (count > 50) {
+        const oldest = await WatchHistory.findOne({ user: user._id }).sort({
+          watchedAt: 1,
+        });
+        if (oldest) await WatchHistory.findByIdAndDelete(oldest._id);
+      }
+    }
+  } catch (error) {
+    // Silently log error to avoid crashing the main response
+    console.error("Auto-save History Error:", error.message);
+  }
+};
 
 /**
  * @desc Get Trending Content (Movies or TV Shows)
@@ -55,7 +97,7 @@ exports.getPopularContent = asyncHandler(async (req, res) => {
 /**
  * @desc Get Details for a Movie or TV Show
  * @route GET /api/v1/movies/details/:mediaType/:id
- * @access Public
+ * @access Public (Identifies logged-in user via optionalProtect)
  */
 exports.getContentDetails = asyncHandler(async (req, res) => {
   const { mediaType, id } = req.params;
@@ -64,6 +106,16 @@ exports.getContentDetails = asyncHandler(async (req, res) => {
   validateId(id, res);
 
   const data = await fetchFromTMDB(`${mediaType}/${id}`);
+
+  // Non-blocking auto-save to history
+  autoSaveHistory(req.user, {
+    tmdbId: id,
+    title: data.title || data.name,
+    posterPath: data.poster_path,
+    type: mediaType,
+  }).catch(err =>
+    console.error("History save failed:", err.message)
+  );
 
   res.status(200).json({
     success: true,
@@ -74,7 +126,7 @@ exports.getContentDetails = asyncHandler(async (req, res) => {
 /**
  * @desc Get Trailers for a Movie or TV Show
  * @route GET /api/v1/movies/trailers/:mediaType/:id
- * @access Public
+ * @access Public (Identifies logged-in user via optionalProtect)
  */
 exports.getContentTrailers = asyncHandler(async (req, res) => {
   const { mediaType, id } = req.params;
@@ -82,6 +134,9 @@ exports.getContentTrailers = asyncHandler(async (req, res) => {
   validateMediaType(mediaType, res);
   validateId(id, res);
 
+  // We need basic content info (title/poster) to save to history if user is logged in
+  // but for performance, we fetch videos directly.
+  // If user is logged in, we fetch a minimal summary for the history record.
   const data = await fetchFromTMDB(`${mediaType}/${id}/videos`);
 
   // Filter for YouTube and sort: Trailers (priority 1), Teasers (priority 2)
@@ -95,6 +150,22 @@ exports.getContentTrailers = asyncHandler(async (req, res) => {
       if (a.type === "Teaser" && b.type === "Trailer") return 1;
       return 0;
     });
+
+  // Non-blocking auto-save: we need title/poster, so we do an extra small fetch only if logged in
+  if (req.user) {
+    fetchFromTMDB(`${mediaType}/${id}`)
+      .then((info) => {
+        autoSaveHistory(req.user, {
+          tmdbId: id,
+          title: info.title || info.name,
+          posterPath: info.poster_path,
+          type: mediaType,
+        });
+      })
+      .catch((err) =>
+        console.error("History Auto-save Info Fetch failed:", err.message),
+      );
+  }
 
   if (trailers.length === 0) {
     return res.status(200).json({

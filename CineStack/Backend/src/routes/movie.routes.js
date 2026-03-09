@@ -7,6 +7,8 @@ const {
   searchContent,
 } = require("../controllers/movie.controller");
 
+const { protect, optionalProtect } = require("../middlewares/authMiddleware");
+
 const router = express.Router();
 
 /**
@@ -14,8 +16,8 @@ const router = express.Router();
  */
 router.get("/trending/:mediaType/:timeWindow", getTrendingContent);
 router.get("/popular/:mediaType", getPopularContent);
-router.get("/details/:mediaType/:id", getContentDetails);
-router.get("/trailers/:mediaType/:id", getContentTrailers);
+router.get("/details/:mediaType/:id", optionalProtect, getContentDetails);
+router.get("/trailers/:mediaType/:id", optionalProtect, getContentTrailers);
 
 /**
  * Search Routes

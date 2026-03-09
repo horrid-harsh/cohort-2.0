@@ -45,4 +45,27 @@ const authorizeRoles = (...roles) => {
   };
 };
 
-module.exports = { protect, authorizeRoles };
+/**
+ * Middleware to optionally identify user - doesn't block if not logged in
+ * Useful for public routes that have extra features for logged-in users (like history)
+ */
+const optionalProtect = asyncHandler(async (req, res, next) => {
+  const token = req.cookies?.token;
+
+  if (token) {
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const user = await User.findById(decoded.id).select("-password");
+      if (user && !user.isBanned) {
+        req.user = user;
+      }
+    } catch (error) {
+      // Don't throw error, just continue as guest
+      console.error("Optional Auth Token Error:", error.message);
+    }
+  }
+
+  next();
+});
+
+module.exports = { protect, authorizeRoles, optionalProtect };
