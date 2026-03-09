@@ -52,9 +52,11 @@ app.get("/health", (req, res) => {
   res.status(200).json({ status: "OK", timestamp: new Date().toISOString() });
 });
 
-// Import and use routes (Will add these in later steps)
-// app.use("/api/v1/users", userRoutes);
-// app.use("/api/v1/movies", movieRoutes);
+// Import Routes
+const authRoutes = require("./routes/auth.routes");
+
+// Mount Routes
+app.use("/api/v1/auth", authRoutes);
 
 // Error Handling Middleware (must be after all routes)
 app.use(ErrorHandler);
