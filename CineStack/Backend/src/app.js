@@ -55,10 +55,12 @@ app.get("/health", (req, res) => {
 // Import Routes
 const authRoutes = require("./routes/auth.routes");
 const movieRoutes = require("./routes/movie.routes");
+const favoriteRoutes = require("./routes/favorite.routes");
 
 // Mount Routes
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/movies", movieRoutes);
+app.use("/api/v1/favorites", favoriteRoutes);
 
 // Error Handling Middleware (must be after all routes)
 app.use(ErrorHandler);
