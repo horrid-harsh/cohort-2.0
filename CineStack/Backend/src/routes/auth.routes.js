@@ -1,15 +1,45 @@
 const express = require("express");
+const rateLimit = require("express-rate-limit");
 const {
   registerUser,
   loginUser,
   logoutUser,
+  getMe,
 } = require("../controllers/auth.controller");
+const { protect } = require("../middlewares/authMiddleware");
 
 const router = express.Router();
 
+// Specialized Rate Limiters
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 10,
+  message: {
+    success: false,
+    message: "Too many login attempts, please try again after 15 minutes",
+  },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+const registerLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 5,
+  message: {
+    success: false,
+    message:
+      "Too many accounts created from this IP, please try again after 15 minutes",
+  },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
 // Public Routes
-router.post("/register", registerUser);
-router.post("/login", loginUser);
-router.get("/logout", logoutUser);
+router.post("/register", registerLimiter, registerUser);
+router.post("/login", loginLimiter, loginUser);
+router.post("/logout", logoutUser);
+
+// Private Routes
+router.get("/me", protect, getMe);
 
 module.exports = router;

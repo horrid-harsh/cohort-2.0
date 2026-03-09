@@ -82,8 +82,21 @@ const logoutUser = asyncHandler(async (req, res, next) => {
   });
 });
 
+/**
+ * @desc Get Current User Profile
+ * @route GET /api/v1/auth/me
+ * @access Private
+ */
+const getMe = asyncHandler(async (req, res) => {
+  res.status(200).json({
+    success: true,
+    user: req.user,
+  });
+});
+
 module.exports = {
   registerUser,
   loginUser,
   logoutUser,
+  getMe,
 };
