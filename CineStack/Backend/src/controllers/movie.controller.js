@@ -60,8 +60,9 @@ exports.getTrendingContent = asyncHandler(async (req, res) => {
     !validMediaTypes.includes(mediaType) ||
     !validTimeWindows.includes(timeWindow)
   ) {
-    res.status(400);
-    throw new Error("Invalid media type or time window");
+    const error = new Error("Invalid media type or time window");
+    error.statusCode = 400;
+    throw error;
   }
 
   const data = await fetchFromTMDB(`trending/${mediaType}/${timeWindow}`);
@@ -113,9 +114,7 @@ exports.getContentDetails = asyncHandler(async (req, res) => {
     title: data.title || data.name,
     posterPath: data.poster_path,
     type: mediaType,
-  }).catch(err =>
-    console.error("History save failed:", err.message)
-  );
+  }).catch((err) => console.error("History save failed:", err.message));
 
   res.status(200).json({
     success: true,
@@ -192,15 +191,17 @@ exports.searchContent = asyncHandler(async (req, res) => {
 
   const validSearchTypes = ["movie", "tv", "person", "multi"];
   if (!validSearchTypes.includes(mediaType)) {
-    res.status(400);
-    throw new Error(
+    const error = new Error(
       "Invalid search type. Use 'movie', 'tv', 'person', or 'multi'",
     );
+    error.statusCode = 400;
+    throw error;
   }
 
   if (!query || query.trim().length === 0) {
-    res.status(400);
-    throw new Error("Search query is required");
+    const error = new Error("Search query is required");
+    error.statusCode = 400;
+    throw error;
   }
 
   const data = await fetchFromTMDB(`search/${mediaType}`, {

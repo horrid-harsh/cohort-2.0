@@ -11,8 +11,9 @@ const registerUser = asyncHandler(async (req, res, next) => {
   let { name, email, password } = req.body;
 
   if (!name || !email || !password) {
-    res.status(400);
-    throw new Error("Name, email and password are required");
+    const error = new Error("Name, email and password are required");
+    error.statusCode = 400;
+    throw error;
   }
 
   name = name.trim();
@@ -22,8 +23,9 @@ const registerUser = asyncHandler(async (req, res, next) => {
   const userExists = await User.findOne({ email });
 
   if (userExists) {
-    res.status(409);
-    throw new Error("User already exists with this email");
+    const error = new Error("User already exists with this email");
+    error.statusCode = 409;
+    throw error;
   }
 
   // Create a new user (Hashing is handled by the model's pre-save hook)
@@ -46,8 +48,9 @@ const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    res.status(400);
-    throw new Error("Please provide email and password");
+    const error = new Error("Please provide email and password");
+    error.statusCode = 400;
+    throw error;
   }
 
   // Find user and explicitly select password
@@ -56,8 +59,9 @@ const loginUser = asyncHandler(async (req, res) => {
   );
 
   if (!user || !(await user.comparePassword(password))) {
-    res.status(401);
-    throw new Error("Invalid email or password");
+    const error = new Error("Invalid email or password");
+    error.statusCode = 401;
+    throw error;
   }
 
   sendToken(user, 200, res, "Logged in successfully");

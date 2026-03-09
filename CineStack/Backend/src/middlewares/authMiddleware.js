@@ -9,21 +9,26 @@ const protect = asyncHandler(async (req, res, next) => {
   const token = req.cookies?.token;
 
   if (!token) {
-    res.status(401);
-    throw new Error("Not authorized, please login to access this resource");
+    const error = new Error(
+      "Not authorized, please login to access this resource",
+    );
+    error.statusCode = 401;
+    throw error;
   }
 
   const decoded = jwt.verify(token, process.env.JWT_SECRET);
   req.user = await User.findById(decoded.id).select("-password");
 
   if (!req.user) {
-    res.status(401);
-    throw new Error("User associated with this token no longer exists");
+    const error = new Error("User associated with this token no longer exists");
+    error.statusCode = 401;
+    throw error;
   }
 
   if (req.user.isBanned) {
-    res.status(403);
-    throw new Error("Your account has been banned. Contact support.");
+    const error = new Error("Your account has been banned. Contact support.");
+    error.statusCode = 403;
+    throw error;
   }
 
   next();
@@ -36,10 +41,11 @@ const protect = asyncHandler(async (req, res, next) => {
 const authorizeRoles = (...roles) => {
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {
-      res.status(403);
-      throw new Error(
+      const error = new Error(
         `Role (${req.user.role}) is not allowed to access this resource`,
       );
+      error.statusCode = 403;
+      throw error;
     }
     next();
   };

@@ -5,8 +5,9 @@
 const validateMediaType = (mediaType, res) => {
   const validTypes = ["movie", "tv"];
   if (!validTypes.includes(mediaType)) {
-    res.status(400);
-    throw new Error("Invalid media type. Must be 'movie' or 'tv'");
+    const error = new Error("Invalid media type. Must be 'movie' or 'tv'");
+    error.statusCode = 400;
+    throw error;
   }
   return true;
 };
@@ -16,8 +17,9 @@ const validateMediaType = (mediaType, res) => {
  */
 const validateId = (id, res) => {
   if (isNaN(id)) {
-    res.status(400);
-    throw new Error("Invalid ID. It must be a numeric value");
+    const error = new Error("Invalid ID. It must be a numeric value");
+    error.statusCode = 400;
+    throw error;
   }
   return true;
 };

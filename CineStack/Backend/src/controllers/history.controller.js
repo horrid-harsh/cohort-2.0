@@ -7,12 +7,13 @@ const { validateMediaType } = require("../utils/validation");
  * @route POST /api/v1/history
  * @access Private
  */
-exports.saveToHistory = asyncHandler(async (req, res) => {  
+exports.saveToHistory = asyncHandler(async (req, res) => {
   const { tmdbId, title, posterPath, type } = req.body;
 
   if (!tmdbId || !title || !type) {
-    res.status(400);
-    throw new Error("TMDB ID, Title, and Media Type are required");
+    const error = new Error("TMDB ID, Title, and Media Type are required");
+    error.statusCode = 400;
+    throw error;
   }
 
   validateMediaType(type, res);
@@ -39,13 +40,16 @@ exports.saveToHistory = asyncHandler(async (req, res) => {
   }
 
   // Limit history to last 50 entries
-    const historyCount = await WatchHistory.countDocuments({ user: req.user._id });
+  const historyCount = await WatchHistory.countDocuments({
+    user: req.user._id,
+  });
 
-    if (historyCount > 50) {
-      const oldest = await WatchHistory.findOne({ user: req.user._id })
-        .sort({ watchedAt: 1 }); // oldest first
-      await WatchHistory.findByIdAndDelete(oldest._id);
-    }
+  if (historyCount > 50) {
+    const oldest = await WatchHistory.findOne({ user: req.user._id }).sort({
+      watchedAt: 1,
+    }); // oldest first
+    await WatchHistory.findByIdAndDelete(oldest._id);
+  }
 
   res.status(200).json({
     success: true,

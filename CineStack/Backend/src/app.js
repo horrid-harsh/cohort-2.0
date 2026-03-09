@@ -66,6 +66,13 @@ app.use("/api/v1/favorites", favoriteRoutes);
 app.use("/api/v1/history", historyRoutes);
 app.use("/api/v1/admin", adminRoutes);
 
+app.use("*name", (req, res) => {
+  res.status(404).json({
+    success: false,
+    message: `Route ${req.originalUrl} not found`,
+  });
+});
+
 // Error Handling Middleware (must be after all routes)
 app.use(ErrorHandler);
 

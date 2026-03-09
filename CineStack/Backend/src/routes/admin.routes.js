@@ -4,6 +4,9 @@ const {
   updateMovie,
   deleteMovie,
   getAllAdminMovies,
+  getAllUsers,
+  toggleBanUser,
+  deleteUser,
 } = require("../controllers/admin.controller");
 const { protect, authorizeRoles } = require("../middlewares/authMiddleware");
 
@@ -19,5 +22,12 @@ router.use(authorizeRoles("admin"));
 router.route("/movies").get(getAllAdminMovies).post(addMovie);
 
 router.route("/movies/:id").put(updateMovie).delete(deleteMovie);
+
+/**
+ * User Management Routes
+ */
+router.get("/users", getAllUsers);
+router.put("/users/:id/ban", toggleBanUser);
+router.delete("/users/:id", deleteUser);
 
 module.exports = router;

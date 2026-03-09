@@ -11,8 +11,9 @@ exports.addFavorite = asyncHandler(async (req, res) => {
   const { tmdbId, title, posterPath, type } = req.body;
 
   if (!tmdbId || !title || !type) {
-    res.status(400);
-    throw new Error("TMDB ID, Title, and Media Type are required");
+    const error = new Error("TMDB ID, Title, and Media Type are required");
+    error.statusCode = 400;
+    throw error;
   }
 
   validateMediaType(type, res);
@@ -24,8 +25,9 @@ exports.addFavorite = asyncHandler(async (req, res) => {
   });
 
   if (existingFavorite) {
-    res.status(409);
-    throw new Error("This item is already in your favorites");
+    const error = new Error("This item is already in your favorites");
+    error.statusCode = 409;
+    throw error;
   }
 
   const favorite = await Favorite.create({
@@ -40,13 +42,13 @@ exports.addFavorite = asyncHandler(async (req, res) => {
     success: true,
     message: `${title} added to favorites`,
     favorite: {
-        _id: favorite._id,
-        tmdbId: favorite.tmdbId,
-        title: favorite.title,
-        posterPath: favorite.posterPath,
-        type: favorite.type,
-        addedAt: favorite.addedAt,
-  },
+      _id: favorite._id,
+      tmdbId: favorite.tmdbId,
+      title: favorite.title,
+      posterPath: favorite.posterPath,
+      type: favorite.type,
+      addedAt: favorite.addedAt,
+    },
   });
 });
 
@@ -64,8 +66,9 @@ exports.removeFavorite = asyncHandler(async (req, res) => {
   });
 
   if (!favorite) {
-    res.status(404);
-    throw new Error("Favorite item not found");
+    const error = new Error("Favorite item not found");
+    error.statusCode = 404;
+    throw error;
   }
 
   res.status(200).json({
@@ -80,16 +83,15 @@ exports.removeFavorite = asyncHandler(async (req, res) => {
  * @access Private
  */
 exports.getFavorites = asyncHandler(async (req, res) => {
-    const { page = 1, limit = 20 } = req.query;
-    const skip = (page - 1) * limit;
+  const { page = 1, limit = 20 } = req.query;
+  const skip = (page - 1) * limit;
 
-  
-    const favorites = await Favorite.find({ user: req.user._id })
+  const favorites = await Favorite.find({ user: req.user._id })
     .sort({ addedAt: -1 })
     .skip(skip)
     .limit(limit);
 
-    const total = await Favorite.countDocuments({ user: req.user._id });
+  const total = await Favorite.countDocuments({ user: req.user._id });
 
   res.status(200).json({
     success: true,
