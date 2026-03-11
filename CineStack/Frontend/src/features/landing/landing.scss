@@ -1,0 +1,391 @@
+@use "sass:color";
+@use "../../shared/variables" as *;
+@use "../../shared/mixins" as *;
+
+.container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  width: 100%;
+}
+
+.landing-page {
+  @include flex(column, stretch, flex-start);
+  min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+// Navbar
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  padding: 1.5rem 0;
+  background: transparent;
+  backdrop-filter: blur(0px);
+  border-bottom: 1px solid transparent;
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease,
+    backdrop-filter 0.3s ease,
+    padding 0.3s ease;
+
+  // Smart Hide
+  &.nav-hidden {
+    transform: translateY(-100%);
+  }
+
+  // Scrolled State
+  &.nav-scrolled {
+    background: rgba(10, 10, 11, 0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 1rem 0; // Slightly compact when scrolled
+  }
+
+  .nav-container {
+    @include flex(row, center, space-between);
+  }
+
+  .logo {
+    font-size: 1.75rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: $text-main;
+    text-transform: uppercase;
+    flex-shrink: 0;
+
+    span {
+      color: $primary;
+    }
+  }
+
+  .nav-links {
+    @include flex(row, center, flex-start, 2.5rem);
+    flex-shrink: 0;
+
+    a {
+      color: $text-muted;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: $transition-smooth;
+
+      &:hover {
+        color: $text-main;
+      }
+    }
+
+    .btn-login {
+      background: $primary;
+      color: $accent;
+      padding: 0.6rem 1.75rem;
+      font-size: 0.9rem;
+      width: auto !important; // Overriding the global 100% for this header button
+      white-space: nowrap;
+    }
+  }
+}
+
+// Hero
+.hero {
+  @include flex(row, center, center);
+  height: 100vh;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+
+  .hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: -2;
+    transform: scale(1.05); // Slight scale for a cinematic feel
+    filter: brightness(0.6) saturate(1.1);
+  }
+
+  .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      to bottom,
+      rgba($bg-dark, 0.4) 0%,
+      rgba($bg-dark, 0.85) 60%,
+      $bg-dark 100%
+    );
+    z-index: -1;
+  }
+
+  .hero-content {
+    max-width: 850px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 10;
+    width: 100%;
+
+    h1 {
+      font-size: clamp(3rem, 12vw, 6.5rem);
+      font-weight: 900;
+      line-height: 0.95;
+      margin-bottom: 1.5rem;
+      letter-spacing: -3px;
+
+      span {
+        color: transparent;
+        -webkit-text-stroke: 2px $text-main;
+      }
+    }
+
+    p {
+      font-size: clamp(1rem, 4vw, 1.4rem);
+      color: $text-muted;
+      margin-bottom: 3rem;
+      max-width: 650px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.4;
+      font-weight: 400;
+    }
+  }
+
+  .hero-actions {
+    @include flex(row, stretch, center);
+    width: 100%;
+
+    .hero-cta {
+      padding: 1.1rem 3rem;
+      font-size: clamp(0.9rem, 3vw, 1.1rem);
+      max-width: fit-content;
+      width: auto !important;
+      white-space: nowrap;
+    }
+  }
+}
+
+// Buttons
+.btn {
+  padding: 0.85rem 2rem;
+  font-weight: 600;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 0.75rem;
+  transition: $transition-smooth;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  max-width: 100%;
+
+  &-primary {
+    background: $primary;
+    color: white;
+    box-shadow: 0 8px 25px rgba($primary, 0.4);
+
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba($primary, 0.5);
+      background: color.adjust($primary, $lightness: 5%);
+    }
+  }
+
+  &-outline {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: $text-main;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(8px);
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: rgba(255, 255, 255, 0.4);
+      transform: translateY(-3px);
+    }
+  }
+}
+
+// Features
+.features {
+  padding: 10rem 0;
+  background: $bg-dark; // Keep it uniform but depth came from sections
+  width: 100%;
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 6rem;
+
+    h2 {
+      font-size: clamp(2rem, 8vw, 3rem);
+      font-weight: 900;
+      margin-bottom: 1.25rem;
+      letter-spacing: -1px;
+    }
+
+    p {
+      color: $text-muted;
+      font-size: clamp(1rem, 3vw, 1.25rem);
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    gap: 2.5rem;
+    width: 100%;
+  }
+
+  .feature-card {
+    background: $bg-surface;
+    padding: min(10vw, 3rem) min(5vw, 2.5rem);
+    border-radius: 2rem;
+    border: 1px solid $glass-border;
+    transition: $transition-smooth;
+    text-align: left;
+    height: 100%;
+    min-width: 0;
+
+    &:hover {
+      transform: translateY(-12px);
+      background: color.adjust($bg-surface, $lightness: 3%);
+      border-color: rgba($primary, 0.4);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .icon-wrapper {
+      @include flex(row, center, center);
+      width: clamp(50px, 8vw, 60px);
+      height: clamp(50px, 8vw, 60px);
+      background: rgba($primary, 0.15);
+      border-radius: 16px;
+      color: $primary;
+      margin-bottom: 2rem;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h3 {
+      font-size: clamp(1.3rem, 4vw, 1.6rem);
+      margin-bottom: 1.25rem;
+      font-weight: 800;
+    }
+
+    p {
+      color: $text-muted;
+      line-height: 1.7;
+      font-size: 1.05rem;
+    }
+  }
+}
+
+.footer {
+  padding: 5rem 0;
+  text-align: center;
+  border-top: 1px solid $glass-border;
+  color: $text-muted;
+  background: $bg-dark;
+  width: 100%;
+
+  p {
+    font-size: 0.9rem;
+    opacity: 0.8;
+  }
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .hero .hero-content h1 {
+    font-size: clamp(2.5rem, 10vw, 3.5rem);
+    letter-spacing: -1px;
+  }
+
+  .nav-links {
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 1.5rem;
+  }
+
+  .features {
+    padding: 6rem 0;
+  }
+
+  .section-header {
+    margin-bottom: 4rem;
+  }
+}
+
+@media (max-width: 426px) {
+  .navbar {
+    padding: 0.8rem 0;
+
+    .logo {
+      font-size: 1.4rem;
+    }
+
+    .nav-links {
+      .btn-login {
+        padding: 0.4rem 1.2rem;
+        font-size: 0.8rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 345px) {
+  .container {
+    padding: 0 1rem;
+  }
+
+  .hero .hero-content h1 {
+    font-size: 2.2rem;
+    letter-spacing: -0.5px;
+  }
+
+  .hero .hero-content p {
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+  }
+
+  .hero .hero-actions .hero-cta {
+    padding: 0.9rem 2rem;
+    font-size: 0.9rem;
+  }
+
+  .features .section-header h2 {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 320px) {
+  .navbar {
+    padding: 0.6rem 0;
+
+    .nav-container {
+      @include flex(column, center, center, 0.4rem);
+    }
+
+    .logo {
+      font-size: 1.1rem;
+    }
+
+    .nav-links {
+      gap: 0;
+    }
+  }
+}
