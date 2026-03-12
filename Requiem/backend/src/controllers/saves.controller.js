@@ -4,10 +4,11 @@ import { CollectionModel } from "../models/collection.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
+import { scrapeUrl } from "../services/scraper.service.js";
 
 // POST /api/v1/saves
 export const createSave = asyncHandler(async (req, res) => {
-  const { url, title, description, thumbnail, type, note } = req.body;
+  const { url, note } = req.body;
 
   if (!url) throw new ApiError(400, "URL is required");
 
@@ -15,14 +16,13 @@ export const createSave = asyncHandler(async (req, res) => {
   const existing = await SaveModel.findOne({ url, user: req.user._id });
   if (existing) throw new ApiError(409, "You've already saved this URL");
 
+  const metadata = await scrapeUrl(url);
+
   const save = await SaveModel.create({
     user: req.user._id,
     url,
-    type: type || "link",
-    title: title || "",
-    description: description || "",
-    thumbnail: thumbnail || "",
     note: note || "",
+    ...metadata,
   });
 
   return res.status(201).json(new ApiResponse(201, save, "Saved successfully"));
