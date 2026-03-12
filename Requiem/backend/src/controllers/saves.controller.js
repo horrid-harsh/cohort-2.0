@@ -117,7 +117,7 @@ export const updateSave = asyncHandler(async (req, res) => {
   const save = await SaveModel.findOneAndUpdate(
     { _id: req.params.id, user: req.user._id },
     { $set: updates },
-    { new: true, runValidators: true }
+    { returnDocument: "after", runValidators: true }
   );
 
   if (!save) throw new ApiError(404, "Save not found");
