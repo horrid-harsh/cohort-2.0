@@ -1,0 +1,7 @@
+@use '../styles/abstracts/variables' as *;
+
+.page {
+  padding: 28px 32px;
+  color: $color-text-secondary;
+  font-size: $text-sm;
+}

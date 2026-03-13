@@ -1,0 +1,205 @@
+@use "../../styles/abstracts/variables" as *;
+@use "../../styles/abstracts/mixins" as *;
+
+.sidebar {
+  width: $sidebar-width;
+  min-width: $sidebar-width;
+  height: 100vh;
+  background: $color-bg-secondary;
+  border-right: 0.5px solid $color-border;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 20px 12px;
+  gap: 4px;
+}
+
+.logo {
+  font-size: 16px;
+  font-weight: 500;
+  color: $color-text-primary;
+  padding: 0 8px 16px;
+  border-bottom: 0.5px solid $color-border;
+  margin-bottom: 8px;
+  letter-spacing: 0.02em;
+
+  span {
+    color: $color-accent;
+  }
+}
+
+// ─── Nav ──────────────────────────────────────────
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 8px;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  border-radius: $border-radius-md;
+  font-size: $text-sm;
+  color: $color-text-secondary;
+  text-decoration: none;
+  transition:
+    background 0.1s,
+    color 0.1s;
+
+  &:hover {
+    background: $color-bg-hover;
+    color: $color-text-primary;
+  }
+
+  &.active {
+    background: $color-bg-tertiary;
+    color: $color-text-primary;
+    border: 0.5px solid $color-border;
+  }
+}
+
+.navIcon {
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.navLabel {
+  flex: 1;
+  @include truncate;
+}
+
+// ─── Sections ─────────────────────────────────────
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 8px;
+  overflow: hidden;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 10px 4px;
+  font-size: $text-xs;
+  color: $color-text-muted;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 500;
+}
+
+.empty {
+  font-size: $text-xs;
+  color: $color-text-muted;
+  padding: 4px 10px;
+  font-style: italic;
+}
+
+.count {
+  font-size: $text-xs;
+  color: $color-text-muted;
+  margin-left: auto;
+}
+
+// ─── Tags ─────────────────────────────────────────
+
+.tagsList {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow-y: auto;
+  max-height: 140px;
+  @include custom-scrollbar;
+}
+
+.tagItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: $border-radius-md;
+  font-size: $text-sm;
+  color: $color-text-secondary;
+  text-decoration: none;
+  transition:
+    background 0.1s,
+    color 0.1s;
+
+  &:hover {
+    background: $color-bg-hover;
+    color: $color-text-primary;
+  }
+
+  &.active {
+    background: $color-bg-tertiary;
+    color: $color-text-primary;
+    border: 0.5px solid $color-border;
+  }
+}
+
+.tagDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+// ─── Bottom ───────────────────────────────────────
+
+.bottom {
+  margin-top: auto;
+  border-top: 0.5px solid $color-border;
+  padding-top: 12px;
+}
+
+.userRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 6px;
+}
+
+.avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: $color-accent-subtle;
+  border: 0.5px solid rgba(124, 106, 247, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: $text-xs;
+  font-weight: 500;
+  color: $color-accent;
+  flex-shrink: 0;
+}
+
+.userName {
+  font-size: $text-sm;
+  color: $color-text-primary;
+  font-weight: 500;
+  flex: 1;
+  @include truncate;
+}
+
+.logoutBtn {
+  color: $color-text-muted;
+  display: flex;
+  align-items: center;
+  padding: 4px;
+  border-radius: $border-radius-sm;
+  transition:
+    color 0.1s,
+    background 0.1s;
+
+  &:hover {
+    color: $color-danger;
+    background: rgba(248, 113, 113, 0.08);
+  }
+}

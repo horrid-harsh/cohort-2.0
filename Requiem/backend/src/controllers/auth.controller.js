@@ -47,10 +47,10 @@ export const login = asyncHandler(async (req, res) => {
   if (!email || !password) throw new ApiError(400, "Email and password required");
 
   const user = await UserModel.findOne({ email }).select("+password");
-  if (!user) throw new ApiError(404, "User not found");
+  if (!user) throw new ApiError(400, "Invalid credentials");
 
   const isPasswordValid = await user.isPasswordCorrect(password);
-  if (!isPasswordValid) throw new ApiError(401, "Invalid credentials");
+  if (!isPasswordValid) throw new ApiError(400, "Invalid credentials");
 
   const { accessToken, refreshToken } = await generateTokens(user._id);
 
