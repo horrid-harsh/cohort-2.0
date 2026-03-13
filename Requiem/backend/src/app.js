@@ -10,6 +10,7 @@ import { errorHandler } from "./middlewares/error.middleware.js";
 import authRoutes from "./routes/auth.routes.js";
 import savesRoutes from "./routes/saves.routes.js";
 import collectionsRoutes from "./routes/collections.routes.js";
+import tagsRoutes from "./routes/tags.routes.js";
 
 const app = express();
 
@@ -49,6 +50,7 @@ app.get("/health", (req, res) => {
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/saves", savesRoutes);
 app.use("/api/v1/collections", collectionsRoutes);
+app.use("/api/v1/tags", tagsRoutes);
 
 // 404 handler
 app.use((req, res) => {
