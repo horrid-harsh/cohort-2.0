@@ -1,0 +1,93 @@
+@use '../../styles/abstracts/variables' as *;
+@use '../../styles/abstracts/mixins' as *;
+
+.layout {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  background: $color-bg-primary;
+}
+
+.left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 40px 48px;
+  overflow-y: auto;
+  @include custom-scrollbar;
+}
+
+.logo {
+  font-size: 18px;
+  font-weight: 500;
+  color: $color-text-primary;
+  letter-spacing: 0.02em;
+  margin-bottom: auto;
+
+  span {
+    color: $color-accent;
+  }
+}
+
+.formWrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 400px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 40px 0;
+}
+
+// ─── Right panel ──────────────────────────────────
+
+.right {
+  width: 480px;
+  min-width: 480px;
+  position: relative;
+  overflow: hidden;
+  background: #111111;
+  border-left: 0.5px solid $color-border;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+
+// Dark scrim at bottom so text is readable
+.scrim {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 55%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.6) 50%, transparent 100%);
+}
+
+.textOverlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 40px 36px;
+
+  h2 {
+    font-size: 24px;
+    font-weight: 500;
+    color: $color-text-primary;
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+
+  p {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.5);
+    line-height: 1.7;
+    max-width: 320px;
+  }
+}

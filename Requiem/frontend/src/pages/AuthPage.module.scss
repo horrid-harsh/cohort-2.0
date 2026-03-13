@@ -1,0 +1,108 @@
+@use '../styles/abstracts/variables' as *;
+@use '../styles/abstracts/mixins' as *;
+
+.heading {
+  margin-bottom: 32px;
+
+  h1 {
+    font-size: $text-xl;
+    font-weight: 500;
+    color: $color-text-primary;
+    margin-bottom: 6px;
+  }
+
+  p {
+    font-size: $text-sm;
+    color: $color-text-secondary;
+  }
+}
+
+.error {
+  background: rgba(248, 113, 113, 0.08);
+  border: 0.5px solid rgba(248, 113, 113, 0.25);
+  border-radius: $border-radius-md;
+  padding: 10px 14px;
+  font-size: $text-sm;
+  color: $color-danger;
+  margin-bottom: 20px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  label {
+    font-size: $text-xs;
+    color: $color-text-secondary;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+
+  input {
+    background: $color-bg-secondary;
+    border: 0.5px solid $color-border;
+    border-radius: $border-radius-md;
+    padding: 10px 14px;
+    font-size: $text-sm;
+    color: $color-text-primary;
+    transition: border-color 0.15s ease;
+
+    &::placeholder {
+      color: $color-text-muted;
+    }
+
+    &:hover {
+      border-color: $color-border-hover;
+    }
+
+    &:focus {
+      border-color: $color-accent;
+      outline: none;
+    }
+  }
+}
+
+.btn {
+  margin-top: 8px;
+  width: 100%;
+  background: $color-accent;
+  color: #ffffff;
+  border: none;
+  border-radius: $border-radius-md;
+  padding: 11px;
+  font-size: $text-sm;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s ease, opacity 0.15s ease;
+
+  &:hover {
+    background: $color-accent-hover;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.switchText {
+  margin-top: 20px;
+  font-size: $text-sm;
+  color: $color-text-secondary;
+  text-align: center;
+
+  a {
+    color: $color-accent;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
