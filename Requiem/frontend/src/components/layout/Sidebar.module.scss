@@ -5,7 +5,7 @@
   width: $sidebar-width;
   min-width: $sidebar-width;
   height: 100vh;
-  background: $color-bg-secondary;
+  background: $color-bg-primary;
   border-right: 0.5px solid $color-border;
   display: flex;
   flex-direction: column;
@@ -15,16 +15,21 @@
 }
 
 .logo {
-  font-size: 16px;
-  font-weight: 500;
+  display: block;
+  font-family: 'Neue Machina', $font-sans;
+  font-size: 15px;
+  font-weight: 800;
+  text-transform: uppercase;
   color: $color-text-primary;
-  padding: 0 8px 16px;
+  letter-spacing: 0.12em;
+  padding: 8px 10px 20px;
   border-bottom: 0.5px solid $color-border;
-  margin-bottom: 8px;
-  letter-spacing: 0.02em;
+  margin-bottom: 12px;
+  text-decoration: none;
 
   span {
     color: $color-accent;
+    font-weight: 800;
   }
 }
 

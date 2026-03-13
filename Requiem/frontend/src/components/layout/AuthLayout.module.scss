@@ -2,182 +2,65 @@
 @use '../../styles/abstracts/mixins' as *;
 
 .layout {
-  display: flex;
-  height: 100dvh;
-  background: $color-bg-primary;
-  overflow: clip; // More strict than hidden for modern browsers
   position: relative;
+  min-height: 100dvh;
+  width: 100%;
+  background-color: #000;
+  background-image: url('../../assets/background-auth.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  overflow-y: auto;
+  @include custom-scrollbar;
 }
 
-.left {
-  flex: 1;
+// Dark overlay to ensure contrast
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.4) 100%);
+  pointer-events: none;
+}
+
+.container {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 440px;
   display: flex;
   flex-direction: column;
-  padding: 40px 48px;
-  position: relative;
-  overflow: hidden;
-  z-index: 10;
-  @include custom-scrollbar;
-
-  // Subtle grid pattern
-  background-image: 
-    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-  background-size: 40px 40px;
-
-  // Ambient mesh glows
-  &::before {
-    content: '';
-    position: absolute;
-    top: -20%;
-    left: -10%;
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba($color-accent, 0.12) 0%, transparent 70%);
-    filter: blur(100px);
-    pointer-events: none;
-    z-index: -1;
-  }
-
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: -15%;
-    right: -10%;
-    width: 500px;
-    height: 500px;
-    background: radial-gradient(circle, rgba($color-accent, 0.08) 0%, transparent 70%);
-    filter: blur(120px);
-    pointer-events: none;
-    z-index: -1;
-  }
+  align-items: center;
 }
 
-.logo {
+.header {
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.brand {
   font-family: 'Neue Machina', $font-sans;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 800;
   text-transform: uppercase;
   color: $color-text-primary;
-  letter-spacing: 0.12em;
-  margin-bottom: auto;
+  letter-spacing: 0.15em;
   user-select: none;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 2px;
-  transition: opacity 0.2s ease;
-
-  &:hover {
-    opacity: 0.8;
-  }
+  
+  // Subtle glow like the image
+  text-shadow: 0 0 20px rgba($color-accent, 0.3);
 
   span {
     color: $color-accent;
-    font-weight: 800;
   }
 }
 
-.formWrap {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  max-width: 420px;
+.content {
   width: 100%;
-  margin: 0 auto;
-  padding: 40px 0;
-  position: relative;
-  
-  // Add a very subtle glass effect container look if desired, 
-  // but keeping it clean is usually better for forms
-}
-
-// ─── Decorative Orbs ──────────────────────────────
-// These can be added to the JSX if we want more control
-
-.orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(100px);
-  pointer-events: none;
-  opacity: 0.4;
-  z-index: 1;
-}
-
-// ─── Right panel ──────────────────────────────────
-
-.right {
-  width: 500px;
-  min-width: 500px;
-  position: relative;
-  overflow: hidden;
-  background: $color-bg-primary;
-  
-  // Blend transition with the left section
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    width: 160px; // Soft blend width
-    background: linear-gradient(to right, $color-bg-primary 0%, transparent 100%);
-    z-index: 5;
-    pointer-events: none;
-  }
-
-  @include mobile {
-    display: none;
-  }
-}
-
-.image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  display: block;
-  opacity: 0.8;
-  filter: saturate(0.8) contrast(1.1);
-}
-
-.scrim {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 60%;
-  background: linear-gradient(
-    to top, 
-    #000 0%, 
-    rgba(0, 0, 0, 0.8) 40%, 
-    transparent 100%
-  );
-}
-
-.textOverlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 48px;
-
-  h2 {
-    font-family: 'Neue Machina', $font-sans;
-    font-size: 32px;
-    font-weight: 800;
-    color: $color-text-primary;
-    margin-bottom: 12px;
-    line-height: 1.1;
-    letter-spacing: -0.03em;
-  }
-
-  p {
-    font-size: 15px;
-    color: rgba(255, 255, 255, 0.5);
-    line-height: 1.6;
-    max-width: 340px;
-    font-weight: 300;
-  }
 }

@@ -20,8 +20,8 @@ const RegisterPage = () => {
   return (
     <AuthLayout>
       <div className={styles.heading}>
-        <h1>Create account</h1>
-        <p>Start building your second brain</p>
+        <h1>Create your account</h1>
+        <p>Already have an account? <Link to="/login">Log in</Link></p>
       </div>
 
       {error && (
@@ -65,7 +65,7 @@ const RegisterPage = () => {
             id="password"
             name="password"
             type="password"
-            placeholder="Min. 6 characters"
+            placeholder="••••••••••••"
             value={form.password}
             onChange={handleChange}
             required
@@ -74,13 +74,9 @@ const RegisterPage = () => {
         </div>
 
         <button type="submit" className={styles.btn} disabled={isPending}>
-          {isPending ? "Creating account..." : "Create account"}
+          {isPending ? "Creating account..." : "Sign Up"}
         </button>
       </form>
-
-      <p className={styles.switchText}>
-        Already have an account? <Link to="/login">Sign in</Link>
-      </p>
     </AuthLayout>
   );
 };

@@ -20,8 +20,8 @@ const LoginPage = () => {
   return (
     <AuthLayout>
       <div className={styles.heading}>
-        <h1>Welcome back</h1>
-        <p>Sign in to your second brain</p>
+        <h1>Log in to Requiem</h1>
+        <p>Don't have an account? <Link to="/register">Sign up</Link></p>
       </div>
 
       {error && (
@@ -37,7 +37,7 @@ const LoginPage = () => {
             id="email"
             name="email"
             type="email"
-            placeholder="you@example.com"
+            placeholder="alan.turing@example.com"
             value={form.email}
             onChange={handleChange}
             required
@@ -51,7 +51,7 @@ const LoginPage = () => {
             id="password"
             name="password"
             type="password"
-            placeholder="••••••••"
+            placeholder="••••••••••••"
             value={form.password}
             onChange={handleChange}
             required
@@ -60,13 +60,9 @@ const LoginPage = () => {
         </div>
 
         <button type="submit" className={styles.btn} disabled={isPending}>
-          {isPending ? "Signing in..." : "Sign in"}
+          {isPending ? "Logging in..." : "Log In"}
         </button>
       </form>
-
-      <p className={styles.switchText}>
-        Don't have an account? <Link to="/register">Create one</Link>
-      </p>
     </AuthLayout>
   );
 };
