@@ -1,0 +1,130 @@
+@use '../../../styles/abstracts/variables' as *;
+@use '../../../styles/abstracts/mixins' as *;
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  backdrop-filter: blur(2px);
+}
+
+.modal {
+  background: $color-bg-secondary;
+  border: 0.5px solid $color-border-hover;
+  border-radius: $border-radius-xl;
+  padding: 28px;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 16px;
+}
+
+.header {
+  @include flex-between;
+  margin-bottom: 24px;
+
+  h2 {
+    font-size: $text-lg;
+    font-weight: 500;
+    color: $color-text-primary;
+  }
+}
+
+.closeBtn {
+  color: $color-text-muted;
+  display: flex;
+  padding: 4px;
+  border-radius: $border-radius-sm;
+  transition: color 0.1s, background 0.1s;
+
+  &:hover {
+    color: $color-text-primary;
+    background: $color-bg-hover;
+  }
+}
+
+.error {
+  background: rgba(248, 113, 113, 0.08);
+  border: 0.5px solid rgba(248, 113, 113, 0.25);
+  border-radius: $border-radius-md;
+  padding: 10px 14px;
+  font-size: $text-sm;
+  color: $color-danger;
+  margin-bottom: 16px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  label {
+    font-size: $text-xs;
+    color: $color-text-secondary;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+
+  input, textarea {
+    background: $color-bg-tertiary;
+    border: 0.5px solid $color-border;
+    border-radius: $border-radius-md;
+    padding: 10px 14px;
+    font-size: $text-sm;
+    color: $color-text-primary;
+    transition: border-color 0.15s;
+    resize: none;
+
+    &::placeholder { color: $color-text-muted; }
+    &:focus { border-color: $color-accent; outline: none; }
+  }
+}
+
+.optional {
+  color: $color-text-muted;
+  font-weight: 400;
+}
+
+.actions {
+  @include flex-gap(8px);
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.cancelBtn {
+  padding: 8px 16px;
+  border-radius: $border-radius-md;
+  font-size: $text-sm;
+  color: $color-text-secondary;
+  border: 0.5px solid $color-border;
+  background: transparent;
+  transition: background 0.1s, color 0.1s;
+
+  &:hover {
+    background: $color-bg-hover;
+    color: $color-text-primary;
+  }
+}
+
+.submitBtn {
+  padding: 8px 20px;
+  border-radius: $border-radius-md;
+  font-size: $text-sm;
+  font-weight: 500;
+  color: #fff;
+  background: $color-accent;
+  border: none;
+  transition: background 0.15s;
+
+  &:hover { background: $color-accent-hover; }
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
+}

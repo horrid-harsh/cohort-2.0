@@ -1,0 +1,67 @@
+@use '../../styles/abstracts/variables' as *;
+@use '../../styles/abstracts/mixins' as *;
+
+.topbar {
+  @include flex-between;
+  padding: 0 32px;
+  height: $topbar-height;
+  border-bottom: 0.5px solid $color-border;
+  background: $color-bg-primary;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  gap: 16px;
+}
+
+.searchWrap {
+  @include flex-gap(10px);
+  flex: 1;
+  max-width: 480px;
+  background: $color-bg-secondary;
+  border: 0.5px solid $color-border;
+  border-radius: $border-radius-md;
+  padding: 0 14px;
+  height: 36px;
+  transition: border-color 0.15s;
+
+  &:focus-within {
+    border-color: $color-border-hover;
+  }
+}
+
+.searchIcon {
+  color: $color-text-muted;
+  flex-shrink: 0;
+}
+
+.searchInput {
+  flex: 1;
+  font-size: $text-sm;
+  color: $color-text-primary;
+  background: none;
+  border: none;
+  outline: none;
+
+  &::placeholder {
+    color: $color-text-muted;
+  }
+}
+
+.saveBtn {
+  @include flex-gap(6px);
+  background: $color-accent;
+  color: #ffffff;
+  border: none;
+  border-radius: $border-radius-md;
+  padding: 0 16px;
+  height: 36px;
+  font-size: $text-sm;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+  white-space: nowrap;
+
+  &:hover {
+    background: $color-accent-hover;
+  }
+}
