@@ -22,14 +22,23 @@
 .menu {
   position: absolute;
   bottom: calc(100% + 6px);
-  left: 0;
-  right: auto;
   background: $color-bg-tertiary;
   border: 0.5px solid $color-border-hover;
   border-radius: $border-radius-lg;
   padding: 4px;
-  min-width: 180px;
-  z-index: 100;
+  min-width: 190px;
+  z-index: 50;
+}
+
+// ─── Item wrapper (handles hover zone for submenu) ─
+.itemWrap {
+  position: relative;
+  border-radius: $border-radius-md;
+
+  &.activeItem > .item {
+    background: $color-bg-hover;
+    color: $color-text-primary;
+  }
 }
 
 .item {
@@ -43,15 +52,14 @@
   color: $color-text-secondary;
   text-align: left;
   transition: background 0.1s, color 0.1s;
+  cursor: pointer;
 
   &:hover {
     background: $color-bg-hover;
     color: $color-text-primary;
   }
 
-  &.selected {
-    color: $color-accent;
-  }
+  &.selected { color: $color-accent; }
 
   &.danger {
     color: $color-danger;
@@ -59,10 +67,7 @@
   }
 }
 
-.chevron {
-  margin-left: auto;
-  color: $color-text-muted;
-}
+.chevron { margin-left: auto; color: $color-text-muted; }
 
 .divider {
   height: 0.5px;
@@ -70,28 +75,35 @@
   margin: 4px 0;
 }
 
-.subHeader {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 10px 8px;
-  font-size: $text-xs;
-  color: $color-text-muted;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  border-bottom: 0.5px solid $color-border;
-  margin-bottom: 4px;
+// ─── Submenu ──────────────────────────────────────
+
+.submenuWrap {
+  position: absolute;
+  top: 0;
+  background: $color-bg-tertiary;
+  border: 0.5px solid $color-border-hover;
+  border-radius: $border-radius-lg;
+  padding: 4px;
+  min-width: 170px;
+  max-height: 220px;
+  overflow-y: auto;
+  z-index: 60;
+  @include custom-scrollbar;
+
+  &.submenuRight { 
+    left: calc(100% - 2px);
+    padding-left: 6px; 
+  }
+  &.submenuLeft { 
+    right: calc(100% - 2px);
+    padding-right: 6px; 
+  }
 }
 
-.backBtn {
-  @include flex-center;
-  color: $color-text-muted;
-  padding: 2px;
-  border-radius: $border-radius-sm;
-  transition: color 0.1s;
-
-  &:hover { color: $color-text-primary; }
+.submenu {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
 }
 
 .empty {
