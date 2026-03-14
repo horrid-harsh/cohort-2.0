@@ -1,0 +1,81 @@
+@use '../styles/abstracts/variables' as *;
+@use '../styles/abstracts/mixins' as *;
+
+.page {
+  padding: 28px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.loading {
+  font-size: $text-sm;
+  color: $color-text-muted;
+  padding: 40px 0;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.back {
+  @include flex-gap(6px);
+  font-size: $text-sm;
+  color: $color-text-muted;
+  width: fit-content;
+  padding: 4px 0;
+  transition: color 0.15s;
+
+  &:hover { color: $color-text-primary; }
+}
+
+.meta {
+  @include flex-gap(14px);
+
+  h1 {
+    font-size: $text-xl;
+    font-weight: 500;
+    color: $color-text-primary;
+  }
+
+  p {
+    font-size: $text-sm;
+    color: $color-text-muted;
+    margin-top: 3px;
+  }
+}
+
+.emoji {
+  font-size: 32px;
+  line-height: 1;
+}
+
+.count {
+  font-size: $text-sm;
+  color: $color-text-muted;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+.empty {
+  @include flex-col(6px);
+  padding: 80px 0;
+  text-align: center;
+
+  p {
+    font-size: $text-md;
+    font-weight: 500;
+    color: $color-text-primary;
+  }
+
+  span {
+    font-size: $text-sm;
+    color: $color-text-muted;
+  }
+}

@@ -6,6 +6,7 @@ import RegisterPage from "../pages/RegisterPage";
 import DashboardPage from "../pages/DashboardPage";
 import FavoritesPage from "../pages/FavoritesPage";
 import ArchivePage from "../pages/ArchivePage";
+import CollectionPage from "../pages/CollectionPage";
 
 const ProtectedRoute = () => {
   const { user } = useAuthStore();
@@ -31,6 +32,7 @@ const router = createBrowserRouter([
       { path: "/", element: <DashboardPage /> },
       { path: "/favorites", element: <FavoritesPage /> },
       { path: "/archive", element: <ArchivePage /> },
+      { path: "/collections/:id", element: <CollectionPage /> },
     ],
   },
   { path: "*", element: <Navigate to="/" replace /> },
