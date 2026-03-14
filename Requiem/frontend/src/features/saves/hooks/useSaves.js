@@ -11,8 +11,7 @@ export const useSaves = (params = {}) => {
     queryKey: ["saves", params.type, params.search, params.isFavorite, params.isArchived],
     queryFn: () => getSavesApi(params),
     select: (data) => data.data,
-    staleTime: 1000 * 60 * 2, // ← keep data fresh 2 mins, no background refetch
-    placeholderData: (prev) => prev, // ← keep showing OLD data while new data loads
+    staleTime: 1000 * 10, // ← keep data fresh 2 mins, no background refetch
   });
 };
 
@@ -22,6 +21,8 @@ export const useCreateSave = () => {
     mutationFn: createSaveApi,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["saves"] });
+      queryClient.invalidateQueries({ queryKey: ["saves-by-tag"] });
+      queryClient.invalidateQueries({ queryKey: ["collection"] });
     },
   });
 };
@@ -32,6 +33,8 @@ export const useUpdateSave = () => {
     mutationFn: updateSaveApi,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["saves"] });
+      queryClient.invalidateQueries({ queryKey: ["saves-by-tag"] });
+      queryClient.invalidateQueries({ queryKey: ["collection"] });
     },
   });
 };
@@ -42,6 +45,8 @@ export const useDeleteSave = () => {
     mutationFn: deleteSaveApi,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["saves"] });
+      queryClient.invalidateQueries({ queryKey: ["saves-by-tag"] });
+      queryClient.invalidateQueries({ queryKey: ["collection"] });
     },
   });
 };

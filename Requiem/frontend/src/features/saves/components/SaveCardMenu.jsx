@@ -58,6 +58,7 @@ const SaveCardMenu = ({ save }) => {
     }
     queryClient.invalidateQueries({ queryKey: ["saves"] });
     queryClient.invalidateQueries({ queryKey: ["collections"] });
+    queryClient.invalidateQueries({ queryKey: ["collection"] });
   };
 
   const handleToggleTag = async (tagId) => {
@@ -68,6 +69,8 @@ const SaveCardMenu = ({ save }) => {
       await axiosInstance.patch(`/tags/${tagId}/saves/${save._id}`);
     }
     queryClient.invalidateQueries({ queryKey: ["saves"] });
+    queryClient.invalidateQueries({ queryKey: ["tags"] });
+    queryClient.invalidateQueries({ queryKey: ["saves-by-tag"] });
   };
 
   const handleArchive = () => {
