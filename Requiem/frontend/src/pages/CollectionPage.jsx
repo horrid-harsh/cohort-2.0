@@ -5,6 +5,8 @@ import axiosInstance from "../utils/axios.instance";
 import PageWrapper from "../components/layout/PageWrapper";
 import Topbar from "../components/layout/Topbar";
 import SaveCard from "../features/saves/components/SaveCard";
+import ConfirmDialog from "../components/ui/ConfirmDialog";
+import { useDeleteCollection } from "../features/collections/hooks/useCollections";
 import styles from "./CollectionPage.module.scss";
 import useDebounce from "../hooks/useDebounce";
 
@@ -12,6 +14,8 @@ const CollectionPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
   const debouncedSearch = useDebounce(search);
 
   const { data, isLoading } = useQuery({
@@ -22,6 +26,8 @@ const CollectionPage = () => {
     },
   });
 
+  const { mutate: deleteCollection, isPending } = useDeleteCollection();
+
   const collection = data?.collection;
   const saves = data?.saves || [];
 
@@ -31,6 +37,12 @@ const CollectionPage = () => {
         s.note?.toLowerCase().includes(debouncedSearch.toLowerCase())
       )
     : saves;
+
+  const handleDelete = () => {
+    deleteCollection(id, {
+      onSuccess: () => navigate("/"),
+    });
+  };
 
   return (
     <PageWrapper>
@@ -47,16 +59,50 @@ const CollectionPage = () => {
                 </svg>
                 Back
               </button>
-              <div className={styles.meta}>
-                <span className={styles.emoji}>{collection?.emoji}</span>
-                <div>
-                  <h1>{collection?.name}</h1>
-                  {collection?.description && <p>{collection.description}</p>}
+
+              <div className={styles.metaRow}>
+                <div className={styles.meta}>
+                  <span className={styles.emoji}>{collection?.emoji}</span>
+                  <div>
+                    <h1>{collection?.name}</h1>
+                    {collection?.description && <p>{collection.description}</p>}
+                  </div>
+                </div>
+
+                <div className={styles.headerActions}>
+                  <span className={styles.count}>
+                    {filtered.length} {filtered.length === 1 ? "save" : "saves"}
+                  </span>
+
+                  <div className={styles.menuWrap}>
+                    <button
+                      className={styles.menuBtn}
+                      onClick={() => setMenuOpen((p) => !p)}
+                    >
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                        <circle cx="5" cy="12" r="2" />
+                        <circle cx="12" cy="12" r="2" />
+                        <circle cx="19" cy="12" r="2" />
+                      </svg>
+                    </button>
+
+                    {menuOpen && (
+                      <div className={styles.menu}>
+                        <button
+                          className={`${styles.menuItem} ${styles.danger}`}
+                          onClick={() => { setMenuOpen(false); setShowConfirm(true); }}
+                        >
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <polyline points="3 6 5 6 21 6" />
+                            <path d="M19 6l-1 14H6L5 6M10 11v6M14 11v6M9 6V4h6v2" />
+                          </svg>
+                          Delete collection
+                        </button>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
-              <span className={styles.count}>
-                {filtered.length} {filtered.length === 1 ? "save" : "saves"}
-              </span>
             </div>
 
             {filtered.length === 0 ? (
@@ -74,6 +120,16 @@ const CollectionPage = () => {
           </>
         )}
       </div>
+
+      <ConfirmDialog
+        isOpen={showConfirm}
+        title="Delete collection"
+        message={`Delete "${collection?.name}"? Saves inside will not be deleted.`}
+        confirmLabel={isPending ? "Deleting..." : "Delete"}
+        isDanger={true}
+        onConfirm={handleDelete}
+        onCancel={() => setShowConfirm(false)}
+      />
     </PageWrapper>
   );
 };

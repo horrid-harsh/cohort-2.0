@@ -64,7 +64,10 @@
 }
 
 .empty {
-  @include flex-col(6px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
   padding: 80px 0;
   text-align: center;
 
@@ -78,4 +81,64 @@
     font-size: $text-sm;
     color: $color-text-muted;
   }
+}
+
+.metaRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.menuWrap { position: relative; }
+
+.menuBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  color: #555;
+  transition: color 0.1s, background 0.1s;
+
+  &:hover {
+    color: #f0f0f0;
+    background: #1e1e1e;
+  }
+}
+
+.menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  background: #111111;
+  border: 0.5px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  padding: 4px;
+  min-width: 160px;
+  z-index: 50;
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 7px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #888;
+  text-align: left;
+  transition: background 0.1s, color 0.1s;
+
+  &:hover { background: #1e1e1e; color: #f0f0f0; }
+  &.danger { color: #f87171; &:hover { background: rgba(248,113,113,0.08); } }
 }

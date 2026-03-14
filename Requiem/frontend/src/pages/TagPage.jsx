@@ -5,17 +5,19 @@ import axiosInstance from "../utils/axios.instance";
 import PageWrapper from "../components/layout/PageWrapper";
 import Topbar from "../components/layout/Topbar";
 import SaveCard from "../features/saves/components/SaveCard";
+import ConfirmDialog from "../components/ui/ConfirmDialog";
+import { useTags, useDeleteTag } from "../features/tags/hooks/useTags";
 import styles from "./TagPage.module.scss";
 import useDebounce from "../hooks/useDebounce";
-import { useTags } from "../features/tags/hooks/useTags";
 
 const TagPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
   const debouncedSearch = useDebounce(search);
 
-  // fetch all saves that have this tag
   const { data: savesData, isLoading } = useQuery({
     queryKey: ["saves-by-tag", id],
     queryFn: async () => {
@@ -25,9 +27,7 @@ const TagPage = () => {
   });
 
   const { data: tagsData } = useTags();
-
-  console.log("tag id from params:", id);
-  console.log("tags data:", tagsData);
+  const { mutate: deleteTag, isPending } = useDeleteTag();
 
   const tag = Array.isArray(tagsData) ? tagsData.find((t) => t._id === id) : null;
   const saves = savesData?.saves || [];
@@ -38,6 +38,12 @@ const TagPage = () => {
         s.note?.toLowerCase().includes(debouncedSearch.toLowerCase())
       )
     : saves;
+
+  const handleDelete = () => {
+    deleteTag(id, {
+      onSuccess: () => navigate("/"),
+    });
+  };
 
   return (
     <PageWrapper>
@@ -54,14 +60,44 @@ const TagPage = () => {
                 </svg>
                 Back
               </button>
-              <div className={styles.meta}>
-                <span
-                  className={styles.tagDot}
-                  style={{ background: tag?.color || "#7c6af7" }}
-                />
-                <div>
-                  <h1>#{tag?.name || "..."}</h1>
-                  <p>{filtered.length} {filtered.length === 1 ? "save" : "saves"}</p>
+
+              <div className={styles.metaRow}>
+                <div className={styles.meta}>
+                  <span className={styles.tagDot} style={{ background: tag?.color || "#7c6af7" }} />
+                  <div>
+                    <h1>#{tag?.name || "..."}</h1>
+                    <p>{filtered.length} {filtered.length === 1 ? "save" : "saves"}</p>
+                  </div>
+                </div>
+
+                <div className={styles.headerActions}>
+                  <div className={styles.menuWrap}>
+                    <button
+                      className={styles.menuBtn}
+                      onClick={() => setMenuOpen((p) => !p)}
+                    >
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                        <circle cx="5" cy="12" r="2" />
+                        <circle cx="12" cy="12" r="2" />
+                        <circle cx="19" cy="12" r="2" />
+                      </svg>
+                    </button>
+
+                    {menuOpen && (
+                      <div className={styles.menu}>
+                        <button
+                          className={`${styles.menuItem} ${styles.danger}`}
+                          onClick={() => { setMenuOpen(false); setShowConfirm(true); }}
+                        >
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <polyline points="3 6 5 6 21 6" />
+                            <path d="M19 6l-1 14H6L5 6M10 11v6M14 11v6M9 6V4h6v2" />
+                          </svg>
+                          Delete tag
+                        </button>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
@@ -81,6 +117,16 @@ const TagPage = () => {
           </>
         )}
       </div>
+
+      <ConfirmDialog
+        isOpen={showConfirm}
+        title="Delete tag"
+        message={`Delete "#${tag?.name}"? It will be removed from all saves.`}
+        confirmLabel={isPending ? "Deleting..." : "Delete"}
+        isDanger={true}
+        onConfirm={handleDelete}
+        onCancel={() => setShowConfirm(false)}
+      />
     </PageWrapper>
   );
 };
