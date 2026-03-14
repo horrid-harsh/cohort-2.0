@@ -7,6 +7,7 @@ import Topbar from "../components/layout/Topbar";
 import SaveCard from "../features/saves/components/SaveCard";
 import styles from "./TagPage.module.scss";
 import useDebounce from "../hooks/useDebounce";
+import { useTags } from "../features/tags/hooks/useTags";
 
 const TagPage = () => {
   const { id } = useParams();
@@ -23,14 +24,10 @@ const TagPage = () => {
     },
   });
 
-  // fetch tag info
-  const { data: tagsData } = useQuery({
-    queryKey: ["tags"],
-    queryFn: async () => {
-      const res = await axiosInstance.get("/tags");
-      return res.data.data;
-    },
-  });
+  const { data: tagsData } = useTags();
+
+  console.log("tag id from params:", id);
+  console.log("tags data:", tagsData);
 
   const tag = Array.isArray(tagsData) ? tagsData.find((t) => t._id === id) : null;
   const saves = savesData?.saves || [];
@@ -63,7 +60,7 @@ const TagPage = () => {
                   style={{ background: tag?.color || "#7c6af7" }}
                 />
                 <div>
-                  <h1>#{tag?.name || "tag"}</h1>
+                  <h1>#{tag?.name || "..."}</h1>
                   <p>{filtered.length} {filtered.length === 1 ? "save" : "saves"}</p>
                 </div>
               </div>
