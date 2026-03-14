@@ -1,0 +1,78 @@
+@use '../../styles/abstracts/variables' as *;
+@use '../../styles/abstracts/mixins' as *;
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  backdrop-filter: blur(2px);
+}
+
+.dialog {
+  background: $color-bg-secondary;
+  border: 0.5px solid $color-border-hover;
+  border-radius: $border-radius-xl;
+  padding: 24px;
+  width: 100%;
+  max-width: 360px;
+  margin: 0 16px;
+}
+
+.title {
+  font-size: $text-md;
+  font-weight: 500;
+  color: $color-text-primary;
+  margin-bottom: 8px;
+}
+
+.message {
+  font-size: $text-sm;
+  color: $color-text-secondary;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.actions {
+  @include flex-gap(8px);
+  justify-content: flex-end;
+}
+
+.cancelBtn {
+  padding: 8px 16px;
+  border-radius: $border-radius-md;
+  font-size: $text-sm;
+  color: $color-text-secondary;
+  border: 0.5px solid $color-border;
+  background: transparent;
+  transition: background 0.1s, color 0.1s;
+
+  &:hover {
+    background: $color-bg-hover;
+    color: $color-text-primary;
+  }
+}
+
+.confirmBtn {
+  padding: 8px 16px;
+  border-radius: $border-radius-md;
+  font-size: $text-sm;
+  font-weight: 500;
+  color: #fff;
+  background: $color-accent;
+  border: none;
+  transition: background 0.15s;
+
+  &:hover { background: $color-accent-hover; }
+
+  &.danger {
+    background: rgba(248, 113, 113, 0.15);
+    color: $color-danger;
+    border: 0.5px solid rgba(248, 113, 113, 0.25);
+
+    &:hover { background: rgba(248, 113, 113, 0.25); }
+  }
+}

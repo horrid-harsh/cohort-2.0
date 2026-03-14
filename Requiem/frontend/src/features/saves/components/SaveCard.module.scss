@@ -5,13 +5,12 @@
   @include card;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
   transition: border-color 0.15s;
   position: relative;
 
   &:hover {
     border-color: $color-border-hover;
-
+    z-index: 10;
     .actions { opacity: 1; }
   }
 }
@@ -24,6 +23,7 @@
   overflow: hidden;
   cursor: pointer;
   background: $color-bg-tertiary;
+  border-radius: $border-radius-lg $border-radius-lg 0 0;
 
   img {
     width: 100%;
@@ -120,6 +120,7 @@
   border-top: 0.5px solid $color-border;
   opacity: 0;
   transition: opacity 0.15s;
+  justify-content: flex-end; 
 }
 
 .actionBtn {
