@@ -1,5 +1,5 @@
-@use '../../../styles/abstracts/variables' as *;
-@use '../../../styles/abstracts/mixins' as *;
+@use "../../../styles/abstracts/variables" as *;
+@use "../../../styles/abstracts/mixins" as *;
 
 .card {
   @include card;
@@ -7,11 +7,15 @@
   flex-direction: column;
   transition: border-color 0.15s;
   position: relative;
+  overflow: hidden;
+  min-width: 0;
 
   &:hover {
     border-color: $color-border-hover;
     z-index: 10;
-    .actions { opacity: 1; }
+    .actions {
+      opacity: 1;
+    }
   }
 }
 
@@ -32,7 +36,9 @@
     transition: transform 0.2s;
   }
 
-  &:hover img { transform: scale(1.03); }
+  &:hover img {
+    transform: scale(1.03);
+  }
 }
 
 .thumbPlaceholder {
@@ -86,7 +92,9 @@
   cursor: pointer;
   line-height: 1.4;
 
-  &:hover { color: $color-accent; }
+  &:hover {
+    color: $color-accent;
+  }
 }
 
 .note {
@@ -120,16 +128,21 @@
   border-top: 0.5px solid $color-border;
   opacity: 0;
   transition: opacity 0.15s;
-  justify-content: flex-end; 
+  overflow: visible;
+  align-items: center;
+  // justify-content: flex-end;
 }
 
 .actionBtn {
   @include flex-center;
   width: 28px;
   height: 28px;
+  min-width: 28px;
   border-radius: $border-radius-sm;
   color: $color-text-muted;
-  transition: color 0.1s, background 0.1s;
+  transition:
+    color 0.1s,
+    background 0.1s;
 
   &:hover {
     color: $color-text-primary;
