@@ -5,8 +5,16 @@ import * as cheerio from "cheerio";
 const detectType = (url, contentType = "") => {
   if (url.includes("youtube.com") || url.includes("youtu.be")) return "video";
   if (url.includes("twitter.com") || url.includes("x.com")) return "tweet";
-  if (contentType.includes("pdf") || url.endsWith(".pdf")) return "pdf";
-  if (/\.(jpg|jpeg|png|gif|webp|svg)$/i.test(url)) return "image";
+  if (url.includes("github.com")) return "link";
+
+  if (contentType.includes("image/")) return "image";
+  if (contentType.includes("pdf")) return "pdf";
+
+  // fallback — check URL extension
+  const cleanUrl = url.split("?")[0];
+  if (/\.(jpg|jpeg|png|gif|webp|svg)$/i.test(cleanUrl)) return "image";
+  if (cleanUrl.endsWith(".pdf") || url.includes("/pdf")) return "pdf";
+
   return "article";
 };
 
@@ -21,6 +29,20 @@ const scrapeUrl = async (url) => {
           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
       },
     });
+
+    const contentType = headers["content-type"] || "";
+    
+     // if the URL itself is an image, skip scraping entirely
+    if (contentType.includes("image/")) {
+      return {
+        title: url.split("/").pop().split("?")[0] || "Image", // filename as title
+        description: "",
+        thumbnail: url,  // ← the URL itself is the thumbnail
+        siteName: new URL(url).hostname.replace("www.", ""),
+        favicon: "",
+        type: "image",
+      };
+    }
 
     const $ = cheerio.load(html);
 
@@ -45,10 +67,26 @@ const scrapeUrl = async (url) => {
       getMeta("description") ||
       "";
 
-    const thumbnail =
+    const thumbPath =
       getMeta("og:image") ||
       getMeta("twitter:image") ||
       "";
+
+    let thumbnail = "";
+    if (thumbPath) {
+      if (thumbPath.startsWith("http")) {
+        thumbnail = thumbPath;
+      } else if (thumbPath.startsWith("//")) {
+        thumbnail = `https:${thumbPath}`;
+      } else {
+        // Handle relative paths
+        try {
+          thumbnail = new URL(thumbPath, url).href;
+        } catch (e) {
+          thumbnail = "";
+        }
+      }
+    }
 
     const siteName =
       getMeta("og:site_name") ||
