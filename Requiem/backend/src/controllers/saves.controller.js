@@ -45,6 +45,9 @@ export const getAllSaves = asyncHandler(async (req, res) => {
     isArchived: isArchived === "true",
   };
 
+  if (req.query.tag) {
+    filter.tags = req.query.tag;
+  }
   if (type) filter.type = type;
   if (isFavorite) filter.isFavorite = isFavorite === "true";
 
