@@ -1,4 +1,5 @@
 import { useUpdateSave } from "../hooks/useSaves";
+import { useNavigate } from "react-router-dom";
 import SaveCardMenu from "./SaveCardMenu";
 import styles from "./SaveCard.module.scss";
 
@@ -13,6 +14,7 @@ const TYPE_LABELS = {
 
 const SaveCard = ({ save }) => {
   const { mutate: updateSave } = useUpdateSave();
+  const navigate = useNavigate();
   const typeInfo = TYPE_LABELS[save.type] || TYPE_LABELS.link;
 
   const toggleFavorite = (e) => {
@@ -52,7 +54,7 @@ const SaveCard = ({ save }) => {
           <span>{save.siteName || new URL(save.url).hostname}</span>
         </div>
 
-        <h3 className={styles.title} onClick={handleOpen}>
+        <h3 className={styles.title} onClick={() => navigate(`/saves/${save._id}`)}>
           {save.title || save.url}
         </h3>
 

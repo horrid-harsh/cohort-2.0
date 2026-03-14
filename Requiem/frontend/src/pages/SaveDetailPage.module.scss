@@ -1,0 +1,351 @@
+@use '../styles/abstracts/variables' as *;
+@use '../styles/abstracts/mixins' as *;
+
+.page {
+  padding: 28px 32px;
+  min-height: 100%;
+}
+
+.inner {
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.loading {
+  padding: 60px 32px;
+  font-size: $text-sm;
+  color: $color-text-muted;
+  text-align: center;
+}
+
+.back {
+  @include flex-gap(6px);
+  font-size: $text-sm;
+  color: $color-text-muted;
+  width: fit-content;
+  transition: color 0.15s;
+  &:hover { color: $color-text-primary; }
+}
+
+// ─── Thumbnail ────────────────────────────────────
+
+.thumb {
+  width: 100%;
+  height: 260px;
+  border-radius: $border-radius-lg;
+  overflow: hidden;
+  border: 0.5px solid $color-border;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+// ─── Header ───────────────────────────────────────
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.siteRow {
+  @include flex-gap(8px);
+  flex-wrap: wrap;
+}
+
+.favicon {
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.siteName {
+  font-size: $text-xs;
+  color: $color-text-muted;
+}
+
+.typeBadge {
+  font-size: 10px;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: $border-radius-full;
+  border: 0.5px solid;
+}
+
+.title {
+  font-size: $text-xl;
+  font-weight: 500;
+  color: $color-text-primary;
+  line-height: 1.4;
+}
+
+.description {
+  font-size: $text-sm;
+  color: $color-text-secondary;
+  line-height: 1.7;
+}
+
+.headerActions {
+  @include flex-gap(8px);
+  margin-top: 4px;
+}
+
+.openBtn {
+  @include flex-gap(6px);
+  background: $color-accent;
+  color: #fff;
+  border-radius: $border-radius-md;
+  padding: 7px 14px;
+  font-size: $text-sm;
+  font-weight: 500;
+  transition: background 0.15s;
+
+  &:hover { background: $color-accent-hover; }
+}
+
+.iconBtn {
+  @include flex-center;
+  width: 34px;
+  height: 34px;
+  border-radius: $border-radius-md;
+  color: $color-text-muted;
+  border: 0.5px solid $color-border;
+  background: transparent;
+  transition: all 0.15s;
+
+  &:hover {
+    border-color: $color-border-hover;
+    color: $color-text-primary;
+  }
+
+  &.favorited { color: #f87171; border-color: rgba(248,113,113,0.3); }
+  &.deleteBtn:hover {
+    color: $color-danger;
+    border-color: rgba(248,113,113,0.3);
+    background: rgba(248,113,113,0.08);
+  }
+}
+
+// ─── Two column grid ──────────────────────────────
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 20px;
+  align-items: start;
+}
+
+.left, .right {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+// ─── Section ──────────────────────────────────────
+
+.section {
+  @include card;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sectionHeader {
+  h3 {
+    font-size: $text-sm;
+    font-weight: 500;
+    color: $color-text-secondary;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 11px;
+  }
+}
+
+.emptyText {
+  font-size: $text-xs;
+  color: $color-text-muted;
+  font-style: italic;
+}
+
+// ─── Note ─────────────────────────────────────────
+
+.noteInput {
+  background: $color-bg-tertiary;
+  border: 0.5px solid $color-border;
+  border-radius: $border-radius-md;
+  padding: 10px 12px;
+  font-size: $text-sm;
+  color: $color-text-primary;
+  resize: vertical;
+  line-height: 1.6;
+  transition: border-color 0.15s;
+
+  &::placeholder { color: $color-text-muted; }
+  &:focus { border-color: $color-accent; outline: none; }
+}
+
+.noteActions {
+  @include flex-between;
+}
+
+.saved {
+  font-size: $text-xs;
+  color: $color-success;
+}
+
+.saveNoteBtn {
+  padding: 6px 14px;
+  border-radius: $border-radius-md;
+  font-size: $text-sm;
+  font-weight: 500;
+  color: #fff;
+  background: $color-accent;
+  border: none;
+  transition: background 0.15s, opacity 0.15s;
+
+  &:hover { background: $color-accent-hover; }
+  &:disabled { opacity: 0.4; cursor: not-allowed; }
+}
+
+// ─── Highlights ───────────────────────────────────
+
+.highlights {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.highlight {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 10px 12px;
+  background: $color-bg-tertiary;
+  border-radius: $border-radius-md;
+  border: 0.5px solid $color-border;
+
+  p {
+    flex: 1;
+    font-size: $text-sm;
+    color: $color-text-secondary;
+    line-height: 1.6;
+  }
+}
+
+.highlightBar {
+  width: 3px;
+  min-height: 100%;
+  border-radius: 2px;
+  background: $color-accent;
+  flex-shrink: 0;
+  align-self: stretch;
+}
+
+.removeHighlight {
+  color: $color-text-muted;
+  flex-shrink: 0;
+  padding: 2px;
+  border-radius: 4px;
+  transition: color 0.1s, background 0.1s;
+
+  &:hover { color: $color-danger; background: rgba(248,113,113,0.08); }
+}
+
+.addHighlight {
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+}
+
+.highlightInput {
+  flex: 1;
+  background: $color-bg-tertiary;
+  border: 0.5px solid $color-border;
+  border-radius: $border-radius-md;
+  padding: 8px 12px;
+  font-size: $text-sm;
+  color: $color-text-primary;
+  resize: none;
+  line-height: 1.5;
+
+  &::placeholder { color: $color-text-muted; }
+  &:focus { border-color: $color-accent; outline: none; }
+}
+
+.addHighlightBtn {
+  padding: 8px 14px;
+  border-radius: $border-radius-md;
+  font-size: $text-sm;
+  font-weight: 500;
+  color: $color-accent;
+  border: 0.5px solid rgba(124,106,247,0.3);
+  background: $color-accent-subtle;
+  transition: background 0.15s;
+  white-space: nowrap;
+
+  &:hover { background: rgba(124,106,247,0.2); }
+  &:disabled { opacity: 0.4; cursor: not-allowed; }
+}
+
+// ─── Tags list ────────────────────────────────────
+
+.tagsList, .collectionsList {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.tagItem, .colItem {
+  @include flex-gap(8px);
+  width: 100%;
+  padding: 7px 10px;
+  border-radius: $border-radius-md;
+  font-size: $text-sm;
+  color: $color-text-secondary;
+  text-align: left;
+  transition: background 0.1s, color 0.1s;
+
+  &:hover {
+    background: $color-bg-hover;
+    color: $color-text-primary;
+  }
+}
+
+.tagSelected, .colSelected {
+  color: $color-accent;
+  background: $color-accent-subtle;
+}
+
+.tagDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.colName {
+  flex: 1;
+  @include truncate;
+}
+
+// ─── Meta info ────────────────────────────────────
+
+.metaList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.metaItem {
+  @include flex-between;
+  font-size: $text-xs;
+
+  span:first-child { color: $color-text-muted; }
+  span:last-child { color: $color-text-secondary; }
+}

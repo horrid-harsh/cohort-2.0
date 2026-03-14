@@ -8,6 +8,7 @@ import FavoritesPage from "../pages/FavoritesPage";
 import ArchivePage from "../pages/ArchivePage";
 import CollectionPage from "../pages/CollectionPage";
 import TagPage from "../pages/TagPage";
+import SaveDetailPage from "../pages/SaveDetailPage";
 
 const ProtectedRoute = () => {
   const { user } = useAuthStore();
@@ -35,6 +36,7 @@ const router = createBrowserRouter([
       { path: "/archive", element: <ArchivePage /> },
       { path: "/collections/:id", element: <CollectionPage /> },
       { path: "/tags/:id", element: <TagPage /> },
+      { path: "/saves/:id", element: <SaveDetailPage /> },
     ],
   },
   { path: "*", element: <Navigate to="/" replace /> },

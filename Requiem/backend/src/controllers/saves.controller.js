@@ -104,7 +104,7 @@ export const getSaveById = asyncHandler(async (req, res) => {
 // PATCH /api/v1/saves/:id
 export const updateSave = asyncHandler(async (req, res) => {
   const allowedUpdates = [
-    "title", "note", "isFavorite", "isArchived", "type"
+    "title", "note", "isFavorite", "isArchived", "type", "highlights"
   ];
 
   // Only pick allowed fields from body
