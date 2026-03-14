@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useSaves } from "../hooks/useSaves";
 import SaveCard from "./SaveCard";
 import styles from "./SaveGrid.module.scss";
+import useDebounce from "../../../hooks/useDebounce";
 
 const FILTERS = [
   { label: "All", value: "" },
@@ -12,19 +13,20 @@ const FILTERS = [
   { label: "Images", value: "image" },
 ];
 
-const SaveGrid = ({ search }) => {
+const SaveGrid = ({ search, isFavorite, isArchived }) => {
   const [activeType, setActiveType] = useState("");
 
-  const { data, isLoading, isFetching, error } = useSaves({
+  const { data, isLoading, isFetching } = useSaves({
     ...(activeType && { type: activeType }),
     ...(search && { search }),
+    ...(isFavorite && { isFavorite: true }),
+    ...(isArchived !== undefined && { isArchived }),
   });
 
   const saves = data?.saves || [];
 
   return (
     <div className={styles.wrap}>
-      {/* Filter chips */}
       <div className={styles.filters}>
         {FILTERS.map((f) => (
           <button
@@ -35,9 +37,11 @@ const SaveGrid = ({ search }) => {
             {f.label}
           </button>
         ))}
+        {/* {!isLoading && isFetching && (
+          <span className={styles.updating}>Updating...</span>
+        )} */}
       </div>
 
-      {/* States */}
       {isLoading && (
         <div className={styles.grid}>
           {Array.from({ length: 8 }).map((_, i) => (
@@ -53,19 +57,20 @@ const SaveGrid = ({ search }) => {
         </div>
       )}
 
-      {error && (
-        <div className={styles.state}>Failed to load saves.</div>
-      )}
-
-      {!isLoading && !isFetching && !error && saves.length === 0 && (
+      {!isLoading && saves.length === 0 && (
         <div className={styles.empty}>
-          <p>Nothing saved yet.</p>
-          <span>Hit "Save URL" to add your first one.</span>
+          <p>Nothing here yet.</p>
+          <span>
+            {isFavorite
+              ? 'Heart a save to see it here.'
+              : isArchived
+              ? 'Archived saves will appear here.'
+              : 'Hit "Save URL" to add your first one.'}
+          </span>
         </div>
       )}
 
-      {/* Grid */}
-      {saves.length > 0 && (
+      {!isLoading && saves.length > 0 && (
         <div className={styles.grid}>
           {saves.map((save) => (
             <SaveCard key={save._id} save={save} />

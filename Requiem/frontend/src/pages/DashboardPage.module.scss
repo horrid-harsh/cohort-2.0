@@ -1,5 +1,26 @@
 @use '../styles/abstracts/variables' as *;
+@use '../styles/abstracts/mixins' as *;
 
 .page {
   padding: 28px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.pageHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  h1 {
+    font-size: $text-xl;
+    font-weight: 500;
+    color: $color-text-primary;
+  }
+
+  p {
+    font-size: $text-sm;
+    color: $color-text-muted;
+  }
 }

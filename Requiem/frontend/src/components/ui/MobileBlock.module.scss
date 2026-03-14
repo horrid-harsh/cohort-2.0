@@ -1,11 +1,9 @@
 @use '../../styles/abstracts/variables' as *;
+@use '../../styles/abstracts/mixins' as *;
 
 .wrap {
   height: 100dvh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  @include flex-col-center;
   background-color: $color-bg-primary;
   padding: $space-8;
   text-align: center;

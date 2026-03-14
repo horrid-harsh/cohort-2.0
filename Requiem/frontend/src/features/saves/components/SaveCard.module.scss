@@ -67,9 +67,7 @@
 }
 
 .site {
-  display: flex;
-  align-items: center;
-  gap: 5px;
+  @include flex-gap(5px);
   font-size: $text-xs;
   color: $color-text-muted;
 
