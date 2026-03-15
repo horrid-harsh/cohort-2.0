@@ -243,6 +243,7 @@ DELETE /api/v1/tags/:id/saves/:saveId    ← remove tag from save
 - Runs in background after save — response is instant
 - Creates new tags if they don't exist, reuses existing ones
 - `isAiGenerated: true` flag on auto-created tags
+- Deterministic string-hashing algorithm maps AI tags to distinct cinematic colors
 
 ### Frontend ✅
 - Dark theme (pure black `#000000`, dot grid background)
@@ -325,6 +326,8 @@ feat: create collection and tag from UI via topbar New dropdown
 feat: add delete collection and tag from page header menu
 feat: save detail page with editable note, highlights, tags and collections
 feat: AI auto-tagging with Gemini on save creation (switched to Mistral)
+fix: sync Mistral auto-generated tags instantly with sidebar
+feat: deterministic dynamic colors for AI-generated tags
 ```
 
 ---

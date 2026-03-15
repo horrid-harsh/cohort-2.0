@@ -13,12 +13,13 @@ const FILTERS = [
   { label: "Images", value: "image" },
 ];
 
-const SaveGrid = ({ search, isFavorite, isArchived }) => {
+const SaveGrid = ({ search, isFavorite, isArchived, semantic }) => {
   const [activeType, setActiveType] = useState("");
 
   const { data, isLoading, isFetching } = useSaves({
     ...(activeType && { type: activeType }),
     ...(search && { search }),
+    ...(semantic && { semantic: true }),
     ...(isFavorite && { isFavorite: true }),
     ...(isArchived !== undefined && { isArchived }),
   });
@@ -27,8 +28,16 @@ const SaveGrid = ({ search, isFavorite, isArchived }) => {
 
   return (
     <div className={styles.wrap}>
+      {semantic && search && (
+        <div className={styles.semanticBanner}>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/>
+          </svg>
+          Showing AI semantic results for <strong>"{search}"</strong>
+        </div>
+      )}
       <div className={styles.filters}>
-        {FILTERS.map((f) => (
+        {!semantic && FILTERS.map((f) => (
           <button
             key={f.value}
             className={`${styles.chip} ${activeType === f.value ? styles.active : ""}`}
@@ -37,9 +46,9 @@ const SaveGrid = ({ search, isFavorite, isArchived }) => {
             {f.label}
           </button>
         ))}
-        {/* {!isLoading && isFetching && (
+        {!isLoading && isFetching && (
           <span className={styles.updating}>Updating...</span>
-        )} */}
+        )}
       </div>
 
       {isLoading && (

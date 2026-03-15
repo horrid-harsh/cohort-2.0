@@ -39,7 +39,6 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 14px;
-  overflow: hidden;
 }
 
 .state {
@@ -68,33 +67,25 @@
   }
 }
 
-.skeleton {
-  @include card;
-  overflow: hidden;
+.updating {
+  font-size: $text-xs;
+  color: $color-text-muted;
+  margin-left: 4px;
+  align-self: center;
 }
 
-.skeletonThumb {
-  height: 120px;
-  background: $color-bg-tertiary;
-  animation: shimmer 1.5s infinite;
-}
-
-.skeletonBody {
-  padding: 12px;
+.semanticBanner {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: rgba(124, 106, 247, 0.08);
+  border: 0.5px solid rgba(124, 106, 247, 0.2);
+  border-radius: 8px;
+  font-size: 12px;
+  color: #888;
 
-.skeletonLine {
-  height: 10px;
-  border-radius: $border-radius-full;
-  background: $color-bg-tertiary;
-  animation: shimmer 1.5s infinite;
-}
+  strong { color: #7c6af7; font-weight: 500; }
 
-@keyframes shimmer {
-  0%   { opacity: 1; }
-  50%  { opacity: 0.4; }
-  100% { opacity: 1; }
+  svg { color: #7c6af7; flex-shrink: 0; }
 }

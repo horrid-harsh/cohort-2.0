@@ -1,29 +1,20 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import PageWrapper from "../components/layout/PageWrapper";
 import Topbar from "../components/layout/Topbar";
 import SaveGrid from "../features/saves/components/SaveGrid";
 import styles from "./DashboardPage.module.scss";
-
-const useDebounce = (value, delay = 400) => {
-  const [debounced, setDebounced] = useState(value);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setDebounced(value), delay);
-    return () => clearTimeout(timer);
-  }, [value, delay]);
-
-  return debounced;
-};
+import useDebounce from "../hooks/useDebounce";
 
 const DashboardPage = () => {
   const [search, setSearch] = useState("");
-  const debouncedSearch = useDebounce(search);
+  const [isSemantic, setIsSemantic] = useState(false);
+  const debouncedSearch = useDebounce(search, isSemantic ? 800 : 400);
 
   return (
     <PageWrapper>
-      <Topbar onSearch={setSearch} />
+      <Topbar onSearch={setSearch} onSemanticChange={setIsSemantic} />
       <div className={styles.page}>
-        <SaveGrid search={debouncedSearch} />
+        <SaveGrid search={debouncedSearch} semantic={isSemantic} />
       </div>
     </PageWrapper>
   );

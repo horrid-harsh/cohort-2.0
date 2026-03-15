@@ -1,4 +1,5 @@
 import { autoTagSave } from "../services/autoTag.service.js";
+import { embedSave } from "../services/embedSave.service.js";
 import { SaveModel } from "../models/save.model.js";
 import { TagModel } from "../models/tag.model.js";
 import { CollectionModel } from "../models/collection.model.js";
@@ -6,6 +7,7 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { scrapeUrl } from "../services/scraper.service.js";
+import { generateEmbedding, cosineSimilarity } from "../services/embedding.service.js";
 
 // POST /api/v1/saves
 export const createSave = asyncHandler(async (req, res) => {
@@ -27,6 +29,7 @@ export const createSave = asyncHandler(async (req, res) => {
   });
 
   autoTagSave(save, req.user._id);
+  embedSave(save._id, req.user._id);
 
   return res.status(201).json(new ApiResponse(201, save, "Saved successfully"));
 });
@@ -40,21 +43,63 @@ export const getAllSaves = asyncHandler(async (req, res) => {
     isFavorite,
     isArchived = false,
     search,
+    semantic,
   } = req.query;
 
-  // Build filter object dynamically
+  // ─── SEMANTIC SEARCH PATH ─────────────────────────────────────────────
+  if (search && semantic === "true") {
+    if (search.trim().length < 3) {
+    return res.status(200).json(new ApiResponse(200, { saves: [], pagination: null }, "Query too short"));
+  }
+    const queryEmbedding = await generateEmbedding(search);
+
+    if (!queryEmbedding) {
+      return res.status(200).json(new ApiResponse(200, { saves: [], pagination: null }, "No results"));
+    }
+
+    const allSaves = await SaveModel.find({
+      user: req.user._id,
+      isArchived: false,           
+      embedding: { $exists: true, $not: { $size: 0 } },
+    })
+      .select("+embedding")
+      .populate("tags", "name color")
+      .populate("collections", "name emoji color")
+      .lean();
+
+    const scored = allSaves
+      .map((save) => ({
+        ...save,
+        score: cosineSimilarity(queryEmbedding, save.embedding),
+        embedding: undefined, // strip before sending to frontend
+      }))
+      .filter((save) => save.score > 0.65)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, Number(limit));
+
+    return res.status(200).json(
+      new ApiResponse(200, {
+        saves: scored,
+        pagination: {
+          total: scored.length,
+          page: 1,
+          limit: Number(limit),
+          totalPages: 1,
+        },
+      }, "Semantic search results")
+    );
+  }
+
+  // ─── NORMAL PATH (your existing code, untouched) ──────────────────────
   const filter = {
     user: req.user._id,
     isArchived: isArchived === "true",
   };
 
-  if (req.query.tag) {
-    filter.tags = req.query.tag;
-  }
+  if (req.query.tag) filter.tags = req.query.tag;
   if (type) filter.type = type;
   if (isFavorite) filter.isFavorite = isFavorite === "true";
 
-  // Basic title/description search (semantic search comes in Phase 3)
   if (search) {
     filter.$or = [
       { title: { $regex: search, $options: "i" } },
@@ -87,6 +132,7 @@ export const getAllSaves = asyncHandler(async (req, res) => {
     }, "Saves fetched successfully")
   );
 });
+
 
 // GET /api/v1/saves/:id
 export const getSaveById = asyncHandler(async (req, res) => {
