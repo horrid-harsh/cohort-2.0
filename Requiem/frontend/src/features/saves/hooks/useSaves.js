@@ -23,6 +23,7 @@ export const useCreateSave = () => {
       queryClient.invalidateQueries({ queryKey: ["saves"] });
       queryClient.invalidateQueries({ queryKey: ["saves-by-tag"] });
       queryClient.invalidateQueries({ queryKey: ["collection"] });
+      queryClient.invalidateQueries({ queryKey: ["tags"] });
     },
   });
 };
@@ -35,6 +36,7 @@ export const useUpdateSave = () => {
       queryClient.invalidateQueries({ queryKey: ["saves"] });
       queryClient.invalidateQueries({ queryKey: ["saves-by-tag"] });
       queryClient.invalidateQueries({ queryKey: ["collection"] });
+      queryClient.invalidateQueries({ queryKey: ["tags"] });
     },
   });
 };
@@ -47,6 +49,7 @@ export const useDeleteSave = () => {
       queryClient.invalidateQueries({ queryKey: ["saves"] });
       queryClient.invalidateQueries({ queryKey: ["saves-by-tag"] });
       queryClient.invalidateQueries({ queryKey: ["collection"] });
+      queryClient.invalidateQueries({ queryKey: ["tags"] });
     },
   });
 };

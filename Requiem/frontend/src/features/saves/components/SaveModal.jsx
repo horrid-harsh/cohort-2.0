@@ -36,6 +36,7 @@ const SaveModal = ({ isOpen, onClose }) => {
           setTimeout(() => {
             queryClient.invalidateQueries({ queryKey: ["saves"] });
             queryClient.invalidateQueries({ queryKey: ["saves-by-tag"] });
+            queryClient.invalidateQueries({ queryKey: ["tags"] });
           }, 3000);
         },
       },
