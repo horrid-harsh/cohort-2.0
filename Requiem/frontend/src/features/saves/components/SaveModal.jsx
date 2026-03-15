@@ -1,3 +1,4 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
 import { useCreateSave } from "../hooks/useSaves";
 import styles from "./SaveModal.module.scss";
@@ -6,6 +7,7 @@ const SaveModal = ({ isOpen, onClose }) => {
   const [url, setUrl] = useState("");
   const [note, setNote] = useState("");
   const { mutate: createSave, isPending, error, reset } = useCreateSave();
+  const queryClient = useQueryClient();
 
   // reset form when modal opens
   useEffect(() => {
@@ -26,7 +28,18 @@ const SaveModal = ({ isOpen, onClose }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!url.trim()) return;
-    createSave({ url, note }, { onSuccess: () => onClose() });
+    createSave(
+      { url, note },
+      {
+        onSuccess: () => {
+          onClose();
+          setTimeout(() => {
+            queryClient.invalidateQueries({ queryKey: ["saves"] });
+            queryClient.invalidateQueries({ queryKey: ["saves-by-tag"] });
+          }, 3000);
+        },
+      },
+    );
   };
 
   if (!isOpen) return null;

@@ -1,3 +1,4 @@
+import { autoTagSave } from "../services/autoTag.service.js";
 import { SaveModel } from "../models/save.model.js";
 import { TagModel } from "../models/tag.model.js";
 import { CollectionModel } from "../models/collection.model.js";
@@ -24,6 +25,8 @@ export const createSave = asyncHandler(async (req, res) => {
     note: note || "",
     ...metadata,
   });
+
+  autoTagSave(save, req.user._id);
 
   return res.status(201).json(new ApiResponse(201, save, "Saved successfully"));
 });

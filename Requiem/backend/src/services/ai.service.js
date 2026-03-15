@@ -1,6 +1,8 @@
-import Mistral from "@mistralai/mistralai";
+import { Mistral } from "@mistralai/mistralai";
 
-const client = new Mistral({ apiKey: process.env.MISTRAL_API_KEY });
+const client = new Mistral({
+  apiKey: process.env.MISTRAL_API_KEY,
+});
 
 const suggestTags = async ({ title, description, url }) => {
   try {
@@ -18,21 +20,24 @@ Description: ${description || ""}
 URL: ${url || ""}
 
 Rules:
-- Lowercase only
+- lowercase only
 - 1-2 words max
-- Generic and reusable
-- Return ONLY a JSON array of strings
-- Example: ["javascript", "react", "frontend"]
-          `
+- generic and reusable
+- return ONLY a JSON array of strings
+- example: ["javascript", "react", "frontend"]
+`
         }
-      ],
-      responseFormat: { type: "json_object" },
+      ]
     });
 
-    const text = response.choices[0].message.content;
-    const parsed = JSON.parse(text);
+    // Strip any markdown fencing (e.g. ```json \n [...] \n ```) Mistral might inject
+    const cleanText = response.choices[0].message.content
+      .replace(/```json/g, "")
+      .replace(/```/g, "")
+      .trim();
+      
+    const parsed = JSON.parse(cleanText);
 
-    // Mistral might return { tags: [...] } or just [...]
     const tags = Array.isArray(parsed) ? parsed : parsed.tags || [];
 
     return tags
