@@ -150,7 +150,7 @@ export const removeSaveFromCollection = asyncHandler(async (req, res) => {
   const save = await SaveModel.findOneAndUpdate(
     { _id: saveId, user: req.user._id },
     { $pull: { collections: collectionId } },
-    { new: true }
+    { returnDocument: "after" }
   );
   if (!save) throw new ApiError(404, "Save not found");
 
