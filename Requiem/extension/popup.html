@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Requiem</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div id="app">
+
+    <!-- Loading state -->
+    <div id="screen-loading" class="screen">
+      <div class="spinner"></div>
+    </div>
+
+    <!-- Not logged in -->
+    <div id="screen-auth" class="screen hidden">
+      <div class="logo">re<span>quiem</span></div>
+      <p class="auth-msg">You're not logged in.</p>
+      <p class="auth-sub">Open Requiem in your browser and log in first.</p>
+      <button id="btn-open-app" class="btn-primary">Open Requiem</button>
+    </div>
+
+    <!-- Already saved -->
+    <div id="screen-duplicate" class="screen hidden">
+      <div class="logo">re<span>quiem</span></div>
+      <div class="status-icon status-warn">!</div>
+      <p class="status-msg">Already saved</p>
+      <p class="status-sub">You've already saved this URL.</p>
+      <button id="btn-close-duplicate" class="btn-ghost">Close</button>
+    </div>
+
+    <!-- Main save form -->
+    <div id="screen-main" class="screen hidden">
+      <div class="header">
+        <div class="logo">re<span>quiem</span></div>
+        <div id="user-name" class="user-badge"></div>
+      </div>
+
+      <div class="page-preview">
+        <img id="page-favicon" src="" alt="" class="favicon" />
+        <div class="page-info">
+          <div id="page-title" class="page-title"></div>
+          <div id="page-url" class="page-url"></div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="note-input">Note <span class="optional">(optional)</span></label>
+        <textarea id="note-input" placeholder="Add a note..." rows="3"></textarea>
+      </div>
+
+      <button id="btn-save" class="btn-primary">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M12 5v14M5 12h14"/>
+        </svg>
+        Save to Requiem
+      </button>
+    </div>
+
+    <!-- Success state -->
+    <div id="screen-success" class="screen hidden">
+      <div class="logo">re<span>quiem</span></div>
+      <div class="status-icon status-success">✓</div>
+      <p class="status-msg">Saved!</p>
+      <p class="status-sub">AI is tagging it in the background.</p>
+      <button id="btn-close-success" class="btn-ghost">Close</button>
+    </div>
+
+    <!-- Error state -->
+    <div id="screen-error" class="screen hidden">
+      <div class="logo">re<span>quiem</span></div>
+      <div class="status-icon status-error">✕</div>
+      <p class="status-msg">Something went wrong</p>
+      <p id="error-msg" class="status-sub"></p>
+      <button id="btn-retry" class="btn-primary">Try again</button>
+    </div>
+
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

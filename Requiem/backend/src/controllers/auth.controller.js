@@ -6,8 +6,8 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 // Cookie options — httpOnly prevents JS access (XSS protection)
 const cookieOptions = {
   httpOnly: true,
-  secure: process.env.NODE_ENV === "production",
-  sameSite: "strict",
+  secure: process.env.NODE_ENV === "production" ? true : true, // `true` is required for `sameSite: "none"`
+  sameSite: "none", // `none` is required for cross-origin (like a Chrome extension)
 };
 
 const generateTokens = async (userId) => {

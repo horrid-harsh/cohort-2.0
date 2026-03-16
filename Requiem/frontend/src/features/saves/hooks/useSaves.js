@@ -12,6 +12,7 @@ export const useSaves = (params = {}) => {
     queryFn: () => getSavesApi(params),
     select: (data) => data.data,
     staleTime: 1000 * 10, // ← keep data fresh 2 mins, no background refetch
+    refetchOnWindowFocus: "always", // immediately refresh when switching back from the browser extension
   });
 };
 

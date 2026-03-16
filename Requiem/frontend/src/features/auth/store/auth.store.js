@@ -10,16 +10,6 @@ const useAuthStore = create(
       user: null,
       accessToken: null,
 
-      setAuth: (user, accessToken) => {
-        localStorage.setItem("accessToken", accessToken);
-        set({ user, accessToken });
-      },
-
-      clearAuth: () => {
-        localStorage.removeItem("accessToken");
-        set({ user: null, accessToken: null });
-      },
-
       updateUser: (updatedUser) =>
         set((state) => ({ user: { ...state.user, ...updatedUser } })),
     }),
