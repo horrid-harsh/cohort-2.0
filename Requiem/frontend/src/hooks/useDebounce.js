@@ -4,7 +4,9 @@ const useDebounce = (value, delay = 400) => {
   const [debounced, setDebounced] = useState(value);
 
   useEffect(() => {
-    const timer = setTimeout(() => setDebounced(value), delay);
+    const timer = setTimeout(() => {
+      setDebounced(typeof value === "string" ? value.trim() : value);
+    }, delay);
     return () => clearTimeout(timer);
   }, [value, delay]);
 

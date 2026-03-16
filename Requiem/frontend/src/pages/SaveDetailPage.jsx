@@ -141,10 +141,16 @@ const SaveDetailPage = () => {
       <Topbar />
       <div className={styles.page}>
         <div className={styles.inner}>
-
           {/* Back */}
           <button className={styles.back} onClick={() => navigate(-1)}>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
               <path d="M19 12H5M12 19l-7-7 7-7" />
             </svg>
             Back
@@ -153,16 +159,35 @@ const SaveDetailPage = () => {
           {/* Thumbnail */}
           {save.thumbnail && (
             <div className={styles.thumb}>
-              <img src={save.thumbnail} alt={save.title} />
+              <img
+                src={save.thumbnail}
+                alt={save.title}
+                loading="eager"
+                decoding="async"
+              />
             </div>
           )}
 
           {/* Header */}
           <div className={styles.header}>
             <div className={styles.siteRow}>
-              {save.favicon && <img src={save.favicon} alt="" width={14} height={14} className={styles.favicon} />}
+              {save.favicon && (
+                <img
+                  src={save.favicon}
+                  alt=""
+                  width={14}
+                  height={14}
+                  className={styles.favicon}
+                />
+              )}
               <span className={styles.siteName}>{save.siteName}</span>
-              <span className={styles.typeBadge} style={{ color: typeInfo.color, borderColor: `${typeInfo.color}30` }}>
+              <span
+                className={styles.typeBadge}
+                style={{
+                  color: typeInfo.color,
+                  borderColor: `${typeInfo.color}30`,
+                }}
+              >
                 {typeInfo.label}
               </span>
             </div>
@@ -174,8 +199,20 @@ const SaveDetailPage = () => {
             )}
 
             <div className={styles.headerActions}>
-              <a href={save.url} target="_blank" rel="noopener noreferrer" className={styles.openBtn}>
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <a
+                href={save.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.openBtn}
+              >
+                <svg
+                  width="13"
+                  height="13"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
                   <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
                   <polyline points="15 3 21 3 21 9" />
                   <line x1="10" y1="14" x2="21" y2="3" />
@@ -188,7 +225,14 @@ const SaveDetailPage = () => {
                 onClick={handleToggleFavorite}
                 title={save.isFavorite ? "Unfavorite" : "Favorite"}
               >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill={save.isFavorite ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2">
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill={save.isFavorite ? "currentColor" : "none"}
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
                   <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
                 </svg>
               </button>
@@ -198,7 +242,14 @@ const SaveDetailPage = () => {
                 onClick={() => setShowConfirm(true)}
                 title="Delete"
               >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
                   <polyline points="3 6 5 6 21 6" />
                   <path d="M19 6l-1 14H6L5 6M10 11v6M14 11v6M9 6V4h6v2" />
                 </svg>
@@ -209,7 +260,6 @@ const SaveDetailPage = () => {
           <div className={styles.grid}>
             {/* Left column */}
             <div className={styles.left}>
-
               {/* Note */}
               <div className={styles.section}>
                 <div className={styles.sectionHeader}>
@@ -250,7 +300,14 @@ const SaveDetailPage = () => {
                           className={styles.removeHighlight}
                           onClick={() => handleDeleteHighlight(i)}
                         >
-                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                          <svg
+                            width="12"
+                            height="12"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                          >
                             <path d="M18 6 6 18M6 6l12 12" />
                           </svg>
                         </button>
@@ -276,18 +333,48 @@ const SaveDetailPage = () => {
                   </button>
                 </div>
               </div>
+
+              {/* Meta */}
+              <div className={styles.section}>
+                <div className={styles.sectionHeader}>
+                  <h3>Info</h3>
+                </div>
+                <div className={styles.metaList}>
+                  <div className={styles.metaItem}>
+                    <span>Saved</span>
+                    <span>
+                      {new Date(save.createdAt).toLocaleDateString("en-US", {
+                        month: "short",
+                        day: "numeric",
+                        year: "numeric",
+                      })}
+                    </span>
+                  </div>
+                  <div className={styles.metaItem}>
+                    <span>Type</span>
+                    <span style={{ color: typeInfo.color }}>
+                      {typeInfo.label}
+                    </span>
+                  </div>
+                  <div className={styles.metaItem}>
+                    <span>Source</span>
+                    <span>{save.siteName || "—"}</span>
+                  </div>
+                </div>
+              </div>
             </div>
 
             {/* Right column */}
             <div className={styles.right}>
-
               {/* Tags */}
               <div className={styles.section}>
                 <div className={styles.sectionHeader}>
                   <h3>Tags</h3>
                 </div>
                 {tags.length === 0 ? (
-                  <p className={styles.emptyText}>No tags yet. Create one from the topbar.</p>
+                  <p className={styles.emptyText}>
+                    No tags yet. Create one from the topbar.
+                  </p>
                 ) : (
                   <div className={styles.tagsList}>
                     {tags.map((tag) => (
@@ -296,10 +383,21 @@ const SaveDetailPage = () => {
                         className={`${styles.tagItem} ${hasTag(tag._id) ? styles.tagSelected : ""}`}
                         onClick={() => handleToggleTag(tag._id)}
                       >
-                        <span className={styles.tagDot} style={{ background: tag.color }} />
+                        <span
+                          className={styles.tagDot}
+                          style={{ background: tag.color }}
+                        />
                         {tag.name}
                         {hasTag(tag._id) && (
-                          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ marginLeft: "auto" }}>
+                          <svg
+                            width="11"
+                            height="11"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2.5"
+                            style={{ marginLeft: "auto" }}
+                          >
                             <polyline points="20 6 9 17 4 12" />
                           </svg>
                         )}
@@ -315,7 +413,9 @@ const SaveDetailPage = () => {
                   <h3>Collections</h3>
                 </div>
                 {collections.length === 0 ? (
-                  <p className={styles.emptyText}>No collections yet. Create one from the topbar.</p>
+                  <p className={styles.emptyText}>
+                    No collections yet. Create one from the topbar.
+                  </p>
                 ) : (
                   <div className={styles.collectionsList}>
                     {collections.map((col) => (
@@ -327,7 +427,15 @@ const SaveDetailPage = () => {
                         <span>{col.emoji}</span>
                         <span className={styles.colName}>{col.name}</span>
                         {isInCollection(col._id) && (
-                          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ marginLeft: "auto" }}>
+                          <svg
+                            width="11"
+                            height="11"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2.5"
+                            style={{ marginLeft: "auto" }}
+                          >
                             <polyline points="20 6 9 17 4 12" />
                           </svg>
                         )}
@@ -336,28 +444,6 @@ const SaveDetailPage = () => {
                   </div>
                 )}
               </div>
-
-              {/* Meta */}
-              <div className={styles.section}>
-                <div className={styles.sectionHeader}>
-                  <h3>Info</h3>
-                </div>
-                <div className={styles.metaList}>
-                  <div className={styles.metaItem}>
-                    <span>Saved</span>
-                    <span>{new Date(save.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}</span>
-                  </div>
-                  <div className={styles.metaItem}>
-                    <span>Type</span>
-                    <span style={{ color: typeInfo.color }}>{typeInfo.label}</span>
-                  </div>
-                  <div className={styles.metaItem}>
-                    <span>Source</span>
-                    <span>{save.siteName || "—"}</span>
-                  </div>
-                </div>
-              </div>
-
             </div>
           </div>
         </div>

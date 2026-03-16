@@ -100,11 +100,11 @@ export const getAllSaves = asyncHandler(async (req, res) => {
   if (type) filter.type = type;
   if (isFavorite) filter.isFavorite = isFavorite === "true";
 
-  if (search) {
+  if (search && search.trim() !== "") {
     filter.$or = [
-      { title: { $regex: search, $options: "i" } },
-      { description: { $regex: search, $options: "i" } },
-      { note: { $regex: search, $options: "i" } },
+      { title: { $regex: search.trim(), $options: "i" } },
+      { description: { $regex: search.trim(), $options: "i" } },
+      { note: { $regex: search.trim(), $options: "i" } },
     ];
   }
 
