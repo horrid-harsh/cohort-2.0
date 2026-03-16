@@ -1,23 +1,15 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
 
-// persist middleware automatically saves to localStorage
-// so user stays logged in on page refresh
+const useAuthStore = create((set) => ({
+  user: null,
 
-const useAuthStore = create(
-  persist(
-    (set) => ({
-      user: null,
-      accessToken: null,
+  setUser: (user) => set({ user }),
 
-      updateUser: (updatedUser) =>
-        set((state) => ({ user: { ...state.user, ...updatedUser } })),
-    }),
-    {
-      name: "requiem-auth", // localStorage key
-      partialize: (state) => ({ user: state.user, accessToken: state.accessToken }),
-    }
-  )
-);
+  updateUser: (updatedUser) =>
+    set((state) => ({ user: { ...state.user, ...updatedUser } })),
+
+  clearAuth: () => set({ user: null }),
+}));
+
 
 export default useAuthStore;

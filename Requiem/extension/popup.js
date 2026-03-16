@@ -1,14 +1,12 @@
-const API_BASE = process.env.NODE_ENV === "production" 
-  ? "https://yourdomain.com/api/v1"
-  : "http://localhost:8000/api/v1";
+
 // ─── Screen management ────────────────────────────────────────────────────────
 
 const screens = {
-  loading:   document.getElementById("screen-loading"),
-  auth:      document.getElementById("screen-auth"),
-  main:      document.getElementById("screen-main"),
-  success:   document.getElementById("screen-success"),
-  error:     document.getElementById("screen-error"),
+  loading: document.getElementById("screen-loading"),
+  auth: document.getElementById("screen-auth"),
+  main: document.getElementById("screen-main"),
+  success: document.getElementById("screen-success"),
+  error: document.getElementById("screen-error"),
   duplicate: document.getElementById("screen-duplicate"),
 };
 
@@ -17,19 +15,46 @@ const showScreen = (name) => {
   screens[name].classList.remove("hidden");
 };
 
+// ─── Token helper ────────────────────────────────────────────────────────────
+
+const getToken = async () => {
+  try {
+    const cookie = await chrome.cookies.get({ url: APP_URL, name: "accessToken" });
+    return cookie ? cookie.value : null;
+  } catch (e) {
+    return null;
+  }
+};
+
 // ─── API helpers ──────────────────────────────────────────────────────────────
 
 const apiFetch = async (path, options = {}) => {
-  const res = await fetch(`${API_BASE}${path}`, {
-    ...options,
-    credentials: "include", // sends cookies automatically
-    headers: {
-      "Content-Type": "application/json",
-      ...options.headers,
-    },
-  });
-  const data = await res.json();
-  return { ok: res.ok, status: res.status, data };
+  try {
+    // Manually get the token to bypass SameSite: Lax issues on localhost
+    const token = await getToken();
+    
+    const res = await fetch(`${API_BASE}${path}`, {
+      ...options,
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        ...(token ? { "Authorization": `Bearer ${token}` } : {}),
+        ...options.headers,
+      },
+    });
+    
+    let data;
+    try {
+      data = await res.json();
+    } catch (e) {
+      data = {};
+    }
+    
+    return { ok: res.ok, status: res.status, data };
+  } catch (error) {
+    console.error("API error:", error);
+    return { ok: false, status: 500, data: { message: "Network error" } };
+  }
 };
 
 // ─── Main flow ────────────────────────────────────────────────────────────────
@@ -37,12 +62,26 @@ const apiFetch = async (path, options = {}) => {
 const init = async () => {
   showScreen("loading");
 
-  // 1. Check if user is logged in
-  const { ok, data: meData } = await apiFetch("/auth/me");
+  // 1. Try /auth/me — if 401, try refresh first
+  let { ok, data: meData } = await apiFetch("/auth/me");
 
   if (!ok) {
-    showScreen("auth");
-    return;
+    // Try refreshing the token
+    const refreshResult = await apiFetch("/auth/refresh", { method: "POST" });
+
+    if (refreshResult.ok) {
+      // Retry /auth/me with new cookie
+      const retry = await apiFetch("/auth/me");
+      if (!retry.ok) {
+        showScreen("auth");
+        return;
+      }
+      ok = retry.ok;
+      meData = retry.data;
+    } else {
+      showScreen("auth");
+      return;
+    }
   }
 
   const user = meData.data;
@@ -55,7 +94,6 @@ const init = async () => {
   document.getElementById("page-title").textContent = tab.title || tab.url;
   document.getElementById("page-url").textContent = tab.url;
 
-  // Set favicon
   const faviconEl = document.getElementById("page-favicon");
   if (tab.favIconUrl) {
     faviconEl.src = tab.favIconUrl;
@@ -79,18 +117,9 @@ const init = async () => {
       body: JSON.stringify({ url: tab.url, note }),
     });
 
-    if (ok) {
-      showScreen("success");
-      return;
-    }
+    if (ok) { showScreen("success"); return; }
+    if (status === 409) { showScreen("duplicate"); return; }
 
-    // Handle duplicate URL
-    if (status === 409) {
-      showScreen("duplicate");
-      return;
-    }
-
-    // Other error
     document.getElementById("error-msg").textContent =
       data?.message || "Something went wrong. Please try again.";
     showScreen("error");
@@ -104,18 +133,8 @@ document.getElementById("btn-open-app").addEventListener("click", () => {
   window.close();
 });
 
-document.getElementById("btn-close-success").addEventListener("click", () => {
-  window.close();
-});
-
-document.getElementById("btn-close-duplicate").addEventListener("click", () => {
-  window.close();
-});
-
-document.getElementById("btn-retry").addEventListener("click", () => {
-  init();
-});
-
-// ─── Start ────────────────────────────────────────────────────────────────────
+document.getElementById("btn-close-success").addEventListener("click", () => window.close());
+document.getElementById("btn-close-duplicate").addEventListener("click", () => window.close());
+document.getElementById("btn-retry").addEventListener("click", () => init());
 
 init();

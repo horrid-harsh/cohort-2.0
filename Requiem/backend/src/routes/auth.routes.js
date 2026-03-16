@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { register, login, logout, getMe } from "../controllers/auth.controller.js";
+import { register, login, logout, getMe, refreshAccessToken } from "../controllers/auth.controller.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 
 const router = Router();
@@ -31,5 +31,12 @@ router.post("/logout", verifyJWT, logout);
  * @access private
  */
 router.get("/me", verifyJWT, getMe);
+
+/**
+ * @description Refresh access token
+ * @route POST /api/v1/auth/refresh
+ * @access public
+ */
+router.post("/refresh", refreshAccessToken);
 
 export default router;

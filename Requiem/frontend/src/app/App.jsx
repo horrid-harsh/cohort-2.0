@@ -5,6 +5,7 @@ import Router from "./Router";
 import useMediaQuery from "../hooks/useMediaQuery";
 import MobileBlock from "../components/ui/MobileBlock";
 import "../styles/main.scss";
+import SessionProvider from "./SessionProvider";
 
 const App = () => {
   const isMobile = useMediaQuery("(max-width: 768px)");
@@ -12,7 +13,9 @@ const App = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Router />
+      <SessionProvider>
+        <Router />
+      </SessionProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );

@@ -1,23 +1,69 @@
+import jwt from "jsonwebtoken";
 import { UserModel } from "../models/user.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 
+const isProduction = process.env.NODE_ENV === "production";
+
 // Cookie options — httpOnly prevents JS access (XSS protection)
 const cookieOptions = {
   httpOnly: true,
-  secure: process.env.NODE_ENV === "production" ? true : true, // `true` is required for `sameSite: "none"`
-  sameSite: "none", // `none` is required for cross-origin (like a Chrome extension)
+  secure: isProduction, // false for local http, true for production https
+  sameSite: isProduction ? "none" : "lax", // "none" in production for extension support, "lax" for local dev
 };
 
+// For chrome extension development on localhost, it sometimes needs SameSite: None 
+// BUT SameSite: None mandatory requires Secure: True.
+// If the developer is on HTTP, they should use SameSite: Lax.
+// To support the extension in local dev, the extension must handle cookie retrieval manually OR use HTTPS.
+
+
 const generateTokens = async (userId) => {
-  const user = await UserModel.findById(userId);
+  const user = await UserModel.findById(userId).select("+refreshToken");
   const accessToken = user.generateAccessToken();
   const refreshToken = user.generateRefreshToken();
   user.refreshToken = refreshToken;
   await user.save({ validateBeforeSave: false });
   return { accessToken, refreshToken };
 };
+
+// POST /api/v1/auth/refresh
+export const refreshAccessToken = asyncHandler(async (req, res) => {
+  const incomingRefreshToken = req.cookies?.refreshToken;
+ 
+  if (!incomingRefreshToken) {
+    throw new ApiError(401, "Unauthorized — no refresh token");
+  }
+ 
+  // Verify refresh token
+  let decoded;
+  try {
+    decoded = jwt.verify(
+      incomingRefreshToken,
+      process.env.REFRESH_TOKEN_SECRET
+    );
+  } catch (error) {
+    throw new ApiError(401, "Invalid or expired refresh token");
+  }
+ 
+  const user = await UserModel.findById(decoded?._id).select("+refreshToken");
+  if (!user) throw new ApiError(401, "Invalid refresh token");
+ 
+  // Check token matches what's stored in DB
+  if (incomingRefreshToken !== user.refreshToken) {
+    throw new ApiError(401, "Refresh token expired or already used");
+  }
+ 
+  // Generate fresh tokens
+  const { accessToken, refreshToken } = await generateTokens(user._id);
+ 
+  return res
+    .status(200)
+    .cookie("accessToken", accessToken, cookieOptions)
+    .cookie("refreshToken", refreshToken, cookieOptions)
+    .json(new ApiResponse(200, { user }, "Token refreshed successfully"));
+});
 
 // POST /api/v1/auth/register
 export const register = asyncHandler(async (req, res) => {
@@ -54,13 +100,13 @@ export const login = asyncHandler(async (req, res) => {
 
   const { accessToken, refreshToken } = await generateTokens(user._id);
 
-  const loggedInUser = await UserModel.findById(user._id);
+  const loggedInUser = await UserModel.findById(user._id).select("name email avatar");
 
   return res
     .status(200)
     .cookie("accessToken", accessToken, cookieOptions)
     .cookie("refreshToken", refreshToken, cookieOptions)
-    .json(new ApiResponse(200, { user: loggedInUser, accessToken }, "Logged in successfully"));
+    .json(new ApiResponse(200, { user: loggedInUser }, "Logged in successfully"));
 });
 
 // POST /api/v1/auth/logout
@@ -76,7 +122,8 @@ export const logout = asyncHandler(async (req, res) => {
 
 // GET /api/v1/auth/me
 export const getMe = asyncHandler(async (req, res) => {
+  const user = await UserModel.findById(req.user._id).select("name email avatar");
   return res
     .status(200)
-    .json(new ApiResponse(200, req.user, "User fetched successfully"));
+    .json(new ApiResponse(200, user, "User fetched successfully"));
 });
