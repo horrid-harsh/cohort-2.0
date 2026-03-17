@@ -1,4 +1,9 @@
-import { createBrowserRouter, RouterProvider, Navigate, Outlet } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Navigate,
+  Outlet,
+} from "react-router-dom";
 import useAuthStore from "../features/auth/store/auth.store";
 
 import LoginPage from "../pages/LoginPage";

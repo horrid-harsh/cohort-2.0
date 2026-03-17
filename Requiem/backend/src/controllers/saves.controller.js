@@ -7,7 +7,10 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { scrapeUrl } from "../services/scraper.service.js";
-import { generateEmbedding, cosineSimilarity } from "../services/embedding.service.js";
+import {
+  generateEmbedding,
+  cosineSimilarity,
+} from "../services/embedding.service.js";
 
 // POST /api/v1/saves
 export const createSave = asyncHandler(async (req, res) => {
@@ -49,17 +52,29 @@ export const getAllSaves = asyncHandler(async (req, res) => {
   // ─── SEMANTIC SEARCH PATH ─────────────────────────────────────────────
   if (search && semantic === "true") {
     if (search.trim().length < 3) {
-    return res.status(200).json(new ApiResponse(200, { saves: [], pagination: null }, "Query too short"));
-  }
+      return res
+        .status(200)
+        .json(
+          new ApiResponse(
+            200,
+            { saves: [], pagination: null },
+            "Query too short",
+          ),
+        );
+    }
     const queryEmbedding = await generateEmbedding(search);
 
     if (!queryEmbedding) {
-      return res.status(200).json(new ApiResponse(200, { saves: [], pagination: null }, "No results"));
+      return res
+        .status(200)
+        .json(
+          new ApiResponse(200, { saves: [], pagination: null }, "No results"),
+        );
     }
 
     const allSaves = await SaveModel.find({
       user: req.user._id,
-      isArchived: false,           
+      isArchived: false,
       embedding: { $exists: true, $not: { $size: 0 } },
     })
       .select("+embedding")
@@ -78,15 +93,19 @@ export const getAllSaves = asyncHandler(async (req, res) => {
       .slice(0, Number(limit));
 
     return res.status(200).json(
-      new ApiResponse(200, {
-        saves: scored,
-        pagination: {
-          total: scored.length,
-          page: 1,
-          limit: Number(limit),
-          totalPages: 1,
+      new ApiResponse(
+        200,
+        {
+          saves: scored,
+          pagination: {
+            total: scored.length,
+            page: 1,
+            limit: Number(limit),
+            totalPages: 1,
+          },
         },
-      }, "Semantic search results")
+        "Semantic search results",
+      ),
     );
   }
 
@@ -121,18 +140,21 @@ export const getAllSaves = asyncHandler(async (req, res) => {
   ]);
 
   return res.status(200).json(
-    new ApiResponse(200, {
-      saves,
-      pagination: {
-        total,
-        page: Number(page),
-        limit: Number(limit),
-        totalPages: Math.ceil(total / Number(limit)),
+    new ApiResponse(
+      200,
+      {
+        saves,
+        pagination: {
+          total,
+          page: Number(page),
+          limit: Number(limit),
+          totalPages: Math.ceil(total / Number(limit)),
+        },
       },
-    }, "Saves fetched successfully")
+      "Saves fetched successfully",
+    ),
   );
 });
-
 
 // GET /api/v1/saves/:id
 export const getSaveById = asyncHandler(async (req, res) => {
@@ -153,7 +175,12 @@ export const getSaveById = asyncHandler(async (req, res) => {
 // PATCH /api/v1/saves/:id
 export const updateSave = asyncHandler(async (req, res) => {
   const allowedUpdates = [
-    "title", "note", "isFavorite", "isArchived", "type", "highlights"
+    "title",
+    "note",
+    "isFavorite",
+    "isArchived",
+    "type",
+    "highlights",
   ];
 
   // Only pick allowed fields from body
@@ -169,7 +196,7 @@ export const updateSave = asyncHandler(async (req, res) => {
   const save = await SaveModel.findOneAndUpdate(
     { _id: req.params.id, user: req.user._id },
     { $set: updates },
-    { returnDocument: "after", runValidators: true }
+    { returnDocument: "after", runValidators: true },
   );
 
   if (!save) throw new ApiError(404, "Save not found");

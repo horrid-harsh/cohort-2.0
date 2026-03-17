@@ -9,13 +9,17 @@ const axiosInstance = axios.create({
   timeout: 15000,
 });
 
+// 🔹 RESPONSE INTERCEPTOR (auto refresh tokens)
 let isRefreshing = false;
 let failedQueue = [];
 
-const processQueue = (error) => {
+const processQueue = (error, token = null) => {
   failedQueue.forEach((prom) => {
-    if (error) prom.reject(error);
-    else prom.resolve();
+    if (error) {
+      prom.reject(error);
+    } else {
+      prom.resolve(token);
+    }
   });
   failedQueue = [];
 };
@@ -25,15 +29,23 @@ axiosInstance.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    // If 401 and not already retried and not the refresh endpoint itself
-    if (
-      error.response?.status === 401 &&
-      !originalRequest._retry &&
-      !originalRequest.url.includes("/auth/refresh") &&
-      !originalRequest.url.includes("/auth/login")
-    ) {
+    // Skip if no response or if it's already a retry
+    if (!error.response || originalRequest._retry) {
+      return Promise.reject(error);
+    }
+
+    // 401 error means unauthorized (expired access token)
+    if (error.response.status === 401) {
+      // Don't intercept refresh or login requests to avoid loops
+      if (
+        originalRequest.url.includes("/auth/refresh") ||
+        originalRequest.url.includes("/auth/login")
+      ) {
+        return Promise.reject(error);
+      }
+
+      // If already refreshing, queue this request
       if (isRefreshing) {
-        // Queue requests while refresh is in progress
         return new Promise((resolve, reject) => {
           failedQueue.push({ resolve, reject });
         })
@@ -45,23 +57,29 @@ axiosInstance.interceptors.response.use(
       isRefreshing = true;
 
       try {
-        // Try to get a new access token using refresh token cookie
+        // Use raw axios call to avoid the interceptor loop
         await axios.post(
           `${BASE_URL}/auth/refresh`,
           {},
           { withCredentials: true }
         );
 
-        processQueue(null);
-        return axiosInstance(originalRequest); // retry original request
-      } catch (refreshError) {
-        // Refresh failed — log user out
-        processQueue(refreshError);
-        useAuthStore.setState({ user: null });
-        window.location.href = "/login";
-        return Promise.reject(refreshError);
-      } finally {
         isRefreshing = false;
+        processQueue(null);
+        return axiosInstance(originalRequest);
+      } catch (refreshError) {
+        isRefreshing = false;
+        processQueue(refreshError);
+
+        // Clear user context on refresh failure
+        useAuthStore.setState({ user: null });
+
+        // Only redirect if we're not already on the login page
+        if (!window.location.pathname.includes("/login")) {
+          window.location.href = "/login";
+        }
+
+        return Promise.reject(refreshError);
       }
     }
 

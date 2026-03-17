@@ -62,9 +62,9 @@ const SaveGrid = ({ search, isFavorite, isArchived, semantic }) => {
             {f.label}
           </button>
         ))}
-        {!isLoading && isFetching && !isFetchingNextPage && (
+        {/* {!isLoading && isFetching && !isFetchingNextPage && (
           <span className={styles.updating}>Updating...</span>
-        )}
+        )} */}
       </div>
 
       {isLoading && (
