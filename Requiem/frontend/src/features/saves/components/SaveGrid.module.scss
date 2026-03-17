@@ -37,7 +37,7 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns: repeat(4, 1fr);  // ← always 4 columns
   gap: 14px;
 }
 
@@ -88,4 +88,44 @@
   strong { color: #7c6af7; font-weight: 500; }
 
   svg { color: #7c6af7; flex-shrink: 0; }
+}
+
+.sentinel {
+  height: 1px;
+  width: 100%;
+}
+
+.loadingMore {
+  display: flex;
+  justify-content: center;
+  padding: 24px 0;
+}
+
+.loadingDots {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+
+  span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #7c6af7;
+    animation: bounce 0.6s infinite alternate;
+
+    &:nth-child(2) { animation-delay: 0.2s; }
+    &:nth-child(3) { animation-delay: 0.4s; }
+  }
+}
+
+@keyframes bounce {
+  from { opacity: 0.3; transform: translateY(0); }
+  to   { opacity: 1;   transform: translateY(-4px); }
+}
+
+.endMessage {
+  text-align: center;
+  font-size: 12px;
+  color: #333;
+  padding: 24px 0 8px;
 }

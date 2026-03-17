@@ -1,8 +1,9 @@
-import { useState } from "react";
-import { useSaves } from "../hooks/useSaves";
+import { useState, useCallback } from "react";
+import { useSaves, LIMIT } from "../hooks/useSaves";
 import SaveCard from "./SaveCard";
+import SaveSkeleton from "./SaveSkeleton";
+import useInfiniteScroll from "../../../hooks/useInfiniteScroll";
 import styles from "./SaveGrid.module.scss";
-import useDebounce from "../../../hooks/useDebounce";
 
 const FILTERS = [
   { label: "All", value: "" },
@@ -16,15 +17,29 @@ const FILTERS = [
 const SaveGrid = ({ search, isFavorite, isArchived, semantic }) => {
   const [activeType, setActiveType] = useState("");
 
-  const { data, isLoading, isFetching } = useSaves({
+  const {
+    data,
+    isLoading,
+    isFetching,
+    isFetchingNextPage,
+    hasNextPage,
+    fetchNextPage,
+  } = useSaves({
     ...(activeType && { type: activeType }),
     ...(search && { search }),
-    ...(semantic && { semantic: true }),
     ...(isFavorite && { isFavorite: true }),
     ...(isArchived !== undefined && { isArchived }),
+    ...(semantic && { semantic: true }),
   });
 
   const saves = data?.saves || [];
+
+  // Trigger next page when sentinel div enters viewport
+  const onIntersect = useCallback(() => {
+    if (hasNextPage && !isFetchingNextPage) fetchNextPage();
+  }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
+
+  const sentinelRef = useInfiniteScroll(onIntersect, hasNextPage);
 
   return (
     <div className={styles.wrap}>
@@ -36,6 +51,7 @@ const SaveGrid = ({ search, isFavorite, isArchived, semantic }) => {
           Showing AI semantic results for <strong>"{search}"</strong>
         </div>
       )}
+
       <div className={styles.filters}>
         {!semantic && FILTERS.map((f) => (
           <button
@@ -46,22 +62,15 @@ const SaveGrid = ({ search, isFavorite, isArchived, semantic }) => {
             {f.label}
           </button>
         ))}
-        {!isLoading && isFetching && (
+        {!isLoading && isFetching && !isFetchingNextPage && (
           <span className={styles.updating}>Updating...</span>
         )}
       </div>
 
       {isLoading && (
         <div className={styles.grid}>
-          {Array.from({ length: 8 }).map((_, i) => (
-            <div key={i} className={styles.skeleton}>
-              <div className={styles.skeletonThumb} />
-              <div className={styles.skeletonBody}>
-                <div className={styles.skeletonLine} style={{ width: "60%" }} />
-                <div className={styles.skeletonLine} style={{ width: "90%" }} />
-                <div className={styles.skeletonLine} style={{ width: "75%" }} />
-              </div>
-            </div>
+          {Array.from({ length: LIMIT }).map((_, i) => (
+            <SaveSkeleton key={i} />
           ))}
         </div>
       )}
@@ -71,20 +80,36 @@ const SaveGrid = ({ search, isFavorite, isArchived, semantic }) => {
           <p>Nothing here yet.</p>
           <span>
             {isFavorite
-              ? 'Heart a save to see it here.'
+              ? "Heart a save to see it here."
               : isArchived
-              ? 'Archived saves will appear here.'
-              : 'Hit "Save URL" to add your first one.'}
+              ? "Archived saves will appear here."
+              : semantic
+              ? "No semantic matches found. Try a different search."
+              : 'Hit "+ New" to add your first save.'}
           </span>
         </div>
       )}
 
       {!isLoading && saves.length > 0 && (
-        <div className={styles.grid}>
-          {saves.map((save) => (
-            <SaveCard key={save._id} save={save} />
-          ))}
-        </div>
+        <>
+          <div className={styles.grid}>
+            {saves.map((save) => (
+              <SaveCard key={save._id} save={save} />
+            ))}
+            {isFetchingNextPage && Array.from({ length: LIMIT }).map((_, i) => (
+              <SaveSkeleton key={`skeleton-${i}`} />
+            ))}
+          </div>
+
+          {/* Sentinel — invisible div at bottom, triggers next page load */}
+          {!isFetchingNextPage && <div ref={sentinelRef} className={styles.sentinel} />}
+
+          {!hasNextPage && saves.length > 0 && (
+            <div className={styles.endMessage}>
+              You've seen all {saves.length} saves
+            </div>
+          )}
+        </>
       )}
     </div>
   );

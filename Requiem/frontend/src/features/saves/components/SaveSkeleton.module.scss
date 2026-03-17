@@ -1,0 +1,63 @@
+@use "../../../styles/abstracts/variables" as *;
+@use "../../../styles/abstracts/mixins" as *;
+
+.skeletonCard {
+  @include card;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: 100%;
+}
+
+.thumbnail {
+  height: 120px;
+  @include skeleton-loading;
+}
+
+.body {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+.siteInfo {
+  width: 40%;
+  height: 10px;
+  border-radius: 4px;
+  @include skeleton-loading;
+}
+
+.title {
+  width: 90%;
+  height: 16px;
+  border-radius: 4px;
+  @include skeleton-loading;
+}
+
+.note {
+  width: 70%;
+  height: 12px;
+  border-radius: 4px;
+  @include skeleton-loading;
+}
+
+.tags {
+  display: flex;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.tag {
+  width: 40px;
+  height: 16px;
+  border-radius: $border-radius-full;
+  @include skeleton-loading;
+}
+
+.actions {
+  height: 44px;
+  border-top: 0.5px solid $color-border;
+  @include skeleton-loading;
+}

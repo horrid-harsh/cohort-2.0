@@ -1,4 +1,4 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useInfiniteQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   getSavesApi,
   createSaveApi,
@@ -6,13 +6,23 @@ import {
   deleteSaveApi,
 } from "../services/saves.service";
 
+export const LIMIT = 8;
+
 export const useSaves = (params = {}) => {
-  return useQuery({
+  return useInfiniteQuery({
     queryKey: ["saves", params.type, params.search, params.isFavorite, params.isArchived, params.semantic],
-    queryFn: () => getSavesApi(params),
-    select: (data) => data.data,
-    staleTime: 1000 * 10, // ← keep data fresh 2 mins, no background refetch
-    refetchOnWindowFocus: "always", // immediately refresh when switching back from the browser extension
+    queryFn: ({ pageParam = 1 }) =>
+      getSavesApi({ ...params, page: pageParam, limit: LIMIT }),
+    getNextPageParam: (lastPage) => {
+      const { page, totalPages } = lastPage.data.pagination || {};
+      return page < totalPages ? page + 1 : undefined;
+    },
+    select: (data) => ({
+      saves: data.pages.flatMap((p) => p.data.saves),
+      pagination: data.pages[data.pages.length - 1]?.data?.pagination,
+    }),
+    staleTime: 1000 * 10,
+    refetchOnWindowFocus: "always",
   });
 };
 
