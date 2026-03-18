@@ -5,21 +5,25 @@ const userSchema = new mongoose.Schema(
   {
     username: {
       type: String,
-      required: true,
+      required: [true, "Username is required"],
       trim: true,
       unique: true,
+      minlength: [3, "Username must be at least 3 characters"],
+      maxlength: [30, "Username cannot exceed 30 characters"],
+      match: [/^[a-zA-Z0-9_]+$/, "Username can only contain letters, numbers, and underscores"],
     },
     email: {
       type: String,
-      required: true,
+      required: [true, "Email is required"],
       unique: true,
       lowercase: true,
       trim: true,
+      match: [/^\S+@\S+\.\S+$/, "Please provide a valid email"],
     },
     password: {
       type: String,
-      required: true,
-      minlength: 6,
+      required: [true, "Password is required"],
+      minlength: [6, "Password must be at least 6 characters"],
       select: false,
     },
     isVerified: {
@@ -27,12 +31,16 @@ const userSchema = new mongoose.Schema(
       default: false,
     },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
+
+// Indexes
+userSchema.index({ email: 1 });
+userSchema.index({ username: 1 });
 
 userSchema.pre("save", async function () {
   if (!this.isModified("password")) return;
-  this.password = await bcrypt.hash(this.password, 10);
+  this.password = await bcrypt.hash(this.password, 12);
 });
 
 userSchema.methods.comparePassword = function (candidatePassword) {

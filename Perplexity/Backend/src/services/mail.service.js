@@ -1,37 +1,41 @@
 import nodemailer from "nodemailer";
+import logger from "../utils/logger.js";
 
 const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-        type: "OAuth2",
-        user: process.env.GOOGLE_USER,
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        refreshToken: process.env.GOOGLE_REFRESH_TOKEN,
-        clientId: process.env.GOOGLE_CLIENT_ID,
-    },
+  service: "gmail",
+  auth: {
+    type: "OAuth2",
+    user: process.env.GOOGLE_USER,
+    clientId: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    refreshToken: process.env.GOOGLE_REFRESH_TOKEN,
+  },
 });
 
-transporter.verify()
-    .then(() => console.log("📧 Mail service authenticated and ready"))
-    .catch((err) => console.error("❌ Mail Service Error:", err.message));
+// Verify connection on startup
+transporter
+  .verify()
+  .then(() => logger.info("📧 Mail service authenticated and ready"))
+  .catch((err) => logger.error(`Mail Service Error: ${err.message}`));
 
-export async function sendEmail({
+/**
+ * Sends an email
+ * @param {Object} options
+ * @param {string} options.to - Recipient email
+ * @param {string} options.subject - Email subject
+ * @param {string} [options.text] - Plain text body
+ * @param {string} [options.html] - HTML body
+ */
+export async function sendEmail({ to, subject, text, html }) {
+  const mailOptions = {
+    from: `"Perplexity Clone" <${process.env.GOOGLE_USER}>`,
     to,
     subject,
     text,
     html,
-}) {
-    const mailOptions = {
-        from: process.env.GOOGLE_USER,
-        to,
-        subject,
-        text,
-        html,
-    };
-    try {
-        const details = await transporter.sendMail(mailOptions);
-        console.log("Email sent successfully", details);
-    } catch (error) {
-        console.log(error);
-    }
+  };
+
+  const info = await transporter.sendMail(mailOptions);
+  logger.info(`Email sent to ${to}: ${info.messageId}`);
+  return info;
 }

@@ -1,183 +1,135 @@
 import jwt from "jsonwebtoken";
 import userModel from "../models/user.model.js";
 import { sendEmail } from "../services/mail.service.js";
+import { ApiError, ApiResponse } from "../utils/apiResponse.js";
+import asyncHandler from "../utils/asyncHandler.js";
 
-export async function registerUser(req, res) {
-  try {
-    const { username, email, password } = req.body;
-    const isUserAlreadyExists = await userModel.findOne({
-      $or: [{ email }, { username }],
-    });
+const COOKIE_OPTIONS = {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
+  maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+};
 
-    if (isUserAlreadyExists) {
-      return res.status(400).json({
-        success: false,
-        message: "User with this email or username already exists",
-      });
-    }
-    const user = await userModel.create({ username, email, password });
+export const registerUser = asyncHandler(async (req, res) => {
+  const { username, email, password } = req.body;
 
-    const emailVerificationToken = jwt.sign(
-      { email: user.email },
-      process.env.JWT_SECRET,
-      { expiresIn: "1d" },
-    );
+  const isUserAlreadyExists = await userModel.findOne({
+    $or: [{ email }, { username }],
+  });
 
-    try {
-      await sendEmail({
-        to: user.email,
-        subject: "Welcome to Perplexity",
-        html: `<p>Hi ${username},</p>
-                    <p>Thank you for registering at <strong>Perplexity</strong>. We're excited to have you on board!</p>
-                    <p>Please verify your email by clicking the link below:</p>
-                    <a href="http://localhost:5000/api/auth/verify-email?token=${emailVerificationToken}">Verify Email</a>
-                    <p>Best regards,<br/>The Perplexity Team<p>`,
-      });
-    } catch (error) {
-      await userModel.findByIdAndDelete(user._id);
-      return res.status(500).json({
-        success: false,
-        message: "Failed to send verification email. Please try again.",
-      });
-    }
-
-    res.status(201).json({
-      success: true,
-      message: "User registered successfully",
-      data: {
-        id: user._id,
-        username: user.username,
-        email: user.email,
-      },
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ success: false, message: "Internal server error" });
+  if (isUserAlreadyExists) {
+    throw new ApiError(400, "User with this email or username already exists");
   }
-}
 
-export async function loginUser(req, res) {
+  const user = await userModel.create({ username, email, password });
 
-    try {
-      const { email, password } = req.body;
+  const emailVerificationToken = jwt.sign(
+    { email: user.email },
+    process.env.JWT_SECRET,
+    { expiresIn: "1d" }
+  );
 
-      const user = await userModel.findOne({ email }).select("+password");
-      if (!user) {
-        return res.status(400).json({ success: false, message: "User not found" });
-      }
-      if (!user.isVerified) {
-        return res.status(400).json({ success: false, message: "Email not verified" });
-      }
+  const verificationUrl = `${process.env.CLIENT_URL || "http://localhost:3000"}/api/auth/verify-email?token=${emailVerificationToken}`;
 
-      const isPasswordMatch = await user.comparePassword(password);
-      if (!isPasswordMatch) {
-        return res.status(400).json({ success: false, message: "Invalid password" });
-      }
-
-      const token = jwt.sign(
-        {
-          id: user._id,
-          email: user.email,
-        },
-        process.env.JWT_SECRET,
-        {
-          expiresIn: "7d",
-        },
-      );
-
-      res.cookie("token", token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
-        maxAge: 7 * 24 * 60 * 60 * 1000,
-      });
-
-      res.status(200).json({
-        success: true,
-        message: "Login successful",
-        data: {
-          id: user._id,
-          email: user.email,
-          username: user.username,
-        },
-      });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ success: false, message: "Internal server error" });
-    }
-}
-
-export async function verifyEmail(req, res) {
   try {
-    const { token } = req.query;
-    if (!token) {
-      return res.status(400).json({ success: false, message: "Token is required" });
-    }
-
-    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-    const user = await userModel.findOne({ email: decodedToken.email });
-
-    if (!user) {
-      return res.status(400).json({ success: false, message: "User not found" });
-    }
-    if (user.isVerified) {
-      return res.status(400).json({ success: false, message: "Email already verified" });
-    }
-
-    user.isVerified = true;
-    await user.save();
-
-    res.status(200).json({
-      success: true,
-      message: "Email verified successfully",
-      data: null,
+    await sendEmail({
+      to: user.email,
+      subject: "Verify your email – Perplexity Clone",
+      html: `
+        <div style="font-family: sans-serif; max-width: 500px; margin: auto;">
+          <h2>Welcome, ${username}!</h2>
+          <p>Thanks for signing up. Please verify your email to get started.</p>
+          <a href="${verificationUrl}" style="display:inline-block;padding:12px 24px;background:#000;color:#fff;text-decoration:none;border-radius:6px;margin-top:12px;">
+            Verify Email
+          </a>
+          <p style="margin-top:24px;color:#888;font-size:12px;">Link expires in 24 hours. If you didn't sign up, ignore this email.</p>
+        </div>
+      `,
     });
-  } catch (error) {
-    if (
-      error.name === "JsonWebTokenError" ||
-      error.name === "TokenExpiredError"
-    ) {
-      return res.status(400).json({
-        success: false,
-        message: "Invalid or expired token",
-      });
-    }
-    console.error(error);
-    res.status(500).json({ success: false, message: "Internal server error" });
+  } catch (emailError) {
+    await userModel.findByIdAndDelete(user._id);
+    throw new ApiError(500, "Failed to send verification email. Please try again.");
   }
-}
 
-export async function getMe(req, res) {
-    try {
-        const user = req.user;
-        console.log(user);
-        
-        res.status(200).json({
-            success: true,
-            message: "User fetched successfully",
-            data: {
-                id: user._id,
-                email: user.email,
-                username: user.username,
-            },
-        });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ success: false, message: "Internal server error" });
-    }
-}
+  return ApiResponse.success(res, 201, "Registration successful. Please check your email to verify your account.", {
+    id: user._id,
+    username: user.username,
+    email: user.email,
+  });
+});
 
-export async function logout(req, res) {
-  try {
-    res.clearCookie("token", {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-    });
+export const loginUser = asyncHandler(async (req, res) => {
+  const { email, password } = req.body;
 
-    res.status(200).json({ success: true, message: "Logout successful" });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ success: false, message: "Internal server error" });
+  const user = await userModel.findOne({ email }).select("+password");
+  if (!user) {
+    throw new ApiError(401, "Invalid credentials");
   }
-}
+
+  if (!user.isVerified) {
+    throw new ApiError(403, "Email not verified. Please check your inbox.");
+  }
+
+  const isPasswordMatch = await user.comparePassword(password);
+  if (!isPasswordMatch) {
+    throw new ApiError(401, "Invalid credentials");
+  }
+
+  const token = jwt.sign(
+    { id: user._id, email: user.email },
+    process.env.JWT_SECRET,
+    { expiresIn: "7d" }
+  );
+
+  res.cookie("token", token, COOKIE_OPTIONS);
+
+  return ApiResponse.success(res, 200, "Login successful", {
+    id: user._id,
+    email: user.email,
+    username: user.username,
+  });
+});
+
+export const verifyEmail = asyncHandler(async (req, res) => {
+  const { token } = req.query;
+
+  if (!token) {
+    throw new ApiError(400, "Verification token is required");
+  }
+
+  const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+
+  const user = await userModel.findOne({ email: decodedToken.email });
+  if (!user) {
+    throw new ApiError(404, "User not found");
+  }
+
+  if (user.isVerified) {
+    throw new ApiError(400, "Email is already verified");
+  }
+
+  user.isVerified = true;
+  await user.save();
+
+  return ApiResponse.success(res, 200, "Email verified successfully. You can now log in.");
+});
+
+export const getMe = asyncHandler(async (req, res) => {
+  const user = req.user;
+  return ApiResponse.success(res, 200, "User fetched successfully", {
+    id: user._id,
+    email: user.email,
+    username: user.username,
+  });
+});
+
+export const logout = asyncHandler(async (req, res) => {
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
+  });
+
+  return ApiResponse.success(res, 200, "Logged out successfully");
+});
