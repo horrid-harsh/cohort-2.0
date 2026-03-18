@@ -30,7 +30,7 @@ export const registerUser = asyncHandler(async (req, res) => {
     { expiresIn: "1d" }
   );
 
-  const verificationUrl = `${process.env.CLIENT_URL || "http://localhost:3000"}/api/auth/verify-email?token=${emailVerificationToken}`;
+  const verificationUrl = `${process.env.SERVER_URL || "http://localhost:3000"}/api/auth/verify-email?token=${emailVerificationToken}`;
 
   try {
     await sendEmail({
