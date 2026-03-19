@@ -113,6 +113,17 @@
   margin-left: auto;
 }
 
+// ─── Collections ──────────────────────────────────
+
+.collectionsList {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow-y: auto;
+  max-height: 180px;
+  @include custom-scrollbar;
+}
+
 // ─── Tags ─────────────────────────────────────────
 
 .tagsList {

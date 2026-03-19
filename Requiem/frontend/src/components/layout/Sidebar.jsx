@@ -49,19 +49,21 @@ const Sidebar = () => {
         ) : collections.length === 0 ? (
           <div className={styles.empty}>No collections yet</div>
         ) : (
-          collections.map((col) => (
-            <NavLink
-              key={col._id}
-              to={`/collections/${col._id}`}
-              className={({ isActive }) =>
-                `${styles.navItem} ${isActive ? styles.active : ""}`
-              }
-            >
-              <span className={styles.navIcon}>{col.emoji}</span>
-              <span className={styles.navLabel}>{col.name}</span>
-              <span className={styles.count}>{col.saveCount}</span>
-            </NavLink>
-          ))
+          <div className={styles.collectionsList}>
+            {collections.map((col) => (
+              <NavLink
+                key={col._id}
+                to={`/collections/${col._id}`}
+                className={({ isActive }) =>
+                  `${styles.navItem} ${isActive ? styles.active : ""}`
+                }
+              >
+                <span className={styles.navIcon}>{col.emoji}</span>
+                <span className={styles.navLabel}>{col.name}</span>
+                <span className={styles.count}>{col.saveCount}</span>
+              </NavLink>
+            ))}
+          </div>
         )}
       </div>
 
