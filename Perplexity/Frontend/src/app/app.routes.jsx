@@ -5,6 +5,7 @@ import {
 } from "../components/ProtectedRoute.jsx";
 import LoginPage from "../features/auth/pages/LoginPage.jsx";
 import SignupPage from "../features/auth/pages/SignupPage.jsx";
+import VerifyEmailPage from "../features/auth/pages/VerifyEmailPage .jsx";
 
 function DashboardPage() {
   return (
@@ -35,6 +36,7 @@ export default function AppRoutes() {
           </PublicOnlyRoute>
         }
       />
+      <Route path="/verify-email" element={<VerifyEmailPage />} />
       <Route
         path="/dashboard"
         element={

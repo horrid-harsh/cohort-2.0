@@ -51,6 +51,30 @@ export const fetchCurrentUser = createAsyncThunk(
   }
 );
 
+export const verifyEmail = createAsyncThunk(
+  "auth/verifyEmail",
+  async (token, { rejectWithValue }) => {
+    try {
+      const res = await authService.verifyEmail(token);
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err.response?.data?.message || "Verification failed");
+    }
+  }
+);
+ 
+export const resendVerification = createAsyncThunk(
+  "auth/resendVerification",
+  async (email, { rejectWithValue }) => {
+    try {
+      const res = await authService.resendVerification(email);
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err.response?.data?.message || "Failed to resend email");
+    }
+  }
+);
+
 // ── Slice ─────────────────────────────────────────────────────────────────────
 
 const authSlice = createSlice({
@@ -101,12 +125,11 @@ const authSlice = createSlice({
       });
 
     // ── Logout ────────────────────────────────────────────
-    builder
-      .addCase(logoutUser.fulfilled, (state) => {
-        state.user = null;
-        state.isAuthenticated = false;
-        state.error = null;
-      });
+    builder.addCase(logoutUser.fulfilled, (state) => {
+      state.user = null;
+      state.isAuthenticated = false;
+      state.error = null;
+    });
 
     // ── Fetch current user (app init session restore) ─────
     builder
@@ -124,7 +147,39 @@ const authSlice = createSlice({
         state.isAuthenticated = false;
         state.user = null;
       });
-  },
+
+    // ── Verify email ──────────────────────────────────────
+
+    builder
+      .addCase(verifyEmail.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(verifyEmail.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.successMessage = action.payload.message;
+      })
+      .addCase(verifyEmail.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      });
+
+    // ── Resend verification ───────────────────────────────
+    builder
+      .addCase(resendVerification.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+        state.successMessage = null;
+      })
+      .addCase(resendVerification.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.successMessage = action.payload.message;
+      })
+      .addCase(resendVerification.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      });
+  } 
 });
 
 export const { clearError, clearSuccessMessage } = authSlice.actions;

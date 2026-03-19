@@ -13,4 +13,6 @@ export const authService = {
   login: (data) => authApi.post("/login", data),
   logout: () => authApi.post("/logout"),
   getMe: () => authApi.get("/get-me"),
+  verifyEmail: (token) => authApi.get(`/verify-email?token=${token}`),
+  resendVerification: (email) => authApi.post("/resend-verification", { email }),
 };

@@ -3,6 +3,8 @@ import {
   loginUser,
   registerUser,
   logoutUser,
+  verifyEmail,
+  resendVerification,
   clearError,
   clearSuccessMessage,
   selectUser,
@@ -16,7 +18,6 @@ import {
 /**
  * useAuth — state + async dispatchers only.
  *
- * Navigation is intentionally excluded.
  * Components call these functions, then handle navigation
  * in their own try/catch after .unwrap() resolves.
  *
@@ -39,6 +40,8 @@ export function useAuth() {
     login:    (data) => dispatch(loginUser(data)).unwrap(),
     register: (data) => dispatch(registerUser(data)).unwrap(),
     logout:   ()     => dispatch(logoutUser()).unwrap(),
+    verifyEmail:        (token) => dispatch(verifyEmail(token)).unwrap(),
+    resendVerification: (email) => dispatch(resendVerification(email)).unwrap(),
 
     // ── Cleanup ────────────────────────────────────────────
     clearError:          () => dispatch(clearError()),

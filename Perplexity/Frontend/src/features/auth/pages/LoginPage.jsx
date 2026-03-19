@@ -38,7 +38,27 @@ export default function LoginPage() {
         Sign in to continue your research
       </p>
 
-      <Alert type="error" message={error} />
+      <Alert
+        type="error"
+        message={
+          error?.toLowerCase().includes("not verified") ? (
+            <div className="flex flex-col gap-1">
+              <span>{error}</span>
+              <Link
+                to="/verify-email"
+                className="text-[#00d4aa] font-medium hover:underline inline-flex items-center gap-1 mt-0.5"
+              >
+                Resend verification email
+                <svg viewBox="0 0 16 16" fill="none" className="w-3.5 h-3.5">
+                  <path d="M6 12l4-4-4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </Link>
+            </div>
+          ) : (
+            error
+          )
+        }
+      />
 
       <form onSubmit={handleSubmit(onSubmit)} noValidate className="flex flex-col gap-4">
 

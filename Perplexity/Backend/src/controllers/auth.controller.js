@@ -25,12 +25,15 @@ export const registerUser = asyncHandler(async (req, res) => {
   const user = await userModel.create({ username, email, password });
 
   const emailVerificationToken = jwt.sign(
-    { email: user.email },
+    {
+      userId: user._id,
+      version: user.emailVerificationTokenVersion,
+    },
     process.env.JWT_SECRET,
     { expiresIn: "1d" }
   );
 
-  const verificationUrl = `${process.env.SERVER_URL || "http://localhost:3000"}/api/auth/verify-email?token=${emailVerificationToken}`;
+  const verificationUrl = `${process.env.CLIENT_URL}/verify-email?token=${emailVerificationToken}`;
 
   try {
     await sendEmail({
@@ -48,6 +51,7 @@ export const registerUser = asyncHandler(async (req, res) => {
       `,
     });
   } catch (emailError) {
+    console.error("Email sending Error:", emailError);
     await userModel.findByIdAndDelete(user._id);
     throw new ApiError(500, "Failed to send verification email. Please try again.");
   }
@@ -100,9 +104,14 @@ export const verifyEmail = asyncHandler(async (req, res) => {
 
   const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
 
-  const user = await userModel.findOne({ email: decodedToken.email });
+  const user = await userModel.findById(decodedToken.userId);
   if (!user) {
     throw new ApiError(404, "User not found");
+  }
+
+  // Check version to invalidate old links
+  if (user.emailVerificationTokenVersion !== decodedToken.version) {
+    throw new ApiError(401, "Link expired or invalid");
   }
 
   if (user.isVerified) {
@@ -114,6 +123,73 @@ export const verifyEmail = asyncHandler(async (req, res) => {
 
   return ApiResponse.success(res, 200, "Email verified successfully. You can now log in.");
 });
+
+export const resendVerificationEmail = asyncHandler(async (req, res) => {
+  const { email } = req.body;
+
+  if (!email) {
+    throw new ApiError(400, "Email is required");
+  }
+
+  const SAFE_RESPONSE =
+    "If that email exists and is unverified, a new link has been sent.";
+
+  const user = await userModel.findOne({
+    email: email.toLowerCase().trim(),
+  });
+
+  if (!user || user.isVerified) {
+    return ApiResponse.success(res, 200, SAFE_RESPONSE);
+  }
+
+  // ⏱️ Cooldown check (60s)
+  const COOLDOWN = 60 * 1000;
+  if (
+    user.lastVerificationEmailSentAt &&
+    user.lastVerificationEmailSentAt.getTime() > Date.now() - COOLDOWN
+  ) {
+    return ApiResponse.success(res, 200, SAFE_RESPONSE);
+  }
+
+  // 🔐 Invalidate old tokens + update timestamp
+  user.emailVerificationTokenVersion += 1;
+  user.lastVerificationEmailSentAt = new Date();
+  await user.save();
+
+  // 🔐 Strong JWT payload
+  const emailVerificationToken = jwt.sign(
+    {
+      userId: user._id,
+      version: user.emailVerificationTokenVersion,
+    },
+    process.env.JWT_SECRET,
+    { expiresIn: "1d" }
+  );
+
+  const verificationUrl = `${process.env.CLIENT_URL}/verify-email?token=${emailVerificationToken}`;
+
+  try {
+    await sendEmail({
+      to: user.email,
+      subject: "Verify your email – Perplexity Clone",
+      html: `
+        <div style="font-family: sans-serif; max-width: 500px; margin: auto;">
+          <h2>Hi ${user.username},</h2>
+          <p>You requested a new verification link. Click below to verify your email.</p>
+          <a href="${verificationUrl}" style="display:inline-block;padding:12px 24px;background:#000;color:#fff;text-decoration:none;border-radius:6px;margin-top:12px;">
+            Verify Email
+          </a>
+          <p style="margin-top:24px;color:#888;font-size:12px;">Link expires in 24 hours.</p>
+        </div>
+      `,
+    });
+  } catch (err) {
+    console.error("Resend verification email failed:", err);
+  }
+
+  return ApiResponse.success(res, 200, SAFE_RESPONSE);
+});
+
 
 export const getMe = asyncHandler(async (req, res) => {
   const user = req.user;

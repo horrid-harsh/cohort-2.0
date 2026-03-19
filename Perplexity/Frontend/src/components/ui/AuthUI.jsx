@@ -10,7 +10,7 @@ export function Alert({ type = "error", message }) {
 
   return (
     <div
-      className={`flex items-center gap-2 rounded-lg px-3.5 py-3 text-sm leading-relaxed mb-4 ${styles[type]}`}
+      className={`flex items-start gap-2 rounded-lg px-3.5 py-3 text-sm leading-relaxed mb-4 ${styles[type]}`}
     >
       {type === "error" ? <ErrorIcon /> : <CheckIcon />}
       <span>{message}</span>
@@ -174,7 +174,7 @@ function ErrorIcon() {
       fill="none"
       width="14"
       height="14"
-      className="flex-shrink-0 mt-0.5"
+      className="shrink-0 mt-1"
     >
       <circle cx="8" cy="8" r="6.5" stroke="currentColor" strokeWidth="1.3" />
       <path
@@ -194,7 +194,7 @@ function CheckIcon() {
       fill="none"
       width="14"
       height="14"
-      className="flex-shrink-0 mt-0.5"
+      className="shrink-0 mt-1"
     >
       <circle cx="8" cy="8" r="6.5" stroke="currentColor" strokeWidth="1.3" />
       <path

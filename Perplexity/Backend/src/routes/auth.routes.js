@@ -5,6 +5,7 @@ import {
   logout,
   verifyEmail,
   getMe,
+  resendVerificationEmail
 } from "../controllers/auth.controller.js";
 import { registerValidator, loginValidator } from "../validators/auth.validator.js";
 import { authUser } from "../middlewares/auth.middleware.js";
@@ -49,5 +50,13 @@ authRouter.get('/get-me', authUser, getMe)
  * @query { token }
  */
 authRouter.get('/verify-email', verifyEmail)
+
+/**
+ * @route POST /api/auth/resend-verification
+ * @desc Resend verification email to user
+ * @access Public
+ * @body { email }
+ */
+authRouter.post('/resend-verification', authRateLimiter, resendVerificationEmail)
 
 export default authRouter;
