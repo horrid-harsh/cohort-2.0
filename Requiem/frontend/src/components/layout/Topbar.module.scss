@@ -2,7 +2,9 @@
 @use '../../styles/abstracts/mixins' as *;
 
 .topbar {
-  @include flex-between;
+  display: grid;
+  grid-template-columns: 1fr minmax(auto, 520px) 1fr;
+  align-items: center;
   padding: 0 32px;
   height: $topbar-height;
   border-bottom: 0.5px solid $color-border;
@@ -13,18 +15,26 @@
   gap: 16px;
 }
 
+.leftSpacer {
+  grid-column: 1;
+}
+
 .searchWrap {
   @include flex-gap(10px);
-  flex: 1;
-  max-width: 480px;
+  grid-column: 2;
+  width: 100%;
   background: $color-bg-secondary;
   border: 0.5px solid $color-border;
   border-radius: $border-radius-md;
   padding: 0 14px;
-  height: 36px;
-  transition: border-color 0.15s;
+  height: 38px;
+  transition: all 0.15s;
 
-  &:focus-within { border-color: $color-border-hover; }
+  &:focus-within { 
+    background: $color-bg-tertiary;
+    border-color: $color-accent; 
+    box-shadow: 0 0 0 1px rgba(124, 106, 247, 0.2);
+  }
 }
 
 .searchIcon { color: $color-text-muted; flex-shrink: 0; }
@@ -42,6 +52,8 @@
 
 .btnGroup {
   @include flex-gap(8px);
+  grid-column: 3;
+  justify-self: end;
 }
 
 // ─── New dropdown ─────────────────────────────────

@@ -2,10 +2,7 @@
 @use '../styles/abstracts/mixins' as *;
 
 .page {
-  padding: 28px 32px;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
+  @include page-layout;
 }
 
 .pageHeader {

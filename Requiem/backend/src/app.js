@@ -11,6 +11,7 @@ import authRoutes from "./routes/auth.routes.js";
 import savesRoutes from "./routes/saves.routes.js";
 import collectionsRoutes from "./routes/collections.routes.js";
 import tagsRoutes from "./routes/tags.routes.js";
+import graphRoutes from "./routes/graph.routes.js";
 
 const app = express();
 
@@ -51,6 +52,7 @@ app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/saves", savesRoutes);
 app.use("/api/v1/collections", collectionsRoutes);
 app.use("/api/v1/tags", tagsRoutes);
+app.use("/api/v1/graph", graphRoutes);
 
 // 404 handler
 app.use((req, res) => {
