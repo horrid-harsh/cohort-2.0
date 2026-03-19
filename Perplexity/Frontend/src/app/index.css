@@ -1,1 +1,54 @@
 @import "tailwindcss";
+
+@theme {
+  --font-display: "Syne", sans-serif;
+  --font-body: "Inter", sans-serif;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   GLOBAL OVERRIDES
+   ────────────────────────────────────────────────────────────────────────── */
+
+/* 
+   Browser Autofill Fix
+   Prevents background and text color from changing to default white/blue 
+   when browser suggests or fills address/login data.
+*/
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  /* Using a dark color that matches the card input background */
+  -webkit-box-shadow: 0 0 0px 1000px #1a1a1a inset !important;
+  -webkit-text-fill-color: #f0f0ee !important;
+  transition: background-color 5000s ease-in-out 0s;
+  caret-color: #00d4aa;
+}
+
+::selection {
+  background-color: rgba(0, 212, 170, 0.2);
+  color: #00d4aa;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #222;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #333;
+}
+
+/* Base resets or common animations if needed */
+@keyframes cardReveal {
+  from { opacity: 0; transform: translateY(12px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
