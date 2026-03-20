@@ -41,11 +41,59 @@ export const useCreateSave = () => {
 
 export const useUpdateSave = () => {
   const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: updateSaveApi,
-    onSuccess: () => {
+    // Optimistic Update
+    onMutate: async (updatedSave) => {
+      // Cancel outgoing refetches
+      await queryClient.cancelQueries({ queryKey: ["saves"] });
+      await queryClient.cancelQueries({ queryKey: ["save", updatedSave.id] });
+
+      // Snapshot previous values
+      const prevSaves = queryClient.getQueryData(["saves"]);
+      const prevSaveDetail = queryClient.getQueryData(["save", updatedSave.id]);
+
+      // Optimistically update individual save detail
+      if (prevSaveDetail) {
+        queryClient.setQueryData(["save", updatedSave.id], {
+          ...prevSaveDetail,
+          ...updatedSave,
+        });
+      }
+
+      // Optimistically update the infinite list
+      queryClient.setQueriesData({ queryKey: ["saves"] }, (old) => {
+        if (!old) return old;
+        return {
+          ...old,
+          pages: old.pages.map((page) => ({
+            ...page,
+            data: {
+              ...page.data,
+              saves: page.data.saves.map((s) =>
+                s._id === updatedSave.id ? { ...s, ...updatedSave } : s
+              ),
+            },
+          })),
+        };
+      });
+
+      return { prevSaves, prevSaveDetail };
+    },
+    // Rollback on error
+    onError: (err, updatedSave, context) => {
+      if (context?.prevSaveDetail) {
+        queryClient.setQueryData(["save", updatedSave.id], context.prevSaveDetail);
+      }
+      if (context?.prevSaves) {
+        queryClient.setQueryData(["saves"], context.prevSaves);
+      }
+    },
+    // Refetch on settled
+    onSettled: (data, err, updatedSave) => {
       queryClient.invalidateQueries({ queryKey: ["saves"] });
-      queryClient.invalidateQueries({ queryKey: ["saves-by-tag"] });
+      queryClient.invalidateQueries({ queryKey: ["save", updatedSave.id] });
       queryClient.invalidateQueries({ queryKey: ["collection"] });
       queryClient.invalidateQueries({ queryKey: ["tags"] });
     },

@@ -61,7 +61,6 @@ const SaveDetailPage = () => {
 
   const handleToggleFavorite = () => {
     updateSave({ id, isFavorite: !save.isFavorite });
-    queryClient.invalidateQueries({ queryKey: ["save", id] });
   };
 
   const handleToggleCollection = async (colId) => {
