@@ -87,6 +87,7 @@
   min-width: 170px;
   max-height: 220px;
   overflow-y: auto;
+  overscroll-behavior: contain;
   z-index: 60;
   @include custom-scrollbar;
 

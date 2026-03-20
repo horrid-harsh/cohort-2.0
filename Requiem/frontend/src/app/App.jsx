@@ -22,15 +22,20 @@ const App = () => {
       smoothWheel: true,
     });
 
+    let rafId;
+
     const raf = (time) => {
       lenis.raf(time);
-      requestAnimationFrame(raf);
+      rafId = requestAnimationFrame(raf);
     };
 
-    requestAnimationFrame(raf);
+    rafId = requestAnimationFrame(raf);
 
-    return () => lenis.destroy();
-  }, [isMobile]);
+    return () => {
+      cancelAnimationFrame(rafId); // ✅ important
+      lenis.destroy();
+    };
+}, [isMobile]);
 
   if (isMobile) return <MobileBlock />;
 

@@ -9,7 +9,12 @@ import styles from "./SaveCardMenu.module.scss";
 
 const Submenu = ({ items, onSelect, isSelected, renderItem, menuRef }) => {
   return (
-    <div className={styles.submenu} ref={menuRef}>
+    <div
+      id="save-card-submenu"
+      className={styles.submenu}
+      ref={menuRef}
+      data-lenis-prevent
+    >
       {items.length === 0 ? (
         <div className={styles.empty}>Nothing here yet</div>
       ) : (
@@ -21,7 +26,15 @@ const Submenu = ({ items, onSelect, isSelected, renderItem, menuRef }) => {
           >
             {renderItem(item)}
             {isSelected(item._id) && (
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ marginLeft: "auto", flexShrink: 0 }}>
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                style={{ marginLeft: "auto", flexShrink: 0 }}
+              >
                 <polyline points="20 6 9 17 4 12" />
               </svg>
             )}
@@ -55,17 +68,16 @@ const SaveCardMenu = ({ save }) => {
     if (isOpen && triggerRef.current) {
       const rect = triggerRef.current.getBoundingClientRect();
       const menuWidth = 190;
-      const spaceOnRight = window.innerWidth - rect.right;
-      const spaceOnLeft = rect.left;
+      const midpoint = window.innerWidth / 2;
 
-      if (spaceOnRight >= menuWidth) {
-        setMenuStyle({ left: 0, right: "auto" });
-        setSubmenuSide("right");
-      } else if (spaceOnLeft >= menuWidth) {
+      // Simple threshold-based positioning
+      if (rect.left > midpoint) {
+        // We are on the right half of the screen, open everything to the left
         setMenuStyle({ right: 0, left: "auto" });
         setSubmenuSide("left");
       } else {
-        setMenuStyle({ left: "50%", transform: "translateX(-50%)" });
+        // We are on the left half, open everything to the right
+        setMenuStyle({ left: 0, right: "auto" });
         setSubmenuSide("right");
       }
     }
@@ -75,13 +87,16 @@ const SaveCardMenu = ({ save }) => {
   useEffect(() => {
     const handler = (e) => {
       if (
-        menuRef.current && !menuRef.current.contains(e.target) &&
-        submenuRef.current && !submenuRef.current.contains(e.target)
+        menuRef.current &&
+        !menuRef.current.contains(e.target) &&
+        submenuRef.current &&
+        !submenuRef.current.contains(e.target)
       ) {
         setIsOpen(false);
         setActiveSubmenu(null);
       } else if (
-        menuRef.current && !menuRef.current.contains(e.target) &&
+        menuRef.current &&
+        !menuRef.current.contains(e.target) &&
         !submenuRef.current
       ) {
         setIsOpen(false);
@@ -110,11 +125,17 @@ const SaveCardMenu = ({ save }) => {
   const handleSubmenuLeave = () => scheduleClose();
 
   const handleToggleCollection = async (collectionId) => {
-    const isAdded = save.collections?.some((c) => c._id === collectionId || c === collectionId);
+    const isAdded = save.collections?.some(
+      (c) => c._id === collectionId || c === collectionId,
+    );
     if (isAdded) {
-      await axiosInstance.delete(`/collections/${collectionId}/saves/${save._id}`);
+      await axiosInstance.delete(
+        `/collections/${collectionId}/saves/${save._id}`,
+      );
     } else {
-      await axiosInstance.patch(`/collections/${collectionId}/saves/${save._id}`);
+      await axiosInstance.patch(
+        `/collections/${collectionId}/saves/${save._id}`,
+      );
     }
     queryClient.invalidateQueries({ queryKey: ["saves"] });
     queryClient.invalidateQueries({ queryKey: ["collections"] });
@@ -171,8 +192,11 @@ const SaveCardMenu = ({ save }) => {
         </button>
 
         {isOpen && (
-          <div className={styles.menu} style={menuStyle} onClick={(e) => e.stopPropagation()}>
-
+          <div
+            className={styles.menu}
+            style={menuStyle}
+            onClick={(e) => e.stopPropagation()}
+          >
             {/* Collections item */}
             <div
               className={`${styles.itemWrap} ${activeSubmenu === "collections" ? styles.activeItem : ""}`}
@@ -180,11 +204,26 @@ const SaveCardMenu = ({ save }) => {
               onMouseLeave={handleMenuItemLeave}
             >
               <span className={styles.item}>
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <svg
+                  width="13"
+                  height="13"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
                   <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
                 </svg>
                 Add to collection
-                <svg className={styles.chevron} width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <svg
+                  className={styles.chevron}
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
                   <path d="m9 18 6-6-6-6" />
                 </svg>
               </span>
@@ -195,6 +234,7 @@ const SaveCardMenu = ({ save }) => {
                   onMouseEnter={handleSubmenuEnter}
                   onMouseLeave={handleSubmenuLeave}
                   ref={submenuRef}
+                  data-lenis-prevent
                 >
                   <Submenu
                     items={collections}
@@ -218,12 +258,27 @@ const SaveCardMenu = ({ save }) => {
               onMouseLeave={handleMenuItemLeave}
             >
               <span className={styles.item}>
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <svg
+                  width="13"
+                  height="13"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
                   <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" />
                   <line x1="7" y1="7" x2="7.01" y2="7" />
                 </svg>
                 Add tag
-                <svg className={styles.chevron} width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <svg
+                  className={styles.chevron}
+                  width="12"
+                  height="12"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
                   <path d="m9 18 6-6-6-6" />
                 </svg>
               </span>
@@ -234,6 +289,7 @@ const SaveCardMenu = ({ save }) => {
                   onMouseEnter={handleSubmenuEnter}
                   onMouseLeave={handleSubmenuLeave}
                   ref={submenuRef}
+                  data-lenis-prevent
                 >
                   <Submenu
                     items={tags}
@@ -241,7 +297,10 @@ const SaveCardMenu = ({ save }) => {
                     isSelected={hasTag}
                     renderItem={(tag) => (
                       <>
-                        <span className={styles.tagDot} style={{ background: tag.color }} />
+                        <span
+                          className={styles.tagDot}
+                          style={{ background: tag.color }}
+                        />
                         <span className={styles.itemLabel}>{tag.name}</span>
                       </>
                     )}
@@ -253,7 +312,14 @@ const SaveCardMenu = ({ save }) => {
             <div className={styles.divider} />
 
             <button className={styles.item} onClick={handleArchive}>
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <svg
+                width="13"
+                height="13"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
                 <polyline points="21 8 21 21 3 21 3 8" />
                 <rect x="1" y="3" width="22" height="5" />
                 <line x1="10" y1="12" x2="14" y2="12" />
@@ -263,9 +329,19 @@ const SaveCardMenu = ({ save }) => {
 
             <button
               className={`${styles.item} ${styles.danger}`}
-              onClick={() => { setIsOpen(false); setShowConfirm(true); }}
+              onClick={() => {
+                setIsOpen(false);
+                setShowConfirm(true);
+              }}
             >
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <svg
+                width="13"
+                height="13"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
                 <polyline points="3 6 5 6 21 6" />
                 <path d="M19 6l-1 14H6L5 6M10 11v6M14 11v6M9 6V4h6v2" />
               </svg>
