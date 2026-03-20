@@ -2,12 +2,74 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>frontend</title>
+    <title>Requiem</title>
+    <link rel="shortcut icon" href="./src/assets/logo.png" type="image/x-icon">
+
+    <style>
+      html, body {
+        margin: 0;
+        padding: 0;
+        background-color: #000;
+      }
+
+      #root {
+        min-height: 100vh;
+      }
+
+      /* Loader wrapper */
+      .loader-wrapper {
+        position: fixed;
+        inset: 0;
+        background: #000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        transition: opacity 0.4s ease;
+      }
+
+      .loader-wrapper.fade-out {
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      /* Your loader */
+      .loader {
+        width: 80px;
+        aspect-ratio: 1;
+        border: 10px solid #000;
+        box-sizing: border-box;
+        background: 
+          radial-gradient(farthest-side,#fff 98%,#0000) top,
+          radial-gradient(farthest-side,#fff 98%,#0000) top,
+          radial-gradient(farthest-side,#fff 98%,#0000) left,
+          radial-gradient(farthest-side,#fff 98%,#0000) right,
+          radial-gradient(farthest-side,#fff 98%,#0000) bottom,
+          #000;
+        background-size: 20px 20px;
+        background-repeat: no-repeat;
+        filter: blur(4px) contrast(10); 
+        animation: l19 2s infinite;
+      }
+
+      @keyframes l19 {
+        0%   {background-position:top,top,left,right,bottom}
+        25%  {background-position:right,top,left,right,bottom}
+        50%  {background-position:bottom,top,left,right,bottom}
+        75%  {background-position:left,top,left,right,bottom}
+        100% {background-position:top,top,left,right,bottom}
+      }
+    </style>
   </head>
+
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div class="loader-wrapper">
+        <div class="loader"></div>
+      </div>
+    </div>
+
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

@@ -1,3 +1,4 @@
+import logo from "../../assets/logo-requiem-auth.png";
 import styles from "./AuthLayout.module.scss";
 
 const AuthLayout = ({ children }) => {
@@ -8,7 +9,7 @@ const AuthLayout = ({ children }) => {
       <div className={styles.container}>
         <div className={styles.header}>
           <div className={styles.brand}>
-            RE<span>QUIEM</span>
+            <img src={logo} alt="Requiem" className={styles.logo} />
           </div>
         </div>
         

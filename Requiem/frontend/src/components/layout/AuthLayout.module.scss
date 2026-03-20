@@ -43,20 +43,14 @@
 }
 
 .brand {
-  font-family: 'Neue Machina', $font-sans;
-  font-size: 18px;
-  font-weight: 800;
-  text-transform: uppercase;
-  color: $color-text-primary;
-  letter-spacing: 0.15em;
+  @include flex-center;
   user-select: none;
-  
-  // Subtle glow like the image
-  text-shadow: 0 0 20px rgba($color-accent, 0.3);
+}
 
-  span {
-    color: $color-accent;
-  }
+.logo {
+  height: 54px;
+  width: auto;
+  filter: drop-shadow(0 0 12px rgba($color-accent, 0.2));
 }
 
 .content {
