@@ -376,7 +376,7 @@ const SaveDetailPage = () => {
                     No tags yet. Create one from the topbar.
                   </p>
                 ) : (
-                  <div className={styles.tagsList}>
+                  <div className={styles.tagsList} data-lenis-prevent>
                     {tags.map((tag) => (
                       <button
                         key={tag._id}
@@ -417,7 +417,7 @@ const SaveDetailPage = () => {
                     No collections yet. Create one from the topbar.
                   </p>
                 ) : (
-                  <div className={styles.collectionsList}>
+                   <div className={styles.collectionsList} data-lenis-prevent>
                     {collections.map((col) => (
                       <button
                         key={col._id}

@@ -1,4 +1,4 @@
-@use 'variables' as *;
+@use "variables" as *;
 
 // ─── Flex helpers ─────────────────────────────────
 @mixin flex-center {
@@ -59,8 +59,12 @@
   scrollbar-width: thin;
   scrollbar-color: $color-bg-hover transparent;
 
-  &::-webkit-scrollbar { width: 4px; }
-  &::-webkit-scrollbar-track { background: transparent; }
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
   &::-webkit-scrollbar-thumb {
     background: $color-bg-hover;
     border-radius: $border-radius-full;
@@ -69,11 +73,15 @@
 
 // ─── Breakpoints ──────────────────────────────────
 @mixin mobile {
-  @media (max-width: 768px) { @content; }
+  @media (max-width: 768px) {
+    @content;
+  }
 }
 
 @mixin tablet {
-  @media (max-width: 1024px) { @content; }
+  @media (max-width: 1024px) {
+    @content;
+  }
 }
 
 // ─── Animations ───────────────────────────────────

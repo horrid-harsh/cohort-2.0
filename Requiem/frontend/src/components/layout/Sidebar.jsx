@@ -49,7 +49,7 @@ const Sidebar = () => {
         ) : collections.length === 0 ? (
           <div className={styles.empty}>No collections yet</div>
         ) : (
-          <div className={styles.collectionsList}>
+          <div className={styles.collectionsList} data-lenis-prevent>
             {collections.map((col) => (
               <NavLink
                 key={col._id}
@@ -76,7 +76,7 @@ const Sidebar = () => {
         ) : tags.length === 0 ? (
           <div className={styles.empty}>No tags yet</div>
         ) : (
-          <div className={styles.tagsList}>
+          <div className={styles.tagsList} data-lenis-prevent>
             {tags.map((tag) => (
               <NavLink
                 key={tag._id}
@@ -103,11 +103,22 @@ const Sidebar = () => {
             {user?.name?.charAt(0).toUpperCase()}
           </div>
           <span className={styles.userName}>{user?.name}</span>
-          <button className={styles.logoutBtn} onClick={() => logout()} title="Logout">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-              <polyline points="16 17 21 12 16 7"/>
-              <line x1="21" y1="12" x2="9" y2="12"/>
+          <button
+            className={styles.logoutBtn}
+            onClick={() => logout()}
+            title="Logout"
+          >
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+              <polyline points="16 17 21 12 16 7" />
+              <line x1="21" y1="12" x2="9" y2="12" />
             </svg>
           </button>
         </div>
