@@ -4,10 +4,15 @@
 .page {
   padding: 28px 32px;
   min-height: 100%;
+
+  @media (max-width: 960px) {
+    padding: 20px 16px;
+  }
 }
 
 .inner {
   max-width: 960px;
+  width: 100%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -136,9 +141,13 @@
 .grid {
   display: grid;
   grid-template-columns: 1fr 340px;
-  gap: 20px;
-  align-items: stretch;
-  overflow: hidden; // Prevent overall layout bleed
+  gap: 24px;
+  width: 100%;
+  
+  @media (max-width: 960px) {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
 }
 
 .left {
@@ -151,12 +160,17 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  height: 0;      // Critical: prevent right side content from expanding the grid row height
-  min-height: 100%; // Fill the height determined by the left column
+  height: 0;      
+  min-height: 100%; 
   
+  @media (max-width: 960px) {
+    height: auto;
+    min-height: 0;
+  }
+
   .section {
     flex: 1;
-    min-height: 0; // Allow section to shrink and facilitate internal scrolling
+    min-height: 0; 
     overflow: hidden;
   }
 }
@@ -197,8 +211,12 @@
   padding: 10px 12px;
   font-size: $text-sm;
   color: $color-text-primary;
-  resize: vertical;
   line-height: 1.6;
+  min-height: 110px;
+  max-height: 360px;
+  overflow-y: auto;
+  resize: vertical;
+  @include custom-scrollbar;
   transition: border-color 0.15s;
 
   &::placeholder { color: $color-text-muted; }
@@ -319,6 +337,10 @@
   min-height: 0;
   overscroll-behavior: contain;
   @include custom-scrollbar;
+
+  @media (max-width: 1024px) {
+    max-height: 240px;
+  }
 }
 
 .tagItem, .colItem {

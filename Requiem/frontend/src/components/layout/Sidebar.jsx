@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import logo from "../../assets/requiem-logo-wordmark.png";
+import logo from "../../assets/requiem-logo-wordmark-v2.png";
 import { useCollections } from "../../features/collections/hooks/useCollections";
 import { useTags } from "../../features/tags/hooks/useTags";
 import { useLogout } from "../../features/auth/hooks/useAuth";

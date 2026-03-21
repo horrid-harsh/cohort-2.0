@@ -1,14 +1,11 @@
 import styles from "./MobileBlock.module.scss";
-import textClip from "../../assets/text-clip.png";
+import logo from "../../assets/requiem-logo-wordmark-v2.png";
 
 const MobileBlock = () => (
   <div className={styles.wrap}>
-    <h1 
-      className={styles.logo} 
-      style={{ backgroundImage: `url(${textClip})` }}
-    >
-      REQUIEM
-    </h1>
+    <div className={styles.logoContainer}>
+      <img src={logo} alt="Requiem" className={styles.logo} />
+    </div>
     <p className={styles.message}>
       For the best experience,<br />
       please open Requiem on<br />

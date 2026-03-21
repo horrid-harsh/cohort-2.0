@@ -12,25 +12,15 @@
   overflow: hidden;
 }
 
+.logoContainer {
+  width: 80%;
+  max-width: 320px;
+  @include flex-center;
+}
+
 .logo {
-  font-size: clamp(3.2rem, 16vw, 6.5rem);
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  margin: 0;
-  line-height: 1.1;
-  
-  // Image as text mask effect
-  // Note: backgroundImage is passed via JSX for reliable asset resolution
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
-  
-  // High contrast and presence
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
+  width: 100%;
+  height: auto;
   user-select: none;
 }
 

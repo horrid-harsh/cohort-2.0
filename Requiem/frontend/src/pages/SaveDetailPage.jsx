@@ -288,6 +288,7 @@ const SaveDetailPage = () => {
                   value={note}
                   onChange={(e) => setNote(e.target.value)}
                   rows={4}
+                  data-lenis-prevent
                 />
                 <div className={styles.noteActions}>
                   <button
