@@ -3,6 +3,7 @@ import {
   createSave,
   getAllSaves,
   getSaveById,
+  getRelatedSaves,
   updateSave,
   deleteSave,
 } from "../controllers/saves.controller.js";
@@ -27,5 +28,13 @@ router.route("/").get(getAllSaves).post(aiLimiter, createSave);
  * @access private
  */
 router.route("/:id").get(getSaveById).patch(apiLimiter, updateSave).delete(apiLimiter, deleteSave);
+
+/**
+ * @route /api/v1/saves/:id/related
+ * @methods GET - getRelatedSaves
+ * @access private
+ */
+router.get("/:id/related", getRelatedSaves);
+
 
 export default router;

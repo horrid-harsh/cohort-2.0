@@ -10,6 +10,7 @@ import { useUpdateSave, useDeleteSave } from "../features/saves/hooks/useSaves";
 import { useCollections } from "../features/collections/hooks/useCollections";
 import { useTags } from "../features/tags/hooks/useTags";
 import styles from "./SaveDetailPage.module.scss";
+import RelatedSaves from "../features/saves/components/RelatedSaves";
 
 const TYPE_LABELS = {
   article: { label: "Article", color: "#378ADD" },
@@ -463,6 +464,8 @@ const SaveDetailPage = () => {
               </div>
             </div>
           </div>
+
+          <RelatedSaves saveId={id} />
         </div>
       </div>
 

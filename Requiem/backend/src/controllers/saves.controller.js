@@ -172,6 +172,53 @@ export const getSaveById = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, save, "Save fetched successfully"));
 });
 
+// GET /api/v1/saves/:id/related
+export const getRelatedSaves = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+ 
+  // Get the current save with its embedding
+  const currentSave = await SaveModel.findOne({
+    _id: id,
+    user: req.user._id,
+  }).select("+embedding");
+ 
+  if (!currentSave) throw new ApiError(404, "Save not found");
+ 
+  // If no embedding yet, return empty
+  if (!currentSave.embedding?.length) {
+    return res.status(200).json(
+      new ApiResponse(200, [], "No embedding available yet")
+    );
+  }
+ 
+  // Get all other saves with embeddings
+  const allSaves = await SaveModel.find({
+    user: req.user._id,
+    _id: { $ne: id }, // exclude current save
+    isArchived: false,
+    embedding: { $exists: true, $not: { $size: 0 } },
+  })
+    .select("+embedding")
+    .populate("tags", "name color")
+    .lean();
+ 
+  // Score by cosine similarity
+  const scored = allSaves
+    .map((save) => ({
+      ...save,
+      score: cosineSimilarity(currentSave.embedding, save.embedding),
+      embedding: undefined, // strip before sending
+    }))
+    .filter((save) => save.score > 0.75)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 5);
+ 
+  return res.status(200).json(
+    new ApiResponse(200, scored, "Related saves fetched")
+  );
+});
+
+
 // PATCH /api/v1/saves/:id
 export const updateSave = asyncHandler(async (req, res) => {
   const allowedUpdates = [
