@@ -11,6 +11,7 @@ const NAV_ITEMS = [
   { label: "Favorites", to: "/favorites", icon: "♡" },
   { label: "Graph", to: "/graph", icon: "◎" },
   { label: "Archive", to: "/archive", icon: "▤" },
+  { label: "Clusters", to: "/clusters", icon: "⬢" },
 ];
 
 const Sidebar = () => {

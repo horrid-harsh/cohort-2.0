@@ -11,6 +11,7 @@ import savesRoutes from "./routes/saves.routes.js";
 import collectionsRoutes from "./routes/collections.routes.js";
 import tagsRoutes from "./routes/tags.routes.js";
 import graphRoutes from "./routes/graph.routes.js";
+import clusterRoutes from "./routes/cluster.routes.js";
 
 const app = express();
 
@@ -44,6 +45,7 @@ app.use("/api/v1/saves", savesRoutes);
 app.use("/api/v1/collections", collectionsRoutes);
 app.use("/api/v1/tags", tagsRoutes);
 app.use("/api/v1/graph", graphRoutes);
+app.use("/api/v1/clusters", clusterRoutes);
 
 // 404 handler
 app.use((req, res) => {
