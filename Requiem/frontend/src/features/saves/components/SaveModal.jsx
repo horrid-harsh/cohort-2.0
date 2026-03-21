@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import { useQueryClient } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
 import { useCreateSave } from "../hooks/useSaves";
@@ -28,10 +29,14 @@ const SaveModal = ({ isOpen, onClose }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!url.trim()) return;
+
+    const toastId = toast.loading("Saving URL...");
+
     createSave(
       { url, note },
       {
         onSuccess: () => {
+          toast.success("Save added!", { id: toastId });
           onClose();
           setTimeout(() => {
             queryClient.invalidateQueries({ queryKey: ["saves"] });
@@ -39,6 +44,9 @@ const SaveModal = ({ isOpen, onClose }) => {
             queryClient.invalidateQueries({ queryKey: ["tags"] });
           }, 3000);
         },
+        onError: (err) => {
+          toast.error(err.response?.data?.message || "Failed to save", { id: toastId });
+        }
       },
     );
   };

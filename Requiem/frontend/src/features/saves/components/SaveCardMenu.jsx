@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from "react";
+import toast from "react-hot-toast";
 import { useCollections } from "../../collections/hooks/useCollections";
 import { useTags } from "../../tags/hooks/useTags";
 import { useUpdateSave, useDeleteSave } from "../hooks/useSaves";
@@ -128,14 +129,18 @@ const SaveCardMenu = ({ save }) => {
     const isAdded = save.collections?.some(
       (c) => c._id === collectionId || c === collectionId,
     );
+    const colName = collections.find(c => c._id === collectionId)?.name || "collection";
+
     if (isAdded) {
       await axiosInstance.delete(
         `/collections/${collectionId}/saves/${save._id}`,
       );
+      toast.success(`Removed from ${colName}`);
     } else {
       await axiosInstance.patch(
         `/collections/${collectionId}/saves/${save._id}`,
       );
+      toast.success(`Added to ${colName}`);
     }
     queryClient.invalidateQueries({ queryKey: ["saves"] });
     queryClient.invalidateQueries({ queryKey: ["collections"] });
@@ -144,10 +149,14 @@ const SaveCardMenu = ({ save }) => {
 
   const handleToggleTag = async (tagId) => {
     const isAdded = save.tags?.some((t) => t._id === tagId || t === tagId);
+    const tagName = tags.find(t => t._id === tagId)?.name || "tag";
+
     if (isAdded) {
       await axiosInstance.delete(`/tags/${tagId}/saves/${save._id}`);
+      toast.success(`Removed tag: ${tagName}`);
     } else {
       await axiosInstance.patch(`/tags/${tagId}/saves/${save._id}`);
+      toast.success(`Added tag: ${tagName}`);
     }
     queryClient.invalidateQueries({ queryKey: ["saves"] });
     queryClient.invalidateQueries({ queryKey: ["tags"] });
@@ -155,12 +164,15 @@ const SaveCardMenu = ({ save }) => {
   };
 
   const handleArchive = () => {
-    updateSave({ id: save._id, isArchived: !save.isArchived });
+    const nextArchived = !save.isArchived;
+    updateSave({ id: save._id, isArchived: nextArchived });
+    toast.success(nextArchived ? "Archived" : "Unarchived");
     setIsOpen(false);
   };
 
   const handleDeleteConfirmed = () => {
     deleteSave(save._id);
+    toast.success("Save deleted");
     setShowConfirm(false);
     setIsOpen(false);
   };

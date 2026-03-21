@@ -19,7 +19,12 @@ export const useSession = () => {
       setUser(query.data?.data?.data);
     }
     if (query.isError) {
-      clearAuth();
+      // Only clear auth on actual unauthorized/forbidden errors (401, 403)
+      // Do NOT clear on 429 (Rate Limit) or other network errors
+      const status = query.error?.response?.status;
+      if (status === 401 || status === 403) {
+        clearAuth();
+      }
     }
   }, [query.isSuccess, query.isError]);
 

@@ -8,6 +8,7 @@ import {
   removeTagFromSave,
 } from "../controllers/tags.controller.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
+import { apiLimiter } from "../middlewares/rateLimiter.middleware.js";
 
 const router = Router();
 
@@ -18,14 +19,14 @@ router.use(verifyJWT);
  * @methods GET - getAllTags | POST - createTag
  * @access private
  */
-router.route("/").get(getAllTags).post(createTag);
+router.route("/").get(getAllTags).post(apiLimiter, createTag);
 
 /**
  * @route /api/v1/tags/:id
  * @methods PATCH - updateTag | DELETE - deleteTag
  * @access private
  */
-router.route("/:id").patch(updateTag).delete(deleteTag);
+router.route("/:id").patch(apiLimiter, updateTag).delete(apiLimiter, deleteTag);
 
 /**
  * @route /api/v1/tags/:id/saves/:saveId
@@ -33,7 +34,7 @@ router.route("/:id").patch(updateTag).delete(deleteTag);
  * @access private
  */
 router.route("/:id/saves/:saveId")
-  .patch(addTagToSave)
-  .delete(removeTagFromSave);
+  .patch(apiLimiter, addTagToSave)
+  .delete(apiLimiter, removeTagFromSave);
 
 export default router;

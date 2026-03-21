@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import { useUpdateSave } from "../hooks/useSaves";
 import { useNavigate } from "react-router-dom";
 import SaveCardMenu from "./SaveCardMenu";
@@ -19,7 +20,9 @@ const SaveCard = ({ save }) => {
 
   const toggleFavorite = (e) => {
     e.preventDefault();
-    updateSave({ id: save._id, isFavorite: !save.isFavorite });
+    const nextFavorite = !save.isFavorite;
+    updateSave({ id: save._id, isFavorite: nextFavorite });
+    toast.success(nextFavorite ? "Added to favorites" : "Removed from favorites");
   };
 
   const handleOpen = () => {

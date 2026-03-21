@@ -1,4 +1,4 @@
-import logo from "../../assets/logo-requiem-auth.png";
+import logo from "../../assets/requiem-logo-auth.png";
 import styles from "./AuthLayout.module.scss";
 
 const AuthLayout = ({ children }) => {

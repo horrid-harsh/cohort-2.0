@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import toast from "react-hot-toast";
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axiosInstance from "../utils/axios.instance";
@@ -25,7 +26,6 @@ const SaveDetailPage = () => {
   const queryClient = useQueryClient();
 
   const [note, setNote] = useState("");
-  const [noteSaved, setNoteSaved] = useState(false);
   const [newHighlight, setNewHighlight] = useState("");
   const [showConfirm, setShowConfirm] = useState(false);
 
@@ -52,23 +52,28 @@ const SaveDetailPage = () => {
   const handleSaveNote = () => {
     updateSave({ id, note }, {
       onSuccess: () => {
-        setNoteSaved(true);
-        setTimeout(() => setNoteSaved(false), 2000);
+        toast.success("Note saved");
         queryClient.invalidateQueries({ queryKey: ["save", id] });
       },
     });
   };
 
   const handleToggleFavorite = () => {
-    updateSave({ id, isFavorite: !save.isFavorite });
+    const nextFavorite = !save.isFavorite;
+    updateSave({ id, isFavorite: nextFavorite });
+    toast.success(nextFavorite ? "Added to favorites" : "Removed from favorites");
   };
 
   const handleToggleCollection = async (colId) => {
     const isAdded = save.collections?.some((c) => c._id === colId || c === colId);
+    const colName = collections.find(c => c._id === colId)?.name || "collection";
+    
     if (isAdded) {
       await axiosInstance.delete(`/collections/${colId}/saves/${id}`);
+      toast.success(`Removed from ${colName}`);
     } else {
       await axiosInstance.patch(`/collections/${colId}/saves/${id}`);
+      toast.success(`Added to ${colName}`);
     }
     queryClient.invalidateQueries({ queryKey: ["save", id] });
     queryClient.invalidateQueries({ queryKey: ["saves"] });
@@ -77,10 +82,14 @@ const SaveDetailPage = () => {
 
   const handleToggleTag = async (tagId) => {
     const isAdded = save.tags?.some((t) => t._id === tagId || t === tagId);
+    const tagName = tags.find(t => t._id === tagId)?.name || "tag";
+    
     if (isAdded) {
       await axiosInstance.delete(`/tags/${tagId}/saves/${id}`);
+      toast.success(`Removed tag: ${tagName}`);
     } else {
       await axiosInstance.patch(`/tags/${tagId}/saves/${id}`);
+      toast.success(`Added tag: ${tagName}`);
     }
     queryClient.invalidateQueries({ queryKey: ["save", id] });
     queryClient.invalidateQueries({ queryKey: ["saves"] });
@@ -94,6 +103,7 @@ const SaveDetailPage = () => {
       {
         onSuccess: () => {
           setNewHighlight("");
+          toast.success("Highlight added");
           queryClient.invalidateQueries({ queryKey: ["save", id] });
         },
       }
@@ -103,12 +113,20 @@ const SaveDetailPage = () => {
   const handleDeleteHighlight = (index) => {
     const updated = save.highlights.filter((_, i) => i !== index);
     updateSave({ id, highlights: updated }, {
-      onSuccess: () => queryClient.invalidateQueries({ queryKey: ["save", id] }),
+      onSuccess: () => {
+        toast.success("Highlight removed");
+        queryClient.invalidateQueries({ queryKey: ["save", id] });
+      },
     });
   };
 
   const handleDelete = () => {
-    deleteSave(id, { onSuccess: () => navigate("/") });
+    deleteSave(id, { 
+      onSuccess: () => {
+        toast.success("Save deleted");
+        navigate("/");
+      } 
+    });
   };
 
   const isInCollection = (colId) =>
@@ -272,7 +290,6 @@ const SaveDetailPage = () => {
                   rows={4}
                 />
                 <div className={styles.noteActions}>
-                  {noteSaved && <span className={styles.saved}>Saved!</span>}
                   <button
                     className={styles.saveNoteBtn}
                     onClick={handleSaveNote}

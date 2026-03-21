@@ -1,3 +1,4 @@
+import { Toaster } from "react-hot-toast";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import queryClient from "./QueryClient";
@@ -44,6 +45,40 @@ const App = () => {
       <SessionProvider>
         <Router />
       </SessionProvider>
+      <Toaster 
+        position="top-center"
+        toastOptions={{
+          style: {
+            background: "rgba(24, 24, 27, 0.85)",
+            backdropFilter: "blur(12px) saturate(180%)",
+            WebkitBackdropFilter: "blur(12px) saturate(180%)",
+            color: "#ffffff",
+            border: "1px solid rgba(255, 255, 255, 0.12)",
+            fontSize: "14px",
+            fontWeight: "500",
+            borderRadius: "14px",
+            padding: "12px 20px",
+            boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.2)",
+          },
+          success: {
+            iconTheme: {
+              primary: "#ffffff",
+              secondary: "#000000",
+            },
+          },
+          error: {
+            iconTheme: {
+              primary: "#f87171",
+              secondary: "#ffffff",
+            },
+          },
+          loading: {
+            style: {
+              background: "rgba(24, 24, 27, 0.95)",
+            }
+          }
+        }}
+      />
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );

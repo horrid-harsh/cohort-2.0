@@ -24,20 +24,15 @@
   align-items: center;
   height: $topbar-height;
   flex-shrink: 0;
-  font-family: "Neue Machina", $font-sans;
-  font-size: 15px;
-  font-weight: 800;
-  text-transform: uppercase;
-  color: $color-text-primary;
-  letter-spacing: 0.12em;
   padding: 0 10px;
   border-bottom: 0.5px solid $color-border;
   margin-bottom: 24px;
   text-decoration: none;
 
-  span {
-    color: $color-accent;
-    font-weight: 800;
+  img {
+    height: 32px;
+    width: auto;
+    object-fit: contain;
   }
 }
 

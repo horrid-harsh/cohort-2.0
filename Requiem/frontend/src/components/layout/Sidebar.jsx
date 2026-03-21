@@ -1,4 +1,5 @@
 import { NavLink, useNavigate } from "react-router-dom";
+import logo from "../../assets/requiem-logo-wordmark.png";
 import { useCollections } from "../../features/collections/hooks/useCollections";
 import { useTags } from "../../features/tags/hooks/useTags";
 import { useLogout } from "../../features/auth/hooks/useAuth";
@@ -21,7 +22,7 @@ const Sidebar = () => {
   return (
     <aside className={styles.sidebar}>
       <NavLink to="/" className={styles.logo}>
-        RE<span>QUIEM</span>
+        <img src={logo} alt="Requiem" />
       </NavLink>
 
       <nav className={styles.nav}>

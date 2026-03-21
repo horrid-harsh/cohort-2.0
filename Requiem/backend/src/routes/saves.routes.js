@@ -7,6 +7,7 @@ import {
   deleteSave,
 } from "../controllers/saves.controller.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
+import { apiLimiter, aiLimiter } from "../middlewares/rateLimiter.middleware.js";
 
 const router = Router();
 
@@ -18,13 +19,13 @@ router.use(verifyJWT);
  * @methods GET - getAllSaves | POST - createSave
  * @access private
  */
-router.route("/").get(getAllSaves).post(createSave);
+router.route("/").get(getAllSaves).post(aiLimiter, createSave);
 
 /**
  * @route /api/v1/saves/:id
  * @methods GET - getSaveById | PATCH - updateSave | DELETE - deleteSave
  * @access private
  */
-router.route("/:id").get(getSaveById).patch(updateSave).delete(deleteSave);
+router.route("/:id").get(getSaveById).patch(apiLimiter, updateSave).delete(apiLimiter, deleteSave);
 
 export default router;
