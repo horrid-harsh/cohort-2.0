@@ -1,0 +1,119 @@
+@use '../../../styles/abstracts/variables' as *;
+@use '../../../styles/abstracts/mixins' as *;
+
+.card {
+  position: relative;
+  background: $color-bg-secondary;
+  border: 0.5px solid $color-border;
+  border-radius: $border-radius-lg;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: border-color 0.15s;
+
+  &:hover {
+    border-color: $color-border-hover;
+  }
+}
+
+.label {
+  @include flex-gap(5px);
+  font-size: $text-xs;
+  color: $color-accent;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+
+  svg { flex-shrink: 0; }
+}
+
+.content {
+  @include flex-gap(12px);
+  cursor: pointer;
+  align-items: center;
+
+  &:hover .title {
+    color: $color-accent;
+  }
+
+  &:hover .arrow {
+    opacity: 1;
+    transform: translateX(2px);
+  }
+}
+
+.thumb {
+  width: 64px;
+  height: 44px;
+  border-radius: $border-radius-sm;
+  object-fit: cover;
+  flex-shrink: 0;
+  background: $color-bg-tertiary;
+}
+
+.thumbPlaceholder {
+  width: 64px;
+  height: 44px;
+  border-radius: $border-radius-sm;
+  background: $color-bg-tertiary;
+  flex-shrink: 0;
+  @include flex-center;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.title {
+  font-size: $text-sm;
+  font-weight: 500;
+  color: $color-text-primary;
+  @include line-clamp(1);
+  transition: color 0.15s;
+}
+
+.meta {
+  @include flex-gap(6px);
+  flex-wrap: wrap;
+}
+
+.site {
+  font-size: $text-xs;
+  color: $color-text-muted;
+}
+
+.tag {
+  font-size: 10px;
+  padding: 1px 6px;
+  border-radius: $border-radius-full;
+  border: 0.5px solid;
+  font-weight: 500;
+}
+
+.arrow {
+  color: $color-text-muted;
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity 0.15s, transform 0.15s;
+}
+
+.dismiss {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: $color-text-muted;
+  padding: 4px;
+  border-radius: $border-radius-sm;
+  transition: color 0.1s, background 0.1s;
+
+  &:hover {
+    color: $color-text-primary;
+    background: $color-bg-hover;
+  }
+}

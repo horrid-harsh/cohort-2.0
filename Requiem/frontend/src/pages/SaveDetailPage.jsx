@@ -2,7 +2,9 @@ import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import axiosInstance from "../utils/axios.instance";
+import { getSaveByIdApi } from "../features/saves/services/saves.service";
+import { addSaveToCollectionApi, removeSaveFromCollectionApi } from "../features/collections/services/collections.service";
+import { addTagToSaveApi, removeTagFromSaveApi } from "../features/tags/services/tags.service";
 import PageWrapper from "../components/layout/PageWrapper";
 import Topbar from "../components/layout/Topbar";
 import ConfirmDialog from "../components/ui/ConfirmDialog";
@@ -32,10 +34,7 @@ const SaveDetailPage = () => {
 
   const { data, isLoading } = useQuery({
     queryKey: ["save", id],
-    queryFn: async () => {
-      const res = await axiosInstance.get(`/saves/${id}`);
-      return res.data.data;
-    },
+    queryFn: () => getSaveByIdApi(id),
   });
 
   const { data: collections = [] } = useCollections();
@@ -70,10 +69,10 @@ const SaveDetailPage = () => {
     const colName = collections.find(c => c._id === colId)?.name || "collection";
     
     if (isAdded) {
-      await axiosInstance.delete(`/collections/${colId}/saves/${id}`);
+      await removeSaveFromCollectionApi({ collectionId: colId, saveId: id });
       toast.success(`Removed from ${colName}`);
     } else {
-      await axiosInstance.patch(`/collections/${colId}/saves/${id}`);
+      await addSaveToCollectionApi({ collectionId: colId, saveId: id });
       toast.success(`Added to ${colName}`);
     }
     queryClient.invalidateQueries({ queryKey: ["save", id] });
@@ -86,10 +85,10 @@ const SaveDetailPage = () => {
     const tagName = tags.find(t => t._id === tagId)?.name || "tag";
     
     if (isAdded) {
-      await axiosInstance.delete(`/tags/${tagId}/saves/${id}`);
+      await removeTagFromSaveApi({ tagId, saveId: id });
       toast.success(`Removed tag: ${tagName}`);
     } else {
-      await axiosInstance.patch(`/tags/${tagId}/saves/${id}`);
+      await addTagToSaveApi({ tagId, saveId: id });
       toast.success(`Added tag: ${tagName}`);
     }
     queryClient.invalidateQueries({ queryKey: ["save", id] });

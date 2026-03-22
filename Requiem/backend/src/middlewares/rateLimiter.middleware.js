@@ -1,4 +1,4 @@
-import { rateLimit } from "express-rate-limit";
+import rateLimit, { ipKeyGenerator } from "express-rate-limit";
 
 // ─── Auth routes — strict (prevent brute force) ───
 // 20 attempts per 15 mins per IP
@@ -24,7 +24,7 @@ export const apiLimiter = rateLimit({
     message: "Too many requests, please slow down.",
   },
   skip: (req) => req.method === "GET",
-  keyGenerator: (req) => req.user?._id?.toString() || req.ip,
+  keyGenerator: (req) => req.user?._id?.toString() || ipKeyGenerator(req),
   standardHeaders: true,
   legacyHeaders: false,
 });
@@ -38,7 +38,8 @@ export const aiLimiter = rateLimit({
     success: false,
     message: "Hourly save limit reached, try again later.",
   },
-  keyGenerator: (req) => req.user?._id?.toString() || req.ip,
+  skip: (req) => !req.user,
+  keyGenerator: (req) => req.user?._id?.toString() || ipKeyGenerator(req),
   standardHeaders: true,
   legacyHeaders: false,
 });

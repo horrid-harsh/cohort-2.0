@@ -9,7 +9,6 @@ export const useCollections = () => {
   return useQuery({
     queryKey: ["collections"],
     queryFn: getCollectionsApi,
-    select: (data) => data.data,
   });
 };
 

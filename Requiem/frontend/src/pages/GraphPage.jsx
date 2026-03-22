@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import * as d3 from "d3";
-import axiosInstance from "../utils/axios.instance";
+import { getGraphApi } from "../features/graph/services/graph.service";
 import PageWrapper from "../components/layout/PageWrapper";
 import Topbar from "../components/layout/Topbar";
 import styles from "./GraphPage.module.scss";
@@ -24,10 +24,7 @@ const GraphPage = () => {
 
   const { data, isLoading } = useQuery({
     queryKey: ["graph"],
-    queryFn: async () => {
-      const res = await axiosInstance.get("/graph");
-      return res.data.data;
-    },
+    queryFn: getGraphApi,
     staleTime: 1000 * 60 * 5,
   });
 

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import axiosInstance from "../../../utils/axios.instance";
+import { updateTagApi } from "../services/tags.service";
 import styles from "../../../components/ui/CreateModal.module.scss";
 
 const COLORS = ["#7c6af7", "#378ADD", "#1D9E75", "#D85A30", "#D4537E", "#f87171", "#fbbf24", "#4ade80"];
@@ -18,10 +18,7 @@ const EditTagModal = ({ isOpen, onClose, tag }) => {
   }, [tag]);
 
   const { mutate: updateTag, isPending, error } = useMutation({
-    mutationFn: async (data) => {
-      const res = await axiosInstance.patch(`/tags/${tag._id}`, data);
-      return res.data;
-    },
+    mutationFn: (data) => updateTagApi({ id: tag._id, ...data }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["tags"] });
       queryClient.invalidateQueries({ queryKey: ["saves-by-tag", tag._id] });

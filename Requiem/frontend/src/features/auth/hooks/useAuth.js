@@ -10,7 +10,7 @@ export const useLogin = () => {
   return useMutation({
     mutationFn: loginApi,
     onSuccess: (data) => {
-      setUser(data.data.user);
+      setUser(data.user);
       navigate("/");
     },
   });

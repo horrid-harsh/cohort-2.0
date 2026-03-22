@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import axiosInstance from "../utils/axios.instance";
+import { getSavesApi } from "../features/saves/services/saves.service";
 import PageWrapper from "../components/layout/PageWrapper";
 import Topbar from "../components/layout/Topbar";
 import SaveCard from "../features/saves/components/SaveCard";
@@ -22,10 +22,7 @@ const TagPage = () => {
 
   const { data: savesData, isLoading } = useQuery({
     queryKey: ["saves-by-tag", id],
-    queryFn: async () => {
-      const res = await axiosInstance.get("/saves", { params: { tag: id } });
-      return res.data.data;
-    },
+    queryFn: () => getSavesApi({ tag: id }),
   });
 
   const { data: tagsData } = useTags();

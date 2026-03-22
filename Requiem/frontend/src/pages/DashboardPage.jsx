@@ -4,6 +4,7 @@ import Topbar from "../components/layout/Topbar";
 import SaveGrid from "../features/saves/components/SaveGrid";
 import styles from "./DashboardPage.module.scss";
 import useDebounce from "../hooks/useDebounce";
+import ResurfaceCard from "../features/saves/components/ResurfaceCard";
 
 const DashboardPage = () => {
   const [search, setSearch] = useState("");
@@ -14,6 +15,7 @@ const DashboardPage = () => {
     <PageWrapper>
       <Topbar onSearch={setSearch} onSemanticChange={setIsSemantic} />
       <div className={styles.page}>
+        <ResurfaceCard />
         <SaveGrid search={debouncedSearch} semantic={isSemantic} />
       </div>
     </PageWrapper>

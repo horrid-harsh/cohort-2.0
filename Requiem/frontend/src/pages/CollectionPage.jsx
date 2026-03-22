@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import axiosInstance from "../utils/axios.instance";
+import { getCollectionByIdApi } from "../features/collections/services/collections.service";
 import PageWrapper from "../components/layout/PageWrapper";
 import Topbar from "../components/layout/Topbar";
 import SaveCard from "../features/saves/components/SaveCard";
@@ -22,10 +22,7 @@ const CollectionPage = () => {
 
   const { data, isLoading } = useQuery({
     queryKey: ["collection", id],
-    queryFn: async () => {
-      const res = await axiosInstance.get(`/collections/${id}`);
-      return res.data.data;
-    },
+    queryFn: () => getCollectionByIdApi(id),
   });
 
   const { mutate: deleteCollection, isPending } = useDeleteCollection();

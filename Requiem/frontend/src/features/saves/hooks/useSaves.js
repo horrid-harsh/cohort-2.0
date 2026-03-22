@@ -14,12 +14,12 @@ export const useSaves = (params = {}) => {
     queryFn: ({ pageParam = 1 }) =>
       getSavesApi({ ...params, page: pageParam, limit: LIMIT }),
     getNextPageParam: (lastPage) => {
-      const { page, totalPages } = lastPage.data.pagination || {};
+      const { page, totalPages } = lastPage.pagination || {};
       return page < totalPages ? page + 1 : undefined;
     },
     select: (data) => ({
-      saves: data.pages.flatMap((p) => p.data.saves),
-      pagination: data.pages[data.pages.length - 1]?.data?.pagination,
+      saves: data.pages.flatMap((p) => p.saves),
+      pagination: data.pages[data.pages.length - 1]?.pagination,
     }),
     staleTime: 1000 * 10,
     refetchOnWindowFocus: "always",
@@ -69,12 +69,9 @@ export const useUpdateSave = () => {
           ...old,
           pages: old.pages.map((page) => ({
             ...page,
-            data: {
-              ...page.data,
-              saves: page.data.saves.map((s) =>
-                s._id === updatedSave.id ? { ...s, ...updatedSave } : s
-              ),
-            },
+            saves: page.saves.map((s) =>
+              s._id === updatedSave.id ? { ...s, ...updatedSave } : s
+            ),
           })),
         };
       });

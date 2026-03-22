@@ -2,8 +2,9 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import toast from "react-hot-toast";
 import { useCollections } from "../../collections/hooks/useCollections";
 import { useTags } from "../../tags/hooks/useTags";
+import { addSaveToCollectionApi, removeSaveFromCollectionApi } from "../../collections/services/collections.service";
+import { addTagToSaveApi, removeTagFromSaveApi } from "../../tags/services/tags.service";
 import { useUpdateSave, useDeleteSave } from "../hooks/useSaves";
-import axiosInstance from "../../../utils/axios.instance";
 import { useQueryClient } from "@tanstack/react-query";
 import ConfirmDialog from "../../../components/ui/ConfirmDialog";
 import styles from "./SaveCardMenu.module.scss";
@@ -132,14 +133,10 @@ const SaveCardMenu = ({ save }) => {
     const colName = collections.find(c => c._id === collectionId)?.name || "collection";
 
     if (isAdded) {
-      await axiosInstance.delete(
-        `/collections/${collectionId}/saves/${save._id}`,
-      );
+      await removeSaveFromCollectionApi({ collectionId, saveId: save._id });
       toast.success(`Removed from ${colName}`);
     } else {
-      await axiosInstance.patch(
-        `/collections/${collectionId}/saves/${save._id}`,
-      );
+      await addSaveToCollectionApi({ collectionId, saveId: save._id });
       toast.success(`Added to ${colName}`);
     }
     queryClient.invalidateQueries({ queryKey: ["saves"] });
@@ -152,10 +149,10 @@ const SaveCardMenu = ({ save }) => {
     const tagName = tags.find(t => t._id === tagId)?.name || "tag";
 
     if (isAdded) {
-      await axiosInstance.delete(`/tags/${tagId}/saves/${save._id}`);
+      await removeTagFromSaveApi({ tagId, saveId: save._id });
       toast.success(`Removed tag: ${tagName}`);
     } else {
-      await axiosInstance.patch(`/tags/${tagId}/saves/${save._id}`);
+      await addTagToSaveApi({ tagId, saveId: save._id });
       toast.success(`Added tag: ${tagName}`);
     }
     queryClient.invalidateQueries({ queryKey: ["saves"] });

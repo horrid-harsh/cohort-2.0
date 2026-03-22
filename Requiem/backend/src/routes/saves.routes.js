@@ -4,6 +4,7 @@ import {
   getAllSaves,
   getSaveById,
   getRelatedSaves,
+  getSaveToResurface,
   updateSave,
   deleteSave,
 } from "../controllers/saves.controller.js";
@@ -21,6 +22,13 @@ router.use(verifyJWT);
  * @access private
  */
 router.route("/").get(getAllSaves).post(aiLimiter, createSave);
+
+/**
+ * @route /api/v1/saves/resurface
+ * @methods GET - getSaveToResurface
+ * @access private
+ */
+router.get("/resurface", getSaveToResurface);  
 
 /**
  * @route /api/v1/saves/:id

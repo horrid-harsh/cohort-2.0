@@ -175,49 +175,126 @@ export const getSaveById = asyncHandler(async (req, res) => {
 // GET /api/v1/saves/:id/related
 export const getRelatedSaves = asyncHandler(async (req, res) => {
   const { id } = req.params;
- 
-  // Get the current save with its embedding
+
+  const SIMILARITY_THRESHOLD = 0.75;
+  const MAX_CANDIDATES = 100;
+  const MAX_RESULTS = 5;
+
+  // Get current save
   const currentSave = await SaveModel.findOne({
     _id: id,
     user: req.user._id,
   }).select("+embedding");
- 
-  if (!currentSave) throw new ApiError(404, "Save not found");
- 
-  // If no embedding yet, return empty
+
+  if (!currentSave) {
+    throw new ApiError(404, "Save not found");
+  }
+
   if (!currentSave.embedding?.length) {
     return res.status(200).json(
       new ApiResponse(200, [], "No embedding available yet")
     );
   }
- 
-  // Get all other saves with embeddings
-  const allSaves = await SaveModel.find({
+
+  // Fetch candidate saves (limited + sorted)
+  const candidates = await SaveModel.find({
     user: req.user._id,
-    _id: { $ne: id }, // exclude current save
+    _id: { $ne: id },
     isArchived: false,
-    embedding: { $exists: true, $not: { $size: 0 } },
+    embedding: { $exists: true, $ne: [] }, // FIXED query
   })
     .select("+embedding")
     .populate("tags", "name color")
+    .sort({ createdAt: -1 }) // better candidate selection
+    .limit(MAX_CANDIDATES)   // performance guard
     .lean();
- 
-  // Score by cosine similarity
-  const scored = allSaves
-    .map((save) => ({
-      ...save,
-      score: cosineSimilarity(currentSave.embedding, save.embedding),
-      embedding: undefined, // strip before sending
-    }))
-    .filter((save) => save.score > 0.75)
-    .sort((a, b) => b.score - a.score)
-    .slice(0, 5);
- 
+
+  // Validate embeddings
+  const isValidEmbedding = (a, b) =>
+    Array.isArray(a) &&
+    Array.isArray(b) &&
+    a.length > 0 &&
+    a.length === b.length;
+
+  const currentEmbedding = currentSave.embedding;
+
+  // Cosine (assumes normalized embeddings)
+  const cosineSimilarity = (a, b) => {
+    let dot = 0;
+    for (let i = 0; i < a.length; i++) {
+      dot += a[i] * b[i];
+    }
+    return dot;
+  };
+
+  // Score + filter + sort
+  const results = [];
+
+  for (const save of candidates) {
+    if (!isValidEmbedding(currentEmbedding, save.embedding)) continue;
+
+    const score = cosineSimilarity(currentEmbedding, save.embedding);
+
+    if (score >= SIMILARITY_THRESHOLD) {
+      results.push({
+        ...save,
+        score,
+        embedding: undefined, // strip heavy data
+      });
+    }
+  }
+
+  results.sort((a, b) => b.score - a.score);
+
   return res.status(200).json(
-    new ApiResponse(200, scored, "Related saves fetched")
+    new ApiResponse(
+      200,
+      results.slice(0, MAX_RESULTS),
+      "Related saves fetched"
+    )
   );
 });
 
+// GET /api/v1/saves/resurface
+// Returns 1 random save that hasn't been seen in 30+ days
+export const getSaveToResurface = asyncHandler(async (req, res) => {
+  const thirtyDaysAgo = new Date();
+  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 1);
+
+  // Find saves not surfaced in 30+ days (or never surfaced)
+  const candidates = await SaveModel.find({
+    user: req.user._id,
+    isArchived: false,
+    $or: [
+      { lastSurfacedAt: null },
+      { lastSurfacedAt: { $lt: thirtyDaysAgo } },
+    ],
+    // Only resurface saves older than 30 days
+    createdAt: { $lt: thirtyDaysAgo },
+  })
+    .select("title url thumbnail siteName type tags createdAt lastSurfacedAt")
+    .populate("tags", "name color")
+    .lean();
+
+  if (!candidates.length) {
+    return res.status(200).json(
+      new ApiResponse(200, null, "No saves to resurface")
+    );
+  }
+
+  // Pick a random one from candidates
+  const random = candidates[Math.floor(Math.random() * candidates.length)];
+
+  // Update lastSurfacedAt so it won't resurface again for 30 days
+  await SaveModel.findByIdAndUpdate(random._id, {
+    lastSurfacedAt: new Date(),
+    $inc: { surfaceCount: 1 },
+  });
+
+  return res.status(200).json(
+    new ApiResponse(200, random, "Save resurfaced")
+  );
+});
 
 // PATCH /api/v1/saves/:id
 export const updateSave = asyncHandler(async (req, res) => {

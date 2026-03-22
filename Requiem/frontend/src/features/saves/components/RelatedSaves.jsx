@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
-import axiosInstance from "../../../utils/axios.instance";
 import styles from "./RelatedSaves.module.scss";
+import { getRelatedSavesApi } from "../services/saves.service";
 
 const TYPE_COLORS = {
   article: "#378ADD",
@@ -17,10 +17,7 @@ const RelatedSaves = ({ saveId }) => {
 
   const { data: related = [], isLoading } = useQuery({
     queryKey: ["related", saveId],
-    queryFn: async () => {
-      const res = await axiosInstance.get(`/saves/${saveId}/related`);
-      return res.data.data;
-    },
+    queryFn: () => getRelatedSavesApi(saveId),
     staleTime: 1000 * 60 * 5,
   });
 

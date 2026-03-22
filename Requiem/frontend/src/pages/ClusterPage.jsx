@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import axiosInstance from "../utils/axios.instance";
+import { getClustersApi } from "../features/graph/services/graph.service";
 import PageWrapper from "../components/layout/PageWrapper";
 import Topbar from "../components/layout/Topbar";
 import styles from "./ClusterPage.module.scss";
@@ -21,10 +21,7 @@ const ClusterPage = () => {
 
   const { data: clusters = [], isLoading, isFetching, refetch, isFetched, error } = useQuery({
     queryKey: ["clusters"],
-    queryFn: async () => {
-      const res = await axiosInstance.get("/clusters");
-      return res.data.data;
-    },
+    queryFn: getClustersApi,
     staleTime: 1000 * 60 * 30, // keep for 30 mins
     enabled: false,             // don't auto-fetch on mount
     retry: false,

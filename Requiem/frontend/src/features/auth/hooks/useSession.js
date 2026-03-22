@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import axiosInstance from "../../../utils/axios.instance";
+import { getMeApi } from "../services/auth.service";
 import useAuthStore from "../store/auth.store";
 
 export const useSession = () => {
@@ -9,14 +9,14 @@ export const useSession = () => {
 
   const query = useQuery({
     queryKey: ["session"],
-    queryFn: () => axiosInstance.get("/auth/me"),
+    queryFn: getMeApi,
     retry: false,
     staleTime: Infinity, // don't refetch session automatically
   });
 
   useEffect(() => {
     if (query.isSuccess) {
-      setUser(query.data?.data?.data);
+      setUser(query.data);
     }
     if (query.isError) {
       // Only clear auth on actual unauthorized/forbidden errors (401, 403)
@@ -30,7 +30,7 @@ export const useSession = () => {
 
   return {
     isLoading: query.isPending,
-    user: query.data?.data?.data || null,
+    user: query.data || null,
     isError: query.isError,
   };
 };

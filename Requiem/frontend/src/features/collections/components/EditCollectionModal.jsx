@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import axiosInstance from "../../../utils/axios.instance";
+import { updateCollectionApi } from "../services/collections.service";
 import styles from "../../../components/ui/CreateModal.module.scss";
 
 const EMOJIS = ["📁", "💻", "🎨", "📚", "🎯", "🔬", "💡", "🎵", "🏋️", "🌍"];
@@ -23,10 +23,7 @@ const EditCollectionModal = ({ isOpen, onClose, collection }) => {
   }, [collection]);
 
   const { mutate: updateCollection, isPending, error } = useMutation({
-    mutationFn: async (data) => {
-      const res = await axiosInstance.patch(`/collections/${collection._id}`, data);
-      return res.data;
-    },
+    mutationFn: (data) => updateCollectionApi({ id: collection._id, ...data }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["collections"] });
       queryClient.invalidateQueries({ queryKey: ["collection", collection._id] });

@@ -5,7 +5,6 @@ export const useTags = () => {
   return useQuery({
     queryKey: ["tags"],
     queryFn: getTagsApi,
-    select: (data) => data.data,
   });
 };
 
