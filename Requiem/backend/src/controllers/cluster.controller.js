@@ -3,7 +3,7 @@ import { TagModel } from "../models/tag.model.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { ApiError } from "../utils/ApiError.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
-import { kMeansClustering } from "../services/clustering.service.js";
+import { dbscanClustering } from "../services/clustering.service.js";
 import { Mistral } from "@mistralai/mistralai";
 
 const mistral = new Mistral({ apiKey: process.env.MISTRAL_API_KEY });
@@ -55,17 +55,29 @@ export const getClusters = asyncHandler(async (req, res) => {
     );
   }
 
-  // Determine k — roughly 1 cluster per 5 saves, min 2, max 8
-  const k = Math.min(8, Math.max(2, Math.floor(saves.length / 5)));
+  const items = saves.map((s) => ({
+    id: s._id.toString(),
+    embedding: s.embedding,
+  }));
 
-  // Run K-means
-  const items = saves.map((s) => ({ id: s._id.toString(), embedding: s.embedding }));
-  const clusterIds = kMeansClustering(items, k);
+  const result = dbscanClustering(items, {
+    minPts: 2,
+  });
+
+  // 🔥 Map for fast lookup
+  const saveMap = new Map(
+    saves.map((s) => [s._id.toString(), s])
+  )
+
+  const MAX_NAMING = 6;
 
   // Build cluster objects with save details
   const clusters = await Promise.all(
-    clusterIds.map(async (ids) => {
-      const clusterSaves = saves.filter((s) => ids.includes(s._id.toString()));
+    result.clusters.slice(0, MAX_NAMING).map(async (ids) => {
+      if (!ids.length) return null;
+
+      const clusterSaves = ids.map((id) => saveMap.get(id));
+
       const name = await nameCluster(clusterSaves);
 
       return {
@@ -84,10 +96,30 @@ export const getClusters = asyncHandler(async (req, res) => {
     })
   );
 
+  const validClusters = clusters.filter(Boolean);
+
+  if (result.noise.length) {
+  const noiseSaves = result.noise.map((id) => saveMap.get(id));
+
+  validClusters.push({
+    name: "various topics",
+    saves: noiseSaves.map((s) => ({
+      _id: s._id,
+      title: s.title || s.url,
+      url: s.url,
+      type: s.type,
+      thumbnail: s.thumbnail,
+      siteName: s.siteName,
+      tags: s.tags,
+    })),
+    count: noiseSaves.length,
+  });
+}
+
   // Sort by cluster size descending
-  clusters.sort((a, b) => b.count - a.count);
+  validClusters.sort((a, b) => b.count - a.count);
 
   return res.status(200).json(
-    new ApiResponse(200, clusters, "Clusters generated")
+    new ApiResponse(200, validClusters, "Clusters generated")
   );
 });
