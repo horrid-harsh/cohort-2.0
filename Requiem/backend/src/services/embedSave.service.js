@@ -12,7 +12,7 @@ import { generateEmbedding, buildEmbedText } from "./embedding.service.js";
 export const embedSave = async (saveId, userId) => {
   try {
     // Fetch save with tags populated so we can include tag names in embed text
-    const save = await SaveModel.findOne({ _id: saveId, user: userId });
+    const save = await SaveModel.findOne({ _id: saveId, user: userId }).select("+content");
     if (!save) return;
 
     // Get tag names for richer embedding context
@@ -26,7 +26,7 @@ export const embedSave = async (saveId, userId) => {
     if (!embedding) return;
 
     // Store the vector in the save — select:false field
-    await SaveModel.updateOne({ _id: saveId }, { $set: { embedding } });
+    await SaveModel.updateOne({ _id: saveId }, { $set: { embedding, embeddingVersion: 1 } });
 
     console.log(`[embedSave] ✅ Embedded save ${saveId}`);
   } catch (err) {

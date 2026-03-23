@@ -33,10 +33,19 @@ const saveSchema = new mongoose.Schema(
       },
     ],
     tags: [{ type: mongoose.Schema.Types.ObjectId, ref: "Tag" }],
+    content: {
+      type: String,
+      default: "",
+      select: false,
+    },
     embedding: {
       type: [Number],
       default: undefined,
       select: false,
+    },
+    embeddingVersion: {
+      type: Number,
+      default: 0,
     },
     collections: [{ type: mongoose.Schema.Types.ObjectId, ref: "Collection" }],
     lastSurfacedAt: { type: Date, default: null },

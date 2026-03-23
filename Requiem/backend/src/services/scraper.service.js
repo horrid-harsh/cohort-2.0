@@ -18,6 +18,40 @@ const detectType = (url, contentType = "") => {
   return "article";
 };
 
+const CONTENT_SELECTORS = [
+  "article",
+  "[role='main']",
+  "main",
+  ".post-content",
+  ".article-body",
+  ".entry-content",
+  ".post-body",
+  ".article-content",
+  "#content",
+  ".content",
+  "body",
+];
+
+const extractContent = ($) => {
+  // Remove noise elements first
+  $(
+    "nav, header, footer, script, style, iframe, " +
+    ".ad, .ads, .advertisement, .sidebar, .comments, " +
+    ".related, .social-share, .newsletter, .popup, " +
+    "[aria-hidden='true']"
+  ).remove();
+ 
+  // Try selectors in priority order
+  for (const selector of CONTENT_SELECTORS) {
+    const el = $(selector).first();
+    if (el.length) {
+      const text = el.text().replace(/\s+/g, " ").trim();
+      if (text.length > 200) return text; // minimum viable content
+    }
+  }
+  return "";
+};
+
 // Main scraper function
 const scrapeUrl = async (url) => {
   try {
@@ -31,9 +65,11 @@ const scrapeUrl = async (url) => {
     });
 
     const contentType = headers["content-type"] || "";
+    console.log("content-type:", contentType);
+    const type = detectType(url, contentType);
     
      // if the URL itself is an image, skip scraping entirely
-    if (contentType.includes("image/")) {
+    if (type === "image" || contentType.includes("image/")) {
       return {
         title: url.split("/").pop().split("?")[0] || "Image", // filename as title
         description: "",
@@ -41,6 +77,7 @@ const scrapeUrl = async (url) => {
         siteName: new URL(url).hostname.replace("www.", ""),
         favicon: "",
         type: "image",
+        content: "",
       };
     }
 
@@ -103,7 +140,17 @@ const scrapeUrl = async (url) => {
       ? faviconPath
       : `${new URL(url).origin}${faviconPath}`;
 
-    const type = detectType(url, headers["content-type"] || "");
+    let content = "";
+    const isHtmlPage = contentType.startsWith("text/html");
+    const isReasonableSize = html.length < 5_000_000; // skip pages > 5MB
+ 
+    if (isHtmlPage && isReasonableSize) {
+      const extracted = extractContent($);
+      // Only store if meaningful content was extracted
+      if (extracted.length >= 100) {
+        content = extracted.slice(0, 50000); // cap at 50K chars
+      }
+    }
 
     return {
       title: title.slice(0, 500),           // cap length
@@ -112,17 +159,22 @@ const scrapeUrl = async (url) => {
       siteName,
       favicon,
       type,
+      content,
     };
   } catch (error) {
     // If scraping fails, return empty metadata — don't crash the save
     console.error(`Scraper failed for ${url}:`, error.message);
+
+    const fallbackType = detectType(url);
+
     return {
       title: "",
       description: "",
       thumbnail: "",
       siteName: new URL(url).hostname.replace("www.", ""),
       favicon: "",
-      type: "link",
+      type: fallbackType,
+      content: "",
     };
   }
 };

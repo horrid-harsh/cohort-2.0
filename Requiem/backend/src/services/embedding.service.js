@@ -35,6 +35,7 @@ export const buildEmbedText = (save, tagNames = []) => {
     save.siteName,
     save.type,
     tagNames.join(" "),
+    save.content?.slice(0, 2000),
   ].filter(Boolean); // removes undefined/null/empty
 
   return parts.join(" ").trim();
