@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@800&display=swap');
+
+.liquid-loader-container {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+
+  transition: opacity 0.8s ease-out,
+              transform 2.5s cubic-bezier(0.7, 0, 0.3, 1),
+              filter 2.5s ease;
+  will-change: opacity, transform, filter;
+  overflow: hidden;
+
+  &.exit {
+    opacity: 0;
+    transform: scale(12); // "Comes out of the screen"
+    // filter: blur(10px);
+    pointer-events: none;
+  }
+}
+
+.liquid-loader-content {
+  position: relative;
+  width: 90vw; // larger width for wide text
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.liquid-svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.liquid-text,
+.liquid-text-bg {
+  font-family: 'Outfit', 'Inter', sans-serif;
+  font-weight: 900; // Extra heavy
+  font-size: 82px; // increased for new viewBox
+  letter-spacing: -2px; // tighter for display look
+  text-transform: uppercase;
+}
+
+.liquid-text-bg {
+  fill: rgba(113, 113, 122, 0.12);
+}
+
+/* 🌊 Waves */
+
+.wave {
+  animation: moveWave 4s linear infinite reverse;
+}
+
+/* 🛑 Stop animation at full */
+.wave.stop {
+  animation: none;
+  transform: translateX(0);
+}
+
+@keyframes moveWave {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-400px);
+  }
+}
+
+.progress-percentage {
+  position: absolute;
+  bottom: 0px;
+  right: 5%;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: lowercase;
+  letter-spacing: 0.02em;
+}

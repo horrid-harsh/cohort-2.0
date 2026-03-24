@@ -8,11 +8,15 @@ import MobileBlock from "../components/ui/MobileBlock";
 import "../styles/main.scss";
 import SessionProvider from "./SessionProvider";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Lenis from "lenis";
+import useAuthStore from "../features/auth/store/auth.store";
+import LiquidProgressLoader from "../components/common/Loading/LiquidProgressLoader";
 
 const App = () => {
   const isMobile = useMediaQuery("(max-width: 768px)");
+  const isSessionChecked = useAuthStore((s) => s.isSessionChecked);
+  const [showLoader, setShowLoader] = useState(true);
 
   useEffect(() => {
     if (isMobile) return;
@@ -42,6 +46,12 @@ const App = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
+      {showLoader && (
+        <LiquidProgressLoader 
+          isAppReady={isSessionChecked} 
+          onComplete={() => setShowLoader(false)}
+        />
+      )}
       <SessionProvider>
         <Router />
       </SessionProvider>
