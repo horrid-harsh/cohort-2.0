@@ -52,6 +52,11 @@ const saveSchema = new mongoose.Schema(
     surfaceCount: { type: Number, default: 0 },
     isFavorite: { type: Boolean, default: false },
     isArchived: { type: Boolean, default: false },
+    processingStatus: {
+      type: String,
+      enum: ["pending", "processing", "completed", "failed"],
+      default: "pending",
+    },
   },
   { timestamps: true }
 );

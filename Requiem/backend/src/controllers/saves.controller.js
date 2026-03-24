@@ -11,30 +11,47 @@ import {
   generateEmbedding,
   cosineSimilarity,
 } from "../services/embedding.service.js";
+import { addSaveJob } from "../jobs/save.queue.js";
 
 // POST /api/v1/saves
 export const createSave = asyncHandler(async (req, res) => {
   const { url, note } = req.body;
-
+  console.log("📥 [createSave] Received request for:", url);
   if (!url) throw new ApiError(400, "URL is required");
 
   // Check for duplicate URL for this user
   const existing = await SaveModel.findOne({ url, user: req.user._id });
   if (existing) throw new ApiError(409, "You've already saved this URL");
 
+  // 1. Scrape metadata synchronously for immediate UI feedback
+  console.log("🌐 [createSave] Scraping metadata for:", url);
   const metadata = await scrapeUrl(url);
 
+  // 2. Create save with metadata (status: pending)
   const save = await SaveModel.create({
     user: req.user._id,
     url,
     note: note || "",
     ...metadata,
+    processingStatus: "pending",
   });
 
-  autoTagSave(save, req.user._id);
-  embedSave(save._id, req.user._id);
+  // 2. Offload heavy tasks to BullMQ
+  try {
+    console.log("📝 [createSave] Sending job to BullMQ:", save._id);
+    await addSaveJob({ saveId: save._id, userId: req.user._id });
+    console.log("✅ [createSave] Job added successfully");
+  } catch (err) {
+    console.error("Queue failed:", err.message);
 
-  return res.status(201).json(new ApiResponse(201, save, "Saved successfully"));
+    await SaveModel.findByIdAndUpdate(save._id, {
+      processingStatus: "failed",
+    });
+  }
+
+  return res.status(201).json(
+    new ApiResponse(201, save, "Save initiated. Processing in background.")
+  );
 });
 
 // GET /api/v1/saves

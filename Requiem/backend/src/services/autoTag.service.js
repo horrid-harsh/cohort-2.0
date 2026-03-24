@@ -41,7 +41,7 @@ const autoTagSave = async (save, userId) => {
           $set: { isAiGenerated: true },
           $setOnInsert: { color: tagColor },
         },
-        { upsert: true, new: true }
+        { upsert: true, returnDocument: "after" }
       );
       tagIds.push(tag._id);
     }

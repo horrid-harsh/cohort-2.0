@@ -11,6 +11,7 @@ const cookieOptions = {
   httpOnly: true,
   secure: isProduction, // false for local http, true for production https
   sameSite: isProduction ? "none" : "lax", // "none" in production for extension support, "lax" for local dev
+  maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
 };
 
 // For chrome extension development on localhost, it sometimes needs SameSite: None 
