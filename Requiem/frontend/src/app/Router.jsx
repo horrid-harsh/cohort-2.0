@@ -8,6 +8,7 @@ import useAuthStore from "../features/auth/store/auth.store";
 
 import LoginPage from "../pages/LoginPage";
 import RegisterPage from "../pages/RegisterPage";
+import VerifyEmailPage from "../pages/VerifyEmailPage";
 import DashboardPage from "../pages/DashboardPage";
 import FavoritesPage from "../pages/FavoritesPage";
 import ArchivePage from "../pages/ArchivePage";
@@ -35,6 +36,7 @@ const router = createBrowserRouter([
       { path: "/register", element: <RegisterPage /> },
     ],
   },
+  { path: "/verify-email", element: <VerifyEmailPage /> },
   {
     element: <ProtectedRoute />,
     children: [

@@ -1,7 +1,8 @@
 import axios from "axios";
 import useAuthStore from "../features/auth/store/auth.store";
 
-const BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api/v1";
+const BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api/v1";
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
@@ -61,7 +62,7 @@ axiosInstance.interceptors.response.use(
         await axios.post(
           `${BASE_URL}/auth/refresh`,
           {},
-          { withCredentials: true }
+          { withCredentials: true },
         );
 
         isRefreshing = false;
@@ -74,8 +75,13 @@ axiosInstance.interceptors.response.use(
         // Clear user context on refresh failure
         useAuthStore.setState({ user: null });
 
-        // Only redirect if we're not already on the login page
-        if (!window.location.pathname.includes("/login")) {
+        // Only redirect if we're not already on the login page AND not on other public auth pages
+        const publicPaths = ["/login", "/register", "/verify-email"];
+        const isPublicPath = publicPaths.some((path) =>
+          window.location.pathname.startsWith(path),
+        );
+
+        if (!isPublicPath) {
           window.location.href = "/login";
         }
 
@@ -84,7 +90,7 @@ axiosInstance.interceptors.response.use(
     }
 
     return Promise.reject(error);
-  }
+  },
 );
 
 export default axiosInstance;

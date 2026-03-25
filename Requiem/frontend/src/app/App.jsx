@@ -40,22 +40,22 @@ const App = () => {
       cancelAnimationFrame(rafId); // ✅ important
       lenis.destroy();
     };
-}, [isMobile]);
+  }, [isMobile]);
 
   if (isMobile) return <MobileBlock />;
 
   return (
     <QueryClientProvider client={queryClient}>
-      {showLoader && (
-        <LiquidProgressLoader 
-          isAppReady={isSessionChecked} 
+      {/* {showLoader && (
+        <LiquidProgressLoader
+          isAppReady={isSessionChecked}
           onComplete={() => setShowLoader(false)}
         />
-      )}
+      )} */}
       <SessionProvider>
         <Router />
       </SessionProvider>
-      <Toaster 
+      <Toaster
         position="top-center"
         toastOptions={{
           style: {
@@ -68,7 +68,8 @@ const App = () => {
             fontWeight: "500",
             borderRadius: "14px",
             padding: "12px 20px",
-            boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.2)",
+            boxShadow:
+              "0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.2)",
           },
           success: {
             iconTheme: {
@@ -85,8 +86,8 @@ const App = () => {
           loading: {
             style: {
               background: "rgba(24, 24, 27, 0.95)",
-            }
-          }
+            },
+          },
         }}
       />
       <ReactQueryDevtools initialIsOpen={false} />

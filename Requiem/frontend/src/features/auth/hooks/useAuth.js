@@ -1,6 +1,12 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
-import { loginApi, registerApi, logoutApi } from "../services/auth.service";
+import {
+  loginApi,
+  registerApi,
+  logoutApi,
+  verifyEmailApi,
+  resendVerificationApi,
+} from "../services/auth.service";
 import useAuthStore from "../store/auth.store";
 
 export const useLogin = () => {
@@ -17,13 +23,24 @@ export const useLogin = () => {
 };
 
 export const useRegister = () => {
-  const navigate = useNavigate();
-
   return useMutation({
     mutationFn: registerApi,
-    onSuccess: () => {
-      navigate("/login");
-    },
+  });
+};
+
+export const useVerifyEmail = (token) => {
+  return useQuery({
+    queryKey: ["verify-email", token],
+    queryFn: () => verifyEmailApi(token),
+    enabled: !!token,
+    retry: false,
+    staleTime: Infinity,
+  });
+};
+
+export const useResendVerification = () => {
+  return useMutation({
+    mutationFn: (email) => resendVerificationApi(email),
   });
 };
 

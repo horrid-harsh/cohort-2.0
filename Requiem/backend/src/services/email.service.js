@@ -28,7 +28,7 @@ const sendEmail = async ({ to, subject, html }) => {
 export const sendVerificationEmail = async (email, name, token) => {
   const frontendUrl = process.env.FRONTEND_URL || "http://localhost:5173";
   const verificationLink = `${frontendUrl}/verify-email?token=${token}`;
-  
+
   console.log(token);
   const html = `
     <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
@@ -44,5 +44,9 @@ export const sendVerificationEmail = async (email, name, token) => {
     </div>
   `;
 
-  return await sendEmail({ to: email, subject: "Verify your email - Requiem", html });
+  return await sendEmail({
+    to: email,
+    subject: "Verify your email - Requiem",
+    html,
+  });
 };

@@ -55,9 +55,13 @@ import crypto from "node:crypto";
 
 // ... existing code ...
 
-// Method to generate a random verification token
+// Method to generate a verification token (JWT based to allow identification even after reuse)
 userSchema.methods.generateVerificationToken = function () {
-  const token = crypto.randomBytes(32).toString("hex");
+  const token = jwt.sign(
+    { _id: this._id, email: this.email, purpose: "verification" },
+    process.env.ACCESS_TOKEN_SECRET,
+    { expiresIn: "24h" }
+  );
   this.verificationToken = token;
   this.verificationTokenExpires = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
   this.lastVerificationSentAt = new Date();

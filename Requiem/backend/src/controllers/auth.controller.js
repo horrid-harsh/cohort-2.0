@@ -174,14 +174,47 @@ export const verifyEmail = asyncHandler(async (req, res) => {
 
   if (!token) throw new ApiError(400, "Verification token is required");
 
-  // Find user with token and ensure it's not expired
-  const user = await UserModel.findOne({
-    verificationToken: token,
-    verificationTokenExpires: { $gt: new Date() },
-  }).select("+verificationToken +verificationTokenExpires");
+  // Since it's a JWT, we can identify THE USER even if the database field is cleared (reuse/expiry)
+  let decoded;
+  try {
+    decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+  } catch (error) {
+    // If we're here, the token is expired or altered.
+    // BUT we can STILL try to decode it silently to see WHO this was (if we wanted)
+    // For now, let's treat expired as just identification if the user is ALREADY verified
+    decoded = jwt.decode(token);
+    if (!decoded || decoded.purpose !== "verification") {
+      throw new ApiError(400, "Invalid verification token.");
+    }
+  }
+
+  const user = await UserModel.findById(decoded?._id).select("+isVerified +verificationToken");
 
   if (!user) {
-    throw new ApiError(400, "Invalid or expired verification token.");
+    throw new ApiError(404, "User not found.");
+  }
+
+  // If already verified, return SUCCESS with a flag. (Solves reuse/expiry showing error)
+  if (user.isVerified) {
+    return res
+      .status(200)
+      .json(
+        new ApiResponse(200, { alreadyVerified: true }, "Email is already verified."),
+      );
+  }
+
+  // If NOT verified, check if our token matches and is not expired in the verify attempt
+  // Re-verify the token expiry here for non-verified users
+  let fullyDecoded;
+  try {
+    fullyDecoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+  } catch (err) {
+    throw new ApiError(400, "Verification link has expired. Please request a new one.");
+  }
+
+  // Also check if this token matches what we last sent (to prevent very old tokens from working if multiple were sent)
+  if (user.verificationToken !== token) {
+     throw new ApiError(400, "Verification link is invalid or has been replaced by a newer one.");
   }
 
   // Update user verified status
@@ -195,7 +228,7 @@ export const verifyEmail = asyncHandler(async (req, res) => {
     .json(
       new ApiResponse(
         200,
-        {},
+        { alreadyVerified: false },
         "Email verified successfully! You can now log in.",
       ),
     );

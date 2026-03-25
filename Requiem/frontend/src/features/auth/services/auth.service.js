@@ -19,3 +19,13 @@ export const getMeApi = async () => {
   const res = await axiosInstance.get("/auth/me");
   return res.data.data;
 };
+
+export const verifyEmailApi = async (token) => {
+  const res = await axiosInstance.get(`/auth/verify-email?token=${token}`);
+  return res.data.data;
+};
+
+export const resendVerificationApi = async (email) => {
+  const res = await axiosInstance.post("/auth/resend-verification", { email });
+  return res.data.data;
+};

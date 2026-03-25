@@ -17,12 +17,12 @@
   p {
     font-size: $text-base;
     color: $color-text-secondary;
-    
+
     a {
       color: $color-text-primary;
       font-weight: 500;
       text-decoration: none;
-      
+
       &:hover {
         text-decoration: underline;
       }
@@ -59,7 +59,7 @@
     font-weight: 500;
   }
 
-    input {
+  input {
     background: $color-input-bg;
     backdrop-filter: blur(4px);
     border: 1px solid $color-border;
@@ -87,14 +87,16 @@
     }
 
     &:-webkit-autofill,
-    &:-webkit-autofill:hover, 
-    &:-webkit-autofill:focus, 
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:focus,
     &:-webkit-autofill:active {
       -webkit-box-shadow: 0 0 0 1000px $color-input-bg inset !important;
       -webkit-text-fill-color: $color-text-primary !important;
       caret-color: $color-text-primary !important;
       color: $color-text-primary !important;
-      transition: background-color 5000s ease-in-out 0s, color 5000s ease-in-out 0s;
+      transition:
+        background-color 5000s ease-in-out 0s,
+        color 5000s ease-in-out 0s;
     }
   }
   .fieldError {
@@ -158,5 +160,116 @@
     &:hover {
       text-decoration: underline;
     }
+  }
+}
+.verificationSuccess {
+  text-align: center;
+  padding: 20px 0;
+
+  .icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 32px;
+    position: relative;
+    width: 80px;
+    height: 80px;
+
+    svg {
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.2));
+    }
+
+    &.success {
+      animation: pulse-success 2s infinite ease-in-out;
+      color: #10b981; // Green
+    }
+
+    &.error {
+      animation: shake 0.5s ease-in-out;
+      color: #ef4444; // Red
+    }
+
+    &.loading {
+      animation: spin 2s linear infinite;
+      color: $color-text-secondary;
+    }
+  }
+
+  @keyframes pulse-success {
+    0% { transform: scale(1); filter: drop-shadow(0 0 0 rgba(16, 185, 129, 0)); }
+    50% { transform: scale(1.05); filter: drop-shadow(0 0 15px rgba(16, 185, 129, 0.4)); }
+    100% { transform: scale(1); filter: drop-shadow(0 0 0 rgba(16, 185, 129, 0)); }
+  }
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: $color-text-primary;
+    margin-bottom: 12px;
+  }
+
+  p {
+    font-size: $text-base;
+    color: $color-text-secondary;
+    line-height: 1.6;
+    margin-bottom: 32px;
+  }
+}
+
+.resendContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.resendBtn {
+  background: rgba($color-text-primary, 0.05);
+  color: $color-text-primary;
+  border: 1px solid rgba($color-text-primary, 0.1);
+  border-radius: $border-radius-lg;
+  padding: 14px;
+  font-size: $text-sm;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+
+  &:hover:not(:disabled) {
+    background: rgba($color-text-primary, 0.08);
+    border-color: rgba($color-text-primary, 0.2);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    color: $color-text-muted;
+  }
+}
+
+.secondaryBtn {
+  display: block;
+  text-align: center;
+  color: $color-text-secondary;
+  font-size: $text-sm;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 8px;
+  transition: color 0.2s;
+
+  &:hover {
+    color: $color-text-primary;
   }
 }
