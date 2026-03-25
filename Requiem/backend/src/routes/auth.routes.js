@@ -1,7 +1,15 @@
 import { Router } from "express";
-import { register, login, logout, getMe, refreshAccessToken } from "../controllers/auth.controller.js";
+import {
+  register,
+  login,
+  logout,
+  getMe,
+  refreshAccessToken,
+} from "../controllers/auth.controller.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 import { authLimiter } from "../middlewares/rateLimiter.middleware.js";
+import { registerSchema, loginSchema } from "../validators/auth.schema.js";
+import { validate } from "../middlewares/validate.middleware.js";
 
 const router = Router();
 
@@ -10,14 +18,14 @@ const router = Router();
  * @route POST /api/v1/auth/register
  * @access public
  */
-router.post("/register", authLimiter, register);
+router.post("/register", authLimiter, validate(registerSchema), register);
 
 /**
  * @description Login a user
  * @route POST /api/v1/auth/login
  * @access public
  */
-router.post("/login", authLimiter, login);
+router.post("/login", authLimiter, validate(loginSchema), login);
 
 /**
  * @description Logout a user

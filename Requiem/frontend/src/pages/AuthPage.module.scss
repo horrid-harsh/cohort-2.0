@@ -97,6 +97,22 @@
       transition: background-color 5000s ease-in-out 0s, color 5000s ease-in-out 0s;
     }
   }
+  .fieldError {
+    font-size: 11px;
+    color: $color-danger;
+    margin-top: 2px;
+    font-weight: 500;
+  }
+
+  input.inputError {
+    border-color: rgba($color-danger, 0.4);
+    background: rgba($color-danger, 0.02);
+
+    &:focus {
+      border-color: rgba($color-danger, 0.6);
+      box-shadow: 0 0 0 4px rgba($color-danger, 0.05);
+    }
+  }
 }
 
 .btn {
