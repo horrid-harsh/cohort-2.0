@@ -5,6 +5,8 @@ import {
   logout,
   getMe,
   refreshAccessToken,
+  verifyEmail,
+  resendVerificationEmailController,
 } from "../controllers/auth.controller.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 import { authLimiter } from "../middlewares/rateLimiter.middleware.js";
@@ -47,5 +49,19 @@ router.get("/me", verifyJWT, getMe);
  * @access public
  */
 router.post("/refresh", refreshAccessToken);
+
+/**
+ * @description Verify email
+ * @route GET /api/v1/auth/verify-email
+ * @access public
+ */
+router.get("/verify-email", verifyEmail);
+
+/**
+ * @description Resend verification email
+ * @route POST /api/v1/auth/resend-verification
+ * @access public
+ */
+router.post("/resend-verification", resendVerificationEmailController);
 
 export default router;

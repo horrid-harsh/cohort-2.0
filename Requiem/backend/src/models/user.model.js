@@ -31,9 +31,38 @@ const userSchema = new mongoose.Schema(
       type: String,
       select: false,
     },
+    isVerified: {
+      type: Boolean,
+      default: false,
+    },
+    verificationToken: {
+      type: String,
+      select: false,
+    },
+    verificationTokenExpires: {
+      type: Date,
+      select: false,
+    },
+    lastVerificationSentAt: {
+      type: Date,
+      default: null,
+    },
   },
   { timestamps: true }
 );
+
+import crypto from "node:crypto";
+
+// ... existing code ...
+
+// Method to generate a random verification token
+userSchema.methods.generateVerificationToken = function () {
+  const token = crypto.randomBytes(32).toString("hex");
+  this.verificationToken = token;
+  this.verificationTokenExpires = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
+  this.lastVerificationSentAt = new Date();
+  return token;
+};
 
 // Hash password before saving
 userSchema.pre("save", async function () {
