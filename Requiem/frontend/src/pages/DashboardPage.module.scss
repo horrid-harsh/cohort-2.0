@@ -2,7 +2,14 @@
 @use '../styles/abstracts/mixins' as *;
 
 .page {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.contentPage {
   @include page-layout;
+  padding-bottom: 0; // Padding is handled by grid gap
 }
 
 .pageHeader {

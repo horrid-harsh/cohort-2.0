@@ -3,7 +3,12 @@ import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
+import path from "path";
+import { fileURLToPath } from "url";
 import { errorHandler } from "./middlewares/error.middleware.js";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Routes
 import authRoutes from "./routes/auth.routes.js";
@@ -15,8 +20,19 @@ import clusterRoutes from "./routes/cluster.routes.js";
 
 const app = express();
 
-// Security middlewares
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+        "img-src": ["'self'", "data:", "https:", "http:"],
+        "style-src": ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+        "font-src": ["'self'", "https://fonts.gstatic.com"],
+      },
+    },
+  })
+);
+
 app.use(
   cors({
     origin: [process.env.CORS_ORIGIN || "http://localhost:5173", /^chrome-extension:\/\//],
@@ -28,6 +44,7 @@ app.use(
 app.use(express.json({ limit: "16kb" }));
 app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use(cookieParser());
+app.use(express.static(path.join(__dirname, "../public")));
 
 // Logger (only in development)
 if (process.env.NODE_ENV === "development") {
@@ -47,9 +64,9 @@ app.use("/api/v1/tags", tagsRoutes);
 app.use("/api/v1/graph", graphRoutes);
 app.use("/api/v1/clusters", clusterRoutes);
 
-// 404 handler
-app.use((req, res) => {
-  res.status(404).json({ success: false, message: "Route not found" });
+// Serve frontend for any other route
+app.get("*name", (req, res) => {
+  res.sendFile(path.join(__dirname, "../public/index.html"));
 });
 
 // Global error handler — must be last

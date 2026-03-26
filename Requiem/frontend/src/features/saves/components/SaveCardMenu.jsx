@@ -47,7 +47,7 @@ const Submenu = ({ items, onSelect, isSelected, renderItem, menuRef }) => {
   );
 };
 
-const SaveCardMenu = ({ save }) => {
+const SaveCardMenu = ({ save, onOpenChange }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSubmenu, setActiveSubmenu] = useState(null); // 'collections' | 'tags' | null
   const [menuStyle, setMenuStyle] = useState({});
@@ -58,6 +58,11 @@ const SaveCardMenu = ({ save }) => {
   const triggerRef = useRef(null);
   const submenuRef = useRef(null);
   const closeTimerRef = useRef(null);
+  
+  // Notify parent of open state changes
+  useEffect(() => {
+    onOpenChange?.(isOpen);
+  }, [isOpen, onOpenChange]);
   const queryClient = useQueryClient();
 
   const { data: collections = [] } = useCollections();

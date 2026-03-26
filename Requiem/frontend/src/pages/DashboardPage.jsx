@@ -15,7 +15,9 @@ const DashboardPage = () => {
     <PageWrapper>
       <Topbar onSearch={setSearch} onSemanticChange={setIsSemantic} />
       <div className={styles.page}>
-        <ResurfaceCard />
+        <div className={styles.contentPage}>
+          <ResurfaceCard />
+        </div>
         <SaveGrid search={debouncedSearch} semantic={isSemantic} />
       </div>
     </PageWrapper>

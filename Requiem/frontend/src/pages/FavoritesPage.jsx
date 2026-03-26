@@ -13,9 +13,11 @@ const FavoritesPage = () => {
     <PageWrapper>
       <Topbar onSearch={setSearch} />
       <div className={styles.page}>
-        <div className={styles.pageHeader}>
-          <h1>Favorites</h1>
-          <p>Things you've marked as favorite</p>
+        <div className={styles.contentPage}>
+          <div className={styles.pageHeader}>
+            <h1>Favorites</h1>
+            <p>Things you've marked as favorite</p>
+          </div>
         </div>
         <SaveGrid search={debouncedSearch} isFavorite={true} />
       </div>

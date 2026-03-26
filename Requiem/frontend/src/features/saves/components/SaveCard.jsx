@@ -1,3 +1,4 @@
+import { useState } from "react";
 import toast from "react-hot-toast";
 import { useUpdateSave } from "../hooks/useSaves";
 import { useNavigate } from "react-router-dom";
@@ -29,9 +30,11 @@ const SaveCard = ({ save }) => {
     window.open(save.url, "_blank", "noopener,noreferrer");
   };
 
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   return (
     <div 
-      className={`${styles.card} no-select`}
+      className={`${styles.card} ${isMenuOpen ? styles.menuOpen : ""} no-select`}
       style={{ "--type-color-rgb": typeInfo.rgb }}
     >
       {/* Thumbnail */}
@@ -93,7 +96,7 @@ const SaveCard = ({ save }) => {
           </svg>
         </button>
 
-        <SaveCardMenu save={save} />
+        <SaveCardMenu save={save} onOpenChange={setIsMenuOpen} />
       </div>
     </div>
   );

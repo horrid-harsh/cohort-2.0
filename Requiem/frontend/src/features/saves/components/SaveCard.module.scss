@@ -8,6 +8,13 @@
   position: relative;
   min-width: 0;
   overflow: hidden;
+  z-index: 1;
+  transition: all 0.3s cubic-bezier(.4, 0, .2, 1);
+
+  &.menuOpen {
+    overflow: visible !important;
+    z-index: 100 !important;
+  }
 
   &::before {
     content: "";

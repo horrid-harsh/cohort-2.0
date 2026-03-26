@@ -13,9 +13,11 @@ const ArchivePage = () => {
     <PageWrapper>
       <Topbar onSearch={setSearch} />
       <div className={styles.page}>
-        <div className={styles.pageHeader}>
-          <h1>Archive</h1>
-          <p>Saves you've archived</p>
+        <div className={styles.contentPage}>
+          <div className={styles.pageHeader}>
+            <h1>Archive</h1>
+            <p>Saves you've archived</p>
+          </div>
         </div>
         <SaveGrid search={debouncedSearch} isArchived={true} />
       </div>

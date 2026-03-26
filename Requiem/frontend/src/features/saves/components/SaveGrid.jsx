@@ -53,18 +53,17 @@ const SaveGrid = ({ search, isFavorite, isArchived, semantic }) => {
       )}
 
       <div className={`${styles.filters} no-select`}>
-        {!semantic && FILTERS.map((f) => (
-          <button
-            key={f.value}
-            className={`${styles.chip} ${activeType === f.value ? styles.active : ""}`}
-            onClick={() => setActiveType(f.value)}
-          >
-            {f.label}
-          </button>
-        ))}
-        {/* {!isLoading && isFetching && !isFetchingNextPage && (
-          <span className={styles.updating}>Updating...</span>
-        )} */}
+        <div className={styles.filterContent}>
+          {FILTERS.map((f) => (
+            <button
+              key={f.value}
+              className={`${styles.chip} ${activeType === f.value ? styles.active : ""}`}
+              onClick={() => setActiveType(f.value)}
+            >
+              {f.label}
+            </button>
+          ))}
+        </div>
       </div>
 
       {isLoading && (
