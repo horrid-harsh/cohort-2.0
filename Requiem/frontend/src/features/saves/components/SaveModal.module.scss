@@ -99,8 +99,10 @@
 }
 
 .cancelBtn {
-  padding: 8px 16px;
-  border-radius: $border-radius-md;
+  height: 38px;
+  padding: 0 20px;
+  min-width: 100px;
+  border-radius: $border-radius-lg;
   font-size: $text-sm;
   color: $color-text-secondary;
   border: 0.5px solid $color-border;
@@ -115,6 +117,8 @@
 
 .submitBtn {
   @include premium-button;
+  padding: 0 20px;
   height: 38px;
+  min-width: 100px;
   &:disabled { opacity: 0.5; cursor: not-allowed; &::before { display: none; } }
 }
