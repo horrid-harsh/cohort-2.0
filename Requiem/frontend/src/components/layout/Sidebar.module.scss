@@ -71,8 +71,22 @@
 }
 
 .navIcon {
-  font-size: 14px;
+  width: 18px;
+  height: 18px;
+  @include flex-center;
   flex-shrink: 0;
+  color: $color-text-muted;
+  transition: color 0.1s;
+  transform: translateY(-1px);
+
+  svg {
+    display: block;
+  }
+}
+
+.navItem:hover .navIcon,
+.navItem.active .navIcon {
+  color: $color-text-primary;
 }
 
 .navLabel {
