@@ -42,8 +42,8 @@ const Topbar = ({ onSearch, onSemanticChange }) => {
     <>
       <div className={styles.topbar}>
         <div className={styles.leftSpacer} />
-        <div className={styles.searchWrap}>
-          <svg className={styles.searchIcon} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <div className={`${styles.searchWrap} no-select`}>
+          <svg className={`${styles.searchIcon} no-select`} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <circle cx="11" cy="11" r="8" />
             <path d="m21 21-4.35-4.35" />
           </svg>
@@ -65,7 +65,7 @@ const Topbar = ({ onSearch, onSemanticChange }) => {
 
         <div className={styles.btnGroup}>
           <div className={styles.dropdownWrap} ref={dropdownRef}>
-            <button className={styles.newBtn} onClick={() => setIsNewOpen((p) => !p)}>
+            <button className={`${styles.newBtn} no-select`} onClick={() => setIsNewOpen((p) => !p)}>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                 <path d="M12 5v14M5 12h14" />
               </svg>
@@ -77,7 +77,7 @@ const Topbar = ({ onSearch, onSemanticChange }) => {
             </button>
 
             {isNewOpen && (
-              <div className={styles.dropdown}>
+              <div className={`${styles.dropdown} no-select`}>
                 <button className={styles.dropItem} onClick={openSave}>
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />

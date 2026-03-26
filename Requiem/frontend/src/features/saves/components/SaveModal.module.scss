@@ -114,15 +114,7 @@
 }
 
 .submitBtn {
-  padding: 8px 20px;
-  border-radius: $border-radius-md;
-  font-size: $text-sm;
-  font-weight: 500;
-  color: #fff;
-  background: $color-accent;
-  border: none;
-  transition: background 0.15s;
-
-  &:hover { background: $color-accent-hover; }
-  &:disabled { opacity: 0.5; cursor: not-allowed; }
+  @include premium-button;
+  height: 38px;
+  &:disabled { opacity: 0.5; cursor: not-allowed; &::before { display: none; } }
 }

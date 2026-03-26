@@ -106,16 +106,8 @@
 }
 
 .openBtn {
-  @include flex-gap(6px);
-  background: $color-accent;
-  color: #fff;
-  border-radius: $border-radius-md;
-  padding: 7px 14px;
-  font-size: $text-sm;
-  font-weight: 500;
-  transition: background 0.15s;
-
-  &:hover { background: $color-accent-hover; }
+  @include premium-button;
+  height: 36px;
 }
 
 .iconBtn {
@@ -238,17 +230,11 @@
 }
 
 .saveNoteBtn {
-  padding: 6px 14px;
-  border-radius: $border-radius-md;
-  font-size: $text-sm;
-  font-weight: 500;
-  color: #fff;
-  background: $color-accent;
-  border: none;
-  transition: background 0.15s, opacity 0.15s;
+  @include premium-button;
+  height: 32px;
+  padding: 0 16px;
 
-  &:hover { background: $color-accent-hover; }
-  &:disabled { opacity: 0.4; cursor: not-allowed; }
+  &:disabled { opacity: 0.4; cursor: not-allowed; &::before { display: none; } }
 }
 
 // ─── Highlights ───────────────────────────────────
@@ -317,18 +303,10 @@
 }
 
 .addHighlightBtn {
-  padding: 8px 14px;
-  border-radius: $border-radius-md;
-  font-size: $text-sm;
-  font-weight: 500;
-  color: $color-accent;
-  border: 0.5px solid rgba(124,106,247,0.3);
-  background: $color-accent-subtle;
-  transition: background 0.15s;
-  white-space: nowrap;
+  @include premium-button;
+  height: 36px;
 
-  &:hover { background: rgba(124,106,247,0.2); }
-  &:disabled { opacity: 0.4; cursor: not-allowed; }
+  &:disabled { opacity: 0.4; cursor: not-allowed; &::before { display: none; } }
 }
 
 // ─── Tags list ────────────────────────────────────

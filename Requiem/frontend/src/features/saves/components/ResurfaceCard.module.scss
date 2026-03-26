@@ -2,18 +2,35 @@
 @use '../../../styles/abstracts/mixins' as *;
 
 .card {
+  @include card;
   position: relative;
-  background: $color-bg-secondary;
-  border: 0.5px solid $color-border;
-  border-radius: $border-radius-lg;
   padding: 12px 14px;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  transition: border-color 0.15s;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    background: radial-gradient(
+      400px circle at 50% -10%,
+      rgba(var(--type-color-rgb), 0.1),
+      transparent 60%
+    );
+  }
 
   &:hover {
-    border-color: $color-border-hover;
+    @include hover-glow(var(--type-color-rgb));
+    z-index: 100;
   }
 }
 
@@ -23,6 +40,8 @@
   color: $color-accent;
   font-weight: 500;
   letter-spacing: 0.02em;
+  position: relative;
+  z-index: 2;
 
   svg { flex-shrink: 0; }
 }
@@ -31,6 +50,8 @@
   @include flex-gap(12px);
   cursor: pointer;
   align-items: center;
+  position: relative;
+  z-index: 2;
 
   &:hover .title {
     color: $color-accent;
@@ -111,6 +132,7 @@
   padding: 4px;
   border-radius: $border-radius-sm;
   transition: color 0.1s, background 0.1s;
+  z-index: 3; // Above everything else
 
   &:hover {
     color: $color-text-primary;

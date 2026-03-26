@@ -28,21 +28,9 @@
 }
 
 .generateBtn {
-  @include flex-gap(8px);
-  background: $color-accent;
-  color: #fff;
-  border: none;
-  border-radius: $border-radius-md;
-  padding: 0 20px;
+  @include premium-button;
   height: 38px;
-  font-size: $text-sm;
-  font-weight: 500;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: background 0.15s, opacity 0.15s;
-
-  &:hover { background: $color-accent-hover; }
-  &:disabled { opacity: 0.6; cursor: not-allowed; }
+  &:disabled { opacity: 0.6; cursor: not-allowed; &::before { display: none; } }
 }
 
 .spinner {

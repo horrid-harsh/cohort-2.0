@@ -37,7 +37,7 @@ const ClusterPage = () => {
     <PageWrapper>
       <Topbar />
       <div className={styles.page}>
-        <div className={styles.header}>
+        <div className={`${styles.header} no-select`}>
           <div>
             <h1>Topic clusters</h1>
             <p>AI groups your saves by topic automatically</p>
@@ -100,7 +100,7 @@ const ClusterPage = () => {
                 className={`${styles.cluster} ${expandedIndex === i ? styles.isExpanded : ""}`}
               >
                 <div
-                  className={styles.clusterHeader}
+                  className={`${styles.clusterHeader} no-select`}
                   onClick={() => toggleCluster(i)}
                 >
                   <div className={styles.clusterTitleGroup}>
@@ -145,7 +145,7 @@ const ClusterPage = () => {
                           )}
                         </div>
                         <div className={styles.saveInfo}>
-                          <p className={styles.saveTitle}>{save.title || save.url}</p>
+                          <p className={`${styles.saveTitle} select-text`}>{save.title || save.url}</p>
                           <div className={styles.saveMeta}>
                             <span className={styles.saveSite}>{save.siteName}</span>
                             {save.tags?.slice(0, 2).map((tag) => (

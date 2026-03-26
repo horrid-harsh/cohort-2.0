@@ -5,12 +5,12 @@ import SaveCardMenu from "./SaveCardMenu";
 import styles from "./SaveCard.module.scss";
 
 const TYPE_LABELS = {
-  article: { label: "Article", color: "#378ADD" },
-  video:   { label: "Video",   color: "#D85A30" },
-  tweet:   { label: "Tweet",   color: "#1D9E75" },
-  pdf:     { label: "PDF",     color: "#f87171" },
-  image:   { label: "Image",   color: "#D4537E" },
-  link:    { label: "Link",    color: "#888888" },
+  article: { label: "Article", color: "#378ADD", rgb: "136, 136, 136" },
+  video:   { label: "Video",   color: "#D85A30", rgb: "136, 136, 136" },
+  tweet:   { label: "Tweet",   color: "#1D9E75", rgb: "136, 136, 136" },
+  pdf:     { label: "PDF",     color: "#f87171", rgb: "136, 136, 136" },
+  image:   { label: "Image",   color: "#D4537E", rgb: "136, 136, 136" },
+  link:    { label: "Link",    color: "#888888", rgb: "136, 136, 136" },
 };
 
 const SaveCard = ({ save }) => {
@@ -30,7 +30,10 @@ const SaveCard = ({ save }) => {
   };
 
   return (
-    <div className={styles.card}>
+    <div 
+      className={`${styles.card} no-select`}
+      style={{ "--type-color-rgb": typeInfo.rgb }}
+    >
       {/* Thumbnail */}
       <div className={styles.thumb} onClick={handleOpen}>
         {save.thumbnail ? (
@@ -54,21 +57,21 @@ const SaveCard = ({ save }) => {
           {save.favicon && (
             <img src={save.favicon} alt="" width={12} height={12} />
           )}
-          <span>{save.siteName || new URL(save.url).hostname}</span>
+          <span className="select-text">{save.siteName || new URL(save.url).hostname}</span>
         </div>
 
         <h3 className={styles.title} onClick={() => navigate(`/saves/${save._id}`)}>
-          {save.title || save.url}
+          <span className="select-text">{save.title || save.url}</span>
         </h3>
 
-        {save.note && <p className={styles.note}>{save.note}</p>}
+        {save.note && <p className={`${styles.note} select-text`}>{save.note}</p>}
 
         {save.tags?.length > 0 && (
           <div className={styles.tags}>
             {save.tags.map((tag) => (
               <span
                 key={tag._id}
-                className={styles.tag}
+                className={`${styles.tag} select-text`}
                 style={{ color: tag.color, borderColor: `${tag.color}30` }}
               >
                 {tag.name}

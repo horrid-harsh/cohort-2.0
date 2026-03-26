@@ -159,7 +159,7 @@ const SaveDetailPage = () => {
       <div className={styles.page}>
         <div className={styles.inner}>
           {/* Back */}
-          <button className={styles.back} onClick={() => navigate(-1)}>
+          <button className={`${styles.back} no-select`} onClick={() => navigate(-1)}>
             <svg
               width="14"
               height="14"
@@ -199,7 +199,7 @@ const SaveDetailPage = () => {
               )}
               <span className={styles.siteName}>{save.siteName}</span>
               <span
-                className={styles.typeBadge}
+                className={`${styles.typeBadge} no-select`}
                 style={{
                   color: typeInfo.color,
                   borderColor: `${typeInfo.color}30`,
@@ -209,10 +209,10 @@ const SaveDetailPage = () => {
               </span>
             </div>
 
-            <h1 className={styles.title}>{save.title || save.url}</h1>
+            <h1 className={`${styles.title} select-text`}>{save.title || save.url}</h1>
 
             {save.description && (
-              <p className={styles.description}>{save.description}</p>
+              <p className={`${styles.description} select-text`}>{save.description}</p>
             )}
 
             <div className={styles.headerActions}>
@@ -220,7 +220,7 @@ const SaveDetailPage = () => {
                 href={save.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={styles.openBtn}
+                className={`${styles.openBtn} no-select`}
               >
                 <svg
                   width="13"
@@ -238,7 +238,7 @@ const SaveDetailPage = () => {
               </a>
 
               <button
-                className={`${styles.iconBtn} ${save.isFavorite ? styles.favorited : ""}`}
+                className={`${styles.iconBtn} ${save.isFavorite ? styles.favorited : ""} no-select`}
                 onClick={handleToggleFavorite}
                 title={save.isFavorite ? "Unfavorite" : "Favorite"}
               >
@@ -255,7 +255,7 @@ const SaveDetailPage = () => {
               </button>
 
               <button
-                className={`${styles.iconBtn} ${styles.deleteBtn}`}
+                className={`${styles.iconBtn} ${styles.deleteBtn} no-select`}
                 onClick={() => setShowConfirm(true)}
                 title="Delete"
               >
@@ -280,7 +280,7 @@ const SaveDetailPage = () => {
               {/* Note */}
               <div className={styles.section}>
                 <div className={styles.sectionHeader}>
-                  <h3>Note</h3>
+                  <h3 className="no-select">Note</h3>
                 </div>
                 <textarea
                   className={styles.noteInput}
@@ -304,7 +304,7 @@ const SaveDetailPage = () => {
               {/* Highlights */}
               <div className={styles.section}>
                 <div className={styles.sectionHeader}>
-                  <h3>Highlights</h3>
+                  <h3 className="no-select">Highlights</h3>
                 </div>
 
                 {save.highlights?.length > 0 && (
@@ -312,7 +312,7 @@ const SaveDetailPage = () => {
                     {save.highlights.map((h, i) => (
                       <div key={i} className={styles.highlight}>
                         <span className={styles.highlightBar} />
-                        <p>{h.text}</p>
+                        <p className="select-text">{h.text}</p>
                         <button
                           className={styles.removeHighlight}
                           onClick={() => handleDeleteHighlight(i)}
@@ -354,11 +354,11 @@ const SaveDetailPage = () => {
               {/* Meta */}
               <div className={styles.section}>
                 <div className={styles.sectionHeader}>
-                  <h3>Info</h3>
+                  <h3 className="no-select">Info</h3>
                 </div>
                 <div className={styles.metaList}>
                   <div className={styles.metaItem}>
-                    <span>Saved</span>
+                    <span className="no-select">Saved</span>
                     <span>
                       {new Date(save.createdAt).toLocaleDateString("en-US", {
                         month: "short",
@@ -368,13 +368,13 @@ const SaveDetailPage = () => {
                     </span>
                   </div>
                   <div className={styles.metaItem}>
-                    <span>Type</span>
+                    <span className="no-select">Type</span>
                     <span style={{ color: typeInfo.color }}>
                       {typeInfo.label}
                     </span>
                   </div>
                   <div className={styles.metaItem}>
-                    <span>Source</span>
+                    <span className="no-select">Source</span>
                     <span>{save.siteName || "—"}</span>
                   </div>
                 </div>
@@ -386,7 +386,7 @@ const SaveDetailPage = () => {
               {/* Tags */}
               <div className={styles.section}>
                 <div className={styles.sectionHeader}>
-                  <h3>Tags</h3>
+                  <h3 className="no-select">Tags</h3>
                 </div>
                 {tags.length === 0 ? (
                   <p className={styles.emptyText}>
@@ -427,7 +427,7 @@ const SaveDetailPage = () => {
               {/* Collections */}
               <div className={styles.section}>
                 <div className={styles.sectionHeader}>
-                  <h3>Collections</h3>
+                  <h3 className="no-select">Collections</h3>
                 </div>
                 {collections.length === 0 ? (
                   <p className={styles.emptyText}>

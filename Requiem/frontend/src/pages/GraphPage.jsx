@@ -208,7 +208,7 @@ const GraphPage = () => {
     <PageWrapper>
       <Topbar />
       <div className={styles.page}>
-        <div className={styles.header}>
+        <div className={`${styles.header} no-select`}>
           <div className={styles.headerLeft}>
             <h1>Knowledge graph</h1>
             <p>Saves connected by shared tags</p>
@@ -237,7 +237,7 @@ const GraphPage = () => {
             </div>
           )}
 
-          <svg ref={svgRef} className={styles.svg} />
+          <svg ref={svgRef} className={`${styles.svg} no-select`} />
 
           {tooltip.visible && tooltip.node && (
             <div
@@ -267,7 +267,7 @@ const GraphPage = () => {
           )}
         </div>
 
-        <div className={styles.legend}>
+        <div className={`${styles.legend} no-select`}>
           {Object.entries(TYPE_COLORS).map(([type, color]) => (
             <div key={type} className={styles.legendItem}>
               <span className={styles.legendDot} style={{ background: color }} />

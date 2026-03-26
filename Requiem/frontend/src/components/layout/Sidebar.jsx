@@ -22,7 +22,7 @@ const Sidebar = () => {
 
   return (
     <aside className={styles.sidebar}>
-      <NavLink to="/" className={styles.logo}>
+      <NavLink to="/" className={`${styles.logo} no-select`}>
         <img src={logo} alt="Requiem" />
       </NavLink>
 
@@ -36,14 +36,14 @@ const Sidebar = () => {
               `${styles.navItem} ${isActive ? styles.active : ""}`
             }
           >
-            <span className={styles.navIcon}>{item.icon}</span>
+            <span className={`${styles.navIcon} no-select`}>{item.icon}</span>
             {item.label}
           </NavLink>
         ))}
       </nav>
 
       <div className={styles.section}>
-        <div className={styles.sectionHeader}>
+        <div className={`${styles.sectionHeader} no-select`}>
           <span>Collections</span>
         </div>
         {colLoading ? (
@@ -61,7 +61,7 @@ const Sidebar = () => {
                 }
               >
                 <span className={styles.navIcon}>{col.emoji}</span>
-                <span className={styles.navLabel}>{col.name}</span>
+                <span className={`${styles.navLabel} select-text`}>{col.name}</span>
                 <span className={styles.count}>{col.saveCount}</span>
               </NavLink>
             ))}
@@ -70,7 +70,7 @@ const Sidebar = () => {
       </div>
 
       <div className={styles.section}>
-        <div className={styles.sectionHeader}>
+        <div className={`${styles.sectionHeader} no-select`}>
           <span>Tags</span>
         </div>
         {tagLoading ? (
@@ -91,7 +91,7 @@ const Sidebar = () => {
                   className={styles.tagDot}
                   style={{ background: tag.color }}
                 />
-                {tag.name}
+                <span className="select-text">{tag.name}</span>
                 <span className={styles.count}>{tag.saveCount}</span>
               </NavLink>
             ))}

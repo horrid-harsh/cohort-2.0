@@ -46,12 +46,12 @@ const App = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* {showLoader && (
+      {showLoader && (
         <LiquidProgressLoader
           isAppReady={isSessionChecked}
           onComplete={() => setShowLoader(false)}
         />
-      )} */}
+      )}
       <SessionProvider>
         <Router />
       </SessionProvider>

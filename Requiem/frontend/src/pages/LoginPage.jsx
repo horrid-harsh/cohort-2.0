@@ -8,6 +8,7 @@ import styles from "./AuthPage.module.scss";
 const LoginPage = () => {
   const [form, setForm] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
   const { mutate: login, isPending, error: serverError } = useLogin();
 
   const validateField = (name, value) => {
@@ -76,17 +77,67 @@ const LoginPage = () => {
 
         <div className={styles.field}>
           <label htmlFor="password">Password</label>
-          <input
-            id="password"
-            name="password"
-            type="password"
-            className={errors.password ? styles.inputError : ""}
-            placeholder="••••••••••••"
-            value={form.password}
-            onChange={handleChange}
-            autoComplete="current-password"
-          />
-          {errors.password && <span className={styles.fieldError}>{errors.password}</span>}
+          <div className={styles.passwordWrapper}>
+            <input
+              id="password"
+              name="password"
+              type={showPassword ? "text" : "password"}
+              className={errors.password ? styles.inputError : ""}
+              placeholder="••••••••••••"
+              value={form.password}
+              onChange={handleChange}
+              autoComplete="current-password"
+            />
+            <button
+              type="button"
+              className={styles.eyeButton}
+              onClick={() => setShowPassword(!showPassword)}
+              tabIndex="-1"
+            >
+              {showPassword ? (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M9.88 9.88L14.12 14.12" stroke="currentColor" />
+                  <path d="M2.1 2.1L21.9 21.9" stroke="currentColor" />
+                  <path
+                    d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"
+                    stroke="currentColor"
+                  />
+                  <path
+                    d="M6.61 6.61A13.52 13.52 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"
+                    stroke="currentColor"
+                  />
+                  <circle cx="12" cy="12" r="3" stroke="currentColor" />
+                </svg>
+              ) : (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path
+                    d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"
+                    stroke="currentColor"
+                  />
+                  <circle cx="12" cy="12" r="3" stroke="currentColor" />
+                </svg>
+              )}
+            </button>
+          </div>
+          {errors.password && (
+            <span className={styles.fieldError}>{errors.password}</span>
+          )}
         </div>
 
         <button type="submit" className={styles.btn} disabled={isPending}>

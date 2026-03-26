@@ -49,9 +49,28 @@
 
 // ─── Card ─────────────────────────────────────────
 @mixin card {
-  background: $color-bg-secondary;
-  border: 0.5px solid $color-border;
+  background: rgba(10, 10, 10, 0.7);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  border: 0.5px solid rgba(255, 255, 255, 0.06);
   border-radius: $border-radius-lg;
+  box-shadow: 
+    inset 0 1px 1px rgba(255, 255, 255, 0.05),
+    0 4px 24px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@mixin hover-glow($rgb) {
+  transform: translateY(-4px) scale(1.02);
+  border-color: rgba($rgb, 0.3);
+  box-shadow: 
+    inset 0 1px 1px rgba($rgb, 0.15),
+    0 12px 40px -12px rgba($rgb, 0.25),
+    0 4px 10px rgba(0, 0, 0, 0.5);
+
+  &::before {
+    opacity: 1;
+  }
 }
 
 // ─── Scrollbar ────────────────────────────────────
@@ -123,4 +142,70 @@
   100% {
     transform: translateX(100%);
   }
+}
+
+// ─── Buttons ──────────────────────────────────────
+@mixin premium-button($bg: $color-accent, $color: #fff) {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: $bg;
+  color: $color;
+  padding: 8px 18px;
+  border-radius: $border-radius-full;
+  font-size: $text-sm;
+  font-weight: 600;
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+
+  will-change: transform;
+  backface-visibility: hidden;
+
+  svg {
+    transition: transform 0.3s ease;
+    will-change: transform;
+    backface-visibility: hidden;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -120%;
+    width: 100px;
+    height: 100%;
+    background: linear-gradient(
+      120deg,
+      rgba(255, 255, 255, 0) 30%,
+      rgba(255, 255, 255, 0.45) 50%,
+      rgba(255, 255, 255, 0) 70%
+    );
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  &:hover {
+    transform: scale(1.04) translateY(-1px);
+    border-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+
+    &::before {
+      animation: shine 1.5s ease-out infinite;
+    }
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+@keyframes shine {
+  0% { left: -120%; }
+  60% { left: 120%; }
+  100% { left: 120%; }
 }

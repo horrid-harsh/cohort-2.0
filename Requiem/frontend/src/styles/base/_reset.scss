@@ -54,6 +54,12 @@ select {
   background: none;
   border: none;
   outline: none;
+  user-select: text;
+}
+
+pre,
+code {
+  user-select: text;
 }
 
 ul,

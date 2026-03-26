@@ -5,12 +5,12 @@ import styles from "./ResurfaceCard.module.scss";
 import { getResurfaceSaveApi } from "../services/saves.service";
 
 const TYPE_COLORS = {
-  article: "#378ADD",
-  video:   "#D85A30",
-  tweet:   "#1D9E75",
-  pdf:     "#f87171",
-  image:   "#D4537E",
-  link:    "#888888",
+  article: { hex: "#378ADD", rgb: "136, 136, 136" },
+  video:   { hex: "#D85A30", rgb: "136, 136, 136" },
+  tweet:   { hex: "#1D9E75", rgb: "136, 136, 136" },
+  pdf:     { hex: "#f87171", rgb: "136, 136, 136" },
+  image:   { hex: "#D4537E", rgb: "136, 136, 136" },
+  link:    { hex: "#888888", rgb: "136, 136, 136" },
 };
 
 const timeAgo = (date) => {
@@ -41,7 +41,10 @@ const ResurfaceCard = () => {
   const typeColor = TYPE_COLORS[save.type] || TYPE_COLORS.link;
 
   return (
-    <div className={styles.card}>
+    <div 
+      className={styles.card}
+      style={{ "--type-color-rgb": typeColor.rgb }}
+    >
       <div className={styles.label}>
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <circle cx="12" cy="12" r="10"/>
@@ -59,7 +62,7 @@ const ResurfaceCard = () => {
             loading="lazy"
           />
         ) : (
-          <div className={styles.thumbPlaceholder} style={{ color: typeColor }}>
+          <div className={styles.thumbPlaceholder} style={{ color: typeColor.hex }}>
             {save.type?.[0]?.toUpperCase() || "L"}
           </div>
         )}

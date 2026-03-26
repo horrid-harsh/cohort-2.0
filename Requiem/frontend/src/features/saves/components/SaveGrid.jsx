@@ -52,7 +52,7 @@ const SaveGrid = ({ search, isFavorite, isArchived, semantic }) => {
         </div>
       )}
 
-      <div className={styles.filters}>
+      <div className={`${styles.filters} no-select`}>
         {!semantic && FILTERS.map((f) => (
           <button
             key={f.value}
