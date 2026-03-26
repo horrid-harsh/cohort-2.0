@@ -28,7 +28,9 @@ const Topbar = ({ onSearch, onSemanticChange }) => {
     onSearch?.(e.target.value);
   };
 
-  const handleSemanticToggle = () => {
+  const handleSemanticToggle = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     const next = !isSemantic;
     setIsSemantic(next);
     onSemanticChange?.(next);

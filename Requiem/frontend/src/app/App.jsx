@@ -25,6 +25,11 @@ const App = () => {
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
+      // 🔹 ADD THESE FOR TOUCHPAD COMPATIBILITY
+      syncTouch: true,       // Syncs smooth scroll with touch gestures
+      touchMultiplier: 2,    // Allows easier movement on trackpads
+      orientation: 'vertical', // Explicitly set to vertical only
+      gestureOrientation: 'vertical'
     });
 
     let rafId;

@@ -24891,28 +24891,28 @@ var useDeleteTag = () => {
 	});
 };
 var Sidebar_module_default = {
-	sidebar: "_sidebar_1kp3x_17",
-	logo: "_logo_1kp3x_35",
-	nav: "_nav_1kp3x_51",
-	navItem: "_navItem_1kp3x_58",
-	active: "_active_1kp3x_73",
-	navIcon: "_navIcon_1kp3x_79",
-	navLabel: "_navLabel_1kp3x_84",
-	section: "_section_1kp3x_91",
-	sectionHeader: "_sectionHeader_1kp3x_100",
-	empty: "_empty_1kp3x_112",
-	count: "_count_1kp3x_119",
-	collectionsList: "_collectionsList_1kp3x_125",
-	tagsList: "_tagsList_1kp3x_147",
-	tagItem: "_tagItem_1kp3x_169",
-	tagDot: "_tagDot_1kp3x_190",
-	bottom: "_bottom_1kp3x_197",
-	userRow: "_userRow_1kp3x_203",
-	avatar: "_avatar_1kp3x_210",
-	userName: "_userName_1kp3x_225",
-	logoutBtn: "_logoutBtn_1kp3x_235",
-	shimmer: "_shimmer_1kp3x_1",
-	shine: "_shine_1kp3x_1"
+	sidebar: "_sidebar_4qwou_17",
+	logo: "_logo_4qwou_35",
+	nav: "_nav_4qwou_51",
+	navItem: "_navItem_4qwou_58",
+	active: "_active_4qwou_73",
+	navIcon: "_navIcon_4qwou_79",
+	navLabel: "_navLabel_4qwou_99",
+	section: "_section_4qwou_106",
+	sectionHeader: "_sectionHeader_4qwou_115",
+	empty: "_empty_4qwou_127",
+	count: "_count_4qwou_134",
+	collectionsList: "_collectionsList_4qwou_140",
+	tagsList: "_tagsList_4qwou_162",
+	tagItem: "_tagItem_4qwou_184",
+	tagDot: "_tagDot_4qwou_205",
+	bottom: "_bottom_4qwou_212",
+	userRow: "_userRow_4qwou_218",
+	avatar: "_avatar_4qwou_225",
+	userName: "_userName_4qwou_240",
+	logoutBtn: "_logoutBtn_4qwou_250",
+	shimmer: "_shimmer_4qwou_1",
+	shine: "_shine_4qwou_1"
 };
 //#endregion
 //#region src/components/layout/Sidebar.jsx
@@ -24920,27 +24920,148 @@ var NAV_ITEMS = [
 	{
 		label: "All saves",
 		to: "/",
-		icon: "◈"
+		icon: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("svg", {
+			width: "18",
+			height: "18",
+			viewBox: "0 0 24 24",
+			fill: "none",
+			stroke: "currentColor",
+			strokeWidth: "2",
+			strokeLinecap: "round",
+			strokeLinejoin: "round",
+			children: [
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("rect", {
+					x: "3",
+					y: "3",
+					width: "7",
+					height: "7",
+					rx: "1"
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("rect", {
+					x: "14",
+					y: "3",
+					width: "7",
+					height: "7",
+					rx: "1"
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("rect", {
+					x: "14",
+					y: "14",
+					width: "7",
+					height: "7",
+					rx: "1"
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("rect", {
+					x: "3",
+					y: "14",
+					width: "7",
+					height: "7",
+					rx: "1"
+				})
+			]
+		})
 	},
 	{
 		label: "Favorites",
 		to: "/favorites",
-		icon: "♡"
+		icon: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+			width: "18",
+			height: "18",
+			viewBox: "0 0 24 24",
+			fill: "none",
+			stroke: "currentColor",
+			strokeWidth: "2",
+			strokeLinecap: "round",
+			strokeLinejoin: "round",
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", { d: "M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" })
+		})
 	},
 	{
 		label: "Graph",
 		to: "/graph",
-		icon: "◎"
+		icon: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("svg", {
+			width: "18",
+			height: "18",
+			viewBox: "0 0 24 24",
+			fill: "none",
+			stroke: "currentColor",
+			strokeWidth: "2",
+			strokeLinecap: "round",
+			strokeLinejoin: "round",
+			children: [
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("circle", {
+					cx: "18",
+					cy: "5",
+					r: "3"
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("circle", {
+					cx: "6",
+					cy: "12",
+					r: "3"
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("circle", {
+					cx: "18",
+					cy: "19",
+					r: "3"
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("line", {
+					x1: "8.59",
+					y1: "13.51",
+					x2: "15.42",
+					y2: "17.49"
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("line", {
+					x1: "15.41",
+					y1: "6.51",
+					x2: "8.59",
+					y2: "10.49"
+				})
+			]
+		})
 	},
 	{
 		label: "Archive",
 		to: "/archive",
-		icon: "▤"
+		icon: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("svg", {
+			width: "18",
+			height: "18",
+			viewBox: "0 0 24 24",
+			fill: "none",
+			stroke: "currentColor",
+			strokeWidth: "2",
+			strokeLinecap: "round",
+			strokeLinejoin: "round",
+			children: [
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("polyline", { points: "21 8 21 21 3 21 3 8" }),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("rect", {
+					x: "1",
+					y: "3",
+					width: "22",
+					height: "5"
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("line", {
+					x1: "10",
+					y1: "12",
+					x2: "14",
+					y2: "12"
+				})
+			]
+		})
 	},
 	{
 		label: "Clusters",
 		to: "/clusters",
-		icon: "⬢"
+		icon: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+			width: "18",
+			height: "18",
+			viewBox: "0 0 24 24",
+			fill: "none",
+			stroke: "currentColor",
+			strokeWidth: "2",
+			strokeLinecap: "round",
+			strokeLinejoin: "round",
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", { d: "M12 2l9 4.9V17.1l-9 4.9l-9-4.9V6.9L12 2z" })
+		})
 	}
 ];
 var Sidebar = () => {
@@ -25216,19 +25337,19 @@ var useDeleteSave = () => {
 	});
 };
 var SaveModal_module_default = {
-	overlay: "_overlay_g245a_17",
-	modal: "_modal_g245a_28",
-	header: "_header_g245a_38",
-	closeBtn: "_closeBtn_g245a_50",
-	error: "_error_g245a_62",
-	form: "_form_g245a_72",
-	field: "_field_g245a_78",
-	optional: "_optional_g245a_107",
-	actions: "_actions_g245a_112",
-	cancelBtn: "_cancelBtn_g245a_120",
-	submitBtn: "_submitBtn_g245a_134",
-	shine: "_shine_g245a_1",
-	shimmer: "_shimmer_g245a_1"
+	overlay: "_overlay_i3mfv_17",
+	modal: "_modal_i3mfv_28",
+	header: "_header_i3mfv_38",
+	closeBtn: "_closeBtn_i3mfv_50",
+	error: "_error_i3mfv_62",
+	form: "_form_i3mfv_72",
+	field: "_field_i3mfv_78",
+	optional: "_optional_i3mfv_107",
+	actions: "_actions_i3mfv_112",
+	cancelBtn: "_cancelBtn_i3mfv_120",
+	submitBtn: "_submitBtn_i3mfv_136",
+	shine: "_shine_i3mfv_1",
+	shimmer: "_shimmer_i3mfv_1"
 };
 //#endregion
 //#region src/features/saves/components/SaveModal.jsx
@@ -25349,26 +25470,26 @@ var SaveModal = ({ isOpen, onClose }) => {
 	});
 };
 var CreateModal_module_default = {
-	overlay: "_overlay_12gej_17",
-	modal: "_modal_12gej_28",
-	header: "_header_12gej_38",
-	closeBtn: "_closeBtn_12gej_50",
-	error: "_error_12gej_62",
-	form: "_form_12gej_72",
-	field: "_field_12gej_78",
-	optional: "_optional_12gej_106",
-	emojiRow: "_emojiRow_12gej_111",
-	emojiBtn: "_emojiBtn_12gej_117",
-	selected: "_selected_12gej_132",
-	colorRow: "_colorRow_12gej_137",
-	colorBtn: "_colorBtn_12gej_143",
-	preview: "_preview_12gej_157",
-	tagPreview: "_tagPreview_12gej_167",
-	actions: "_actions_12gej_175",
-	cancelBtn: "_cancelBtn_12gej_183",
-	submitBtn: "_submitBtn_12gej_197",
-	shimmer: "_shimmer_12gej_1",
-	shine: "_shine_12gej_1"
+	overlay: "_overlay_1ymre_17",
+	modal: "_modal_1ymre_28",
+	header: "_header_1ymre_38",
+	closeBtn: "_closeBtn_1ymre_50",
+	error: "_error_1ymre_62",
+	form: "_form_1ymre_72",
+	field: "_field_1ymre_78",
+	optional: "_optional_1ymre_106",
+	emojiRow: "_emojiRow_1ymre_111",
+	emojiBtn: "_emojiBtn_1ymre_117",
+	selected: "_selected_1ymre_132",
+	colorRow: "_colorRow_1ymre_137",
+	colorBtn: "_colorBtn_1ymre_143",
+	preview: "_preview_1ymre_157",
+	tagPreview: "_tagPreview_1ymre_167",
+	actions: "_actions_1ymre_175",
+	cancelBtn: "_cancelBtn_1ymre_183",
+	submitBtn: "_submitBtn_1ymre_199",
+	shimmer: "_shimmer_1ymre_1",
+	shine: "_shine_1ymre_1"
 };
 //#endregion
 //#region src/components/ui/CreateCollectionModal.jsx
@@ -25631,21 +25752,21 @@ var CreateTagModal = ({ isOpen, onClose }) => {
 	});
 };
 var Topbar_module_default = {
-	topbar: "_topbar_1ij7a_17",
-	leftSpacer: "_leftSpacer_1ij7a_31",
-	searchWrap: "_searchWrap_1ij7a_35",
-	searchIcon: "_searchIcon_1ij7a_54",
-	searchInput: "_searchInput_1ij7a_59",
-	btnGroup: "_btnGroup_1ij7a_71",
-	dropdownWrap: "_dropdownWrap_1ij7a_79",
-	newBtn: "_newBtn_1ij7a_83",
-	shine: "_shine_1ij7a_1",
-	dropdown: "_dropdown_1ij7a_79",
-	dropItem: "_dropItem_1ij7a_143",
-	saveBtn: "_saveBtn_1ij7a_160",
-	semanticBtn: "_semanticBtn_1ij7a_180",
-	semanticActive: "_semanticActive_1ij7a_198",
-	shimmer: "_shimmer_1ij7a_1"
+	topbar: "_topbar_1r3g0_17",
+	leftSpacer: "_leftSpacer_1r3g0_31",
+	searchWrap: "_searchWrap_1r3g0_35",
+	searchIcon: "_searchIcon_1r3g0_54",
+	searchInput: "_searchInput_1r3g0_59",
+	btnGroup: "_btnGroup_1r3g0_71",
+	dropdownWrap: "_dropdownWrap_1r3g0_79",
+	newBtn: "_newBtn_1r3g0_83",
+	shine: "_shine_1r3g0_1",
+	dropdown: "_dropdown_1r3g0_79",
+	dropItem: "_dropItem_1r3g0_143",
+	saveBtn: "_saveBtn_1r3g0_160",
+	semanticBtn: "_semanticBtn_1r3g0_180",
+	semanticActive: "_semanticActive_1r3g0_198",
+	shimmer: "_shimmer_1r3g0_1"
 };
 //#endregion
 //#region src/components/layout/Topbar.jsx
@@ -25668,7 +25789,9 @@ var Topbar = ({ onSearch, onSemanticChange }) => {
 		setSearchValue(e.target.value);
 		onSearch?.(e.target.value);
 	};
-	const handleSemanticToggle = () => {
+	const handleSemanticToggle = (e) => {
+		e.preventDefault();
+		e.stopPropagation();
 		const next = !isSemantic;
 		setIsSemantic(next);
 		onSemanticChange?.(next);
@@ -27415,52 +27538,52 @@ var TagPage = () => {
 	] });
 };
 var SaveDetailPage_module_default = {
-	page: "_page_5zlae_17",
-	inner: "_inner_5zlae_27",
-	loading: "_loading_5zlae_36",
-	back: "_back_5zlae_43",
-	thumb: "_thumb_5zlae_56",
-	header: "_header_5zlae_69",
-	siteRow: "_siteRow_5zlae_75",
-	favicon: "_favicon_5zlae_82",
-	siteName: "_siteName_5zlae_87",
-	typeBadge: "_typeBadge_5zlae_92",
-	title: "_title_5zlae_105",
-	description: "_description_5zlae_112",
-	headerActions: "_headerActions_5zlae_118",
-	openBtn: "_openBtn_5zlae_125",
-	shine: "_shine_5zlae_1",
-	iconBtn: "_iconBtn_5zlae_176",
-	favorited: "_favorited_5zlae_192",
-	deleteBtn: "_deleteBtn_5zlae_196",
-	grid: "_grid_5zlae_202",
-	left: "_left_5zlae_215",
-	right: "_right_5zlae_221",
-	section: "_section_5zlae_234",
-	sectionHeader: "_sectionHeader_5zlae_254",
-	emptyText: "_emptyText_5zlae_263",
-	noteInput: "_noteInput_5zlae_269",
-	noteActions: "_noteActions_5zlae_305",
-	saved: "_saved_5zlae_311",
-	saveNoteBtn: "_saveNoteBtn_5zlae_316",
-	highlights: "_highlights_5zlae_375",
-	highlight: "_highlight_5zlae_375",
-	highlightBar: "_highlightBar_5zlae_397",
-	removeHighlight: "_removeHighlight_5zlae_406",
-	addHighlight: "_addHighlight_5zlae_418",
-	highlightInput: "_highlightInput_5zlae_424",
-	addHighlightBtn: "_addHighlightBtn_5zlae_443",
-	tagsList: "_tagsList_5zlae_501",
-	collectionsList: "_collectionsList_5zlae_501",
-	tagItem: "_tagItem_5zlae_528",
-	colItem: "_colItem_5zlae_528",
-	tagSelected: "_tagSelected_5zlae_545",
-	colSelected: "_colSelected_5zlae_545",
-	tagDot: "_tagDot_5zlae_550",
-	colName: "_colName_5zlae_557",
-	metaList: "_metaList_5zlae_564",
-	metaItem: "_metaItem_5zlae_570",
-	shimmer: "_shimmer_5zlae_1"
+	page: "_page_h7dv5_17",
+	inner: "_inner_h7dv5_27",
+	loading: "_loading_h7dv5_36",
+	back: "_back_h7dv5_43",
+	thumb: "_thumb_h7dv5_56",
+	header: "_header_h7dv5_69",
+	siteRow: "_siteRow_h7dv5_75",
+	favicon: "_favicon_h7dv5_82",
+	siteName: "_siteName_h7dv5_87",
+	typeBadge: "_typeBadge_h7dv5_92",
+	title: "_title_h7dv5_105",
+	description: "_description_h7dv5_112",
+	headerActions: "_headerActions_h7dv5_118",
+	openBtn: "_openBtn_h7dv5_125",
+	shine: "_shine_h7dv5_1",
+	iconBtn: "_iconBtn_h7dv5_176",
+	favorited: "_favorited_h7dv5_192",
+	deleteBtn: "_deleteBtn_h7dv5_196",
+	grid: "_grid_h7dv5_202",
+	left: "_left_h7dv5_215",
+	right: "_right_h7dv5_221",
+	section: "_section_h7dv5_234",
+	sectionHeader: "_sectionHeader_h7dv5_254",
+	emptyText: "_emptyText_h7dv5_263",
+	noteInput: "_noteInput_h7dv5_269",
+	noteActions: "_noteActions_h7dv5_305",
+	saved: "_saved_h7dv5_311",
+	saveNoteBtn: "_saveNoteBtn_h7dv5_316",
+	highlights: "_highlights_h7dv5_375",
+	highlight: "_highlight_h7dv5_375",
+	highlightBar: "_highlightBar_h7dv5_397",
+	removeHighlight: "_removeHighlight_h7dv5_406",
+	addHighlight: "_addHighlight_h7dv5_418",
+	highlightInput: "_highlightInput_h7dv5_424",
+	addHighlightBtn: "_addHighlightBtn_h7dv5_443",
+	tagsList: "_tagsList_h7dv5_501",
+	collectionsList: "_collectionsList_h7dv5_501",
+	tagItem: "_tagItem_h7dv5_528",
+	colItem: "_colItem_h7dv5_528",
+	tagSelected: "_tagSelected_h7dv5_545",
+	colSelected: "_colSelected_h7dv5_545",
+	tagDot: "_tagDot_h7dv5_550",
+	colName: "_colName_h7dv5_557",
+	metaList: "_metaList_h7dv5_564",
+	metaItem: "_metaItem_h7dv5_570",
+	shimmer: "_shimmer_h7dv5_1"
 };
 var RelatedSaves_module_default = {
 	wrap: "_wrap_116d7_17",
@@ -31715,37 +31838,37 @@ var GraphPage = () => {
 	})] });
 };
 var ClusterPage_module_default = {
-	page: "_page_nocek_17",
-	header: "_header_nocek_26",
-	generateBtn: "_generateBtn_nocek_43",
-	shine: "_shine_nocek_1",
-	spinner: "_spinner_nocek_101",
-	spin: "_spin_nocek_101",
-	error: "_error_nocek_110",
-	emptyState: "_emptyState_nocek_119",
-	loadingState: "_loadingState_nocek_119",
-	emptyIcon: "_emptyIcon_nocek_138",
-	bigSpinner: "_bigSpinner_nocek_144",
-	clusters: "_clusters_nocek_159",
-	cluster: "_cluster_nocek_159",
-	isExpanded: "_isExpanded_nocek_178",
-	chevron: "_chevron_nocek_181",
-	clusterHeader: "_clusterHeader_nocek_186",
-	clusterTitleGroup: "_clusterTitleGroup_nocek_199",
-	clusterName: "_clusterName_nocek_210",
-	clusterCount: "_clusterCount_nocek_217",
-	savesListWrap: "_savesListWrap_nocek_225",
-	savesList: "_savesList_nocek_225",
-	saveItem: "_saveItem_nocek_267",
-	saveArrow: "_saveArrow_nocek_279",
-	saveThumb: "_saveThumb_nocek_283",
-	thumbPlaceholder: "_thumbPlaceholder_nocek_297",
-	saveInfo: "_saveInfo_nocek_307",
-	saveTitle: "_saveTitle_nocek_312",
-	saveMeta: "_saveMeta_nocek_321",
-	saveSite: "_saveSite_nocek_328",
-	saveTag: "_saveTag_nocek_333",
-	shimmer: "_shimmer_nocek_1"
+	page: "_page_10qh9_17",
+	header: "_header_10qh9_26",
+	generateBtn: "_generateBtn_10qh9_43",
+	shine: "_shine_10qh9_1",
+	spinner: "_spinner_10qh9_101",
+	spin: "_spin_10qh9_101",
+	error: "_error_10qh9_110",
+	emptyState: "_emptyState_10qh9_119",
+	loadingState: "_loadingState_10qh9_119",
+	emptyIcon: "_emptyIcon_10qh9_138",
+	bigSpinner: "_bigSpinner_10qh9_144",
+	clusters: "_clusters_10qh9_159",
+	cluster: "_cluster_10qh9_159",
+	isExpanded: "_isExpanded_10qh9_178",
+	chevron: "_chevron_10qh9_181",
+	clusterHeader: "_clusterHeader_10qh9_186",
+	clusterTitleGroup: "_clusterTitleGroup_10qh9_199",
+	clusterName: "_clusterName_10qh9_210",
+	clusterCount: "_clusterCount_10qh9_217",
+	savesListWrap: "_savesListWrap_10qh9_225",
+	savesList: "_savesList_10qh9_225",
+	saveItem: "_saveItem_10qh9_267",
+	saveArrow: "_saveArrow_10qh9_279",
+	saveThumb: "_saveThumb_10qh9_283",
+	thumbPlaceholder: "_thumbPlaceholder_10qh9_297",
+	saveInfo: "_saveInfo_10qh9_307",
+	saveTitle: "_saveTitle_10qh9_312",
+	saveMeta: "_saveMeta_10qh9_321",
+	saveSite: "_saveSite_10qh9_328",
+	saveTag: "_saveTag_10qh9_333",
+	shimmer: "_shimmer_10qh9_1"
 };
 //#endregion
 //#region src/pages/ClusterPage.jsx
@@ -33012,6 +33135,10 @@ var LiquidProgressLoader = ({ isAppReady = true, onComplete }) => {
 	const [isReactReady, setIsReactReady] = (0, import_react.useState)(false);
 	(0, import_react.useEffect)(() => {
 		setIsReactReady(true);
+		document.body.style.overflow = "hidden";
+		return () => {
+			document.body.style.overflow = "auto";
+		};
 	}, []);
 	(0, import_react.useEffect)(() => {
 		if (!isReactReady) return;
@@ -33097,7 +33224,11 @@ var App = () => {
 		const lenis = new Lenis({
 			duration: 1.2,
 			easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-			smoothWheel: true
+			smoothWheel: true,
+			syncTouch: true,
+			touchMultiplier: 2,
+			orientation: "vertical",
+			gestureOrientation: "vertical"
 		});
 		let rafId;
 		const raf = (time) => {

@@ -9,6 +9,13 @@ const LiquidProgressLoader = ({ isAppReady = true, onComplete }) => {
   // 1. Handover logic abolished - we now just wait for React to mount
   useEffect(() => {
     setIsReactReady(true);
+    // 🔹 Disable background scrollbar during loading
+    document.body.style.overflow = "hidden";
+    
+    return () => {
+      // 🔹 Re-enable it when the loader is gone
+      document.body.style.overflow = "auto";
+    };
   }, []);
 
   // 🔹 Smooth progress (NO stutter)
