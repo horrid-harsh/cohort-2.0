@@ -30,6 +30,7 @@ Rules:
 - Lowercase only
 - 1-2 words max
 - Generic and reusable
+- If there is not enough information to determine the topic, return an empty array []
 - Return ONLY a JSON array of strings
 - Example: ["javascript", "react", "frontend"]
 `

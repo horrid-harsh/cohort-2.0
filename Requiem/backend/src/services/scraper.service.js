@@ -54,8 +54,15 @@ const extractContent = ($) => {
 
 // Main scraper function
 const scrapeUrl = async (url) => {
+  let targetUrl = url;
+
+  // Use vxtwitter/fxtwitter for better meta tags on Twitter/X
+  if (url.includes("twitter.com") || url.includes("x.com")) {
+    targetUrl = url.replace("twitter.com", "vxtwitter.com").replace("x.com", "vxtwitter.com");
+  }
+
   try {
-    const { data: html, headers } = await axios.get(url, {
+    const { data: html, headers } = await axios.get(targetUrl, {
       timeout: 10000, // 10 seconds max
       headers: {
         // Pretend to be a browser so sites don't block us
