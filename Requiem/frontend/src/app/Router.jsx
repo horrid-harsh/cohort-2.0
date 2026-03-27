@@ -17,6 +17,7 @@ import TagPage from "../pages/TagPage";
 import SaveDetailPage from "../pages/SaveDetailPage";
 import GraphPage from "../pages/GraphPage";
 import ClusterPage from "../pages/ClusterPage";
+import SettingsPage from "../pages/SettingsPage";
 
 const ProtectedRoute = () => {
   const { user } = useAuthStore();
@@ -48,6 +49,7 @@ const router = createBrowserRouter([
       { path: "/saves/:id", element: <SaveDetailPage /> },
       { path: "/graph", element: <GraphPage /> },
       { path: "/clusters", element: <ClusterPage /> },
+      { path: "/settings", element: <SettingsPage /> },
     ],
   },
   { path: "*", element: <Navigate to="/" replace /> },

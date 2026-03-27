@@ -209,3 +209,30 @@
   60% { left: 120%; }
   100% { left: 120%; }
 }
+
+@mixin back-button {
+  background: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: $text-sm;
+  font-weight: 500;
+  color: $color-text-muted;
+  width: fit-content;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    color: #fff;
+    svg {
+      color: $color-accent;
+      transform: translateX(-2px);
+    }
+  }
+
+  svg {
+    transition: transform 0.2s ease;
+  }
+}

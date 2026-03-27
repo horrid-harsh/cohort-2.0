@@ -150,10 +150,16 @@ const Sidebar = () => {
 
       <div className={styles.bottom}>
         <div className={styles.userRow}>
-          <div className={styles.avatar}>
-            {user?.name?.charAt(0).toUpperCase()}
-          </div>
-          <span className={styles.userName}>{user?.name}</span>
+          <NavLink to="/settings" className={styles.userTrigger}>
+            <div className={styles.avatar}>
+              {user?.avatar ? (
+                <img src={user.avatar} alt={user.name} />
+              ) : (
+                user?.name?.charAt(0).toUpperCase()
+              )}
+            </div>
+            <span className={styles.userName}>{user?.name}</span>
+          </NavLink>
           <button
             className={styles.logoutBtn}
             onClick={() => logout()}

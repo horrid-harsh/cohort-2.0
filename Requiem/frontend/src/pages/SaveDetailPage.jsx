@@ -159,16 +159,9 @@ const SaveDetailPage = () => {
       <div className={styles.page}>
         <div className={styles.inner}>
           {/* Back */}
-          <button className={`${styles.back} no-select`} onClick={() => navigate(-1)}>
-            <svg
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <path d="M19 12H5M12 19l-7-7 7-7" />
+          <button className={`${styles.backBtn} no-select`} onClick={() => navigate(-1)}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+              <path d="M15 18l-6-6 6-6" />
             </svg>
             Back
           </button>
