@@ -33,3 +33,22 @@ export const loginSchema = z.object({
   email: z.string().trim().email("Invalid email format").toLowerCase(),
   password: z.string().min(1, "Password is required"),
 });
+
+export const resetPasswordSchema = z.object({
+  token: z.string().min(1, "Token is required"),
+  password: z
+    .string()
+    .min(8, "Password must be at least 8 characters")
+    .refine((val) => /[A-Z]/.test(val), {
+      message: "Must include at least one uppercase letter",
+    })
+    .refine((val) => /[a-z]/.test(val), {
+      message: "Must include at least one lowercase letter",
+    })
+    .refine((val) => /[0-9]/.test(val), {
+      message: "Must include at least one number",
+    })
+    .refine((val) => /[\W]/.test(val), {
+      message: "Must include at least one special character",
+    }),
+});

@@ -6,6 +6,8 @@ import {
   logoutApi,
   verifyEmailApi,
   resendVerificationApi,
+  forgotPasswordApi,
+  resetPasswordApi,
 } from "../services/auth.service";
 import useAuthStore from "../store/auth.store";
 
@@ -54,5 +56,17 @@ export const useLogout = () => {
       clearAuth(); // Reset the store immediately, even if logoutApi fails (e.g. 401 already)
       navigate("/login");
     },
+  });
+};
+
+export const useForgotPassword = () => {
+  return useMutation({
+    mutationFn: (email) => forgotPasswordApi(email),
+  });
+};
+
+export const useResetPassword = () => {
+  return useMutation({
+    mutationFn: (data) => resetPasswordApi(data),
   });
 };

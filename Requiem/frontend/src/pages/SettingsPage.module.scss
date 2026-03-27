@@ -8,13 +8,28 @@
 }
 
 .header {
-  margin-bottom: 40px;
+  margin-bottom: 32px;
 
-  h1 {
-    font-size: 32px;
-    font-weight: 600;
-    color: #fff;
-    margin-bottom: 8px;
+  .titleWithIcon {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    h1 {
+      font-size: 32px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 0;
+    }
+
+    .settingsIcon {
+      color: $color-accent;
+      transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      
+      &:hover {
+        transform: rotate(180deg);
+      }
+    }
   }
 
   p {

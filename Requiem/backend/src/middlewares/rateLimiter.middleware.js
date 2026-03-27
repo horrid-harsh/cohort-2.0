@@ -13,6 +13,17 @@ export const authLimiter = rateLimit({
   legacyHeaders: false,
 });
 
+export const resetPasswordLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 5,
+  message: {
+    success: false,
+    message: "Too many password reset attempts, please try again after 15 minutes.",
+  },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
 // ─── General API — relaxed ─────────────────────────
 // 500 requests per 15 mins
 // GETs are skipped entirely — no point limiting reads

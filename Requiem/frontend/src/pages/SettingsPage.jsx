@@ -31,17 +31,22 @@ const SettingsPage = () => {
 
   return (
     <div className={styles.settingsPage}>
-      <header className={styles.header}>
-        <h1>Settings</h1>
-        <p>Manage your account settings and preferences.</p>
-      </header>
-
-      <button className={styles.backBtn} onClick={() => navigate(-1)}>
+      <button className={`${styles.backBtn} no-select`} onClick={() => navigate(-1)}>
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
           <path d="M15 18l-6-6 6-6" />
         </svg>
         Back
       </button>
+
+      <header className={styles.header}>
+        <div className={styles.titleWithIcon}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className={styles.settingsIcon}>
+            <circle cx="12" cy="12" r="3" />
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
+          </svg>
+          <h1>Settings</h1>
+        </div>
+      </header>
 
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>
@@ -115,18 +120,6 @@ const SettingsPage = () => {
             </div>
           </div>
         </div>
-      </section>
-
-      <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-          </svg>
-          Account Security
-        </h2>
-        <p style={{ color: '#555', fontSize: '14px', fontStyle: 'italic' }}>
-          Password management and 2FA features are coming soon.
-        </p>
       </section>
     </div>
   );

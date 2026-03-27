@@ -29,3 +29,13 @@ export const resendVerificationApi = async (email) => {
   const res = await axiosInstance.post("/auth/resend-verification", { email });
   return res.data.data;
 };
+
+export const forgotPasswordApi = async (email) => {
+  const res = await axiosInstance.post("/auth/forgot-password", { email });
+  return res.data.data;
+};
+
+export const resetPasswordApi = async (data) => {
+  const res = await axiosInstance.post("/auth/reset-password", data);
+  return res.data.data;
+};

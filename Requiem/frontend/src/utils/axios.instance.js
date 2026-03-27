@@ -76,7 +76,13 @@ axiosInstance.interceptors.response.use(
         useAuthStore.setState({ user: null });
 
         // Only redirect if we're not already on the login page AND not on other public auth pages
-        const publicPaths = ["/login", "/register", "/verify-email"];
+        const publicPaths = [
+          "/login",
+          "/register",
+          "/verify-email",
+          "/forgot-password",
+          "/reset-password"
+        ];
         const isPublicPath = publicPaths.some((path) =>
           window.location.pathname.startsWith(path),
         );

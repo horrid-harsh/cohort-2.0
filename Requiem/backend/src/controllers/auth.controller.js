@@ -1,9 +1,10 @@
 import jwt from "jsonwebtoken";
+import crypto from "crypto";
 import { UserModel } from "../models/user.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
-import { sendVerificationEmail } from "../services/email.service.js";
+import { sendVerificationEmail, sendPasswordResetEmail } from "../services/email.service.js";
 
 const isProduction = process.env.NODE_ENV === "production";
 
@@ -315,4 +316,70 @@ export const getMe = asyncHandler(async (req, res) => {
   return res
     .status(200)
     .json(new ApiResponse(200, user, "User fetched successfully"));
+});
+
+// POST /api/v1/auth/forgot-password
+export const forgotPassword = asyncHandler(async (req, res) => {
+  const { email } = req.body;
+
+  if (!email) throw new ApiError(400, "Email is required");
+
+  const user = await UserModel.findOne({ email });
+
+  // For security, always return success even if user doesn't exist (prevents email enumeration)
+  if (!user) {
+    return res
+      .status(200)
+      .json(new ApiResponse(200, {}, "If an account exists with that email, a reset link was sent."));
+  }
+
+  // Generate 32-byte hex token
+  const resetToken = crypto.randomBytes(32).toString("hex");
+
+  // Hash it and store in DB
+  const hashedToken = crypto.createHash("sha256").update(resetToken).digest("hex");
+
+  user.resetPasswordToken = hashedToken;
+  user.resetPasswordTokenExpires = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
+
+  await user.save({ validateBeforeSave: false });
+
+  // Send email
+  await sendPasswordResetEmail(email, user.name, resetToken);
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, {}, "If that email exists, a password reset link has been sent."));
+});
+
+// POST /api/v1/auth/reset-password
+export const resetPassword = asyncHandler(async (req, res) => {
+  const { token, password } = req.body;
+
+  if (!token || !password) throw new ApiError(400, "Token and password are required");
+
+  // Hash the incoming token to match what's in DB
+  const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
+
+  const user = await UserModel.findOne({
+    resetPasswordToken: hashedToken,
+    resetPasswordTokenExpires: { $gt: Date.now() }
+  }).select("+password");
+
+  if (!user) throw new ApiError(400, "Invalid or expired reset token");
+
+  // Check if new password is the same as the old one
+  const isSamePassword = await user.isPasswordCorrect(password);
+  if (isSamePassword) {
+    throw new ApiError(400, "New password cannot be the same as your current password.");
+  }
+
+  // Update password (pre-save hook will hash it)
+  user.password = password;
+  user.resetPasswordToken = undefined;
+  user.resetPasswordTokenExpires = undefined;
+
+  await user.save();
+
+  return res.status(200).json(new ApiResponse(200, {}, "Password reset successfully. You can now log in."));
 });

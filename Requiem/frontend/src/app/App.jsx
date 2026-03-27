@@ -16,7 +16,11 @@ import LiquidProgressLoader from "../components/common/Loading/LiquidProgressLoa
 const App = () => {
   const isMobile = useMediaQuery("(max-width: 768px)");
   const isSessionChecked = useAuthStore((s) => s.isSessionChecked);
-  const [showLoader, setShowLoader] = useState(true);
+  // Bypass loader for direct landing pages (email links)
+  const isBypassPath = window.location.pathname.startsWith("/verify-email") || 
+                       window.location.pathname.startsWith("/reset-password");
+                       
+  const [showLoader, setShowLoader] = useState(!isBypassPath);
 
   useEffect(() => {
     if (isMobile) return;

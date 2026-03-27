@@ -7,10 +7,12 @@ import {
   refreshAccessToken,
   verifyEmail,
   resendVerificationEmailController,
+  forgotPassword,
+  resetPassword,
 } from "../controllers/auth.controller.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
-import { authLimiter } from "../middlewares/rateLimiter.middleware.js";
-import { registerSchema, loginSchema } from "../validators/auth.schema.js";
+import { authLimiter, resetPasswordLimiter } from "../middlewares/rateLimiter.middleware.js";
+import { registerSchema, loginSchema, resetPasswordSchema } from "../validators/auth.schema.js";
 import { validate } from "../middlewares/validate.middleware.js";
 
 const router = Router();
@@ -63,5 +65,19 @@ router.get("/verify-email", verifyEmail);
  * @access public
  */
 router.post("/resend-verification", resendVerificationEmailController);
+
+/**
+ * @description Forgot password
+ * @route POST /api/v1/auth/forgot-password
+ * @access public
+ */
+router.post("/forgot-password", authLimiter, forgotPassword);
+
+/**
+ * @description Reset password
+ * @route POST /api/v1/auth/reset-password
+ * @access public
+ */
+router.post("/reset-password", resetPasswordLimiter, validate(resetPasswordSchema), resetPassword);
 
 export default router;

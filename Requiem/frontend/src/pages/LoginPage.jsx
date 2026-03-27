@@ -138,6 +138,9 @@ const LoginPage = () => {
           {errors.password && (
             <span className={styles.fieldError}>{errors.password}</span>
           )}
+          <div className={styles.forgotPassRow}>
+            <Link to="/forgot-password">Forgot password?</Link>
+          </div>
         </div>
 
         <button type="submit" className={styles.btn} disabled={isPending}>
