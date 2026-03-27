@@ -13,20 +13,20 @@
   z-index: 1000;
   width: 100%;
   
-  // 🔹 ADD THESE: Force a clean hardware-accelerated layer
+  // 🔹 Force a clean hardware-accelerated layer
   isolation: isolate; 
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   
-  // Simplify the filter (remove saturate for a moment to test)
-  background: rgba(10, 10, 10, 0.4) !important; 
-  backdrop-filter: blur(20px) !important;
-  -webkit-backdrop-filter: blur(20px) !important;
+  // 🛡️ Improve visibility over bright content
+  background: rgba(0, 0, 0, 0.8) !important; 
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
   
   border-bottom: 0.5px solid rgba(255, 255, 255, 0.1);
   display: flex;
   padding: 14px 0;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 }
 
 .filterContent {
@@ -43,21 +43,25 @@
   padding: 5px 14px;
   border-radius: $border-radius-full;
   font-size: $text-sm;
-  border: 0.5px solid $color-border;
-  color: $color-text-secondary;
-  background: transparent;
+  font-weight: 500; // Slightly bolder for readability
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.7); // Significantly brighter than before
+  background: rgba(255, 255, 255, 0.04);
   cursor: pointer;
-  transition: all 0.15s;
+  transition: all 0.2s ease;
 
   &:hover {
-    border-color: $color-border-hover;
-    color: $color-text-primary;
+    border-color: rgba(255, 255, 255, 0.3);
+    color: #fff;
+    background: rgba(255, 255, 255, 0.1);
   }
 
   &.active {
-    background: $color-accent-subtle;
-    color: $color-accent;
-    border-color: rgba(124, 106, 247, 0.3);
+    background: $color-accent;
+    color: #fff;
+    border-color: $color-accent;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(124, 106, 247, 0.25);
   }
 }
 

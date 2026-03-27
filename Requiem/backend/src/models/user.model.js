@@ -27,6 +27,14 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
+    avatarUrl: {
+      type: String,
+      default: "",
+    },
+    avatarFileId: {
+      type: String,
+      default: "",
+    },
     refreshToken: {
       type: String,
       select: false,
@@ -50,10 +58,6 @@ const userSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-
-import crypto from "node:crypto";
-
-// ... existing code ...
 
 // Method to generate a verification token (JWT based to allow identification even after reuse)
 userSchema.methods.generateVerificationToken = function () {

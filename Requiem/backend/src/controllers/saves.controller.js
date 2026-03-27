@@ -16,7 +16,6 @@ import { addSaveJob } from "../jobs/save.queue.js";
 // POST /api/v1/saves
 export const createSave = asyncHandler(async (req, res) => {
   const { url, note } = req.body;
-  console.log("📥 [createSave] Received request for:", url);
   if (!url) throw new ApiError(400, "URL is required");
 
   // Check for duplicate URL for this user
@@ -24,7 +23,6 @@ export const createSave = asyncHandler(async (req, res) => {
   if (existing) throw new ApiError(409, "You've already saved this URL");
 
   // 1. Scrape metadata synchronously for immediate UI feedback
-  console.log("🌐 [createSave] Scraping metadata for:", url);
   const metadata = await scrapeUrl(url);
 
   // 2. Create save with metadata (status: pending)
@@ -38,9 +36,7 @@ export const createSave = asyncHandler(async (req, res) => {
 
   // 2. Offload heavy tasks to BullMQ
   try {
-    console.log("📝 [createSave] Sending job to BullMQ:", save._id);
     await addSaveJob({ saveId: save._id, userId: req.user._id });
-    console.log("✅ [createSave] Job added successfully");
   } catch (err) {
     console.error("Queue failed:", err.message);
 
@@ -139,6 +135,7 @@ export const getAllSaves = asyncHandler(async (req, res) => {
   if (search && search.trim() !== "") {
     filter.$or = [
       { title: { $regex: search.trim(), $options: "i" } },
+      { url: { $regex: search.trim(), $options: "i" } },
       { description: { $regex: search.trim(), $options: "i" } },
       { note: { $regex: search.trim(), $options: "i" } },
     ];
