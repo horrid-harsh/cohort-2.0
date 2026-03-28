@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { uploadAvatar, deleteAvatar } from "../controllers/user.controller.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
-import { upload } from "../middlewares/multer.middleware.js";
+import { imageUpload } from "../middlewares/multer.middleware.js";
 
 const router = Router();
 
@@ -10,7 +10,7 @@ const router = Router();
  * @methods PATCH - uploadAvatar
  * @access private
  */
-router.patch("/avatar", verifyJWT, upload.single("avatar"), uploadAvatar);
+router.patch("/avatar", verifyJWT, imageUpload.single("avatar"), uploadAvatar);
 
 /**
  * @route /api/v1/users/avatar

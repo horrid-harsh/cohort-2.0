@@ -18,6 +18,7 @@ import tagsRoutes from "./routes/tags.routes.js";
 import graphRoutes from "./routes/graph.routes.js";
 import clusterRoutes from "./routes/cluster.routes.js";
 import userRoutes from "./routes/user.routes.js";
+import uploadRoutes from "./routes/upload.routes.js";
 
 const app = express();
 
@@ -65,6 +66,7 @@ app.use("/api/v1/tags", tagsRoutes);
 app.use("/api/v1/graph", graphRoutes);
 app.use("/api/v1/clusters", clusterRoutes);
 app.use("/api/v1/users", userRoutes);
+app.use("/api/v1/upload", uploadRoutes);
 
 // Serve frontend for any other route
 app.get("*name", (req, res) => {

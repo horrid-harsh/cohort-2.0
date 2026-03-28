@@ -20757,7 +20757,9 @@ axiosInstance.interceptors.response.use((response) => response, async (error) =>
 			if (![
 				"/login",
 				"/register",
-				"/verify-email"
+				"/verify-email",
+				"/forgot-password",
+				"/reset-password"
 			].some((path) => window.location.pathname.startsWith(path))) window.location.href = "/login";
 			return Promise.reject(refreshError);
 		}
@@ -20783,6 +20785,12 @@ var verifyEmailApi = async (token) => {
 };
 var resendVerificationApi = async (email) => {
 	return (await axiosInstance.post("/auth/resend-verification", { email })).data.data;
+};
+var forgotPasswordApi = async (email) => {
+	return (await axiosInstance.post("/auth/forgot-password", { email })).data.data;
+};
+var resetPasswordApi = async (data) => {
+	return (await axiosInstance.post("/auth/reset-password", data)).data.data;
 };
 //#endregion
 //#region src/features/auth/hooks/useAuth.js
@@ -20822,6 +20830,12 @@ var useLogout = () => {
 			navigate("/login");
 		}
 	});
+};
+var useForgotPassword = () => {
+	return useMutation({ mutationFn: (email) => forgotPasswordApi(email) });
+};
+var useResetPassword = () => {
+	return useMutation({ mutationFn: (data) => resetPasswordApi(data) });
 };
 Object.freeze({ status: "aborted" });
 function $constructor(name, initializer, params) {
@@ -24178,50 +24192,52 @@ var loginSchema = object({
 });
 //#endregion
 //#region src/pages/AuthPage.module.scss
-var heading$1 = "_heading_mzzus_17";
-var error$3 = "_error_mzzus_41";
-var form$2 = "_form_mzzus_52";
-var field$2 = "_field_mzzus_59";
-var passwordWrapper = "_passwordWrapper_mzzus_100";
-var eyeButton = "_eyeButton_mzzus_109";
-var fieldError = "_fieldError_mzzus_131";
-var inputError = "_inputError_mzzus_137";
-var btn = "_btn_mzzus_146";
-var switchText = "_switchText_mzzus_173";
-var verificationSuccess = "_verificationSuccess_mzzus_187";
-var icon = "_icon_mzzus_191";
-var success = "_success_mzzus_205";
-var shake = "_shake_mzzus_1";
-var loading$3 = "_loading_mzzus_213";
-var spin$2 = "_spin_mzzus_1";
-var resendContainer = "_resendContainer_mzzus_260";
-var resendBtn = "_resendBtn_mzzus_267";
-var secondaryBtn = "_secondaryBtn_mzzus_289";
-var shimmer$19 = "_shimmer_mzzus_1";
-var shine$19 = "_shine_mzzus_1";
+var heading$1 = "_heading_1g0a7_17";
+var error$3 = "_error_1g0a7_41";
+var form$2 = "_form_1g0a7_52";
+var field$3 = "_field_1g0a7_59";
+var passwordWrapper = "_passwordWrapper_1g0a7_100";
+var eyeButton = "_eyeButton_1g0a7_109";
+var fieldError = "_fieldError_1g0a7_131";
+var inputError = "_inputError_1g0a7_137";
+var forgotPassRow = "_forgotPassRow_1g0a7_145";
+var btn = "_btn_1g0a7_161";
+var switchText = "_switchText_1g0a7_188";
+var verificationSuccess = "_verificationSuccess_1g0a7_202";
+var icon = "_icon_1g0a7_206";
+var success = "_success_1g0a7_220";
+var shake = "_shake_1g0a7_1";
+var loading$3 = "_loading_1g0a7_228";
+var spin$2 = "_spin_1g0a7_1";
+var resendContainer = "_resendContainer_1g0a7_275";
+var resendBtn = "_resendBtn_1g0a7_282";
+var secondaryBtn = "_secondaryBtn_1g0a7_304";
+var shimmer$20 = "_shimmer_1g0a7_1";
+var shine$20 = "_shine_1g0a7_1";
 var AuthPage_module_default = {
 	heading: heading$1,
 	error: error$3,
 	form: form$2,
-	field: field$2,
+	field: field$3,
 	passwordWrapper,
 	eyeButton,
 	fieldError,
 	inputError,
+	forgotPassRow,
 	btn,
 	switchText,
 	verificationSuccess,
 	icon,
 	success,
-	"pulse-success": "_pulse-success_mzzus_1",
+	"pulse-success": "_pulse-success_1g0a7_1",
 	shake,
 	loading: loading$3,
 	spin: spin$2,
 	resendContainer,
 	resendBtn,
 	secondaryBtn,
-	shimmer: shimmer$19,
-	shine: shine$19
+	shimmer: shimmer$20,
+	shine: shine$20
 };
 //#endregion
 //#region src/pages/LoginPage.jsx
@@ -24382,6 +24398,13 @@ var LoginPage = () => {
 						errors.password && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 							className: AuthPage_module_default.fieldError,
 							children: errors.password
+						}),
+						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+							className: AuthPage_module_default.forgotPassRow,
+							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
+								to: "/forgot-password",
+								children: "Forgot password?"
+							})
 						})
 					]
 				}),
@@ -24669,6 +24692,262 @@ var RegisterPage = () => {
 	] });
 };
 //#endregion
+//#region src/pages/ForgotPasswordPage.jsx
+var ForgotPasswordPage = () => {
+	const [email, setEmail] = (0, import_react.useState)("");
+	const [isSubmitted, setIsSubmitted] = (0, import_react.useState)(false);
+	const { mutate: forgotPassword, isPending, error } = useForgotPassword();
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		if (!email) return;
+		forgotPassword(email, { onSuccess: () => {
+			setIsSubmitted(true);
+		} });
+	};
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(AuthLayout, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: AuthPage_module_default.heading,
+		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h1", { children: "Forgot password?" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: "No worries, we'll send you reset instructions." })]
+	}), isSubmitted ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: AuthPage_module_default.verificationSuccess,
+		children: [
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: `${AuthPage_module_default.icon} ${AuthPage_module_default.success}`,
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("svg", {
+					viewBox: "0 0 24 24",
+					fill: "none",
+					stroke: "currentColor",
+					strokeWidth: "2",
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", { d: "M22 11.08V12a10 10 0 1 1-5.93-9.14" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("polyline", { points: "22 4 12 14.01 9 11.01" })]
+				})
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", { children: "Check your email" }),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", { children: [
+				"We've sent a password reset link to ",
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("strong", { children: email }),
+				"."
+			] }),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+				className: AuthPage_module_default.btn,
+				onClick: () => setIsSubmitted(false),
+				children: "Try another email"
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: AuthPage_module_default.switchText,
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
+					to: "/login",
+					children: "Back to login"
+				})
+			})
+		]
+	}) : /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
+		error && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: AuthPage_module_default.error,
+			children: error.response?.data?.errors && Object.keys(error.response.data.errors).length > 0 ? Object.values(error.response.data.errors)[0] : error.response?.data?.message || "Something went wrong"
+		}),
+		/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("form", {
+			className: AuthPage_module_default.form,
+			onSubmit: handleSubmit,
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				className: AuthPage_module_default.field,
+				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("label", {
+					htmlFor: "email",
+					children: "Email address"
+				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
+					id: "email",
+					type: "email",
+					placeholder: "Enter your email",
+					value: email,
+					onChange: (e) => setEmail(e.target.value),
+					required: true
+				})]
+			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+				type: "submit",
+				className: AuthPage_module_default.btn,
+				disabled: isPending,
+				children: isPending ? "Sending..." : "Reset password"
+			})]
+		}),
+		/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: AuthPage_module_default.switchText,
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
+				to: "/login",
+				children: "Back to login"
+			})
+		})
+	] })] });
+};
+//#endregion
+//#region src/pages/ResetPasswordPage.jsx
+var ResetPasswordPage = () => {
+	const [searchParams] = useSearchParams();
+	const navigate = useNavigate();
+	const token = searchParams.get("token");
+	const [password, setPassword] = (0, import_react.useState)("");
+	const [confirmPassword, setConfirmPassword] = (0, import_react.useState)("");
+	const [showPassword, setShowPassword] = (0, import_react.useState)(false);
+	const [showConfirmPassword, setShowConfirmPassword] = (0, import_react.useState)(false);
+	const [isSuccess, setIsSuccess] = (0, import_react.useState)(false);
+	const { mutate: resetPassword, isPending, error } = useResetPassword();
+	(0, import_react.useEffect)(() => {
+		if (!token) {
+			zt.error("Invalid reset link");
+			navigate("/login");
+		}
+	}, [token, navigate]);
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		if (password !== confirmPassword) {
+			zt.error("Passwords do not match");
+			return;
+		}
+		resetPassword({
+			token,
+			password
+		}, { onSuccess: () => {
+			setIsSuccess(true);
+			zt.success("Password reset successfully!");
+		} });
+	};
+	if (isSuccess) return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(AuthLayout, { children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: AuthPage_module_default.verificationSuccess,
+		children: [
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				className: `${AuthPage_module_default.icon} ${AuthPage_module_default.success}`,
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("svg", {
+					viewBox: "0 0 24 24",
+					fill: "none",
+					stroke: "currentColor",
+					strokeWidth: "2",
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", { d: "M22 11.08V12a10 10 0 1 1-5.93-9.14" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("polyline", { points: "22 4 12 14.01 9 11.01" })]
+				})
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", { children: "Password reset" }),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: "Your password has been successfully reset. You can now log in with your new password." }),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
+				to: "/login",
+				className: AuthPage_module_default.btn,
+				children: "Log in now"
+			})
+		]
+	}) });
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(AuthLayout, { children: [
+		/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: AuthPage_module_default.heading,
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h1", { children: "Set new password" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: "Your new password must be different from previous used passwords." })]
+		}),
+		error && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: AuthPage_module_default.error,
+			children: error.response?.data?.errors && Object.keys(error.response.data.errors).length > 0 ? Object.values(error.response.data.errors)[0] : error.response?.data?.message || "Something went wrong"
+		}),
+		/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("form", {
+			className: AuthPage_module_default.form,
+			onSubmit: handleSubmit,
+			children: [
+				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					className: AuthPage_module_default.field,
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("label", {
+						htmlFor: "password",
+						children: "New Password"
+					}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						className: AuthPage_module_default.passwordWrapper,
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
+							id: "password",
+							type: showPassword ? "text" : "password",
+							placeholder: "••••••••",
+							value: password,
+							onChange: (e) => setPassword(e.target.value),
+							minLength: 6,
+							required: true
+						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+							type: "button",
+							className: AuthPage_module_default.eyeButton,
+							onClick: () => setShowPassword(!showPassword),
+							children: showPassword ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("svg", {
+								fill: "none",
+								stroke: "currentColor",
+								strokeWidth: "2",
+								viewBox: "0 0 24 24",
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", { d: "M17.94 17.94A10.07 10.07 0 0 1 12 19c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("line", {
+									x1: "1",
+									y1: "1",
+									x2: "23",
+									y2: "23"
+								})]
+							}) : /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("svg", {
+								fill: "none",
+								stroke: "currentColor",
+								strokeWidth: "2",
+								viewBox: "0 0 24 24",
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", { d: "M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("circle", {
+									cx: "12",
+									cy: "12",
+									r: "3"
+								})]
+							})
+						})]
+					})]
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					className: AuthPage_module_default.field,
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("label", {
+						htmlFor: "confirmPassword",
+						children: "Confirm Password"
+					}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						className: AuthPage_module_default.passwordWrapper,
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
+							id: "confirmPassword",
+							type: showConfirmPassword ? "text" : "password",
+							placeholder: "••••••••",
+							value: confirmPassword,
+							onChange: (e) => setConfirmPassword(e.target.value),
+							required: true
+						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+							type: "button",
+							className: AuthPage_module_default.eyeButton,
+							onClick: () => setShowConfirmPassword(!showConfirmPassword),
+							children: showConfirmPassword ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("svg", {
+								fill: "none",
+								stroke: "currentColor",
+								strokeWidth: "2",
+								viewBox: "0 0 24 24",
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", { d: "M17.94 17.94A10.07 10.07 0 0 1 12 19c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("line", {
+									x1: "1",
+									y1: "1",
+									x2: "23",
+									y2: "23"
+								})]
+							}) : /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("svg", {
+								fill: "none",
+								stroke: "currentColor",
+								strokeWidth: "2",
+								viewBox: "0 0 24 24",
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", { d: "M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("circle", {
+									cx: "12",
+									cy: "12",
+									r: "3"
+								})]
+							})
+						})]
+					})]
+				}),
+				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+					type: "submit",
+					className: AuthPage_module_default.btn,
+					disabled: isPending,
+					children: isPending ? "Resetting..." : "Reset password"
+				})
+			]
+		}),
+		/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+			className: AuthPage_module_default.switchText,
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
+				to: "/login",
+				children: "Back to login"
+			})
+		})
+	] });
+};
+//#endregion
 //#region src/pages/VerifyEmailPage.jsx
 var BadgeIcon = ({ type }) => {
 	const isSuccess = type === "success";
@@ -24891,28 +25170,29 @@ var useDeleteTag = () => {
 	});
 };
 var Sidebar_module_default = {
-	sidebar: "_sidebar_4qwou_17",
-	logo: "_logo_4qwou_35",
-	nav: "_nav_4qwou_51",
-	navItem: "_navItem_4qwou_58",
-	active: "_active_4qwou_73",
-	navIcon: "_navIcon_4qwou_79",
-	navLabel: "_navLabel_4qwou_99",
-	section: "_section_4qwou_106",
-	sectionHeader: "_sectionHeader_4qwou_115",
-	empty: "_empty_4qwou_127",
-	count: "_count_4qwou_134",
-	collectionsList: "_collectionsList_4qwou_140",
-	tagsList: "_tagsList_4qwou_162",
-	tagItem: "_tagItem_4qwou_184",
-	tagDot: "_tagDot_4qwou_205",
-	bottom: "_bottom_4qwou_212",
-	userRow: "_userRow_4qwou_218",
-	avatar: "_avatar_4qwou_225",
-	userName: "_userName_4qwou_240",
-	logoutBtn: "_logoutBtn_4qwou_250",
-	shimmer: "_shimmer_4qwou_1",
-	shine: "_shine_4qwou_1"
+	sidebar: "_sidebar_bahr0_17",
+	logo: "_logo_bahr0_35",
+	nav: "_nav_bahr0_51",
+	navItem: "_navItem_bahr0_58",
+	active: "_active_bahr0_73",
+	navIcon: "_navIcon_bahr0_79",
+	navLabel: "_navLabel_bahr0_99",
+	section: "_section_bahr0_106",
+	sectionHeader: "_sectionHeader_bahr0_115",
+	empty: "_empty_bahr0_127",
+	count: "_count_bahr0_134",
+	collectionsList: "_collectionsList_bahr0_140",
+	tagsList: "_tagsList_bahr0_162",
+	tagItem: "_tagItem_bahr0_184",
+	tagDot: "_tagDot_bahr0_205",
+	bottom: "_bottom_bahr0_212",
+	userRow: "_userRow_bahr0_218",
+	userTrigger: "_userTrigger_bahr0_225",
+	userName: "_userName_bahr0_239",
+	avatar: "_avatar_bahr0_243",
+	logoutBtn: "_logoutBtn_bahr0_276",
+	shimmer: "_shimmer_bahr0_1",
+	shine: "_shine_bahr0_1"
 };
 //#endregion
 //#region src/components/layout/Sidebar.jsx
@@ -25164,39 +25444,42 @@ var Sidebar = () => {
 				className: Sidebar_module_default.bottom,
 				children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 					className: Sidebar_module_default.userRow,
-					children: [
-						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(NavLink, {
+						to: "/settings",
+						className: Sidebar_module_default.userTrigger,
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 							className: Sidebar_module_default.avatar,
-							children: user?.name?.charAt(0).toUpperCase()
-						}),
-						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+							children: user?.avatar ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("img", {
+								src: user.avatar,
+								alt: user.name
+							}) : user?.name?.charAt(0).toUpperCase()
+						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 							className: Sidebar_module_default.userName,
 							children: user?.name
-						}),
-						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-							className: Sidebar_module_default.logoutBtn,
-							onClick: () => logout(),
-							title: "Logout",
-							children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("svg", {
-								width: "14",
-								height: "14",
-								viewBox: "0 0 24 24",
-								fill: "none",
-								stroke: "currentColor",
-								strokeWidth: "2",
-								children: [
-									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", { d: "M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" }),
-									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("polyline", { points: "16 17 21 12 16 7" }),
-									/* @__PURE__ */ (0, import_jsx_runtime.jsx)("line", {
-										x1: "21",
-										y1: "12",
-										x2: "9",
-										y2: "12"
-									})
-								]
-							})
+						})]
+					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+						className: Sidebar_module_default.logoutBtn,
+						onClick: () => logout(),
+						title: "Logout",
+						children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("svg", {
+							width: "14",
+							height: "14",
+							viewBox: "0 0 24 24",
+							fill: "none",
+							stroke: "currentColor",
+							strokeWidth: "2",
+							children: [
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", { d: "M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" }),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("polyline", { points: "16 17 21 12 16 7" }),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("line", {
+									x1: "21",
+									y1: "12",
+									x2: "9",
+									y2: "12"
+								})
+							]
 						})
-					]
+					})]
 				})
 			})
 		]
@@ -27538,52 +27821,52 @@ var TagPage = () => {
 	] });
 };
 var SaveDetailPage_module_default = {
-	page: "_page_h7dv5_17",
-	inner: "_inner_h7dv5_27",
-	loading: "_loading_h7dv5_36",
-	back: "_back_h7dv5_43",
-	thumb: "_thumb_h7dv5_56",
-	header: "_header_h7dv5_69",
-	siteRow: "_siteRow_h7dv5_75",
-	favicon: "_favicon_h7dv5_82",
-	siteName: "_siteName_h7dv5_87",
-	typeBadge: "_typeBadge_h7dv5_92",
-	title: "_title_h7dv5_105",
-	description: "_description_h7dv5_112",
-	headerActions: "_headerActions_h7dv5_118",
-	openBtn: "_openBtn_h7dv5_125",
-	shine: "_shine_h7dv5_1",
-	iconBtn: "_iconBtn_h7dv5_176",
-	favorited: "_favorited_h7dv5_192",
-	deleteBtn: "_deleteBtn_h7dv5_196",
-	grid: "_grid_h7dv5_202",
-	left: "_left_h7dv5_215",
-	right: "_right_h7dv5_221",
-	section: "_section_h7dv5_234",
-	sectionHeader: "_sectionHeader_h7dv5_254",
-	emptyText: "_emptyText_h7dv5_263",
-	noteInput: "_noteInput_h7dv5_269",
-	noteActions: "_noteActions_h7dv5_305",
-	saved: "_saved_h7dv5_311",
-	saveNoteBtn: "_saveNoteBtn_h7dv5_316",
-	highlights: "_highlights_h7dv5_375",
-	highlight: "_highlight_h7dv5_375",
-	highlightBar: "_highlightBar_h7dv5_397",
-	removeHighlight: "_removeHighlight_h7dv5_406",
-	addHighlight: "_addHighlight_h7dv5_418",
-	highlightInput: "_highlightInput_h7dv5_424",
-	addHighlightBtn: "_addHighlightBtn_h7dv5_443",
-	tagsList: "_tagsList_h7dv5_501",
-	collectionsList: "_collectionsList_h7dv5_501",
-	tagItem: "_tagItem_h7dv5_528",
-	colItem: "_colItem_h7dv5_528",
-	tagSelected: "_tagSelected_h7dv5_545",
-	colSelected: "_colSelected_h7dv5_545",
-	tagDot: "_tagDot_h7dv5_550",
-	colName: "_colName_h7dv5_557",
-	metaList: "_metaList_h7dv5_564",
-	metaItem: "_metaItem_h7dv5_570",
-	shimmer: "_shimmer_h7dv5_1"
+	page: "_page_nsyrc_17",
+	inner: "_inner_nsyrc_27",
+	loading: "_loading_nsyrc_36",
+	backBtn: "_backBtn_nsyrc_43",
+	thumb: "_thumb_nsyrc_68",
+	header: "_header_nsyrc_81",
+	siteRow: "_siteRow_nsyrc_87",
+	favicon: "_favicon_nsyrc_94",
+	siteName: "_siteName_nsyrc_99",
+	typeBadge: "_typeBadge_nsyrc_104",
+	title: "_title_nsyrc_117",
+	description: "_description_nsyrc_124",
+	headerActions: "_headerActions_nsyrc_130",
+	openBtn: "_openBtn_nsyrc_137",
+	shine: "_shine_nsyrc_1",
+	iconBtn: "_iconBtn_nsyrc_188",
+	favorited: "_favorited_nsyrc_204",
+	deleteBtn: "_deleteBtn_nsyrc_208",
+	grid: "_grid_nsyrc_214",
+	left: "_left_nsyrc_227",
+	right: "_right_nsyrc_233",
+	section: "_section_nsyrc_246",
+	sectionHeader: "_sectionHeader_nsyrc_266",
+	emptyText: "_emptyText_nsyrc_275",
+	noteInput: "_noteInput_nsyrc_281",
+	noteActions: "_noteActions_nsyrc_317",
+	saved: "_saved_nsyrc_323",
+	saveNoteBtn: "_saveNoteBtn_nsyrc_328",
+	highlights: "_highlights_nsyrc_387",
+	highlight: "_highlight_nsyrc_387",
+	highlightBar: "_highlightBar_nsyrc_409",
+	removeHighlight: "_removeHighlight_nsyrc_418",
+	addHighlight: "_addHighlight_nsyrc_430",
+	highlightInput: "_highlightInput_nsyrc_436",
+	addHighlightBtn: "_addHighlightBtn_nsyrc_455",
+	tagsList: "_tagsList_nsyrc_513",
+	collectionsList: "_collectionsList_nsyrc_513",
+	tagItem: "_tagItem_nsyrc_540",
+	colItem: "_colItem_nsyrc_540",
+	tagSelected: "_tagSelected_nsyrc_557",
+	colSelected: "_colSelected_nsyrc_557",
+	tagDot: "_tagDot_nsyrc_562",
+	colName: "_colName_nsyrc_569",
+	metaList: "_metaList_nsyrc_576",
+	metaItem: "_metaItem_nsyrc_582",
+	shimmer: "_shimmer_nsyrc_1"
 };
 var RelatedSaves_module_default = {
 	wrap: "_wrap_116d7_17",
@@ -27826,7 +28109,7 @@ var SaveDetailPage = () => {
 				className: SaveDetailPage_module_default.inner,
 				children: [
 					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
-						className: `${SaveDetailPage_module_default.back} no-select`,
+						className: `${SaveDetailPage_module_default.backBtn} no-select`,
 						onClick: () => navigate(-1),
 						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
 							width: "14",
@@ -27834,8 +28117,8 @@ var SaveDetailPage = () => {
 							viewBox: "0 0 24 24",
 							fill: "none",
 							stroke: "currentColor",
-							strokeWidth: "2",
-							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", { d: "M19 12H5M12 19l-7-7 7-7" })
+							strokeWidth: "3",
+							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", { d: "M15 18l-6-6 6-6" })
 						}), "Back"]
 					}),
 					save.thumbnail && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
@@ -32029,6 +32312,229 @@ var ClusterPage = () => {
 	})] });
 };
 //#endregion
+//#region src/features/auth/services/user.service.js
+/**
+* Upload or Update User Avatar
+* @param {File} file - Image file to upload
+*/
+var uploadAvatarApi = async (file) => {
+	const formData = new FormData();
+	formData.append("avatar", file);
+	return (await axiosInstance.patch("/users/avatar", formData, { headers: { "Content-Type": "multipart/form-data" } })).data;
+};
+/**
+* Delete User Avatar
+*/
+var deleteAvatarApi = async () => {
+	return (await axiosInstance.delete("/users/avatar")).data;
+};
+//#endregion
+//#region src/features/auth/hooks/useUser.js
+var useUploadAvatar = () => {
+	const updateUser = useAuthStore((s) => s.updateUser);
+	return useMutation({
+		mutationFn: uploadAvatarApi,
+		onSuccess: (data) => {
+			const avatarUrl = data.data?.avatarUrl || data.data?.avatar;
+			updateUser({
+				avatar: avatarUrl,
+				avatarUrl
+			});
+			zt.success("Avatar updated successfully");
+		},
+		onError: (error) => {
+			zt.error(error.response?.data?.message || "Failed to upload avatar");
+		}
+	});
+};
+var useDeleteAvatar = () => {
+	const updateUser = useAuthStore((s) => s.updateUser);
+	return useMutation({
+		mutationFn: deleteAvatarApi,
+		onSuccess: () => {
+			updateUser({
+				avatar: "",
+				avatarUrl: ""
+			});
+			zt.success("Avatar deleted successfully");
+		},
+		onError: (error) => {
+			zt.error(error.response?.data?.message || "Failed to delete avatar");
+		}
+	});
+};
+var SettingsPage_module_default = {
+	settingsPage: "_settingsPage_11aqc_17",
+	header: "_header_11aqc_29",
+	titleWithIcon: "_titleWithIcon_11aqc_32",
+	settingsIcon: "_settingsIcon_11aqc_43",
+	backBtn: "_backBtn_11aqc_55",
+	section: "_section_11aqc_83",
+	sectionTitle: "_sectionTitle_11aqc_91",
+	profileGrid: "_profileGrid_11aqc_104",
+	avatarSection: "_avatarSection_11aqc_110",
+	avatarContainer: "_avatarContainer_11aqc_116",
+	avatar: "_avatar_11aqc_110",
+	uploadOverlay: "_uploadOverlay_11aqc_140",
+	avatarActions: "_avatarActions_11aqc_164",
+	actionBtns: "_actionBtns_11aqc_181",
+	uploadBtn: "_uploadBtn_11aqc_186",
+	removeBtn: "_removeBtn_11aqc_205",
+	infoSection: "_infoSection_11aqc_224",
+	field: "_field_11aqc_230",
+	shimmer: "_shimmer_11aqc_1",
+	shine: "_shine_11aqc_1"
+};
+//#endregion
+//#region src/pages/SettingsPage.jsx
+var SettingsPage = () => {
+	const navigate = useNavigate();
+	const { user } = useAuthStore();
+	const fileInputRef = (0, import_react.useRef)(null);
+	const { mutate: uploadAvatar, isPending: isUploading } = useUploadAvatar();
+	const { mutate: deleteAvatar, isPending: isDeleting } = useDeleteAvatar();
+	const handleFileChange = (e) => {
+		const file = e.target.files?.[0];
+		if (file) uploadAvatar(file);
+	};
+	const handleUploadClick = () => {
+		fileInputRef.current?.click();
+	};
+	const handleDeleteClick = () => {
+		if (window.confirm("Are you sure you want to remove your profile picture?")) deleteAvatar();
+	};
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+		className: SettingsPage_module_default.settingsPage,
+		children: [
+			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
+				className: `${SettingsPage_module_default.backBtn} no-select`,
+				onClick: () => navigate(-1),
+				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+					width: "14",
+					height: "14",
+					viewBox: "0 0 24 24",
+					fill: "none",
+					stroke: "currentColor",
+					strokeWidth: "3",
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", { d: "M15 18l-6-6 6-6" })
+				}), "Back"]
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("header", {
+				className: SettingsPage_module_default.header,
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					className: SettingsPage_module_default.titleWithIcon,
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("svg", {
+						width: "24",
+						height: "24",
+						viewBox: "0 0 24 24",
+						fill: "none",
+						stroke: "currentColor",
+						strokeWidth: "2.5",
+						className: SettingsPage_module_default.settingsIcon,
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("circle", {
+							cx: "12",
+							cy: "12",
+							r: "3"
+						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", { d: "M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" })]
+					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h1", { children: "Settings" })]
+				})
+			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("section", {
+				className: SettingsPage_module_default.section,
+				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("h2", {
+					className: SettingsPage_module_default.sectionTitle,
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("svg", {
+						width: "20",
+						height: "20",
+						viewBox: "0 0 24 24",
+						fill: "none",
+						stroke: "currentColor",
+						strokeWidth: "2.5",
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", { d: "M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("circle", {
+							cx: "12",
+							cy: "7",
+							r: "4"
+						})]
+					}), "Account Profile"]
+				}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+					className: SettingsPage_module_default.profileGrid,
+					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						className: SettingsPage_module_default.avatarSection,
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+							className: SettingsPage_module_default.avatarContainer,
+							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+								className: SettingsPage_module_default.avatar,
+								children: user?.avatar ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("img", {
+									src: user.avatar,
+									alt: user.name
+								}) : user?.name?.charAt(0).toUpperCase()
+							}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("label", {
+								className: SettingsPage_module_default.uploadOverlay,
+								onClick: handleUploadClick,
+								title: "Change Avatar",
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
+									type: "file",
+									ref: fileInputRef,
+									onChange: handleFileChange,
+									accept: "image/*",
+									disabled: isUploading
+								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+									width: "14",
+									height: "14",
+									viewBox: "0 0 24 24",
+									fill: "none",
+									stroke: "currentColor",
+									strokeWidth: "3",
+									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", { d: "M12 5v14M5 12h14" })
+								})]
+							})]
+						}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+							className: SettingsPage_module_default.avatarActions,
+							children: [
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", { children: "Profile Picture" }),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", { children: "Upload a square image for best results." }),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+									className: SettingsPage_module_default.actionBtns,
+									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+										className: SettingsPage_module_default.uploadBtn,
+										onClick: handleUploadClick,
+										disabled: isUploading || isDeleting,
+										children: isUploading ? "Uploading..." : "Upload New"
+									}), user?.avatar && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+										className: SettingsPage_module_default.removeBtn,
+										onClick: handleDeleteClick,
+										disabled: isUploading || isDeleting,
+										children: isDeleting ? "Removing..." : "Remove"
+									})]
+								})
+							]
+						})]
+					}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						className: SettingsPage_module_default.infoSection,
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+							className: SettingsPage_module_default.field,
+							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("label", { children: "Full Name" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
+								type: "text",
+								value: user?.name || "",
+								readOnly: true,
+								disabled: true
+							})]
+						}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+							className: SettingsPage_module_default.field,
+							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("label", { children: "Email Address" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
+								type: "email",
+								value: user?.email || "",
+								readOnly: true,
+								disabled: true
+							})]
+						})]
+					})]
+				})]
+			})
+		]
+	});
+};
+//#endregion
 //#region src/app/Router.jsx
 var ProtectedRoute = () => {
 	const { user } = useAuthStore();
@@ -32054,6 +32560,14 @@ var router = createBrowserRouter([
 			path: "/register",
 			element: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RegisterPage, {})
 		}]
+	},
+	{
+		path: "/forgot-password",
+		element: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ForgotPasswordPage, {})
+	},
+	{
+		path: "/reset-password",
+		element: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ResetPasswordPage, {})
 	},
 	{
 		path: "/verify-email",
@@ -32093,6 +32607,10 @@ var router = createBrowserRouter([
 			{
 				path: "/clusters",
 				element: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ClusterPage, {})
+			},
+			{
+				path: "/settings",
+				element: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SettingsPage, {})
 			}
 		]
 	},
@@ -33218,7 +33736,7 @@ var LiquidProgressLoader = ({ isAppReady = true, onComplete }) => {
 var App = () => {
 	const isMobile = useMediaQuery("(max-width: 768px)");
 	const isSessionChecked = useAuthStore((s) => s.isSessionChecked);
-	const [showLoader, setShowLoader] = (0, import_react.useState)(true);
+	const [showLoader, setShowLoader] = (0, import_react.useState)(!(window.location.pathname.startsWith("/verify-email") || window.location.pathname.startsWith("/reset-password")));
 	(0, import_react.useEffect)(() => {
 		if (isMobile) return;
 		const lenis = new Lenis({
