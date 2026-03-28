@@ -1,11 +1,13 @@
 import { useState, useRef, useEffect } from "react";
 import SaveModal from "../../features/saves/components/SaveModal";
+import UploadFileModal from "../ui/UploadFileModal";
 import CreateCollectionModal from "../ui/CreateCollectionModal";
 import CreateTagModal from "../ui/CreateTagModal";
 import styles from "./Topbar.module.scss";
 
 const Topbar = ({ onSearch, onSemanticChange }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showUpload, setShowUpload] = useState(false);
   const [isNewOpen, setIsNewOpen] = useState(false);
   const [showCollection, setShowCollection] = useState(false);
   const [showTag, setShowTag] = useState(false);
@@ -30,7 +32,6 @@ const Topbar = ({ onSearch, onSemanticChange }) => {
 
   const handleSemanticToggle = (e) => {
     e.preventDefault();
-    e.stopPropagation();
     const next = !isSemantic;
     setIsSemantic(next);
     onSemanticChange?.(next);
@@ -39,6 +40,7 @@ const Topbar = ({ onSearch, onSemanticChange }) => {
   const closeAll = () => {
     setIsNewOpen(false);
     setIsModalOpen(false);
+    setShowUpload(false);
     setShowCollection(false);
     setShowTag(false);
   };
@@ -46,6 +48,7 @@ const Topbar = ({ onSearch, onSemanticChange }) => {
   const openCollection = () => { closeAll(); setShowCollection(true); };
   const openTag = () => { closeAll(); setShowTag(true); };
   const openSave = () => { closeAll(); setIsModalOpen(true); };
+  const openUpload = () => { closeAll(); setShowUpload(true); };
 
   return (
     <>
@@ -94,6 +97,14 @@ const Topbar = ({ onSearch, onSemanticChange }) => {
                   </svg>
                   Save URL
                 </button>
+                <button className={styles.dropItem} onClick={openUpload}>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="17 8 12 3 7 8" />
+                    <line x1="12" y1="3" x2="12" y2="15" />
+                  </svg>
+                  Upload from PC
+                </button>
                 <button className={styles.dropItem} onClick={openCollection}>
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
@@ -114,6 +125,7 @@ const Topbar = ({ onSearch, onSemanticChange }) => {
       </div>
 
       <SaveModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      <UploadFileModal isOpen={showUpload} onClose={() => setShowUpload(false)} />
       <CreateCollectionModal isOpen={showCollection} onClose={() => setShowCollection(false)} />
       <CreateTagModal isOpen={showTag} onClose={() => setShowTag(false)} />
     </>

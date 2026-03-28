@@ -25,10 +25,10 @@ const saveSchema = new mongoose.Schema(
     thumbnail: { type: String, default: "" },
     siteName: { type: String, default: "" },
     favicon: { type: String, default: "" },
-    note: { type: String, trim: true, default: "" },
+    note: { type: String, trim: true, default: "", maxlength: 1000 },
     highlights: [
       {
-        text: String,
+        text: { type: String, maxlength: 500 },
         createdAt: { type: Date, default: Date.now },
       },
     ],

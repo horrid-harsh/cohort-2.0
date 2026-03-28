@@ -11,42 +11,46 @@ import {
   generateEmbedding,
   cosineSimilarity,
 } from "../services/embedding.service.js";
+import { deleteFromSupabase } from "../services/storage.supabase.js";
 import { addSaveJob } from "../jobs/save.queue.js";
 
 // POST /api/v1/saves
 export const createSave = asyncHandler(async (req, res) => {
-  const { url, note } = req.body;
+  const { url, note, ...bodyMetadata } = req.body;
   if (!url) throw new ApiError(400, "URL is required");
 
   // Check for duplicate URL for this user
   const existing = await SaveModel.findOne({ url, user: req.user._id });
   if (existing) throw new ApiError(409, "You've already saved this URL");
 
-  // 1. Scrape metadata synchronously for immediate UI feedback
-  const metadata = await scrapeUrl(url);
+  let metadata = {};
+  // Skip scraper if metadata (like title) is already provided (e.g., from direct upload)
+  if (!bodyMetadata.title) {
+    metadata = await scrapeUrl(url);
+  }
 
-  // 2. Create save with metadata (status: pending)
+  // 2. Create save with metadata (status: pending or completed)
   const save = await SaveModel.create({
     user: req.user._id,
     url,
     note: note || "",
     ...metadata,
-    processingStatus: "pending",
+    ...bodyMetadata,
+    processingStatus: bodyMetadata.processingStatus || "pending",
   });
 
-  // 2. Offload heavy tasks to BullMQ
-  try {
-    await addSaveJob({ saveId: save._id, userId: req.user._id });
-  } catch (err) {
-    console.error("Queue failed:", err.message);
-
-    await SaveModel.findByIdAndUpdate(save._id, {
-      processingStatus: "failed",
-    });
+  // 3. Offload heavy tasks to BullMQ (only for generic URLs or if requested)
+  if (save.processingStatus === "pending") {
+    try {
+      await addSaveJob({ saveId: save._id, userId: req.user._id });
+    } catch (err) {
+      console.error("Queue failed:", err.message);
+      await SaveModel.findByIdAndUpdate(save._id, { processingStatus: "failed" });
+    }
   }
 
   return res.status(201).json(
-    new ApiResponse(201, save, "Save initiated. Processing in background.")
+    new ApiResponse(201, save, "Save initiated.")
   );
 });
 
@@ -353,7 +357,15 @@ export const deleteSave = asyncHandler(async (req, res) => {
 
   if (!save) throw new ApiError(404, "Save not found");
 
-  return res
-    .status(200)
-    .json(new ApiResponse(200, {}, "Save deleted successfully"));
+  // If this was a local file upload to Supabase, delete from storage too
+  if (save.url && save.url.includes("/uploads/")) {
+    try {
+      await deleteFromSupabase(save.url);
+    } catch (err) {
+      console.error("Cleanup failed for deleted save:", save.url, err.message);
+      // We don't throw here to ensure the user at least sees the DB entry gone
+    }
+  }
+
+  return res.status(200).json(new ApiResponse(200, {}, "Save deleted successfully"));
 });

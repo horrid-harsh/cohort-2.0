@@ -91,7 +91,12 @@ const SaveModal = ({ isOpen, onClose }) => {
               value={note}
               onChange={(e) => setNote(e.target.value)}
               rows={3}
+              maxLength={1000}
+              data-lenis-prevent
             />
+            <div className={styles.charCount}>
+              {note.length} / 1000
+            </div>
           </div>
 
           <div className={styles.actions}>

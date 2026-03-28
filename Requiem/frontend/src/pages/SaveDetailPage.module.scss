@@ -233,33 +233,33 @@
 }
 
 // ─── Highlights ───────────────────────────────────
-
 .highlights {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
 }
 
 .highlight {
   display: flex;
-  gap: 10px;
+  gap: 12px;
   align-items: flex-start;
-  padding: 10px 12px;
+  padding: 12px 14px;
   background: $color-bg-tertiary;
   border-radius: $border-radius-md;
   border: 0.5px solid $color-border;
+  position: relative;
 
   p {
     flex: 1;
     font-size: $text-sm;
     color: $color-text-secondary;
     line-height: 1.6;
+    margin: 0;
   }
 }
 
 .highlightBar {
   width: 3px;
-  min-height: 100%;
   border-radius: 2px;
   background: $color-accent;
   flex-shrink: 0;
@@ -269,37 +269,74 @@
 .removeHighlight {
   color: $color-text-muted;
   flex-shrink: 0;
-  padding: 2px;
-  border-radius: 4px;
-  transition: color 0.1s, background 0.1s;
+  padding: 4px;
+  border-radius: 6px;
+  transition: all 0.1s;
+  cursor: pointer;
 
-  &:hover { color: $color-danger; background: rgba(248,113,113,0.08); }
+  &:hover { color: $color-danger; background: rgba($color-danger, 0.08); }
 }
 
-.addHighlight {
+.addHighlightWrapper {
   display: flex;
-  gap: 8px;
-  align-items: flex-end;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 12px;
+  border-top: 0.5px solid $color-border;
+  padding-top: 20px;
+}
+
+.limitMessage {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  background: rgba($color-danger, 0.05);
+  border: 0.5px solid rgba($color-danger, 0.2);
+  border-radius: $border-radius-md;
+  font-size: $text-xs;
+  color: $color-danger;
+  font-weight: 500;
+
+  svg {
+    flex-shrink: 0;
+  }
 }
 
 .highlightInput {
-  flex: 1;
   background: $color-bg-tertiary;
   border: 0.5px solid $color-border;
   border-radius: $border-radius-md;
-  padding: 8px 12px;
+  padding: 12px 14px;
   font-size: $text-sm;
   color: $color-text-primary;
-  resize: none;
-  line-height: 1.5;
+  line-height: 1.6;
+  min-height: 48px;
+  overflow: hidden; // Remove scrollbar
+  resize: none;      // Manual resize via logic
+  transition: border-color 0.15s;
 
   &::placeholder { color: $color-text-muted; }
   &:focus { border-color: $color-accent; outline: none; }
 }
 
+.highlightActions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.charCount {
+  font-size: 11px;
+  color: $color-text-muted;
+  font-weight: 500;
+}
+
 .addHighlightBtn {
   @include premium-button;
-  height: 36px;
+  height: 34px;
+  padding: 0 16px;
 
   &:disabled { opacity: 0.4; cursor: not-allowed; &::before { display: none; } }
 }

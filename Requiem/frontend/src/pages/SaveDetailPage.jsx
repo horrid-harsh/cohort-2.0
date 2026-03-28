@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import toast from "react-hot-toast";
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -31,6 +31,14 @@ const SaveDetailPage = () => {
   const [note, setNote] = useState("");
   const [newHighlight, setNewHighlight] = useState("");
   const [showConfirm, setShowConfirm] = useState(false);
+  const highlightRef = useRef(null);
+
+  useEffect(() => {
+    if (highlightRef.current) {
+      highlightRef.current.style.height = "auto";
+      highlightRef.current.style.height = `${highlightRef.current.scrollHeight}px`;
+    }
+  }, [newHighlight]);
 
   const { data, isLoading } = useQuery({
     queryKey: ["save", id],
@@ -326,21 +334,41 @@ const SaveDetailPage = () => {
                   </div>
                 )}
 
-                <div className={styles.addHighlight}>
-                  <textarea
-                    placeholder="Paste a highlight..."
-                    value={newHighlight}
-                    onChange={(e) => setNewHighlight(e.target.value)}
-                    rows={2}
-                    className={styles.highlightInput}
-                  />
-                  <button
-                    className={styles.addHighlightBtn}
-                    onClick={handleAddHighlight}
-                    disabled={!newHighlight.trim()}
-                  >
-                    Add
-                  </button>
+                <div className={styles.addHighlightWrapper}>
+                  {save.highlights?.length >= 3 ? (
+                    <div className={styles.limitMessage}>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="12" y1="8" x2="12" y2="12" />
+                        <line x1="12" y1="16" x2="12.01" y2="16" />
+                      </svg>
+                      Maximum of 3 highlights per save reached. Remove one to add more.
+                    </div>
+                  ) : (
+                    <>
+                      <textarea
+                        ref={highlightRef}
+                        placeholder="Paste or write a meaningful highlight..."
+                        value={newHighlight}
+                        onChange={(e) => setNewHighlight(e.target.value)}
+                        className={styles.highlightInput}
+                        maxLength={500}
+                        data-lenis-prevent
+                      />
+                      <div className={styles.highlightActions}>
+                        <div className={styles.charCount}>
+                          {newHighlight.length} / 500
+                        </div>
+                        <button
+                          className={styles.addHighlightBtn}
+                          onClick={handleAddHighlight}
+                          disabled={!newHighlight.trim()}
+                        >
+                          Add Highlight
+                        </button>
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
 
