@@ -17789,15 +17789,15 @@ var useAuthStore = create$1((set) => ({
 //#region src/assets/requiem-logo-auth.png
 var requiem_logo_auth_default = "/assets/requiem-logo-auth-Dz-5DHGP.png";
 var AuthLayout_module_default = {
-	layout: "_layout_1x69l_17",
-	overlay: "_overlay_1x69l_45",
-	container: "_container_1x69l_55",
-	header: "_header_1x69l_65",
-	brand: "_brand_1x69l_70",
-	logo: "_logo_1x69l_77",
-	content: "_content_1x69l_83",
-	shimmer: "_shimmer_1x69l_1",
-	shine: "_shine_1x69l_1"
+	layout: "_layout_b9b0e_17",
+	overlay: "_overlay_b9b0e_45",
+	container: "_container_b9b0e_55",
+	header: "_header_b9b0e_66",
+	brand: "_brand_b9b0e_71",
+	logo: "_logo_b9b0e_78",
+	content: "_content_b9b0e_84",
+	shimmer: "_shimmer_b9b0e_1",
+	shine: "_shine_b9b0e_1"
 };
 //#endregion
 //#region src/components/layout/AuthLayout.jsx
@@ -24192,28 +24192,28 @@ var loginSchema = object({
 });
 //#endregion
 //#region src/pages/AuthPage.module.scss
-var heading$1 = "_heading_1g0a7_17";
-var error$3 = "_error_1g0a7_41";
-var form$2 = "_form_1g0a7_52";
-var field$3 = "_field_1g0a7_59";
-var passwordWrapper = "_passwordWrapper_1g0a7_100";
-var eyeButton = "_eyeButton_1g0a7_109";
-var fieldError = "_fieldError_1g0a7_131";
-var inputError = "_inputError_1g0a7_137";
-var forgotPassRow = "_forgotPassRow_1g0a7_145";
-var btn = "_btn_1g0a7_161";
-var switchText = "_switchText_1g0a7_188";
-var verificationSuccess = "_verificationSuccess_1g0a7_202";
-var icon = "_icon_1g0a7_206";
-var success = "_success_1g0a7_220";
-var shake = "_shake_1g0a7_1";
-var loading$3 = "_loading_1g0a7_228";
-var spin$2 = "_spin_1g0a7_1";
-var resendContainer = "_resendContainer_1g0a7_275";
-var resendBtn = "_resendBtn_1g0a7_282";
-var secondaryBtn = "_secondaryBtn_1g0a7_304";
-var shimmer$20 = "_shimmer_1g0a7_1";
-var shine$20 = "_shine_1g0a7_1";
+var heading$1 = "_heading_1z12l_17";
+var error$3 = "_error_1z12l_41";
+var form$2 = "_form_1z12l_52";
+var field$3 = "_field_1z12l_59";
+var passwordWrapper = "_passwordWrapper_1z12l_100";
+var eyeButton = "_eyeButton_1z12l_109";
+var fieldError = "_fieldError_1z12l_131";
+var inputError = "_inputError_1z12l_137";
+var forgotPassRow = "_forgotPassRow_1z12l_145";
+var btn = "_btn_1z12l_161";
+var switchText = "_switchText_1z12l_188";
+var verificationSuccess = "_verificationSuccess_1z12l_202";
+var icon = "_icon_1z12l_206";
+var success = "_success_1z12l_220";
+var shake = "_shake_1z12l_1";
+var loading$3 = "_loading_1z12l_228";
+var spin$2 = "_spin_1z12l_1";
+var resendContainer = "_resendContainer_1z12l_275";
+var resendBtn = "_resendBtn_1z12l_282";
+var secondaryBtn = "_secondaryBtn_1z12l_304";
+var shimmer$20 = "_shimmer_1z12l_1";
+var shine$20 = "_shine_1z12l_1";
 var AuthPage_module_default = {
 	heading: heading$1,
 	error: error$3,
@@ -24229,7 +24229,7 @@ var AuthPage_module_default = {
 	verificationSuccess,
 	icon,
 	success,
-	"pulse-success": "_pulse-success_1g0a7_1",
+	"pulse-success": "_pulse-success_1z12l_1",
 	shake,
 	loading: loading$3,
 	spin: spin$2,
@@ -25170,29 +25170,29 @@ var useDeleteTag = () => {
 	});
 };
 var Sidebar_module_default = {
-	sidebar: "_sidebar_bahr0_17",
-	logo: "_logo_bahr0_35",
-	nav: "_nav_bahr0_51",
-	navItem: "_navItem_bahr0_58",
-	active: "_active_bahr0_73",
-	navIcon: "_navIcon_bahr0_79",
-	navLabel: "_navLabel_bahr0_99",
-	section: "_section_bahr0_106",
-	sectionHeader: "_sectionHeader_bahr0_115",
-	empty: "_empty_bahr0_127",
-	count: "_count_bahr0_134",
-	collectionsList: "_collectionsList_bahr0_140",
-	tagsList: "_tagsList_bahr0_162",
-	tagItem: "_tagItem_bahr0_184",
-	tagDot: "_tagDot_bahr0_205",
-	bottom: "_bottom_bahr0_212",
-	userRow: "_userRow_bahr0_218",
-	userTrigger: "_userTrigger_bahr0_225",
-	userName: "_userName_bahr0_239",
-	avatar: "_avatar_bahr0_243",
-	logoutBtn: "_logoutBtn_bahr0_276",
-	shimmer: "_shimmer_bahr0_1",
-	shine: "_shine_bahr0_1"
+	sidebar: "_sidebar_2ykol_17",
+	logo: "_logo_2ykol_35",
+	nav: "_nav_2ykol_52",
+	navItem: "_navItem_2ykol_59",
+	active: "_active_2ykol_74",
+	navIcon: "_navIcon_2ykol_80",
+	navLabel: "_navLabel_2ykol_100",
+	section: "_section_2ykol_107",
+	sectionHeader: "_sectionHeader_2ykol_116",
+	empty: "_empty_2ykol_128",
+	count: "_count_2ykol_135",
+	collectionsList: "_collectionsList_2ykol_141",
+	tagsList: "_tagsList_2ykol_163",
+	tagItem: "_tagItem_2ykol_185",
+	tagDot: "_tagDot_2ykol_206",
+	bottom: "_bottom_2ykol_213",
+	userRow: "_userRow_2ykol_219",
+	userTrigger: "_userTrigger_2ykol_226",
+	userName: "_userName_2ykol_240",
+	avatar: "_avatar_2ykol_244",
+	logoutBtn: "_logoutBtn_2ykol_277",
+	shimmer: "_shimmer_2ykol_1",
+	shine: "_shine_2ykol_1"
 };
 //#endregion
 //#region src/components/layout/Sidebar.jsx
@@ -25620,19 +25620,23 @@ var useDeleteSave = () => {
 	});
 };
 var SaveModal_module_default = {
-	overlay: "_overlay_i3mfv_17",
-	modal: "_modal_i3mfv_28",
-	header: "_header_i3mfv_38",
-	closeBtn: "_closeBtn_i3mfv_50",
-	error: "_error_i3mfv_62",
-	form: "_form_i3mfv_72",
-	field: "_field_i3mfv_78",
-	optional: "_optional_i3mfv_107",
-	actions: "_actions_i3mfv_112",
-	cancelBtn: "_cancelBtn_i3mfv_120",
-	submitBtn: "_submitBtn_i3mfv_136",
-	shine: "_shine_i3mfv_1",
-	shimmer: "_shimmer_i3mfv_1"
+	overlay: "_overlay_virtd_17",
+	modal: "_modal_virtd_28",
+	header: "_header_virtd_38",
+	closeBtn: "_closeBtn_virtd_50",
+	error: "_error_virtd_62",
+	form: "_form_virtd_72",
+	field: "_field_virtd_78",
+	charCount: "_charCount_virtd_106",
+	optional: "_optional_virtd_113",
+	actions: "_actions_virtd_118",
+	fileDropZone: "_fileDropZone_virtd_126",
+	fileInfo: "_fileInfo_virtd_143",
+	uploadPrompt: "_uploadPrompt_virtd_143",
+	cancelBtn: "_cancelBtn_virtd_164",
+	submitBtn: "_submitBtn_virtd_180",
+	shine: "_shine_virtd_1",
+	shimmer: "_shimmer_virtd_1"
 };
 //#endregion
 //#region src/features/saves/components/SaveModal.jsx
@@ -25722,15 +25726,24 @@ var SaveModal = ({ isOpen, onClose }) => {
 						}),
 						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 							className: SaveModal_module_default.field,
-							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("label", { children: ["Note ", /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-								className: SaveModal_module_default.optional,
-								children: "(optional)"
-							})] }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("textarea", {
-								placeholder: "Add a note...",
-								value: note,
-								onChange: (e) => setNote(e.target.value),
-								rows: 3
-							})]
+							children: [
+								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("label", { children: ["Note ", /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+									className: SaveModal_module_default.optional,
+									children: "(optional)"
+								})] }),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("textarea", {
+									placeholder: "Add a note...",
+									value: note,
+									onChange: (e) => setNote(e.target.value),
+									rows: 3,
+									maxLength: 1e3,
+									"data-lenis-prevent": true
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+									className: SaveModal_module_default.charCount,
+									children: [note.length, " / 1000"]
+								})
+							]
 						}),
 						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 							className: SaveModal_module_default.actions,
@@ -25752,27 +25765,191 @@ var SaveModal = ({ isOpen, onClose }) => {
 		})
 	});
 };
+//#endregion
+//#region src/components/ui/UploadFileModal.jsx
+var UploadFileModal = ({ isOpen, onClose }) => {
+	const [file, setFile] = (0, import_react.useState)(null);
+	const [note, setNote] = (0, import_react.useState)("");
+	const [isUploading, setIsUploading] = (0, import_react.useState)(false);
+	const fileInputRef = (0, import_react.useRef)(null);
+	const queryClient = useQueryClient();
+	const handleFileChange = (e) => {
+		const selected = e.target.files[0];
+		if (selected) setFile(selected);
+	};
+	const handleClose = () => {
+		setFile(null);
+		setNote("");
+		setIsUploading(false);
+		onClose();
+	};
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		if (!file) return;
+		const toastId = zt.loading("Uploading file...");
+		setIsUploading(true);
+		try {
+			const formData = new FormData();
+			formData.append("file", file);
+			const { url } = (await axiosInstance.post("/upload", formData, { headers: { "Content-Type": "multipart/form-data" } })).data.data;
+			const isImage = file.type.startsWith("image/");
+			const isVideo = file.type.startsWith("video/");
+			const isPdf = file.type.includes("pdf");
+			let saveType = "link";
+			if (isImage) saveType = "image";
+			else if (isVideo) saveType = "video";
+			else if (isPdf) saveType = "pdf";
+			await axiosInstance.post("/saves", {
+				url,
+				note,
+				title: file.name,
+				thumbnail: isImage ? url : "",
+				type: saveType,
+				siteName: "PC Upload",
+				processingStatus: "completed"
+			});
+			zt.success("File uploaded and saved!", { id: toastId });
+			queryClient.invalidateQueries({ queryKey: ["saves"] });
+			handleClose();
+		} catch (err) {
+			console.error("Upload error:", err);
+			zt.error(err.response?.data?.message || "Upload failed", { id: toastId });
+		} finally {
+			setIsUploading(false);
+		}
+	};
+	if (!isOpen) return null;
+	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+		className: SaveModal_module_default.overlay,
+		onClick: handleClose,
+		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			className: SaveModal_module_default.modal,
+			onClick: (e) => e.stopPropagation(),
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+				className: SaveModal_module_default.header,
+				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", { children: "Upload from PC" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+					className: SaveModal_module_default.closeBtn,
+					onClick: handleClose,
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
+						width: "16",
+						height: "16",
+						viewBox: "0 0 24 24",
+						fill: "none",
+						stroke: "currentColor",
+						strokeWidth: "2",
+						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", { d: "M18 6 6 18M6 6l12 12" })
+					})
+				})]
+			}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("form", {
+				className: SaveModal_module_default.form,
+				onSubmit: handleSubmit,
+				children: [
+					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						className: SaveModal_module_default.field,
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("label", { children: "Select File" }), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+							className: SaveModal_module_default.fileDropZone,
+							onClick: () => fileInputRef.current?.click(),
+							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("input", {
+								type: "file",
+								ref: fileInputRef,
+								onChange: handleFileChange,
+								className: SaveModal_module_default.hiddenInput,
+								hidden: true
+							}), file ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								className: SaveModal_module_default.fileInfo,
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("svg", {
+									width: "20",
+									height: "20",
+									viewBox: "0 0 24 24",
+									fill: "none",
+									stroke: "currentColor",
+									strokeWidth: "2",
+									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", { d: "M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" }), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("polyline", { points: "13 2 13 9 20 9" })]
+								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: file.name })]
+							}) : /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								className: SaveModal_module_default.uploadPrompt,
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("svg", {
+									width: "24",
+									height: "24",
+									viewBox: "0 0 24 24",
+									fill: "none",
+									stroke: "currentColor",
+									strokeWidth: "2",
+									children: [
+										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", { d: "M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" }),
+										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("polyline", { points: "17 8 12 3 7 8" }),
+										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("line", {
+											x1: "12",
+											y1: "3",
+											x2: "12",
+											y2: "15"
+										})
+									]
+								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Click to choose a file" })]
+							})]
+						})]
+					}),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						className: SaveModal_module_default.field,
+						children: [
+							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("label", { children: ["Note ", /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+								className: SaveModal_module_default.optional,
+								children: "(optional)"
+							})] }),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("textarea", {
+								placeholder: "Add a note about this file...",
+								value: note,
+								onChange: (e) => setNote(e.target.value),
+								rows: 3,
+								maxLength: 1e3,
+								"data-lenis-prevent": true
+							}),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+								className: SaveModal_module_default.charCount,
+								children: [note.length, " / 1000"]
+							})
+						]
+					}),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						className: SaveModal_module_default.actions,
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+							type: "button",
+							className: SaveModal_module_default.cancelBtn,
+							onClick: handleClose,
+							children: "Cancel"
+						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+							type: "submit",
+							className: SaveModal_module_default.submitBtn,
+							disabled: !file || isUploading,
+							children: isUploading ? "Uploading..." : "Upload & Save"
+						})]
+					})
+				]
+			})]
+		})
+	});
+};
 var CreateModal_module_default = {
-	overlay: "_overlay_1ymre_17",
-	modal: "_modal_1ymre_28",
-	header: "_header_1ymre_38",
-	closeBtn: "_closeBtn_1ymre_50",
-	error: "_error_1ymre_62",
-	form: "_form_1ymre_72",
-	field: "_field_1ymre_78",
-	optional: "_optional_1ymre_106",
-	emojiRow: "_emojiRow_1ymre_111",
-	emojiBtn: "_emojiBtn_1ymre_117",
-	selected: "_selected_1ymre_132",
-	colorRow: "_colorRow_1ymre_137",
-	colorBtn: "_colorBtn_1ymre_143",
-	preview: "_preview_1ymre_157",
-	tagPreview: "_tagPreview_1ymre_167",
-	actions: "_actions_1ymre_175",
-	cancelBtn: "_cancelBtn_1ymre_183",
-	submitBtn: "_submitBtn_1ymre_199",
-	shimmer: "_shimmer_1ymre_1",
-	shine: "_shine_1ymre_1"
+	overlay: "_overlay_x41mx_17",
+	modal: "_modal_x41mx_28",
+	header: "_header_x41mx_38",
+	closeBtn: "_closeBtn_x41mx_50",
+	error: "_error_x41mx_64",
+	form: "_form_x41mx_74",
+	field: "_field_x41mx_80",
+	optional: "_optional_x41mx_108",
+	emojiRow: "_emojiRow_x41mx_113",
+	emojiBtn: "_emojiBtn_x41mx_119",
+	selected: "_selected_x41mx_134",
+	colorRow: "_colorRow_x41mx_139",
+	colorBtn: "_colorBtn_x41mx_145",
+	preview: "_preview_x41mx_159",
+	tagPreview: "_tagPreview_x41mx_169",
+	actions: "_actions_x41mx_177",
+	cancelBtn: "_cancelBtn_x41mx_185",
+	submitBtn: "_submitBtn_x41mx_201",
+	shine: "_shine_x41mx_1",
+	shimmer: "_shimmer_x41mx_1"
 };
 //#endregion
 //#region src/components/ui/CreateCollectionModal.jsx
@@ -25871,7 +26048,8 @@ var CreateCollectionModal = ({ isOpen, onClose }) => {
 								value: name,
 								onChange: (e) => setName(e.target.value),
 								autoFocus: true,
-								required: true
+								required: true,
+								maxLength: 32
 							})]
 						}),
 						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
@@ -25883,7 +26061,8 @@ var CreateCollectionModal = ({ isOpen, onClose }) => {
 								type: "text",
 								placeholder: "What's this collection about?",
 								value: description,
-								onChange: (e) => setDescription(e.target.value)
+								onChange: (e) => setDescription(e.target.value),
+								maxLength: 120
 							})]
 						}),
 						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
@@ -25988,7 +26167,8 @@ var CreateTagModal = ({ isOpen, onClose }) => {
 								value: name,
 								onChange: (e) => setName(e.target.value),
 								autoFocus: true,
-								required: true
+								required: true,
+								maxLength: 20
 							})]
 						}),
 						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
@@ -26055,6 +26235,7 @@ var Topbar_module_default = {
 //#region src/components/layout/Topbar.jsx
 var Topbar = ({ onSearch, onSemanticChange }) => {
 	const [isModalOpen, setIsModalOpen] = (0, import_react.useState)(false);
+	const [showUpload, setShowUpload] = (0, import_react.useState)(false);
 	const [isNewOpen, setIsNewOpen] = (0, import_react.useState)(false);
 	const [showCollection, setShowCollection] = (0, import_react.useState)(false);
 	const [showTag, setShowTag] = (0, import_react.useState)(false);
@@ -26074,22 +26255,32 @@ var Topbar = ({ onSearch, onSemanticChange }) => {
 	};
 	const handleSemanticToggle = (e) => {
 		e.preventDefault();
-		e.stopPropagation();
 		const next = !isSemantic;
 		setIsSemantic(next);
 		onSemanticChange?.(next);
 	};
-	const openCollection = () => {
+	const closeAll = () => {
 		setIsNewOpen(false);
+		setIsModalOpen(false);
+		setShowUpload(false);
+		setShowCollection(false);
+		setShowTag(false);
+	};
+	const openCollection = () => {
+		closeAll();
 		setShowCollection(true);
 	};
 	const openTag = () => {
-		setIsNewOpen(false);
+		closeAll();
 		setShowTag(true);
 	};
 	const openSave = () => {
-		setIsNewOpen(false);
+		closeAll();
 		setIsModalOpen(true);
+	};
+	const openUpload = () => {
+		closeAll();
+		setShowUpload(true);
 	};
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
 		/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
@@ -26179,6 +26370,28 @@ var Topbar = ({ onSearch, onSemanticChange }) => {
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
 									className: Topbar_module_default.dropItem,
+									onClick: openUpload,
+									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("svg", {
+										width: "13",
+										height: "13",
+										viewBox: "0 0 24 24",
+										fill: "none",
+										stroke: "currentColor",
+										strokeWidth: "2",
+										children: [
+											/* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", { d: "M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" }),
+											/* @__PURE__ */ (0, import_jsx_runtime.jsx)("polyline", { points: "17 8 12 3 7 8" }),
+											/* @__PURE__ */ (0, import_jsx_runtime.jsx)("line", {
+												x1: "12",
+												y1: "3",
+												x2: "12",
+												y2: "15"
+											})
+										]
+									}), "Upload from PC"]
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", {
+									className: Topbar_module_default.dropItem,
 									onClick: openCollection,
 									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("svg", {
 										width: "13",
@@ -26217,6 +26430,10 @@ var Topbar = ({ onSearch, onSemanticChange }) => {
 		/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SaveModal, {
 			isOpen: isModalOpen,
 			onClose: () => setIsModalOpen(false)
+		}),
+		/* @__PURE__ */ (0, import_jsx_runtime.jsx)(UploadFileModal, {
+			isOpen: showUpload,
+			onClose: () => setShowUpload(false)
 		}),
 		/* @__PURE__ */ (0, import_jsx_runtime.jsx)(CreateCollectionModal, {
 			isOpen: showCollection,
@@ -26641,22 +26858,22 @@ var SaveCardMenu = ({ save, onOpenChange }) => {
 	})] });
 };
 var SaveCard_module_default = {
-	card: "_card_1i3i5_17",
-	menuOpen: "_menuOpen_1i3i5_33",
-	actions: "_actions_1i3i5_61",
-	thumb: "_thumb_1i3i5_65",
-	thumbPlaceholder: "_thumbPlaceholder_1i3i5_84",
-	typeBadge: "_typeBadge_1i3i5_94",
-	body: "_body_1i3i5_110",
-	site: "_site_1i3i5_120",
-	title: "_title_1i3i5_133",
-	note: "_note_1i3i5_148",
-	tags: "_tags_1i3i5_158",
-	tag: "_tag_1i3i5_158",
-	actionBtn: "_actionBtn_1i3i5_186",
-	favorited: "_favorited_1i3i5_201",
-	shimmer: "_shimmer_1i3i5_1",
-	shine: "_shine_1i3i5_1"
+	card: "_card_cvkgt_17",
+	menuOpen: "_menuOpen_cvkgt_33",
+	actions: "_actions_cvkgt_61",
+	thumb: "_thumb_cvkgt_65",
+	thumbPlaceholder: "_thumbPlaceholder_cvkgt_84",
+	typeBadge: "_typeBadge_cvkgt_94",
+	body: "_body_cvkgt_110",
+	site: "_site_cvkgt_120",
+	title: "_title_cvkgt_133",
+	note: "_note_cvkgt_148",
+	tags: "_tags_cvkgt_158",
+	tag: "_tag_cvkgt_158",
+	actionBtn: "_actionBtn_cvkgt_186",
+	favorited: "_favorited_cvkgt_201",
+	shimmer: "_shimmer_cvkgt_1",
+	shine: "_shine_cvkgt_1"
 };
 //#endregion
 //#region src/features/saves/components/SaveCard.jsx
@@ -26799,17 +27016,17 @@ var SaveCard = ({ save }) => {
 	});
 };
 var SaveSkeleton_module_default = {
-	skeletonCard: "_skeletonCard_1b6if_17",
-	thumbnail: "_thumbnail_1b6if_31",
-	shimmer: "_shimmer_1b6if_1",
-	body: "_body_1b6if_49",
-	siteInfo: "_siteInfo_1b6if_57",
-	title: "_title_1b6if_77",
-	note: "_note_1b6if_97",
-	tags: "_tags_1b6if_117",
-	tag: "_tag_1b6if_117",
-	actions: "_actions_1b6if_143",
-	shine: "_shine_1b6if_1"
+	skeletonCard: "_skeletonCard_19d15_17",
+	thumbnail: "_thumbnail_19d15_34",
+	shimmer: "_shimmer_19d15_1",
+	body: "_body_19d15_52",
+	siteInfo: "_siteInfo_19d15_62",
+	title: "_title_19d15_82",
+	note: "_note_19d15_102",
+	tags: "_tags_19d15_122",
+	tag: "_tag_19d15_122",
+	actions: "_actions_19d15_150",
+	shine: "_shine_19d15_1"
 };
 //#endregion
 //#region src/features/saves/components/SaveSkeleton.jsx
@@ -26842,30 +27059,33 @@ var useInfiniteScroll = (onIntersect, enabled = true) => {
 		if (!enabled || !ref.current) return;
 		const observer = new IntersectionObserver((entries) => {
 			if (entries[0].isIntersecting) onIntersect();
-		}, { threshold: .1 });
+		}, {
+			threshold: .1,
+			rootMargin: "200px"
+		});
 		observer.observe(ref.current);
 		return () => observer.disconnect();
 	}, [onIntersect, enabled]);
 	return ref;
 };
 var SaveGrid_module_default = {
-	wrap: "_wrap_17ml0_17",
-	filters: "_filters_17ml0_23",
-	filterContent: "_filterContent_17ml0_40",
-	chip: "_chip_17ml0_50",
-	active: "_active_17ml0_66",
-	grid: "_grid_17ml0_74",
-	state: "_state_17ml0_99",
-	empty: "_empty_17ml0_106",
-	updating: "_updating_17ml0_123",
-	semanticBanner: "_semanticBanner_17ml0_130",
-	sentinel: "_sentinel_17ml0_150",
-	loadingMore: "_loadingMore_17ml0_155",
-	loadingDots: "_loadingDots_17ml0_161",
-	bounce: "_bounce_17ml0_1",
-	endMessage: "_endMessage_17ml0_190",
-	shimmer: "_shimmer_17ml0_1",
-	shine: "_shine_17ml0_1"
+	wrap: "_wrap_1ym4p_17",
+	filters: "_filters_1ym4p_23",
+	filterContent: "_filterContent_1ym4p_40",
+	chip: "_chip_1ym4p_50",
+	active: "_active_1ym4p_66",
+	grid: "_grid_1ym4p_74",
+	state: "_state_1ym4p_99",
+	empty: "_empty_1ym4p_106",
+	updating: "_updating_1ym4p_123",
+	semanticBanner: "_semanticBanner_1ym4p_130",
+	sentinel: "_sentinel_1ym4p_150",
+	loadingMore: "_loadingMore_1ym4p_155",
+	loadingDots: "_loadingDots_1ym4p_161",
+	bounce: "_bounce_1ym4p_1",
+	endMessage: "_endMessage_1ym4p_190",
+	shimmer: "_shimmer_1ym4p_1",
+	shine: "_shine_1ym4p_1"
 };
 //#endregion
 //#region src/features/saves/components/SaveGrid.jsx
@@ -27362,24 +27582,24 @@ var EditCollectionModal = ({ isOpen, onClose, collection }) => {
 	});
 };
 var CollectionPage_module_default = {
-	page: "_page_rbc6u_17",
-	loading: "_loading_rbc6u_27",
-	header: "_header_rbc6u_33",
-	back: "_back_rbc6u_39",
-	meta: "_meta_rbc6u_53",
-	emoji: "_emoji_rbc6u_69",
-	count: "_count_rbc6u_74",
-	grid: "_grid_rbc6u_79",
-	empty: "_empty_rbc6u_101",
-	metaRow: "_metaRow_rbc6u_119",
-	headerActions: "_headerActions_rbc6u_126",
-	menuWrap: "_menuWrap_rbc6u_133",
-	menuBtn: "_menuBtn_rbc6u_137",
-	menu: "_menu_rbc6u_133",
-	menuItem: "_menuItem_rbc6u_164",
-	danger: "_danger_rbc6u_180",
-	shimmer: "_shimmer_rbc6u_1",
-	shine: "_shine_rbc6u_1"
+	page: "_page_8hmb4_17",
+	loading: "_loading_8hmb4_27",
+	header: "_header_8hmb4_33",
+	back: "_back_8hmb4_39",
+	meta: "_meta_8hmb4_64",
+	emoji: "_emoji_8hmb4_80",
+	count: "_count_8hmb4_85",
+	grid: "_grid_8hmb4_90",
+	empty: "_empty_8hmb4_112",
+	metaRow: "_metaRow_8hmb4_130",
+	headerActions: "_headerActions_8hmb4_137",
+	menuWrap: "_menuWrap_8hmb4_144",
+	menuBtn: "_menuBtn_8hmb4_148",
+	menu: "_menu_8hmb4_144",
+	menuItem: "_menuItem_8hmb4_175",
+	danger: "_danger_8hmb4_191",
+	shimmer: "_shimmer_8hmb4_1",
+	shine: "_shine_8hmb4_1"
 };
 //#endregion
 //#region src/pages/CollectionPage.jsx
@@ -27421,7 +27641,7 @@ var CollectionPage = () => {
 						fill: "none",
 						stroke: "currentColor",
 						strokeWidth: "2",
-						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", { d: "M19 12H5M12 19l-7-7 7-7" })
+						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", { d: "m15 18-6-6 6-6" })
 					}), "Back"]
 				}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 					className: CollectionPage_module_default.metaRow,
@@ -27656,23 +27876,23 @@ var EditTagModal = ({ isOpen, onClose, tag }) => {
 	});
 };
 var TagPage_module_default = {
-	page: "_page_19o5n_17",
-	loading: "_loading_19o5n_27",
-	header: "_header_19o5n_33",
-	back: "_back_19o5n_39",
-	meta: "_meta_19o5n_53",
-	tagDot: "_tagDot_19o5n_69",
-	grid: "_grid_19o5n_76",
-	empty: "_empty_19o5n_98",
-	metaRow: "_metaRow_19o5n_116",
-	headerActions: "_headerActions_19o5n_123",
-	menuWrap: "_menuWrap_19o5n_130",
-	menuBtn: "_menuBtn_19o5n_134",
-	menu: "_menu_19o5n_130",
-	menuItem: "_menuItem_19o5n_161",
-	danger: "_danger_19o5n_177",
-	shimmer: "_shimmer_19o5n_1",
-	shine: "_shine_19o5n_1"
+	page: "_page_jj82p_17",
+	loading: "_loading_jj82p_27",
+	header: "_header_jj82p_33",
+	back: "_back_jj82p_39",
+	meta: "_meta_jj82p_64",
+	tagDot: "_tagDot_jj82p_80",
+	grid: "_grid_jj82p_87",
+	empty: "_empty_jj82p_109",
+	metaRow: "_metaRow_jj82p_127",
+	headerActions: "_headerActions_jj82p_134",
+	menuWrap: "_menuWrap_jj82p_141",
+	menuBtn: "_menuBtn_jj82p_145",
+	menu: "_menu_jj82p_141",
+	menuItem: "_menuItem_jj82p_172",
+	danger: "_danger_jj82p_188",
+	shimmer: "_shimmer_jj82p_1",
+	shine: "_shine_jj82p_1"
 };
 //#endregion
 //#region src/pages/TagPage.jsx
@@ -27715,7 +27935,7 @@ var TagPage = () => {
 						fill: "none",
 						stroke: "currentColor",
 						strokeWidth: "2",
-						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", { d: "M19 12H5M12 19l-7-7 7-7" })
+						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("path", { d: "m15 18-6-6 6-6" })
 					}), "Back"]
 				}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 					className: TagPage_module_default.metaRow,
@@ -27821,52 +28041,55 @@ var TagPage = () => {
 	] });
 };
 var SaveDetailPage_module_default = {
-	page: "_page_nsyrc_17",
-	inner: "_inner_nsyrc_27",
-	loading: "_loading_nsyrc_36",
-	backBtn: "_backBtn_nsyrc_43",
-	thumb: "_thumb_nsyrc_68",
-	header: "_header_nsyrc_81",
-	siteRow: "_siteRow_nsyrc_87",
-	favicon: "_favicon_nsyrc_94",
-	siteName: "_siteName_nsyrc_99",
-	typeBadge: "_typeBadge_nsyrc_104",
-	title: "_title_nsyrc_117",
-	description: "_description_nsyrc_124",
-	headerActions: "_headerActions_nsyrc_130",
-	openBtn: "_openBtn_nsyrc_137",
-	shine: "_shine_nsyrc_1",
-	iconBtn: "_iconBtn_nsyrc_188",
-	favorited: "_favorited_nsyrc_204",
-	deleteBtn: "_deleteBtn_nsyrc_208",
-	grid: "_grid_nsyrc_214",
-	left: "_left_nsyrc_227",
-	right: "_right_nsyrc_233",
-	section: "_section_nsyrc_246",
-	sectionHeader: "_sectionHeader_nsyrc_266",
-	emptyText: "_emptyText_nsyrc_275",
-	noteInput: "_noteInput_nsyrc_281",
-	noteActions: "_noteActions_nsyrc_317",
-	saved: "_saved_nsyrc_323",
-	saveNoteBtn: "_saveNoteBtn_nsyrc_328",
-	highlights: "_highlights_nsyrc_387",
-	highlight: "_highlight_nsyrc_387",
-	highlightBar: "_highlightBar_nsyrc_409",
-	removeHighlight: "_removeHighlight_nsyrc_418",
-	addHighlight: "_addHighlight_nsyrc_430",
-	highlightInput: "_highlightInput_nsyrc_436",
-	addHighlightBtn: "_addHighlightBtn_nsyrc_455",
-	tagsList: "_tagsList_nsyrc_513",
-	collectionsList: "_collectionsList_nsyrc_513",
-	tagItem: "_tagItem_nsyrc_540",
-	colItem: "_colItem_nsyrc_540",
-	tagSelected: "_tagSelected_nsyrc_557",
-	colSelected: "_colSelected_nsyrc_557",
-	tagDot: "_tagDot_nsyrc_562",
-	colName: "_colName_nsyrc_569",
-	metaList: "_metaList_nsyrc_576",
-	metaItem: "_metaItem_nsyrc_582",
-	shimmer: "_shimmer_nsyrc_1"
+	page: "_page_1wjea_17",
+	inner: "_inner_1wjea_27",
+	loading: "_loading_1wjea_36",
+	backBtn: "_backBtn_1wjea_43",
+	thumb: "_thumb_1wjea_68",
+	header: "_header_1wjea_81",
+	siteRow: "_siteRow_1wjea_87",
+	favicon: "_favicon_1wjea_94",
+	siteName: "_siteName_1wjea_99",
+	typeBadge: "_typeBadge_1wjea_104",
+	title: "_title_1wjea_117",
+	description: "_description_1wjea_124",
+	headerActions: "_headerActions_1wjea_130",
+	openBtn: "_openBtn_1wjea_137",
+	shine: "_shine_1wjea_1",
+	iconBtn: "_iconBtn_1wjea_188",
+	favorited: "_favorited_1wjea_204",
+	deleteBtn: "_deleteBtn_1wjea_208",
+	grid: "_grid_1wjea_214",
+	left: "_left_1wjea_227",
+	right: "_right_1wjea_233",
+	section: "_section_1wjea_246",
+	sectionHeader: "_sectionHeader_1wjea_266",
+	emptyText: "_emptyText_1wjea_275",
+	noteInput: "_noteInput_1wjea_281",
+	noteActions: "_noteActions_1wjea_317",
+	saved: "_saved_1wjea_323",
+	saveNoteBtn: "_saveNoteBtn_1wjea_328",
+	highlights: "_highlights_1wjea_387",
+	highlight: "_highlight_1wjea_387",
+	highlightBar: "_highlightBar_1wjea_411",
+	removeHighlight: "_removeHighlight_1wjea_419",
+	addHighlightWrapper: "_addHighlightWrapper_1wjea_432",
+	limitMessage: "_limitMessage_1wjea_441",
+	highlightInput: "_highlightInput_1wjea_457",
+	highlightActions: "_highlightActions_1wjea_478",
+	charCount: "_charCount_1wjea_485",
+	addHighlightBtn: "_addHighlightBtn_1wjea_491",
+	tagsList: "_tagsList_1wjea_550",
+	collectionsList: "_collectionsList_1wjea_550",
+	tagItem: "_tagItem_1wjea_577",
+	colItem: "_colItem_1wjea_577",
+	tagSelected: "_tagSelected_1wjea_594",
+	colSelected: "_colSelected_1wjea_594",
+	tagDot: "_tagDot_1wjea_599",
+	colName: "_colName_1wjea_606",
+	metaList: "_metaList_1wjea_613",
+	metaItem: "_metaItem_1wjea_619",
+	shimmer: "_shimmer_1wjea_1"
 };
 var RelatedSaves_module_default = {
 	wrap: "_wrap_116d7_17",
@@ -27996,6 +28219,13 @@ var SaveDetailPage = () => {
 	const [note, setNote] = (0, import_react.useState)("");
 	const [newHighlight, setNewHighlight] = (0, import_react.useState)("");
 	const [showConfirm, setShowConfirm] = (0, import_react.useState)(false);
+	const highlightRef = (0, import_react.useRef)(null);
+	(0, import_react.useEffect)(() => {
+		if (highlightRef.current) {
+			highlightRef.current.style.height = "auto";
+			highlightRef.current.style.height = `${highlightRef.current.scrollHeight}px`;
+		}
+	}, [newHighlight]);
 	const { data, isLoading } = useQuery({
 		queryKey: ["save", id],
 		queryFn: () => getSaveByIdApi(id)
@@ -28294,20 +28524,57 @@ var SaveDetailPage = () => {
 												]
 											}, i))
 										}),
-										/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-											className: SaveDetailPage_module_default.addHighlight,
-											children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("textarea", {
-												placeholder: "Paste a highlight...",
+										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+											className: SaveDetailPage_module_default.addHighlightWrapper,
+											children: save.highlights?.length >= 3 ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+												className: SaveDetailPage_module_default.limitMessage,
+												children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("svg", {
+													width: "14",
+													height: "14",
+													viewBox: "0 0 24 24",
+													fill: "none",
+													stroke: "currentColor",
+													strokeWidth: "2",
+													children: [
+														/* @__PURE__ */ (0, import_jsx_runtime.jsx)("circle", {
+															cx: "12",
+															cy: "12",
+															r: "10"
+														}),
+														/* @__PURE__ */ (0, import_jsx_runtime.jsx)("line", {
+															x1: "12",
+															y1: "8",
+															x2: "12",
+															y2: "12"
+														}),
+														/* @__PURE__ */ (0, import_jsx_runtime.jsx)("line", {
+															x1: "12",
+															y1: "16",
+															x2: "12.01",
+															y2: "16"
+														})
+													]
+												}), "Maximum of 3 highlights per save reached. Remove one to add more."]
+											}) : /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("textarea", {
+												ref: highlightRef,
+												placeholder: "Paste or write a meaningful highlight...",
 												value: newHighlight,
 												onChange: (e) => setNewHighlight(e.target.value),
-												rows: 2,
-												className: SaveDetailPage_module_default.highlightInput
-											}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-												className: SaveDetailPage_module_default.addHighlightBtn,
-												onClick: handleAddHighlight,
-												disabled: !newHighlight.trim(),
-												children: "Add"
-											})]
+												className: SaveDetailPage_module_default.highlightInput,
+												maxLength: 500,
+												"data-lenis-prevent": true
+											}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+												className: SaveDetailPage_module_default.highlightActions,
+												children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+													className: SaveDetailPage_module_default.charCount,
+													children: [newHighlight.length, " / 500"]
+												}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+													className: SaveDetailPage_module_default.addHighlightBtn,
+													onClick: handleAddHighlight,
+													disabled: !newHighlight.trim(),
+													children: "Add Highlight"
+												})]
+											})] })
 										})
 									]
 								}),
