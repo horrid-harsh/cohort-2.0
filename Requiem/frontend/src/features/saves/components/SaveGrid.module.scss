@@ -117,9 +117,7 @@
 }
 
 .semanticBanner {
-  display: flex;
-  align-items: center;
-  gap: 6px;
+  @include flex-gap(6px);
   padding: 8px 14px;
   background: rgba(124, 106, 247, 0.08);
   border: 0.5px solid rgba(124, 106, 247, 0.2);
@@ -144,9 +142,7 @@
 }
 
 .loadingDots {
-  display: flex;
-  gap: 6px;
-  align-items: center;
+  @include flex-gap(6px);
 
   span {
     width: 6px;

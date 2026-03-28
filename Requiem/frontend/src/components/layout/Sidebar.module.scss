@@ -14,14 +14,13 @@
   border-right: 0.5px solid $color-border;
   display: flex;
   flex-direction: column;
+  gap: 4px;
   overflow: hidden;
   padding: 0 12px 20px 12px;
-  gap: 4px;
 }
 
 .logo {
-  display: flex;
-  align-items: center;
+  @include flex-gap(0);
   height: $topbar-height;
   flex-shrink: 0;
   padding: 0 10px;
@@ -46,9 +45,7 @@
 }
 
 .navItem {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  @include flex-gap(8px);
   padding: 7px 10px;
   border-radius: $border-radius-md;
   font-size: $text-sm;
@@ -154,9 +151,7 @@
   @include custom-scrollbar;
 }
 .tagItem {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  @include flex-gap(8px);
   padding: 6px 10px;
   border-radius: $border-radius-md;
   font-size: $text-sm;
@@ -194,16 +189,12 @@
 }
 
 .userRow {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  @include flex-gap(8px);
   padding: 4px;
 }
 
 .userTrigger {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  @include flex-gap(10px);
   flex: 1;
   text-decoration: none;
   min-width: 0;
@@ -252,8 +243,7 @@
 
 .logoutBtn {
   color: $color-text-muted;
-  display: flex;
-  align-items: center;
+  @include flex-center;
   padding: 4px;
   border-radius: $border-radius-sm;
   transition:

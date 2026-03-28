@@ -5,9 +5,7 @@
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.7);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include flex-center;
   z-index: $z-index-modal;
   backdrop-filter: blur(2px);
 }
@@ -35,7 +33,7 @@
 
 .closeBtn {
   color: $color-text-muted;
-  display: flex;
+  @include flex-center;
   padding: 4px;
   border-radius: $border-radius-sm;
   transition: color 0.1s, background 0.1s;

@@ -152,14 +152,12 @@
 // ─── Actions ──────────────────────────────────────
 
 .actions {
-  display: flex;
-  gap: 4px;
+  @include flex-gap(4px);
   padding: 8px 12px;
   border-top: 0.5px solid $color-border;
   opacity: 0;
   transition: opacity 0.15s;
   overflow: visible;
-  align-items: center;
   position: relative;
   z-index: 2; // Above the hover gradient before element
 }

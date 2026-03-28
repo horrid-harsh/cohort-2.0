@@ -1,6 +1,15 @@
 @use "variables" as *;
 
 // ─── Flex helpers ─────────────────────────────────
+
+// Base / utility variants (most reusable first)
+@mixin flex-gap($gap: $space-3) {
+  display: flex;
+  align-items: center;
+  gap: $gap;
+}
+
+// Row helpers
 @mixin flex-center {
   display: flex;
   align-items: center;
@@ -13,6 +22,7 @@
   justify-content: space-between;
 }
 
+// Column helpers
 @mixin flex-col($gap: $space-2) {
   display: flex;
   flex-direction: column;
@@ -25,12 +35,6 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-}
-
-@mixin flex-gap($gap: $space-3) {
-  display: flex;
-  align-items: center;
-  gap: $gap;
 }
 
 // ─── Text truncation ──────────────────────────────

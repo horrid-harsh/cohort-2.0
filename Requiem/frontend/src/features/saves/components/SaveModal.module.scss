@@ -110,10 +110,7 @@
   background: $color-bg-tertiary;
   border: 1.5px dashed $color-border;
   border-radius: $border-radius-lg;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  @include flex-col-center;
   cursor: pointer;
   transition: all 0.2s ease;
   min-height: 120px;
@@ -124,10 +121,7 @@
   }
 
   .fileInfo, .uploadPrompt {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
+    @include flex-col(12px);
     color: $color-text-secondary;
     font-size: $text-sm;
 

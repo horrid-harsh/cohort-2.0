@@ -28,9 +28,6 @@
 }
 
 .statsRow {
-//   display: flex;
-//   align-items: center;
-//   gap: 8px;
   @include flex-gap(8px);
 }
 
@@ -149,9 +146,6 @@
 // ─── Legend ───────────────────────────────────────
 
 .legend {
-//   display: flex;
-//   align-items: center;
-//   gap: 16px;
 @include flex-gap(16px);
   padding: 10px 32px;
   border-top: 0.5px solid $color-border;
@@ -160,9 +154,6 @@
 }
 
 .legendItem {
-//   display: flex;
-//   align-items: center;
-//   gap: 5px;
 @include flex-gap(5px);
   font-size: $text-xs;
   color: $color-text-muted;

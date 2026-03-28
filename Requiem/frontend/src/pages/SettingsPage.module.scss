@@ -11,9 +11,7 @@
   margin-bottom: 32px;
 
   .titleWithIcon {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+    @include flex-gap(12px);
 
     h1 {
       font-size: 32px;
@@ -56,9 +54,7 @@
   font-weight: 600;
   color: #fff;
   margin-bottom: 24px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  @include flex-gap(10px);
 
   svg {
     color: $color-accent;
@@ -72,9 +68,7 @@
 }
 
 .avatarSection {
-  display: flex;
-  align-items: center;
-  gap: 24px;
+  @include flex-gap(24px);
 }
 
 .avatarContainer {

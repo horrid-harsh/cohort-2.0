@@ -3,8 +3,8 @@
 
 .skeletonCard {
   @include card;
-  display: flex;
-  flex-direction: column;
+  @include flex-col(0);
+  align-items: stretch; // override center
   overflow: hidden;
   height: 100%;
 }
@@ -16,9 +16,8 @@
 
 .body {
   padding: 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  @include flex-col(10px);
+  align-items: stretch; // override center
   flex: 1;
 }
 
@@ -44,8 +43,8 @@
 }
 
 .tags {
-  display: flex;
-  gap: 6px;
+  @include flex-gap(6px);
+  align-items: stretch;
   margin-top: 4px;
 }
 

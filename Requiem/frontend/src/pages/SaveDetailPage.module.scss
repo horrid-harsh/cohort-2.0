@@ -287,9 +287,7 @@
 }
 
 .limitMessage {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  @include flex-gap(10px);
   padding: 12px 14px;
   background: rgba($color-danger, 0.05);
   border: 0.5px solid rgba($color-danger, 0.2);

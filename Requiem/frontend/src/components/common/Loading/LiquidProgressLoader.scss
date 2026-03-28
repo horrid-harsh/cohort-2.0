@@ -1,12 +1,11 @@
 @use '../../../styles/abstracts/variables' as *;
+@use '../../../styles/abstracts/mixins' as *;
 
 .liquid-loader-container {
   position: fixed;
   inset: 0;
   background: #000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include flex-center;
   z-index: $z-index-modal;
 
   transition: opacity 0.8s ease-out,
@@ -26,9 +25,7 @@
   position: relative;
   width: 90vw;
   max-width: 1200px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  @include flex-col(0);
 }
 
 .liquid-svg {
