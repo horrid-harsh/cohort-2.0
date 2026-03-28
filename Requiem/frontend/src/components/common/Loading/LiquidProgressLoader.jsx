@@ -10,11 +10,13 @@ const LiquidProgressLoader = ({ isAppReady = true, onComplete }) => {
   useEffect(() => {
     setIsReactReady(true);
     // 🔹 Disable background scrollbar during loading
+    document.documentElement.style.overflow = "hidden";
     document.body.style.overflow = "hidden";
     
     return () => {
-      // 🔹 Re-enable it when the loader is gone
-      document.body.style.overflow = "auto";
+      // 🔹 Re-enable it when the loader is unmounts
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
     };
   }, []);
 

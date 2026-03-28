@@ -31,15 +31,8 @@ export const uploadAvatar = async (req, res) => {
       });
     }
 
-    // 🔹 Preparing upload params
-    const fileExtension = req.file.originalname.split(".").pop() || "png";
-    const fileName = `avatar-${userId}-${Date.now()}.${fileExtension}`;
-
     // 🚀 Attempting upload via service
-    const uploadResult = await uploadFile({
-      buffer: req.file.buffer,
-      fileName: fileName
-    });
+    const uploadResult = await uploadFile(req.file);
 
     // 🔹 Clean up old image if it exists
     if (user.avatarFileId) {
@@ -47,7 +40,7 @@ export const uploadAvatar = async (req, res) => {
     }
 
     // 🔹 Update database
-    user.avatar = uploadResult.url;         
+    user.avatar = uploadResult.url;
     user.avatarUrl = uploadResult.url;      
     user.avatarFileId = uploadResult.fileId; 
     

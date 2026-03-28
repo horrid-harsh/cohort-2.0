@@ -1,42 +1,75 @@
-import ImageKit, { toFile } from "@imagekit/nodejs";
-
-const client = new ImageKit({
-  publicKey: (process.env.IMAGEKIT_PUBLIC_KEY || "").trim(),
-  privateKey: (process.env.IMAGEKIT_PRIVATE_KEY || "").trim(),
-});
+import { supabase } from "../config/supabase.js";
+import { ApiError } from "../utils/ApiError.js";
 
 /**
- * Upload buffer to ImageKit
- * @param {Buffer} buffer - File buffer
- * @param {string} fileName - Destination file name
+ * Upload a file to Supabase Storage
+ * @param {Object} file - The file object from multer (req.file)
+ * @returns {Promise<Object>} - Object containing url and fileName (used as ID)
  */
-export const uploadFile = async ({ buffer, fileName }) => {
-  try {
-    const response = await client.files.upload({
-      file: await toFile(buffer, "file.jpg"), 
-      fileName: fileName,
-      folder: "cohort-2-requiem",
+export const uploadFile = async (file) => {
+  if (!file) throw new ApiError(400, "No file provided");
+
+  const timestamp = Date.now();
+  const fileExtension = file.originalname.split(".").pop();
+  const baseName = file.originalname.split(".").slice(0, -1).join(".");
+  const uniqueName = `upload-${timestamp}-${baseName}.${fileExtension}`;
+
+  const { data, error } = await supabase.storage
+    .from("uploads")
+    .upload(uniqueName, file.buffer, {
+      contentType: file.mimetype,
+      cacheControl: "3600",
+      upsert: false,
     });
 
-    return {
-      url: response.url,
-      fileId: response.fileId,
-    };
-  } catch (error) {
-    console.error("ImageKit Upload Error:", error.message || error);
-    throw error;
+  if (error) {
+    console.error("Supabase storage error:", error);
+    throw new ApiError(500, "Upload failed: " + error.message);
   }
+
+  // Generate public URL
+  const { data: publicUrlData } = supabase.storage
+    .from("uploads")
+    .getPublicUrl(uniqueName);
+
+  return {
+    url: publicUrlData.publicUrl,
+    fileId: uniqueName, // Using the filename as the ID for consistency
+  };
 };
 
 /**
- * Delete file from ImageKit
- * @param {string} fileId - ImageKit file ID
+ * Delete a file from Supabase Storage
+ * @param {string} fileRef - Can be a full URL or just the fileName
  */
-export const deleteFile = async (fileId) => {
-  try {
-    if (!fileId) return;
-    await client.files.delete(fileId);
-  } catch (error) {
-    console.warn("ImageKit Delete Warning:", error.message);
+export const deleteFile = async (fileRef) => {
+  if (!fileRef) return;
+
+  let fileName = fileRef;
+
+  // If a full URL is provided, extract the filename
+  if (fileRef.includes("/uploads/")) {
+    const rawFileName = fileRef.split("/uploads/")[1];
+    if (rawFileName) {
+      fileName = decodeURIComponent(rawFileName);
+    }
   }
+
+  if (fileName.includes("..")) {
+    throw new ApiError(400, "Invalid file name");
+  }
+
+  const { error } = await supabase.storage
+    .from("uploads")
+    .remove([fileName]);
+
+  if (error) {
+    console.warn("Supabase deletion warning:", {
+      fileName,
+      error: error.message,
+    });
+    // We don't necessarily want to crash the whole operation if a file delete fails
+  }
+
+  return { fileName };
 };

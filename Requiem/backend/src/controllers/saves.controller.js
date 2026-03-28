@@ -11,7 +11,7 @@ import {
   generateEmbedding,
   cosineSimilarity,
 } from "../services/embedding.service.js";
-import { deleteFromSupabase } from "../services/storage.supabase.js";
+import { deleteFile } from "../services/storage.service.js";
 import { addSaveJob } from "../jobs/save.queue.js";
 
 // POST /api/v1/saves
@@ -360,7 +360,7 @@ export const deleteSave = asyncHandler(async (req, res) => {
   // If this was a local file upload to Supabase, delete from storage too
   if (save.url && save.url.includes("/uploads/")) {
     try {
-      await deleteFromSupabase(save.url);
+      await deleteFile(save.url);
     } catch (err) {
       console.error("Cleanup failed for deleted save:", save.url, err.message);
       // We don't throw here to ensure the user at least sees the DB entry gone

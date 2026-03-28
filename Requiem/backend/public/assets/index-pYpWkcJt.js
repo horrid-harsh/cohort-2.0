@@ -33920,9 +33920,11 @@ var LiquidProgressLoader = ({ isAppReady = true, onComplete }) => {
 	const [isReactReady, setIsReactReady] = (0, import_react.useState)(false);
 	(0, import_react.useEffect)(() => {
 		setIsReactReady(true);
+		document.documentElement.style.overflow = "hidden";
 		document.body.style.overflow = "hidden";
 		return () => {
-			document.body.style.overflow = "auto";
+			document.documentElement.style.overflow = "";
+			document.body.style.overflow = "";
 		};
 	}, []);
 	(0, import_react.useEffect)(() => {

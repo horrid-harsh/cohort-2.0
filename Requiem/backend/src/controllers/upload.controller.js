@@ -1,7 +1,7 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { ApiError } from "../utils/ApiError.js";
-import { uploadToSupabase, deleteFromSupabase } from "../services/storage.supabase.js";
+import { uploadFile as uploadToStorage, deleteFile as deleteFromStorage } from "../services/storage.service.js";
 
 /**
  * Handle File Deletion from Supabase
@@ -14,7 +14,7 @@ export const deleteFile = asyncHandler(async (req, res) => {
     throw new ApiError(400, "fileUrl is required in request body");
   }
 
-  const result = await deleteFromSupabase(fileUrl);
+  const result = await deleteFromStorage(fileUrl);
 
   return res.status(200).json(
     new ApiResponse(200, result, "File deleted successfully")
@@ -34,7 +34,7 @@ export const uploadFile = asyncHandler(async (req, res) => {
   }
 
   // Upload to Supabase Storage Bucket "uploads"
-  const publicUrl = await uploadToSupabase(file);
+  const { url: publicUrl } = await uploadToStorage(file);
 
   return res.status(200).json(
     new ApiResponse(

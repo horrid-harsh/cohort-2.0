@@ -4448,8 +4448,8 @@ html {
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-y: scroll !important;
-  overflow-x: hidden !important;
+  overflow-y: auto;
+  overflow-x: hidden;
   scrollbar-width: thin;
   scrollbar-color: #161616 transparent;
 }
@@ -4465,8 +4465,8 @@ html::-webkit-scrollbar-thumb {
 }
 body,
 #root {
-  overflow: visible !important;
-  height: auto !important;
+  overflow: visible;
+  height: auto;
   min-height: 100vh;
 }
 body {
