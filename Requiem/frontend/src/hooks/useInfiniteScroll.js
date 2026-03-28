@@ -11,7 +11,10 @@ const useInfiniteScroll = (onIntersect, enabled = true) => {
       (entries) => {
         if (entries[0].isIntersecting) onIntersect();
       },
-      { threshold: 0.1 }
+      { 
+        threshold: 0.1,
+        rootMargin: "200px", // 🔄 Pre-load contents before they hit the screen
+      }
     );
 
     observer.observe(ref.current);

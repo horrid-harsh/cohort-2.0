@@ -17,9 +17,10 @@ const App = () => {
   const isMobile = useMediaQuery("(max-width: 768px)");
   const isSessionChecked = useAuthStore((s) => s.isSessionChecked);
   // Bypass loader for direct landing pages (email links)
-  const isBypassPath = window.location.pathname.startsWith("/verify-email") || 
-                       window.location.pathname.startsWith("/reset-password");
-                       
+  const isBypassPath =
+    window.location.pathname.startsWith("/verify-email") ||
+    window.location.pathname.startsWith("/reset-password");
+
   const [showLoader, setShowLoader] = useState(!isBypassPath);
 
   useEffect(() => {
@@ -30,10 +31,10 @@ const App = () => {
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
       // 🔹 ADD THESE FOR TOUCHPAD COMPATIBILITY
-      syncTouch: true,       // Syncs smooth scroll with touch gestures
-      touchMultiplier: 2,    // Allows easier movement on trackpads
-      orientation: 'vertical', // Explicitly set to vertical only
-      gestureOrientation: 'vertical'
+      syncTouch: true, // Syncs smooth scroll with touch gestures
+      touchMultiplier: 2, // Allows easier movement on trackpads
+      orientation: "vertical", // Explicitly set to vertical only
+      gestureOrientation: "vertical",
     });
 
     let rafId;
