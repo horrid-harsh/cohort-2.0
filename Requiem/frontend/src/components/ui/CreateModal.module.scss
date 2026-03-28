@@ -8,7 +8,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 100;
+  z-index: $z-index-modal;
   backdrop-filter: blur(2px);
 }
 
@@ -150,7 +150,7 @@
 .tagPreview {
   font-size: $text-sm;
   font-weight: 500;
-  padding: 3px 10px;
+  padding: 3px 12px;
   border-radius: $border-radius-full;
   border: 0.5px solid;
 }
@@ -181,17 +181,9 @@
 }
 
 .submitBtn {
-  height: 38px;
+  @include premium-button;
   padding: 0 20px;
+  height: 38px;
   min-width: 100px;
-  border-radius: $border-radius-lg;
-  font-size: $text-sm;
-  font-weight: 500;
-  color: #fff;
-  background: $color-accent;
-  border: none;
-  transition: background 0.15s;
-
-  &:hover { background: $color-accent-hover; }
-  &:disabled { opacity: 0.5; cursor: not-allowed; }
+  &:disabled { opacity: 0.5; cursor: not-allowed; &::before { display: none; } }
 }

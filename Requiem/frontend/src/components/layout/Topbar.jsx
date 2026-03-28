@@ -36,9 +36,16 @@ const Topbar = ({ onSearch, onSemanticChange }) => {
     onSemanticChange?.(next);
   };
 
-  const openCollection = () => { setIsNewOpen(false); setShowCollection(true); };
-  const openTag = () => { setIsNewOpen(false); setShowTag(true); };
-  const openSave = () => { setIsNewOpen(false); setIsModalOpen(true); };
+  const closeAll = () => {
+    setIsNewOpen(false);
+    setIsModalOpen(false);
+    setShowCollection(false);
+    setShowTag(false);
+  };
+
+  const openCollection = () => { closeAll(); setShowCollection(true); };
+  const openTag = () => { closeAll(); setShowTag(true); };
+  const openSave = () => { closeAll(); setIsModalOpen(true); };
 
   return (
     <>

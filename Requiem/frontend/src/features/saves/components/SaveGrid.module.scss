@@ -10,7 +10,7 @@
 .filters {
   position: sticky;
   top: $topbar-height;
-  z-index: 1000;
+  z-index: $z-index-sticky;
   width: 100%;
   
   // 🔹 Force a clean hardware-accelerated layer

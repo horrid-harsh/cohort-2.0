@@ -1,3 +1,5 @@
+@use '../../../styles/abstracts/variables' as *;
+
 .liquid-loader-container {
   position: fixed;
   inset: 0;
@@ -5,7 +7,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 9999;
+  z-index: $z-index-modal;
 
   transition: opacity 0.8s ease-out,
               transform 2.5s cubic-bezier(0.7, 0, 0.3, 1),

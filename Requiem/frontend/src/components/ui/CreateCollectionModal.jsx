@@ -64,6 +64,7 @@ const CreateCollectionModal = ({ isOpen, onClose }) => {
               onChange={(e) => setName(e.target.value)}
               autoFocus
               required
+              maxLength={32}
             />
           </div>
 
@@ -74,6 +75,7 @@ const CreateCollectionModal = ({ isOpen, onClose }) => {
               placeholder="What's this collection about?"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
+              maxLength={120}
             />
           </div>
 

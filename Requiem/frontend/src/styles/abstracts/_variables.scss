@@ -56,3 +56,9 @@ $border-radius-md: 8px;
 $border-radius-lg: 12px;
 $border-radius-xl: 16px;
 $border-radius-full: 9999px;
+
+// ─── Z-Index Layering ───────────────────────────
+$z-index-sticky:     1000;
+$z-index-dropdown:   1010;
+$z-index-modal:      9999;
+$z-index-toast:      10000;

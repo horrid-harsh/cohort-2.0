@@ -51,6 +51,7 @@ const CreateTagModal = ({ isOpen, onClose }) => {
               onChange={(e) => setName(e.target.value)}
               autoFocus
               required
+              maxLength={20}
             />
           </div>
 
