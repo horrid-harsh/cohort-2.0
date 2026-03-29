@@ -15,12 +15,16 @@ const showScreen = (name) => {
   screens[name].classList.remove("hidden");
 };
 
+// ─── Token helper ────────────────────────────────────────────────────────────
+
 const getToken = async () => {
   try {
-    // 🔹 In production, cookies are on the API_BASE (Render) domain, not APP_URL (Vercel)
-    const cookie = await chrome.cookies.get({ url: API_BASE, name: "accessToken" });
+    const origin = new URL(API_BASE).origin;
+    console.log("🔍 [Extension] Checking origin:", origin);
+    const cookie = await chrome.cookies.get({ url: origin, name: "accessToken" });
     return cookie ? cookie.value : null;
   } catch (e) {
+    console.error("❌ [Extension] Cookie error:", e.message);
     return null;
   }
 };
@@ -29,8 +33,8 @@ const getToken = async () => {
 
 const apiFetch = async (path, options = {}) => {
   try {
-    // Manually get the token to bypass SameSite: Lax issues on localhost
     const token = await getToken();
+    console.log(`🌐 [Extension] Fetching: ${path}`, token ? "(With Token)" : "(No Token)");
     
     const res = await fetch(`${API_BASE}${path}`, {
       ...options,
@@ -42,16 +46,12 @@ const apiFetch = async (path, options = {}) => {
       },
     });
     
-    let data;
-    try {
-      data = await res.json();
-    } catch (e) {
-      data = {};
-    }
+    const data = await res.json().catch(() => ({}));
+    console.log(`📡 [Extension] Response [${res.status}]:`, data);
     
     return { ok: res.ok, status: res.status, data };
   } catch (error) {
-    console.error("API error:", error);
+    console.error("❌ [Extension] API error:", error);
     return { ok: false, status: 500, data: { message: "Network error" } };
   }
 };
@@ -59,23 +59,18 @@ const apiFetch = async (path, options = {}) => {
 // ─── Main flow ────────────────────────────────────────────────────────────────
 
 const init = async () => {
+  console.log("🚀 [Extension] Initializing...");
   showScreen("loading");
 
-  // 1. Try /auth/me — if 401, try refresh first
   let { ok, data: meData } = await apiFetch("/auth/me");
 
   if (!ok) {
-    // Try refreshing the token
+    console.warn("⚠️ [Extension] Not logged in, trying refresh...");
     const refreshResult = await apiFetch("/auth/refresh", { method: "POST" });
 
     if (refreshResult.ok) {
-      // Retry /auth/me with new cookie
       const retry = await apiFetch("/auth/me");
-      if (!retry.ok) {
-        showScreen("auth");
-        return;
-      }
-      ok = retry.ok;
+      if (!retry.ok) { showScreen("auth"); return; }
       meData = retry.data;
     } else {
       showScreen("auth");
@@ -83,12 +78,11 @@ const init = async () => {
     }
   }
 
-  const user = meData.data;
+  const user = meData.data; // Path to user object in ApiResponse
+  console.log("👤 [Extension] User loaded:", user.name);
 
-  // 2. Get current tab info
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
 
-  // 3. Show main screen
   document.getElementById("user-name").textContent = user.name;
   document.getElementById("page-title").textContent = tab.title || tab.url;
   document.getElementById("page-url").textContent = tab.url;
@@ -96,14 +90,12 @@ const init = async () => {
   const faviconEl = document.getElementById("page-favicon");
   if (tab.favIconUrl) {
     faviconEl.src = tab.favIconUrl;
-    faviconEl.onerror = () => faviconEl.style.display = "none";
   } else {
     faviconEl.style.display = "none";
   }
 
   showScreen("main");
 
-  // 4. Save button handler
   document.getElementById("btn-save").addEventListener("click", async () => {
     const note = document.getElementById("note-input").value.trim();
     const btn = document.getElementById("btn-save");
@@ -111,16 +103,15 @@ const init = async () => {
     btn.disabled = true;
     btn.textContent = "Saving...";
 
-    const { ok, status, data } = await apiFetch("/saves", {
+    const { ok: saveOk, status, data } = await apiFetch("/saves", {
       method: "POST",
       body: JSON.stringify({ url: tab.url, note }),
     });
 
-    if (ok) { showScreen("success"); return; }
+    if (saveOk) { showScreen("success"); return; }
     if (status === 409) { showScreen("duplicate"); return; }
 
-    document.getElementById("error-msg").textContent =
-      data?.message || "Something went wrong. Please try again.";
+    document.getElementById("error-msg").textContent = data?.message || "Something went wrong.";
     showScreen("error");
   });
 };
