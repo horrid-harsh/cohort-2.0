@@ -15,11 +15,10 @@ const showScreen = (name) => {
   screens[name].classList.remove("hidden");
 };
 
-// ─── Token helper ────────────────────────────────────────────────────────────
-
 const getToken = async () => {
   try {
-    const cookie = await chrome.cookies.get({ url: APP_URL, name: "accessToken" });
+    // 🔹 In production, cookies are on the API_BASE (Render) domain, not APP_URL (Vercel)
+    const cookie = await chrome.cookies.get({ url: API_BASE, name: "accessToken" });
     return cookie ? cookie.value : null;
   } catch (e) {
     return null;
@@ -129,7 +128,7 @@ const init = async () => {
 // ─── Button listeners ─────────────────────────────────────────────────────────
 
 document.getElementById("btn-open-app").addEventListener("click", () => {
-  chrome.tabs.create({ url: "http://localhost:5173" });
+  chrome.tabs.create({ url: APP_URL });
   window.close();
 });
 

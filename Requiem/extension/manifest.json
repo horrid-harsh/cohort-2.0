@@ -15,7 +15,8 @@
   "host_permissions": [
     "http://localhost:8000/*",
     "http://localhost:5173/*",
-    "https://yourdomain.com/*"
+    "https://cohort-2-0-1-mlj9.onrender.com/*",
+    "https://cohort-2-0-murex.vercel.app/*"
   ],
   "background": {
     "service_worker": "background.js"
