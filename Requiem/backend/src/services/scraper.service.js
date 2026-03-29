@@ -61,12 +61,17 @@ const scrapeUrl = async (url) => {
   if (url.includes("youtube.com") || url.includes("youtu.be")) {
     try {
       const oEmbedUrl = `https://www.youtube.com/oembed?url=${encodeURIComponent(url)}&format=json`;
-      const { data } = await axios.get(oEmbedUrl);
+      const { data } = await axios.get(oEmbedUrl, {
+        timeout: 5000,
+        headers: {
+          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        }
+      });
       
       return {
         title: data.title || "",
-        description: "", // oEmbed doesn't provide description
-        thumbnail: data.thumbnail_url || "",
+        description: "", 
+        thumbnail: data.thumbnail_url || `https://img.youtube.com/vi/${url.match(/(?:youtu\.be\/|youtube\.com\/.*v=)([^&?/]+)/)?.[1]}/hqdefault.jpg`,
         siteName: "YouTube",
         favicon: "https://www.youtube.com/favicon.ico",
         type: "video",
@@ -84,25 +89,22 @@ const scrapeUrl = async (url) => {
   }
 
   try {
-    const { data: html, headers } = await axios.get(targetUrl, {
+    const { data: html, headers: axiosHeaders } = await axios.get(targetUrl, {
       timeout: 10000, // 10 seconds max
       headers: {
-        // Pretend to be a browser so sites don't block us
         "User-Agent":
           "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
       },
     });
 
-    const contentType = headers["content-type"] || "";
-    // console.log("content-type:", contentType);
+    const contentType = axiosHeaders["content-type"] || "";
     const type = detectType(url, contentType);
     
-     // if the URL itself is an image, skip scraping entirely
     if (type === "image" || contentType.includes("image/")) {
       return {
-        title: url.split("/").pop().split("?")[0] || "Image", // filename as title
+        title: url.split("/").pop().split("?")[0] || "Image",
         description: "",
-        thumbnail: url,  // ← the URL itself is the thumbnail
+        thumbnail: url,
         siteName: new URL(url).hostname.replace("www.", ""),
         favicon: "",
         type: "image",
@@ -112,16 +114,12 @@ const scrapeUrl = async (url) => {
 
     const $ = cheerio.load(html);
 
-    // Helper to get meta tag content
-    // Sites use different meta tag formats, so we check all of them
     const getMeta = (property) =>
       $(`meta[property="${property}"]`).attr("content") ||
       $(`meta[name="${property}"]`).attr("content") ||
       "";
 
-    // Open Graph tags (og:title etc) are the most reliable
-    // Fallback chain: og → twitter → plain html tag
-    const title =
+    let title =
       getMeta("og:title") ||
       getMeta("twitter:title") ||
       $("title").text().trim() ||
@@ -145,7 +143,6 @@ const scrapeUrl = async (url) => {
       } else if (thumbPath.startsWith("//")) {
         thumbnail = `https:${thumbPath}`;
       } else {
-        // Handle relative paths
         try {
           thumbnail = new URL(thumbPath, url).href;
         } catch (e) {
@@ -154,35 +151,41 @@ const scrapeUrl = async (url) => {
       }
     }
 
+    // 🔹 HARD FALLBACK FOR YOUTUBE THUMBNAILS (If scraping is used)
+    if (!thumbnail && (url.includes("youtube.com") || url.includes("youtu.be"))) {
+      const videoId = url.match(/(?:youtu\.be\/|youtube\.com\/.*v=)([^&?/]+)/)?.[1];
+      if (videoId) {
+        thumbnail = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+        if(!title) title = "YouTube Video";
+      }
+    }
+
     const siteName =
       getMeta("og:site_name") ||
       new URL(url).hostname.replace("www.", "");
 
-    // Favicon
     const faviconPath =
       $('link[rel="icon"]').attr("href") ||
       $('link[rel="shortcut icon"]').attr("href") ||
       "/favicon.ico";
 
-    // Handle relative favicon paths
     const favicon = faviconPath.startsWith("http")
       ? faviconPath
       : `${new URL(url).origin}${faviconPath}`;
 
     let content = "";
     const isHtmlPage = contentType.startsWith("text/html");
-    const isReasonableSize = html.length < 5_000_000; // skip pages > 5MB
+    const isReasonableSize = html.length < 5_000_000;
  
     if (isHtmlPage && isReasonableSize) {
       const extracted = extractContent($);
-      // Only store if meaningful content was extracted
       if (extracted.length >= 100) {
-        content = extracted.slice(0, 50000); // cap at 50K chars
+        content = extracted.slice(0, 50000);
       }
     }
 
     return {
-      title: title.slice(0, 500),           // cap length
+      title: title.slice(0, 500),
       description: description.slice(0, 1000),
       thumbnail,
       siteName,
@@ -191,15 +194,25 @@ const scrapeUrl = async (url) => {
       content,
     };
   } catch (error) {
-    // If scraping fails, return empty metadata — don't crash the save
     console.error(`Scraper failed for ${url}:`, error.message);
 
     const fallbackType = detectType(url);
+    let fallbackThumbnail = "";
+    let fallbackTitle = "";
+
+    // 🔹 FINAL FALLBACK FOR YOUTUBE (If even standard scrape fails)
+    if (url.includes("youtube.com") || url.includes("youtu.be")) {
+      const videoId = url.match(/(?:youtu\.be\/|youtube\.com\/.*v=)([^&?/]+)/)?.[1];
+      if (videoId) {
+        fallbackThumbnail = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+        fallbackTitle = "YouTube Video";
+      }
+    }
 
     return {
-      title: "",
+      title: fallbackTitle,
       description: "",
-      thumbnail: "",
+      thumbnail: fallbackThumbnail,
       siteName: new URL(url).hostname.replace("www.", ""),
       favicon: "",
       type: fallbackType,
