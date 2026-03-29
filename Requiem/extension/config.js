@@ -6,4 +6,4 @@ const API_BASE = isDev
 
 const APP_URL = isDev
   ? "http://localhost:5173"
-  : "https://cohort-2-0-murex.vercel.app"; // your production frontend URL
+  : "https://requiem-sync.vercel.app"; // your production frontend URL

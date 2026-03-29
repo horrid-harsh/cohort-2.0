@@ -16,7 +16,7 @@
     "http://localhost:8000/*",
     "http://localhost:5173/*",
     "https://cohort-2-0-1-mlj9.onrender.com/*",
-    "https://cohort-2-0-murex.vercel.app/*"
+    "https://requiem-sync.vercel.app/*"
   ],
   "background": {
     "service_worker": "background.js"
