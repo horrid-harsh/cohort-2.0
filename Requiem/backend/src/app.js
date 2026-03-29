@@ -30,6 +30,7 @@ app.use(
         "img-src": ["'self'", "data:", "https:", "http:"],
         "style-src": ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
         "font-src": ["'self'", "https://fonts.gstatic.com"],
+        "connect-src": ["'self'", "https:", "http:"], // 🔹 ALLOW CONNECTIONS TO ALL HTTPS/HTTP (necessary for dev/prod)
       },
     },
   })
