@@ -138,9 +138,11 @@ const LoginPage = () => {
           {errors.password && (
             <span className={styles.fieldError}>{errors.password}</span>
           )}
+          {/* 🔹 Commented out for demo (requires verified email domain)
           <div className={styles.forgotPassRow}>
             <Link to="/forgot-password">Forgot password?</Link>
-          </div>
+          </div> 
+          */}
         </div>
 
         <button type="submit" className={styles.btn} disabled={isPending}>

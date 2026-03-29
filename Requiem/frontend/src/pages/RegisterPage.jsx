@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AuthLayout from "../components/layout/AuthLayout";
 import {
   useRegister,
@@ -113,6 +113,20 @@ const RegisterPage = () => {
     });
   };
 
+  const navigate = useNavigate();
+
+  // 🔹 AUTO-REDIRECT FOR DEMO (Bypass verification screen)
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("Account created! Redirecting to login...");
+      const timer = setTimeout(() => {
+        navigate("/login");
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [isSuccess, navigate]);
+
+  /* 🔹 Original verification screen commented out for demo
   if (isSuccess) {
     return (
       <AuthLayout>
@@ -144,6 +158,7 @@ const RegisterPage = () => {
       </AuthLayout>
     );
   }
+  */
 
   return (
     <AuthLayout>

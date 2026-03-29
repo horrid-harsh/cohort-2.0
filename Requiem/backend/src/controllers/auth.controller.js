@@ -103,34 +103,44 @@ export const register = asyncHandler(async (req, res) => {
     // Resend verification
     const token = existingUser.generateVerificationToken();
     await existingUser.save({ validateBeforeSave: false });
+    
+    /* 🔹 Commented out for demo (unverified Resend domain)
+    sendVerificationEmail(email, name, token).catch(err => 
+      console.warn("Demo: Email send failed (expected in unverified Resend account):", err.message)
+    );
+    */
     await sendVerificationEmail(email, name, token);
-
     return res
       .status(200)
       .json(
         new ApiResponse(
           200,
           {},
-          "Verification email resent. Please check your inbox.",
+          "Account exists. You can log in directly (Email sent for demo).",
         ),
       );
   }
 
   // 2. New user registration
-  const user = new UserModel({ name, email, password });
-  const verificationToken = user.generateVerificationToken();
+  const user = new UserModel({ 
+    name, 
+    email, 
+    password,
+    isVerified: true // 🔹 AUTO-VERIFY FOR DEMO
+  });
+  
+  // const verificationToken = user.generateVerificationToken();
   await user.save(); // pre-save hook will hash password
 
   // 3. Send verification email via Resend
-  await sendVerificationEmail(email, name, verificationToken);
-
+  // await sendVerificationEmail(email, name, verificationToken);
   return res
     .status(201)
     .json(
       new ApiResponse(
         201,
         {},
-        "Registration successful. Please check your email to verify your account.",
+        "Registration successful! You can now log in.",
       ),
     );
 });
@@ -147,9 +157,9 @@ export const login = asyncHandler(async (req, res) => {
   );
   if (!user) throw new ApiError(400, "Invalid credentials");
 
-  if (!user.isVerified) {
-    throw new ApiError(403, "Please verify your email before logging in.");
-  }
+  // if (!user.isVerified) {
+  //   throw new ApiError(403, "Please verify your email before logging in.");
+  // }
 
   const isPasswordValid = await user.isPasswordCorrect(password);
   if (!isPasswordValid) throw new ApiError(400, "Invalid credentials");
