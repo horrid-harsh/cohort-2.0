@@ -56,6 +56,28 @@ const extractContent = ($) => {
 const scrapeUrl = async (url) => {
   let targetUrl = url;
 
+  // 🔹 SPECIAL CASE: YouTube (Render.com IPs are often blocked by YouTube)
+  // We use the oEmbed API which is much more reliable and bot-friendly
+  if (url.includes("youtube.com") || url.includes("youtu.be")) {
+    try {
+      const oEmbedUrl = `https://www.youtube.com/oembed?url=${encodeURIComponent(url)}&format=json`;
+      const { data } = await axios.get(oEmbedUrl);
+      
+      return {
+        title: data.title || "",
+        description: "", // oEmbed doesn't provide description
+        thumbnail: data.thumbnail_url || "",
+        siteName: "YouTube",
+        favicon: "https://www.youtube.com/favicon.ico",
+        type: "video",
+        content: "",
+      };
+    } catch (error) {
+       console.warn("YouTube oEmbed failed, falling back to standard scrape:", error.message);
+       // Fall through to standard scrape
+    }
+  }
+
   // Use vxtwitter/fxtwitter for better meta tags on Twitter/X
   if (url.includes("twitter.com") || url.includes("x.com")) {
     targetUrl = url.replace("twitter.com", "vxtwitter.com").replace("x.com", "vxtwitter.com");
@@ -72,7 +94,7 @@ const scrapeUrl = async (url) => {
     });
 
     const contentType = headers["content-type"] || "";
-    console.log("content-type:", contentType);
+    // console.log("content-type:", contentType);
     const type = detectType(url, contentType);
     
      // if the URL itself is an image, skip scraping entirely

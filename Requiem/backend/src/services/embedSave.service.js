@@ -28,7 +28,7 @@ export const embedSave = async (saveId, userId) => {
     // Store the vector in the save — select:false field
     await SaveModel.updateOne({ _id: saveId }, { $set: { embedding, embeddingVersion: 1 } });
 
-    console.log(`[embedSave] ✅ Embedded save ${saveId}`);
+    // console.log(`[embedSave] ✅ Embedded save ${saveId}`);
   } catch (err) {
     // Never crash the main request — just log
     console.error(`[embedSave] ❌ Failed for save ${saveId}:`, err.message);

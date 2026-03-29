@@ -16,7 +16,7 @@ const worker = new Worker(
   "save-queue",
   async (job) => {
     const { saveId, userId } = job.data;
-    console.log(`[Worker] 🛠️ Processing save: ${saveId}`);
+    // console.log(`[Worker] 🛠️ Processing save: ${saveId}`);
 
     try {
       // 1. Mark as processing
@@ -26,11 +26,11 @@ const worker = new Worker(
       if (!save) throw new Error("Save not found");
 
       // 2. Auto-tag (Heavy)
-      console.log(`[Worker] 🏷️ Auto-tagging...`);
+      // console.log(`[Worker] 🏷️ Auto-tagging...`);
       await autoTagSave(save, userId);
 
       // 3. Generate Embeddings (Heavy)
-      console.log(`[Worker] 🧠 Generating embeddings...`);
+      // console.log(`[Worker] 🧠 Generating embeddings...`);
       await embedSave(saveId, userId);
 
       // 4. Finalize
@@ -38,7 +38,7 @@ const worker = new Worker(
         processingStatus: "completed",
       });
 
-      console.log("✅ Background tasks done:", saveId);
+      // console.log("✅ Background tasks done:", saveId);
     } catch (err) {
       console.error("❌ Worker Job Failed:", err.message);
       await SaveModel.findByIdAndUpdate(saveId, { processingStatus: "failed" });
@@ -48,4 +48,4 @@ const worker = new Worker(
   { connection }
 );
 
-console.log("🚀 Save Worker initialized");
+// console.log("🚀 Save Worker initialized");

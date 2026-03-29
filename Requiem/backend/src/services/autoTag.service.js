@@ -50,7 +50,7 @@ const autoTagSave = async (save, userId) => {
       $addToSet: { tags: { $each: tagIds } },
     });
 
-    console.log(`✅ Auto-tagged "${save.title}" with: ${suggestedNames.join(", ")}`);
+    // console.log(`✅ Auto-tagged "${save.title}" with: ${suggestedNames.join(", ")}`);
   } catch (error) {
     console.error("Auto-tagging failed:", error.message);
   }

@@ -6,11 +6,11 @@ export const saveQueue = new Queue("save-queue", {
 });
 
 export const addSaveJob = async (data) => {
-  console.log("🏗️ [Queue] addSaveJob called with:", data);
+  // console.log("🏗️ [Queue] addSaveJob called with:", data);
   await saveQueue.add("process-save", data, {
     attempts: 3,
     removeOnComplete: true,
     removeOnFail: false,
   });
-  console.log("🚀 [Queue] Job pushed to Redis");
+  // console.log("🚀 [Queue] Job pushed to Redis");
 };
