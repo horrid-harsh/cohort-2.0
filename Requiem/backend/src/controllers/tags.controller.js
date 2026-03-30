@@ -3,6 +3,7 @@ import { SaveModel } from "../models/save.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
+import { embedSave } from "../services/embedSave.service.js";
 
 // POST /api/v1/tags
 export const createTag = asyncHandler(async (req, res) => {
@@ -106,6 +107,9 @@ export const addTagToSave = asyncHandler(async (req, res) => {
   return res
     .status(200)
     .json(new ApiResponse(200, save, "Tag added to save"));
+
+  // 🔹 Trigger re-embedding in background to sync with clusters
+  embedSave(saveId, req.user._id);
 });
 
 // DELETE /api/v1/tags/:id/saves/:saveId → remove tag from save
@@ -119,6 +123,9 @@ export const removeTagFromSave = asyncHandler(async (req, res) => {
   ).populate("tags", "name color");
 
   if (!save) throw new ApiError(404, "Save not found");
+
+  // 🔹 Trigger re-embedding in background to sync with clusters
+  embedSave(saveId, req.user._id);
 
   return res
     .status(200)

@@ -41,6 +41,7 @@ const ClusterPage = () => {
           <div>
             <h1>Topic clusters</h1>
             <p>AI groups your saves by topic automatically</p>
+            <span className={styles.topicLimit}>(max 8 topics)</span>
           </div>
           <button
             className={styles.generateBtn}
@@ -148,7 +149,7 @@ const ClusterPage = () => {
                           <p className={`${styles.saveTitle} select-text`}>{save.title || save.url}</p>
                           <div className={styles.saveMeta}>
                             <span className={styles.saveSite}>{save.siteName}</span>
-                            {save.tags?.slice(0, 2).map((tag) => (
+                            {save.tags?.slice(0, 5).map((tag) => (
                               <span
                                 key={tag._id}
                                 className={styles.saveTag}

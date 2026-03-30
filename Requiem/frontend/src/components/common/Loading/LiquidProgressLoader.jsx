@@ -5,6 +5,15 @@ const LiquidProgressLoader = ({ isAppReady = true, onComplete }) => {
   const [progress, setProgress] = useState(0);
   const [isExiting, setIsExiting] = useState(false);
   const [isReactReady, setIsReactReady] = useState(false);
+  const [showWakingMessage, setShowWakingMessage] = useState(false);
+
+  useEffect(() => {
+    // 🔹 If backend takes > 5s, show "Waking up" message
+    const timer = setTimeout(() => {
+      if (!isAppReady) setShowWakingMessage(true);
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, [isAppReady]);
 
   // 1. Handover logic abolished - we now just wait for React to mount
   useEffect(() => {
@@ -98,6 +107,12 @@ const LiquidProgressLoader = ({ isAppReady = true, onComplete }) => {
         <div className="progress-percentage">
           loading... {Math.round(safeProgress)}%
         </div>
+
+        {showWakingMessage && !isAppReady && (
+          <div className="waking-message">
+            Server is waking up... Please wait
+          </div>
+        )}
       </div>
     </div>
   );

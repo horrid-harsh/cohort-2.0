@@ -13,6 +13,7 @@
               filter 2.5s ease;
   will-change: opacity, transform, filter;
   overflow: hidden;
+  user-select: none; // 🔹 Prevent accidental selection during load
 
   &.exit {
     opacity: 0;
@@ -78,4 +79,23 @@
   color: rgba(255, 255, 255, 0.5);
   text-transform: lowercase;
   letter-spacing: 0.02em;
+}
+
+.waking-message {
+  position: absolute;
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.3);
+  animation: fadeIn 1s ease-out forwards;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translate(-50%, 10px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
 }

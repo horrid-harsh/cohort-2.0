@@ -24,6 +24,15 @@
   p {
     font-size: $text-sm;
     color: $color-text-muted;
+    display: inline-block;
+  }
+
+  .topicLimit {
+    font-size: 11px;
+    color: rgba($color-text-muted, 0.6);
+    font-weight: 500;
+    margin-left: 4px;
+    vertical-align: middle;
   }
 }
 

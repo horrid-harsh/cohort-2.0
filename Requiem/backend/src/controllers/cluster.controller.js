@@ -69,10 +69,10 @@ export const getClusters = asyncHandler(async (req, res) => {
     saves.map((s) => [s._id.toString(), s])
   )
 
-  const MAX_NAMING = 6;
+  const MAX_NAMING = 8;
 
   // Build cluster objects with save details
-  const clusters = await Promise.all(
+  const namedClusters = await Promise.all(
     result.clusters.slice(0, MAX_NAMING).map(async (ids) => {
       if (!ids.length) return null;
 
@@ -96,30 +96,50 @@ export const getClusters = asyncHandler(async (req, res) => {
     })
   );
 
-  const validClusters = clusters.filter(Boolean);
+  const validClusters = namedClusters.filter(Boolean);
 
-  if (result.noise.length) {
-  const noiseSaves = result.noise.map((id) => saveMap.get(id));
+  // 🔥 2. Merge clusters with the same name
+  const mergedMap = new Map();
 
-  validClusters.push({
-    name: "various topics",
-    saves: noiseSaves.map((s) => ({
-      _id: s._id,
-      title: s.title || s.url,
-      url: s.url,
-      type: s.type,
-      thumbnail: s.thumbnail,
-      siteName: s.siteName,
-      tags: s.tags,
-    })),
-    count: noiseSaves.length,
+  validClusters.forEach((cluster) => {
+    if (mergedMap.has(cluster.name)) {
+      const existing = mergedMap.get(cluster.name);
+      existing.saves = [...existing.saves, ...cluster.saves];
+      existing.count += cluster.count;
+    } else {
+      mergedMap.set(cluster.name, { ...cluster });
+    }
   });
-}
+
+  const finalClusters = Array.from(mergedMap.values());
+
+  // 🔹 3. Collect ALL saves that aren't in a named cluster
+  // (This handles noise + clusters beyond MAX_NAMING)
+  const namingLimitSavesIds = result.clusters.slice(MAX_NAMING).flat();
+  const allOtherIds = [...result.noise, ...namingLimitSavesIds];
+
+  if (allOtherIds.length) {
+    const otherSaves = allOtherIds.map((id) => saveMap.get(id));
+
+    finalClusters.push({
+      name: "various topics",
+      saves: otherSaves.map((s) => ({
+        _id: s._id,
+        title: s.title || s.url,
+        url: s.url,
+        type: s.type,
+        thumbnail: s.thumbnail,
+        siteName: s.siteName,
+        tags: s.tags,
+      })),
+      count: otherSaves.length,
+    });
+  }
 
   // Sort by cluster size descending
-  validClusters.sort((a, b) => b.count - a.count);
+  finalClusters.sort((a, b) => b.count - a.count);
 
   return res.status(200).json(
-    new ApiResponse(200, validClusters, "Clusters generated")
+    new ApiResponse(200, finalClusters, "Clusters generated")
   );
 });
