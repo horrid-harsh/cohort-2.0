@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import {
   loginApi,
@@ -48,12 +48,14 @@ export const useResendVerification = () => {
 
 export const useLogout = () => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const clearAuth = useAuthStore((state) => state.clearAuth);
 
   return useMutation({
     mutationFn: logoutApi,
     onSettled: () => {
-      clearAuth(); // Reset the store immediately, even if logoutApi fails (e.g. 401 already)
+      queryClient.clear(); // ☢️ NUKE THE CACHE! (Prevents data leak between accounts)
+      clearAuth(); // Reset the store immediately
       navigate("/login");
     },
   });
