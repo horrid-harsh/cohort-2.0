@@ -92,22 +92,51 @@ export const getAllSaves = asyncHandler(async (req, res) => {
     const allSaves = await SaveModel.find({
       user: req.user._id,
       isArchived: false,
-      embedding: { $exists: true, $not: { $size: 0 } },
     })
-      .select("+embedding")
+      .select("+embedding title url description note tags thumbnail type siteName favicon")
       .populate("tags", "name color")
       .populate("collections", "name emoji color")
       .lean();
 
+    const searchTerm = search.toLowerCase().trim();
+
     const scored = allSaves
-      .map((save) => ({
-        ...save,
-        score: cosineSimilarity(queryEmbedding, save.embedding),
-        embedding: undefined, // strip before sending to frontend
-      }))
-      .filter((save) => save.score > 0.65)
+      .map((save) => {
+        // 1. Calculate AI Score (if embedding exists)
+        let aiScore = 0;
+        if (save.embedding && Array.isArray(save.embedding)) {
+          aiScore = cosineSimilarity(queryEmbedding, save.embedding);
+        }
+        
+        // 2. Exact Title/URL Match (Highest Priority)
+        const isTitleMatch = (save.title || "").toLowerCase().includes(searchTerm);
+        const isUrlMatch = (save.url || "").toLowerCase().includes(searchTerm);
+        
+        // 3. Tag Match (High Priority)
+        const isTagMatch = save.tags?.some(tag => (tag.name || "").toLowerCase().includes(searchTerm));
+        
+        // 4. Description/Note Match (Medium Priority)
+        const isDescMatch = (save.description || "").toLowerCase().includes(searchTerm);
+        const isNoteMatch = (save.note || "").toLowerCase().includes(searchTerm);
+        
+        // Combine scores with priorities
+        let finalScore = aiScore;
+        if (isTitleMatch || isUrlMatch) finalScore = Math.max(finalScore, 1.0);
+        else if (isTagMatch) finalScore = Math.max(finalScore, 0.9);
+        else if (isDescMatch || isNoteMatch) finalScore = Math.max(finalScore, 0.8);
+
+        return {
+          ...save,
+          score: finalScore,
+          embedding: undefined,
+        };
+      })
+      // Any reasonable similarity (0.4) OR any text match (>= 0.8) passes
+      .filter((save) => save.score > 0.4) 
       .sort((a, b) => b.score - a.score)
       .slice(0, Number(limit));
+
+    // Return the response... (rest of the block)
 
     return res.status(200).json(
       new ApiResponse(

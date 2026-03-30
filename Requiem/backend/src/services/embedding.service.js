@@ -31,6 +31,8 @@ export const generateEmbedding = async (text) => {
 export const buildEmbedText = (save, tagNames = []) => {
   const parts = [
     save.title,
+    save.url,
+    save.note,
     save.description,
     save.siteName,
     save.type,
