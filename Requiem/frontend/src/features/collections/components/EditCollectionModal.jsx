@@ -4,13 +4,11 @@ import { updateCollectionApi } from "../services/collections.service";
 import styles from "../../../components/ui/CreateModal.module.scss";
 
 const EMOJIS = ["📁", "💻", "🎨", "📚", "🎯", "🔬", "💡", "🎵", "🏋️", "🌍"];
-const COLORS = ["#7c6af7", "#378ADD", "#1D9E75", "#D85A30", "#D4537E", "#f87171", "#fbbf24", "#4ade80"];
 
 const EditCollectionModal = ({ isOpen, onClose, collection }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [emoji, setEmoji] = useState("📁");
-  const [color, setColor] = useState("#7c6af7");
   const queryClient = useQueryClient();
 
   useEffect(() => {
@@ -18,7 +16,6 @@ const EditCollectionModal = ({ isOpen, onClose, collection }) => {
       setName(collection.name || "");
       setDescription(collection.description || "");
       setEmoji(collection.emoji || "📁");
-      setColor(collection.color || "#7c6af7");
     }
   }, [collection]);
 
@@ -34,7 +31,7 @@ const EditCollectionModal = ({ isOpen, onClose, collection }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!name.trim()) return;
-    updateCollection({ name, description, emoji, color });
+    updateCollection({ name, description, emoji });
   };
 
   if (!isOpen || !collection) return null;
@@ -88,20 +85,6 @@ const EditCollectionModal = ({ isOpen, onClose, collection }) => {
             />
           </div>
 
-          <div className={styles.field}>
-            <label>Color</label>
-            <div className={styles.colorRow}>
-              {COLORS.map((c) => (
-                <button
-                  key={c} type="button"
-                  className={`${styles.colorBtn} ${color === c ? styles.selected : ""}`}
-                  style={{ background: c }}
-                  onClick={() => setColor(c)}
-                />
-              ))}
-            </div>
-          </div>
-
           <div className={styles.actions}>
             <button type="button" className={styles.cancelBtn} onClick={onClose}>Cancel</button>
             <button type="submit" className={styles.submitBtn} disabled={isPending}>
@@ -114,4 +97,4 @@ const EditCollectionModal = ({ isOpen, onClose, collection }) => {
   );
 };
 
-export default EditCollectionModal;
+export default EditCollectionModal;

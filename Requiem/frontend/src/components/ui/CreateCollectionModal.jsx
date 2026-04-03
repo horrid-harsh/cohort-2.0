@@ -3,17 +3,15 @@ import { useCreateCollection } from "../../features/collections/hooks/useCollect
 import styles from "./CreateModal.module.scss";
 
 const EMOJIS = ["📁", "💻", "🎨", "📚", "🎯", "🔬", "💡", "🎵", "🏋️", "🌍"];
-const COLORS = ["#7c6af7", "#378ADD", "#1D9E75", "#D85A30", "#D4537E", "#f87171", "#fbbf24", "#4ade80"];
 
 const CreateCollectionModal = ({ isOpen, onClose }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [emoji, setEmoji] = useState("📁");
-  const [color, setColor] = useState("#7c6af7");
   const { mutate: createCollection, isPending, error, reset } = useCreateCollection();
 
   const handleClose = () => {
-    setName(""); setDescription(""); setEmoji("📁"); setColor("#7c6af7");
+    setName(""); setDescription(""); setEmoji("📁");
     reset();
     onClose();
   };
@@ -21,7 +19,7 @@ const CreateCollectionModal = ({ isOpen, onClose }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!name.trim()) return;
-    createCollection({ name, description, emoji, color }, { onSuccess: handleClose });
+    createCollection({ name, description, emoji }, { onSuccess: handleClose });
   };
 
   if (!isOpen) return null;
@@ -77,20 +75,6 @@ const CreateCollectionModal = ({ isOpen, onClose }) => {
               onChange={(e) => setDescription(e.target.value)}
               maxLength={120}
             />
-          </div>
-
-          <div className={styles.field}>
-            <label>Color</label>
-            <div className={styles.colorRow}>
-              {COLORS.map((c) => (
-                <button
-                  key={c} type="button"
-                  className={`${styles.colorBtn} ${color === c ? styles.selected : ""}`}
-                  style={{ background: c }}
-                  onClick={() => setColor(c)}
-                />
-              ))}
-            </div>
           </div>
 
           <div className={styles.actions}>
