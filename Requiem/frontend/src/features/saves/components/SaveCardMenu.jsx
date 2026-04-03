@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, useLayoutEffect } from "react";
 import toast from "react-hot-toast";
 import { useCollections } from "../../collections/hooks/useCollections";
 import { useTags } from "../../tags/hooks/useTags";
@@ -53,6 +53,7 @@ const SaveCardMenu = ({ save, onOpenChange }) => {
   const [menuStyle, setMenuStyle] = useState({});
   const [submenuSide, setSubmenuSide] = useState("right");
   const [showConfirm, setShowConfirm] = useState(false);
+  const [isReady, setIsReady] = useState(false);
 
   const menuRef = useRef(null);
   const triggerRef = useRef(null);
@@ -70,11 +71,10 @@ const SaveCardMenu = ({ save, onOpenChange }) => {
   const { mutate: updateSave } = useUpdateSave();
   const { mutate: deleteSave } = useDeleteSave();
 
-  // Compute main menu position
-  useEffect(() => {
+  // Compute main menu position synchronously before paint
+  useLayoutEffect(() => {
     if (isOpen && triggerRef.current) {
       const rect = triggerRef.current.getBoundingClientRect();
-      const menuWidth = 190;
       const midpoint = window.innerWidth / 2;
 
       // Simple threshold-based positioning
@@ -87,6 +87,9 @@ const SaveCardMenu = ({ save, onOpenChange }) => {
         setMenuStyle({ left: 0, right: "auto" });
         setSubmenuSide("right");
       }
+      setIsReady(true);
+    } else if (!isOpen) {
+      setIsReady(false);
     }
   }, [isOpen]);
 
@@ -207,7 +210,7 @@ const SaveCardMenu = ({ save, onOpenChange }) => {
 
         {isOpen && (
           <div
-            className={styles.menu}
+            className={`${styles.menu} ${isReady ? styles.ready : ""}`}
             style={menuStyle}
             onClick={(e) => e.stopPropagation()}
           >

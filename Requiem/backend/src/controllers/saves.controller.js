@@ -306,7 +306,7 @@ export const getRelatedSaves = asyncHandler(async (req, res) => {
 // Returns 1 random save that hasn't been seen in 30+ days
 export const getSaveToResurface = asyncHandler(async (req, res) => {
   const thirtyDaysAgo = new Date();
-  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 1);
+  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
 
   // Find saves not surfaced in 30+ days (or never surfaced)
   const candidates = await SaveModel.find({

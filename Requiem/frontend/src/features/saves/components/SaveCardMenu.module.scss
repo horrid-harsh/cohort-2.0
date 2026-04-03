@@ -28,6 +28,19 @@
   padding: 4px;
   min-width: 190px;
   z-index: 50;
+
+  // ─── Animation & Layout Safety ───
+  opacity: 0;
+  transform: scale(0.96) translateY(2px);
+  transform-origin: bottom;
+  pointer-events: none;
+  transition: opacity 0.12s $curve-out, transform 0.12s $curve-out;
+
+  &.ready {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    pointer-events: auto;
+  }
 }
 
 // ─── Item wrapper (handles hover zone for submenu) ─
