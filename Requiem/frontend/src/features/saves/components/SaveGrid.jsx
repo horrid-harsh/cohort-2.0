@@ -1,8 +1,11 @@
 import { useState, useCallback } from "react";
-import { useSaves, LIMIT } from "../hooks/useSaves";
+import { useSaves, LIMIT, useBulkDeleteSaves } from "../hooks/useSaves";
 import SaveCard from "./SaveCard";
 import SaveSkeleton from "./SaveSkeleton";
 import useInfiniteScroll from "../../../hooks/useInfiniteScroll";
+import SelectionToolbar from "./SelectionToolbar";
+import ConfirmDialog from "../../../components/ui/ConfirmDialog";
+import toast from "react-hot-toast";
 import styles from "./SaveGrid.module.scss";
 
 const FILTERS = [
@@ -16,6 +19,8 @@ const FILTERS = [
 
 const SaveGrid = ({ search, isFavorite, isArchived, semantic }) => {
   const [activeType, setActiveType] = useState("");
+  const [selectedIds, setSelectedIds] = useState(new Set());
+  const [showConfirm, setShowConfirm] = useState(false);
 
   const {
     data,
@@ -32,7 +37,39 @@ const SaveGrid = ({ search, isFavorite, isArchived, semantic }) => {
     ...(semantic && { semantic: true }),
   });
 
+  const { mutate: deleteBulk } = useBulkDeleteSaves();
+
   const saves = data?.saves || [];
+
+  // Derived state
+  const isSelectionMode = selectedIds.size > 0;
+
+  const toggleSelection = useCallback((id) => {
+    setSelectedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
+      return next;
+    });
+  }, []);
+
+  const clearSelection = useCallback(() => {
+    setSelectedIds(new Set());
+    setShowConfirm(false);
+  }, []);
+
+  const handleDeleteMany = () => {
+    if (selectedIds.size === 0) return;
+    deleteBulk(Array.from(selectedIds), {
+      onSuccess: () => {
+        toast.success(`Deleted ${selectedIds.size} saves`);
+        clearSelection();
+      },
+    });
+  };
 
   // Trigger next page when sentinel div enters viewport
   const onIntersect = useCallback(() => {
@@ -93,7 +130,13 @@ const SaveGrid = ({ search, isFavorite, isArchived, semantic }) => {
         <>
           <div className={styles.grid}>
             {saves.map((save) => (
-              <SaveCard key={save._id} save={save} />
+              <SaveCard
+                key={save._id}
+                save={save}
+                isSelected={selectedIds.has(save._id)}
+                isSelectionMode={isSelectionMode}
+                onToggleSelect={() => toggleSelection(save._id)}
+              />
             ))}
             {isFetchingNextPage && Array.from({ length: LIMIT }).map((_, i) => (
               <SaveSkeleton key={`skeleton-${i}`} />
@@ -110,6 +153,23 @@ const SaveGrid = ({ search, isFavorite, isArchived, semantic }) => {
           )}
         </>
       )}
+      {/* Bulk Delete Toolbar */}
+      <SelectionToolbar
+        count={selectedIds.size}
+        onCancel={clearSelection}
+        onDelete={() => setShowConfirm(true)}
+      />
+
+      {/* Confirmation Dialog */}
+      <ConfirmDialog
+        isOpen={showConfirm && selectedIds.size > 0}
+        title="Delete multiple saves"
+        message={`This will permanently delete ${selectedIds.size} items. This action cannot be undone.`}
+        confirmLabel="Delete"
+        isDanger={true}
+        onConfirm={handleDeleteMany}
+        onCancel={() => setShowConfirm(false)}
+      />
     </div>
   );
 };

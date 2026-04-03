@@ -4,6 +4,7 @@ import {
   createSaveApi,
   updateSaveApi,
   deleteSaveApi,
+  deleteSavesBulkApi,
 } from "../services/saves.service";
 
 export const LIMIT = 8;
@@ -102,6 +103,59 @@ export const useDeleteSave = () => {
   return useMutation({
     mutationFn: deleteSaveApi,
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["saves"] });
+      queryClient.invalidateQueries({ queryKey: ["saves-by-tag"] });
+      queryClient.invalidateQueries({ queryKey: ["collection"] });
+      queryClient.invalidateQueries({ queryKey: ["tags"] });
+    },
+  });
+};
+
+export const useBulkDeleteSaves = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: deleteSavesBulkApi,
+
+    onMutate: async (ids) => {
+      if (!ids || ids.length === 0) return;
+
+      const idSet = new Set(ids); // ✅ O(1) lookup
+
+      await queryClient.cancelQueries({ queryKey: ["saves"] });
+      await queryClient.cancelQueries({ queryKey: ["saves-by-tag"] });
+
+      const prevSaves = queryClient.getQueryData(["saves"]);
+      const prevSavesByTag = queryClient.getQueryData(["saves-by-tag"]);
+
+      const updater = (old) => {
+        if (!old || !old.pages) return old;
+
+        return {
+          ...old,
+          pages: old.pages.map((page) => ({
+            ...page,
+            saves: page.saves.filter((s) => !idSet.has(s._id)),
+          })),
+        };
+      };
+
+      queryClient.setQueriesData({ queryKey: ["saves"] }, updater);
+      queryClient.setQueriesData({ queryKey: ["saves-by-tag"] }, updater);
+
+      return { prevSaves, prevSavesByTag };
+    },
+
+    onError: (err, ids, context) => {
+      if (context?.prevSaves) {
+        queryClient.setQueryData(["saves"], context.prevSaves);
+      }
+      if (context?.prevSavesByTag) {
+        queryClient.setQueryData(["saves-by-tag"], context.prevSavesByTag);
+      }
+    },
+
+    onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["saves"] });
       queryClient.invalidateQueries({ queryKey: ["saves-by-tag"] });
       queryClient.invalidateQueries({ queryKey: ["collection"] });

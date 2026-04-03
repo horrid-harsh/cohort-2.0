@@ -47,7 +47,7 @@ const Submenu = ({ items, onSelect, isSelected, renderItem, menuRef }) => {
   );
 };
 
-const SaveCardMenu = ({ save, onOpenChange }) => {
+const SaveCardMenu = ({ save, onOpenChange, onSelect }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSubmenu, setActiveSubmenu] = useState(null); // 'collections' | 'tags' | null
   const [menuStyle, setMenuStyle] = useState({});
@@ -327,6 +327,26 @@ const SaveCardMenu = ({ save, onOpenChange }) => {
             </div>
 
             <div className={styles.divider} />
+
+            <button
+              className={styles.item}
+              onClick={() => {
+                onSelect();
+                setIsOpen(false);
+              }}
+            >
+              <svg
+                width="13"
+                height="13"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+              >
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+              Select
+            </button>
 
             <button className={styles.item} onClick={handleArchive}>
               <svg

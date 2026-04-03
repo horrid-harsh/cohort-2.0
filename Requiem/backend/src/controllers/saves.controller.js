@@ -398,3 +398,50 @@ export const deleteSave = asyncHandler(async (req, res) => {
 
   return res.status(200).json(new ApiResponse(200, {}, "Save deleted successfully"));
 });
+
+// POST /api/v1/saves/bulk-delete
+export const deleteSavesBulk = asyncHandler(async (req, res) => {
+  const { ids } = req.body;
+
+  if (!ids || !Array.isArray(ids) || ids.length === 0) {
+    throw new ApiError(400, "IDs array is required");
+  }
+
+  // 1. Fetch saves
+  const saves = await SaveModel.find({
+    _id: { $in: ids },
+    user: req.user._id,
+  }).select("_id url");
+
+  if (saves.length === 0) {
+    throw new ApiError(404, "No matching saves found");
+  }
+
+  // 2. File cleanup (track failures)
+  const results = await Promise.allSettled(
+    saves
+      .filter((s) => s.url && s.url.includes("/uploads/"))
+      .map((s) => deleteFile(s.url))
+  );
+
+  const failedIds = saves
+    .filter((s, i) => results[i]?.status === "rejected")
+    .map((s) => s._id);
+
+  // 3. Delete from DB
+  const result = await SaveModel.deleteMany({
+    _id: { $in: ids },
+    user: req.user._id,
+  });
+
+  return res.status(200).json(
+    new ApiResponse(
+      200,
+      {
+        deletedCount: result.deletedCount,
+        failedIds, // ✅ now included
+      },
+      "Bulk deletion completed"
+    )
+  );
+});

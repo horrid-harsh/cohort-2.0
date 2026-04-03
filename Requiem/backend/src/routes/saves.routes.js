@@ -7,6 +7,7 @@ import {
   getSaveToResurface,
   updateSave,
   deleteSave,
+  deleteSavesBulk,
 } from "../controllers/saves.controller.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 import { apiLimiter, aiLimiter } from "../middlewares/rateLimiter.middleware.js";
@@ -22,6 +23,13 @@ router.use(verifyJWT);
  * @access private
  */
 router.route("/").get(getAllSaves).post(aiLimiter, createSave);
+
+/**
+ * @route /api/v1/saves/bulk-delete
+ * @methods POST - deleteSavesBulk
+ * @access private
+ */
+router.post("/bulk-delete", apiLimiter, deleteSavesBulk);
 
 /**
  * @route /api/v1/saves/resurface

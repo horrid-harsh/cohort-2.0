@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, memo } from "react";
 import toast from "react-hot-toast";
 import { useUpdateSave } from "../hooks/useSaves";
 import { useNavigate } from "react-router-dom";
@@ -14,19 +14,21 @@ const TYPE_LABELS = {
   link:    { label: "Link",    color: "#888888", rgb: "136, 136, 136" },
 };
 
-const SaveCard = ({ save }) => {
+const SaveCard = memo(({ save, isSelected, isSelectionMode, onToggleSelect }) => {
   const { mutate: updateSave } = useUpdateSave();
   const navigate = useNavigate();
   const typeInfo = TYPE_LABELS[save.type] || TYPE_LABELS.link;
 
   const toggleFavorite = (e) => {
     e.preventDefault();
+    e.stopPropagation();
     const nextFavorite = !save.isFavorite;
     updateSave({ id: save._id, isFavorite: nextFavorite });
     toast.success(nextFavorite ? "Added to favorites" : "Removed from favorites");
   };
 
-  const handleOpen = () => {
+  const handleOpen = (e) => {
+    if (isSelectionMode) return; // parent card handles the toggle
     window.open(save.url, "_blank", "noopener,noreferrer");
   };
 
@@ -34,9 +36,39 @@ const SaveCard = ({ save }) => {
 
   return (
     <div 
-      className={`${styles.card} ${isMenuOpen ? styles.menuOpen : ""} no-select`}
+      className={`
+        ${styles.card} 
+        ${isMenuOpen ? styles.menuOpen : ""} 
+        ${isSelected ? styles.selected : ""} 
+        ${isSelectionMode ? styles.selectionMode : ""} 
+        no-select
+      `}
       style={{ "--type-color-rgb": typeInfo.rgb }}
+      onClick={(e) => {
+        if (isSelectionMode) {
+          e.stopPropagation();
+          onToggleSelect();
+        }
+      }}
     >
+      {/* Checkbox Overlay (Only rendered during selection mode) */}
+      {isSelectionMode && (
+        <div 
+          className={`${styles.checkboxWrap} ${isSelected ? styles.checked : ""}`}
+          onClick={(e) => {
+            e.stopPropagation();
+            onToggleSelect();
+          }}
+        >
+          <div className={styles.checkbox}>
+            {isSelected && (
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4">
+                <polyline points="20 6 9 17 4 12" />
+              </svg>
+            )}
+          </div>
+        </div>
+      )}
       {/* Thumbnail */}
       <div className={styles.thumb} onClick={handleOpen}>
         {save.thumbnail ? (
@@ -63,7 +95,13 @@ const SaveCard = ({ save }) => {
           <span className="select-text">{save.siteName || new URL(save.url).hostname}</span>
         </div>
 
-        <h3 className={styles.title} onClick={() => navigate(`/saves/${save._id}`)}>
+        <h3 
+          className={styles.title} 
+          onClick={(e) => {
+            e.stopPropagation();
+            navigate(`/saves/${save._id}`);
+          }}
+        >
           <span className="select-text">{save.title || save.url}</span>
         </h3>
 
@@ -85,21 +123,23 @@ const SaveCard = ({ save }) => {
       </div>
 
       {/* Actions */}
-      <div className={styles.actions}>
-        <button
-          className={`${styles.actionBtn} ${save.isFavorite ? styles.favorited : ""}`}
-          onClick={toggleFavorite}
-          title={save.isFavorite ? "Unfavorite" : "Favorite"}
-        >
-          <svg width="13" height="13" viewBox="0 0 24 24" fill={save.isFavorite ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2">
-            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-          </svg>
-        </button>
+      {!isSelectionMode && (
+        <div className={styles.actions}>
+          <button
+            className={`${styles.actionBtn} ${save.isFavorite ? styles.favorited : ""}`}
+            onClick={toggleFavorite}
+            title={save.isFavorite ? "Unfavorite" : "Favorite"}
+          >
+            <svg width="13" height="13" viewBox="0 0 24 24" fill={save.isFavorite ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+            </svg>
+          </button>
 
-        <SaveCardMenu save={save} onOpenChange={setIsMenuOpen} />
-      </div>
+          <SaveCardMenu save={save} onOpenChange={setIsMenuOpen} onSelect={onToggleSelect} />
+        </div>
+      )}
     </div>
   );
-};
+});
 
 export default SaveCard;

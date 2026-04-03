@@ -1,0 +1,83 @@
+@use "../../../styles/abstracts/variables" as *;
+@use "../../../styles/abstracts/mixins" as *;
+
+.toolbar {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000; // Above most things but below modals
+  width: auto;
+  max-width: 90vw;
+}
+
+.content {
+  @include flex-center;
+  background: rgba(25, 25, 25, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 8px 12px;
+  border-radius: 100px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+.count {
+  font-size: $text-sm;
+  color: $color-text-primary;
+  font-weight: 500;
+  margin-left: 8px;
+  padding-right: 12px;
+  white-space: nowrap;
+}
+
+.divider {
+  width: 1px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.15);
+  margin-right: 10px;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.cancelBtn {
+  font-size: $text-sm;
+  color: $color-text-secondary;
+  padding: 6px 16px;
+  border-radius: 100px;
+  transition: all 0.2s;
+
+  &:hover {
+    color: $color-text-primary;
+    background: rgba(255, 255, 255, 0.05);
+  }
+}
+
+.deleteBtn {
+  @include flex-gap(8px);
+  font-size: $text-sm;
+  color: white;
+  background: #FF3636;
+  padding: 6px 18px;
+  border-radius: 100px;
+  font-weight: 600;
+  transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: none; // Remove glow
+
+  &:hover {
+    background: darken(#FF3636, 4%);
+    transform: none; // Remove translate-y
+    box-shadow: none;
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  svg {
+    opacity: 0.9;
+  }
+}

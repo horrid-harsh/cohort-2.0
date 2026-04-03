@@ -34,3 +34,7 @@ export const getResurfaceSaveApi = async () => {
   const res = await axiosInstance.get(`/saves/resurface`);
   return res.data.data;
 };
+export const deleteSavesBulkApi = async (ids) => {
+  const res = await axiosInstance.post(`/saves/bulk-delete`, { ids });
+  return res.data.data;
+};
