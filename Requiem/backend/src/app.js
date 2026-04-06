@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import path from "path";
 import { fileURLToPath } from "url";
 import { errorHandler } from "./middlewares/error.middleware.js";
+import { config } from "./config/config.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -19,8 +20,11 @@ import graphRoutes from "./routes/graph.routes.js";
 import clusterRoutes from "./routes/cluster.routes.js";
 import userRoutes from "./routes/user.routes.js";
 import uploadRoutes from "./routes/upload.routes.js";
+import passport from "passport";
 
 const app = express();
+
+app.use(passport.initialize());
 
 app.use(
   helmet({
@@ -38,14 +42,14 @@ app.use(
 
 app.use(
   cors({
-    origin: [process.env.CORS_ORIGIN || "http://localhost:5173", /^chrome-extension:\/\//],
+    origin: [config.frontendUrl, /^chrome-extension:\/\//],
     credentials: true, // allow cookies
   })
 );
 
 // Body parsers
-app.use(express.json({ limit: "16kb" }));
-app.use(express.urlencoded({ extended: true, limit: "16kb" }));
+app.use(express.json({ limit: "1mb" }));
+app.use(express.urlencoded({ extended: true, limit: "1mb" }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "../public")));
 

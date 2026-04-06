@@ -8,6 +8,8 @@ import {
 import { registerSchema } from "../features/auth/validators/auth.schema";
 import styles from "./AuthPage.module.scss";
 import toast from "react-hot-toast";
+import { BASE_URL } from "../utils/axios.instance";
+import SocialAuth from "../features/auth/components/SocialAuth";
 
 const BadgeIcon = ({ type }) => {
   return (
@@ -113,6 +115,10 @@ const RegisterPage = () => {
     });
   };
 
+  const handleGoogleLogin = () => {
+    window.location.href = `${BASE_URL}/auth/google`;
+  };
+
   const navigate = useNavigate();
 
   // 🔹 AUTO-REDIRECT FOR DEMO (Bypass verification screen)
@@ -177,6 +183,8 @@ const RegisterPage = () => {
             : serverError.response?.data?.message || "Something went wrong"}
         </div>
       )}
+
+      <SocialAuth text="Continue with Google" />
 
       <form className={styles.form} onSubmit={handleSubmit} noValidate>
         <div className={styles.field}>

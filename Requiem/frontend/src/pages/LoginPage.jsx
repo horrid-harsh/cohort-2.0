@@ -4,6 +4,8 @@ import AuthLayout from "../components/layout/AuthLayout";
 import { useLogin } from "../features/auth/hooks/useAuth";
 import { loginSchema } from "../features/auth/validators/auth.schema";
 import styles from "./AuthPage.module.scss";
+import { BASE_URL } from "../utils/axios.instance";
+import SocialAuth from "../features/auth/components/SocialAuth";
 
 const LoginPage = () => {
   const [form, setForm] = useState({ email: "", password: "" });
@@ -44,6 +46,10 @@ const LoginPage = () => {
     login(form);
   };
 
+  const handleGoogleLogin = () => {
+    window.location.href = `${BASE_URL}/auth/google`;
+  };
+
   return (
     <AuthLayout>
       <div className={styles.heading}>
@@ -58,6 +64,8 @@ const LoginPage = () => {
             : serverError.response?.data?.message || "Something went wrong"}
         </div>
       )}
+
+      <SocialAuth text="Continue with Google" />
 
       <form className={styles.form} onSubmit={handleSubmit} noValidate>
         <div className={styles.field}>

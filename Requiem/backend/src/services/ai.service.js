@@ -1,7 +1,8 @@
 import { Mistral } from "@mistralai/mistralai";
+import { config } from "../config/config.js";
 
 const client = new Mistral({
-  apiKey: process.env.MISTRAL_API_KEY,
+  apiKey: config.mistralApiKey,
 });
 
 const suggestTags = async ({ title, description, url, existingTags = [] }) => {

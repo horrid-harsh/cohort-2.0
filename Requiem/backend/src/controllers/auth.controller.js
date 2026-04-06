@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
 import { UserModel } from "../models/user.model.js";
+import { config } from "../config/config.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
@@ -392,4 +393,56 @@ export const resetPassword = asyncHandler(async (req, res) => {
   await user.save();
 
   return res.status(200).json(new ApiResponse(200, {}, "Password reset successfully. You can now log in."));
+});
+
+// GET /api/v1/auth/google/callback
+export const googleAuth = asyncHandler(async (req, res) => {
+  const { googleId, name, email, avatar } = req.user;
+
+  if (!email) {
+     throw new ApiError(400, "Google account must have an email associated.");
+  }
+
+  let user = await UserModel.findOne({ email });
+
+  if (!user) {
+    // 🔹 Create new OAuth user
+    user = await UserModel.create({
+      name,
+      email,
+      googleId,
+      avatar,
+      authProvider: "google",
+      isVerified: true, // Google emails are pre-verified
+    });
+  } else {
+    // 🔹 Update existing user with OAuth info if not already linked
+    let updated = false;
+    if (!user.googleId) {
+       user.googleId = googleId;
+       user.authProvider = user.authProvider === "local" ? "local+google" : user.authProvider;
+       updated = true;
+    }
+    if (!user.avatar) {
+       user.avatar = avatar;
+       updated = true;
+    }
+    // Google logins bypass email verification usually
+    if (!user.isVerified) {
+       user.isVerified = true;
+       updated = true;
+    }
+
+    if (updated) {
+       await user.save({ validateBeforeSave: false });
+    }
+  }
+
+  const { accessToken, refreshToken } = await generateTokens(user._id);
+
+  return res
+    .status(200)
+    .cookie("accessToken", accessToken, cookieOptions)
+    .cookie("refreshToken", refreshToken, cookieOptions)
+    .redirect(`${config.frontendUrl}/`);
 });

@@ -1,6 +1,7 @@
 import { Mistral } from "@mistralai/mistralai";
+import { config } from "../config/config.js";
 
-const mistral = new Mistral({ apiKey: process.env.MISTRAL_API_KEY });
+const mistral = new Mistral({ apiKey: config.mistralApiKey });
 
 /**
  * Generates a 1024-dimension embedding vector for a given text.

@@ -1,8 +1,8 @@
-import "dotenv/config";
+import { config } from "./config.js";
 import IORedis from "ioredis";
 
 // Use 127.0.0.1 instead of localhost to avoid IPv6 resolution issues (::1)
-const redisUrl = process.env.REDIS_URL || "redis://127.0.0.1:6379";
+const redisUrl = config.redisUrl || "redis://127.0.0.1:6379";
 
 console.log("🛠️ Redis connecting to:", redisUrl.includes("@") ? "Remote Redis" : redisUrl);
 

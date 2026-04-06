@@ -1,7 +1,8 @@
 import { Resend } from "resend";
+import { config } from "../config/config.js";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-const fromEmail = process.env.FROM_EMAIL || "onboarding@resend.dev";
+const resend = new Resend(config.resendApiKey);
+const fromEmail = config.fromEmail;
 
 /**
  * Send Email using Resend
@@ -26,8 +27,7 @@ const sendEmail = async ({ to, subject, html }) => {
  * Send Verification Email
  */
 export const sendVerificationEmail = async (email, name, token) => {
-  const frontendUrl = process.env.FRONTEND_URL || "http://localhost:5173";
-  const verificationLink = `${frontendUrl}/verify-email?token=${token}`;
+  const verificationLink = `${config.frontendUrl}/verify-email?token=${token}`;
 
   // console.log(token);
   const html = `

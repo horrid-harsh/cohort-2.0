@@ -9,7 +9,9 @@ import {
   resendVerificationEmailController,
   forgotPassword,
   resetPassword,
+  googleAuth,
 } from "../controllers/auth.controller.js";
+import passport from "../config/passport.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 import { authLimiter, resetPasswordLimiter } from "../middlewares/rateLimiter.middleware.js";
 import { registerSchema, loginSchema, resetPasswordSchema } from "../validators/auth.schema.js";
@@ -79,5 +81,19 @@ router.post("/forgot-password", authLimiter, forgotPassword);
  * @access public
  */
 router.post("/reset-password", resetPasswordLimiter, validate(resetPasswordSchema), resetPassword);
+
+/**
+ * @description Initiate Google OAuth flow
+ * @route GET /api/v1/auth/google
+ * @access public
+ */
+router.get("/google", passport.authenticate("google", { scope: ["profile", "email"], session: false }));
+
+/**
+ * @description Handle Google OAuth callback
+ * @route GET /api/v1/auth/google/callback
+ * @access public
+ */
+router.get("/google/callback", passport.authenticate("google", { session: false }), googleAuth);
 
 export default router;
