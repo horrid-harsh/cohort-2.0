@@ -8,6 +8,7 @@ passport.use(
       clientID: config.googleClientId,
       clientSecret: config.googleClientSecret,
       callbackURL: `${config.backendUrl}/api/v1/auth/google/callback`,
+      proxy: true,
     },
     (accessToken, refreshToken, profile, done) => {
       const user = {
