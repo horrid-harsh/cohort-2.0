@@ -4,13 +4,7 @@ import { SaveModel } from "../models/save.model.js";
 import { scrapeUrl } from "../services/scraper.service.js";
 import { embedSave } from "../services/embedSave.service.js";
 import { autoTagSave } from "../services/autoTag.service.js";
-import connectDB from "../config/db.js";
 import mongoose from "mongoose";
-
-// Only connect if not already connected (e.g., when running standalone)
-if (mongoose.connection.readyState === 0) {
-  connectDB();
-}
 
 const worker = new Worker(
   "save-queue",
@@ -24,6 +18,9 @@ const worker = new Worker(
 
       const save = await SaveModel.findById(saveId);
       if (!save) throw new Error("Save not found");
+
+      // 🔹 Delay to avoid hitting Mistral rate limits too hard
+      await new Promise((resolve) => setTimeout(resolve, 2000));
 
       // 2. Auto-tag (Heavy)
       // console.log(`[Worker] 🏷️ Auto-tagging...`);
@@ -47,5 +44,13 @@ const worker = new Worker(
   },
   { connection }
 );
+
+worker.on("error", (err) => {
+  console.error("❌ Worker critical error:", err.message);
+});
+
+worker.on("failed", (job, err) => {
+  console.error(`❌ Job ${job?.id} failed:`, err.message);
+});
 
 // console.log("🚀 Save Worker initialized");

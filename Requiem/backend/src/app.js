@@ -42,8 +42,15 @@ app.use(
 
 app.use(
   cors({
-    origin: [config.frontendUrl, /^chrome-extension:\/\//],
-    credentials: true, // allow cookies
+    origin: [
+      "http://localhost:5173",
+      "https://requiem-sync.vercel.app",
+      config.frontendUrl,
+      /^chrome-extension:\/\//
+    ],
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept"],
   })
 );
 

@@ -9,3 +9,5 @@ console.log("🛠️ Redis connecting to:", redisUrl.includes("@") ? "Remote Red
 export const connection = new IORedis(redisUrl, {
   maxRetriesPerRequest: null,
 });
+
+connection.on("error", (err) => console.error("❌ Redis Error:", err.message));

@@ -5,6 +5,7 @@ const LiquidProgressLoader = ({ isAppReady = true, onComplete }) => {
   const [progress, setProgress] = useState(0);
   const [isExiting, setIsExiting] = useState(false);
   const [isReactReady, setIsReactReady] = useState(false);
+  const progressRef = React.useRef(0);
 
   // 1. Handover logic abolished - we now just wait for React to mount
   useEffect(() => {
@@ -25,18 +26,17 @@ const LiquidProgressLoader = ({ isAppReady = true, onComplete }) => {
     if (!isReactReady) return;
 
     let raf;
-    let current = 0;
 
     const animate = () => {
       const target = isAppReady ? 100 : 80;
 
-      current += (target - current) * 0.025; // Slower, smoother progress
+      progressRef.current += (target - progressRef.current) * 0.025; // Slower, smoother progress
 
-      if (current > 99.9) current = 100;
+      if (progressRef.current > 99.9) progressRef.current = 100;
 
-      setProgress(current);
+      setProgress(progressRef.current);
 
-      if (current < 100) {
+      if (progressRef.current < 100) {
         raf = requestAnimationFrame(animate);
       } else {
         setTimeout(() => {
