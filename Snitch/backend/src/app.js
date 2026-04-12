@@ -4,6 +4,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import config from "./config/config.js";
+import authRoutes from "./routes/auth.routes.js";
 
 const app = express();
 
@@ -37,6 +38,7 @@ app.get("/api/health", (req, res) => {
 });
 
 // ─── API Routes (uncomment as you build) ─────────────────────────────
+app.use("/api/v1/auth", authRoutes);
 
 // ─── 404 Handler ─────────────────────────────────────────────────────
 app.use((req, res) => {
@@ -54,6 +56,7 @@ app.use((err, req, res, next) => {
   res.status(statusCode).json({
     success: false,
     message,
+    errors: err.errors || [],
     ...(config.NODE_ENV === "development" && { stack: err.stack }),
   });
 });
