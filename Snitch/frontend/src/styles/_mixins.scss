@@ -1,0 +1,195 @@
+@use 'variables' as *;
+
+// ─── Responsive Breakpoints ───────────────────────────────────────────────────
+@mixin respond-to($bp) {
+  @if $bp == sm    { @media (max-width: $bp-sm)  { @content; } }
+  @else if $bp == md { @media (max-width: $bp-md)  { @content; } }
+  @else if $bp == lg { @media (max-width: $bp-lg)  { @content; } }
+  @else if $bp == xl { @media (max-width: $bp-xl)  { @content; } }
+}
+
+@mixin respond-above($bp) {
+  @if $bp == sm    { @media (min-width: #{$bp-sm + 1})  { @content; } }
+  @else if $bp == md { @media (min-width: #{$bp-md + 1})  { @content; } }
+  @else if $bp == lg { @media (min-width: #{$bp-lg + 1})  { @content; } }
+}
+
+// ─── Flex Helpers ─────────────────────────────────────────────────────────────
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+// ─── Typography ───────────────────────────────────────────────────────────────
+@mixin heading-display {
+  font-family: $font-display;
+  font-weight: $font-weight-bold;
+  line-height: $line-height-tight;
+  color: $text-heading;
+  letter-spacing: -0.02em;
+}
+
+@mixin label-caps {
+  font-family: $font-body;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $text-body;
+}
+
+@mixin body-text {
+  font-family: $font-body;
+  font-size: $font-size-base;
+  font-weight: $font-weight-regular;
+  line-height: $line-height-normal;
+  color: $text-body;
+}
+
+// ─── Form Elements ────────────────────────────────────────────────────────────
+@mixin input-base {
+  width: 100%;
+  background: $input-bg;
+  border: 1.5px solid $border-color;
+  border-radius: $border-radius-md;
+  padding: $space-4 $space-5;
+  font-family: $font-body;
+  font-size: $font-size-base;
+  color: $text-body;
+  outline: none;
+  transition: border-color $transition-base, box-shadow $transition-base;
+
+  &::placeholder {
+    color: $text-muted;
+    font-style: italic;
+  }
+
+  &:focus {
+    border-color: $color-primary;
+    box-shadow: $shadow-input;
+    background: $white;
+  }
+
+  &.error {
+    border-color: $color-error;
+    box-shadow: 0 0 0 3px rgba($color-error, 0.12);
+  }
+}
+
+@mixin btn-primary {
+  width: 100%;
+  padding: $space-4 $space-6;
+  background: $color-primary;
+  color: $white;
+  border: none;
+  border-radius: $border-radius-md;
+  font-family: $font-body;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background $transition-base, box-shadow $transition-base, transform $transition-fast;
+  box-shadow: $shadow-btn;
+
+  &:hover:not(:disabled) {
+    background: $color-primary-hover;
+    box-shadow: $shadow-btn-hover;
+    transform: translateY(-1px);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+}
+
+@mixin btn-outline {
+  width: 100%;
+  padding: $space-4 $space-6;
+  background: $white;
+  color: $text-body;
+  border: 1.5px solid $border-color;
+  border-radius: $border-radius-md;
+  font-family: $font-body;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color $transition-base, background $transition-base, transform $transition-fast;
+
+  &:hover:not(:disabled) {
+    border-color: $olive-drab;
+    background: rgba($olive-drab, 0.04);
+    transform: translateY(-1px);
+  }
+}
+
+// ─── Divider with text ────────────────────────────────────────────────────────
+@mixin divider-text {
+  display: flex;
+  align-items: center;
+  gap: $space-4;
+  color: $text-muted;
+  font-size: $font-size-xs;
+  font-family: $font-body;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  &::before,
+  &::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: $border-color;
+  }
+}
+
+// ─── Error message ────────────────────────────────────────────────────────────
+@mixin field-error {
+  font-family: $font-body;
+  font-size: $font-size-xs;
+  color: $color-error;
+  margin-top: $space-1;
+  display: flex;
+  align-items: center;
+  gap: $space-1;
+}
+
+// ─── Visually Hidden (accessibility) ─────────────────────────────────────────
+@mixin visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// ─── Truncate text ────────────────────────────────────────────────────────────
+@mixin truncate {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

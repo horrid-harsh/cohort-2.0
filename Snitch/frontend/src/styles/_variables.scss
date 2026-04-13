@@ -1,0 +1,84 @@
+@use "sass:color";
+
+// ─── Brand Colors ─────────────────────────────────────────────────────────────
+$smoky-black:    #11120D;
+$olive-drab:     #565449;
+$bone:           #D8CFBC;
+$floral-white:   #FFFBF4;
+
+// ─── Neutrals ─────────────────────────────────────────────────────────────────
+$white:          #FFFFFF;
+$off-white:      $floral-white;
+$input-bg:       color.adjust($floral-white, $lightness: -2%);
+$border-color:   $bone;
+$text-muted:     $bone;
+$text-body:      $olive-drab;
+$text-heading:   $smoky-black;
+
+// ─── Semantic ─────────────────────────────────────────────────────────────────
+$color-primary:        $smoky-black;
+$color-primary-hover:  color.adjust($smoky-black, $lightness: 10%); // Lighten for black
+$color-accent:         $bone;
+$color-bg:             $floral-white;
+$color-error:          #C0392B;
+$color-success:        #5D8A5E;
+
+// ─── Typography ───────────────────────────────────────────────────────────────
+$font-display:   'Cormorant Garamond', Georgia, serif;   // headings — editorial, luxe
+$font-body:      'DM Sans', sans-serif;                  // body — clean, modern
+
+$font-size-xs:   0.75rem;    // 12px
+$font-size-sm:   0.875rem;   // 14px
+$font-size-base: 1rem;       // 16px
+$font-size-md:   1.125rem;   // 18px
+$font-size-lg:   1.5rem;     // 24px
+$font-size-xl:   2rem;       // 32px
+$font-size-2xl:  2.75rem;    // 44px
+$font-size-3xl:  3.5rem;     // 56px
+
+$font-weight-regular:  400;
+$font-weight-medium:   500;
+$font-weight-semibold: 600;
+$font-weight-bold:     700;
+
+$line-height-tight:  1.15;
+$line-height-normal: 1.5;
+$line-height-loose:  1.75;
+
+// ─── Spacing ──────────────────────────────────────────────────────────────────
+$space-1:  0.25rem;   // 4px
+$space-2:  0.5rem;    // 8px
+$space-3:  0.75rem;   // 12px
+$space-4:  1rem;      // 16px
+$space-5:  1.25rem;   // 20px
+$space-6:  1.5rem;    // 24px
+$space-8:  2rem;      // 32px
+$space-10: 2.5rem;    // 40px
+$space-12: 3rem;      // 48px
+$space-16: 4rem;      // 64px
+$space-20: 5rem;      // 80px
+
+// ─── Layout ───────────────────────────────────────────────────────────────────
+$form-max-width:   580px;
+$panel-width:      50%;   // right image panel
+$form-panel-width: 50%;   // left form panel
+$border-radius-sm: 4px;
+$border-radius-md: 8px;
+$border-radius-lg: 12px;
+$border-radius-xl: 20px;
+
+// ─── Shadows ──────────────────────────────────────────────────────────────────
+$shadow-input:   0 0 0 3px rgba($color-primary, 0.08);
+$shadow-btn:     0 4px 20px rgba($color-primary, 0.15);
+$shadow-btn-hover: 0 6px 28px rgba($color-primary, 0.25);
+
+// ─── Transitions ──────────────────────────────────────────────────────────────
+$transition-fast:   150ms ease;
+$transition-base:   250ms ease;
+$transition-slow:   400ms ease;
+
+// ─── Breakpoints ──────────────────────────────────────────────────────────────
+$bp-sm:  576px;
+$bp-md:  768px;
+$bp-lg:  992px;
+$bp-xl:  1200px;

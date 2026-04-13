@@ -1,0 +1,145 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
+
+.layout {
+  display: flex;
+  min-height: 100vh;
+  background: $color-bg;
+}
+
+// ─── Left: Form Panel ────────────────────────────────────────────────────────
+.formPanel {
+  @include flex-col;
+  align-items: center; // Center horizontally
+  flex: 0 0 $form-panel-width;
+  max-width: $form-panel-width;
+  padding: $space-8 $space-16;
+  background: $color-bg;
+  position: relative;
+  overflow-y: auto;
+
+  @include respond-to(lg) {
+    flex: 1;
+    max-width: 100%;
+    padding: $space-8 $space-10;
+  }
+
+  @include respond-to(md) {
+    padding: $space-6 $space-6;
+  }
+}
+
+.header {
+  width: 100%;
+  margin-bottom: $space-10;
+}
+
+.brand {
+  @include label-caps;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-bold;
+  letter-spacing: 0.18em;
+  color: $smoky-black;
+  text-decoration: none;
+}
+
+.formContent {
+  flex: 1;
+  @include flex-col;
+  justify-content: center;
+  max-width: $form-max-width;
+  width: 100%;
+  padding-bottom: $space-10;
+}
+
+.footer {
+  width: 100%;
+  @include flex-between;
+  padding-top: $space-6;
+  border-top: 1px solid $border-color;
+  font-family: $font-body;
+  font-size: $font-size-xs;
+  color: $text-muted;
+  letter-spacing: 0.04em;
+}
+
+.footerLinks {
+  display: flex;
+  gap: $space-6;
+
+  a {
+    color: $text-muted;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: $font-size-xs;
+    transition: color $transition-base;
+
+    &:hover {
+      color: $smoky-black;
+    }
+  }
+}
+
+// ─── Right: Image Panel ───────────────────────────────────────────────────────
+.imagePanel {
+  flex: 0 0 $panel-width;
+  max-width: $panel-width;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  background-color: $olive-drab;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+
+  // Gradient overlay — darkens bottom for text legibility
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba($smoky-black, 0.05) 0%,
+      rgba($smoky-black, 0.0) 40%,
+      rgba($smoky-black, 0.55) 100%
+    );
+  }
+
+  @include respond-to(lg) {
+    display: none;
+  }
+}
+
+.imagePanelInner {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  @include flex-col;
+  justify-content: flex-end;
+  padding: $space-10 $space-10;
+}
+
+.quote {
+  color: $white;
+}
+
+.quoteLabel {
+  @include label-caps;
+  color: rgba($white, 0.7);
+  margin-bottom: $space-3;
+  display: block;
+}
+
+.quoteHeading {
+  font-family: $font-display;
+  font-size: $font-size-3xl;
+  font-weight: $font-weight-bold;
+  line-height: $line-height-tight;
+  color: $white;
+  letter-spacing: -0.02em;
+
+  @include respond-to(xl) {
+    font-size: $font-size-2xl;
+  }
+}

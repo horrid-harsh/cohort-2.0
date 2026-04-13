@@ -55,6 +55,7 @@ app.use((err, req, res, next) => {
   console.error(`[ERROR] ${statusCode} - ${message}`);
   res.status(statusCode).json({
     success: false,
+    statusCode,
     message,
     errors: err.errors || [],
     ...(config.NODE_ENV === "development" && { stack: err.stack }),

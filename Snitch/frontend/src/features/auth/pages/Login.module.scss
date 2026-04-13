@@ -1,0 +1,158 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+
+// Login has the same base structure as Register
+// Only unique additions are .labelRow and .forgotLink
+
+.container {
+  @include flex-col;
+  gap: $space-8;
+  width: 100%;
+}
+
+.heading {
+  @include flex-col;
+  gap: $space-2;
+}
+
+.title {
+  @include heading-display;
+  font-size: $font-size-2xl;
+
+  @include respond-to(md) {
+    font-size: $font-size-xl;
+  }
+}
+
+.subtitle {
+  font-family: $font-body;
+  font-size: $font-size-base;
+  color: $text-muted;
+}
+
+.serverError {
+  background: rgba($color-error, 0.08);
+  border: 1px solid rgba($color-error, 0.25);
+  border-radius: $border-radius-md;
+  padding: $space-3 $space-5;
+  font-family: $font-body;
+  font-size: $font-size-sm;
+  color: $color-error;
+}
+
+.successMsg {
+  background: rgba(#10b981, 0.08); // Success green
+  border: 1px solid rgba(#10b981, 0.25);
+  border-radius: $border-radius-md;
+  padding: $space-3 $space-5;
+  font-family: $font-body;
+  font-size: $font-size-sm;
+  color: #10b981;
+}
+
+.form {
+  @include flex-col;
+  gap: $space-5;
+}
+
+.fieldGroup {
+  @include flex-col;
+  gap: $space-2;
+}
+
+// Unique to login: label row with forgot password link
+.labelRow {
+  @include flex-between;
+  align-items: baseline;
+}
+
+.forgotLink {
+  font-family: $font-body;
+  font-size: $font-size-xs;
+  color: $olive-drab;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  letter-spacing: 0.02em;
+  transition: color $transition-base;
+
+  &:hover {
+    color: $smoky-black;
+  }
+}
+
+.label {
+  @include label-caps;
+}
+
+.input {
+  @include input-base;
+}
+
+.inputError {
+  border-color: $color-error !important;
+  box-shadow: 0 0 0 3px rgba($color-error, 0.12) !important;
+}
+
+.inputWithIcon {
+  padding-right: $space-10;
+}
+
+.inputWrapper {
+  position: relative;
+}
+
+.eyeBtn {
+  position: absolute;
+  right: $space-4;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: $text-muted;
+  padding: 0;
+  @include flex-center;
+  transition: color $transition-base;
+
+  &:hover {
+    color: $smoky-black;
+  }
+}
+
+.errorMsg {
+  @include field-error;
+}
+
+.btnPrimary {
+  @include btn-primary;
+  margin-top: $space-2;
+}
+
+.btnGoogle {
+  @include btn-outline;
+  @include flex-center;
+  gap: $space-3;
+}
+
+.divider {
+  @include divider-text;
+}
+
+.switchAuth {
+  text-align: center;
+  font-family: $font-body;
+  font-size: $font-size-sm;
+  color: $text-muted;
+}
+
+.switchLink {
+  color: $smoky-black;
+  font-weight: $font-weight-semibold;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color $transition-base;
+
+  &:hover {
+    color: $color-primary-hover;
+  }
+}

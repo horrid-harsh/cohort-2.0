@@ -238,9 +238,17 @@ export const resetPassword = asyncHandler(async (req, res) => {
   const user = await User.findOne({
     resetPasswordToken: hashedToken,
     resetPasswordTokenExpires: { $gt: Date.now() },
-  });
+  }).select("+password"); // Need old hashed password for comparison
 
   if (!user) throw new ApiError(400, "Invalid or expired token");
+
+  // Check if new password is the same as the old one
+  const isSamePassword = await user.isPasswordCorrect(password);
+  if (isSamePassword) {
+    throw new ApiError(422, "New password cannot be the same as your old password.", {
+      password: "New password cannot be the same as your old password."
+    });
+  }
 
   user.password = password;
   user.resetPasswordToken = undefined;
