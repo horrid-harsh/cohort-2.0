@@ -26,7 +26,7 @@ const AuthLayout = ({ imageUrl, quote, children }) => {
         </main>
 
         <footer className={styles.footer}>
-          <span>© 2024 Snitch Atelier</span>
+          <span>© 2026 Snitch Atelier</span>
           <div className={styles.footerLinks}>
             <Link to="/privacy">Privacy</Link>
             <Link to="/terms">Terms</Link>

@@ -5,11 +5,13 @@ import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import config from "./config/config.js";
 import authRoutes from "./routes/auth.routes.js";
+import { globalLimiter } from "./middlewares/rateLimit.middleware.js";
 
 const app = express();
 
 // ─── Security ────────────────────────────────────────────────────────
 app.use(helmet());
+app.use(globalLimiter);
 app.use(
   cors({
     origin: config.CLIENT_URL || "http://localhost:5173",

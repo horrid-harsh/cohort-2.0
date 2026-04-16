@@ -36,7 +36,7 @@ const Register = () => {
     <AuthLayout
       imageUrl={authImage}
       quote={{
-        label: "Collection 2024",
+        label: "Collection 2026",
         heading: "Elegance in\nModesty.",
       }}
     >
