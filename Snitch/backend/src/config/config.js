@@ -11,7 +11,7 @@ if (!process.env.JWT_SECRET) {
 }
 
 const config = {
-  PORT: process.env.PORT || 8000,
+  PORT: process.env.PORT || 3000,
   MONGO_URI: process.env.MONGO_URI,
   JWT_SECRET: process.env.JWT_SECRET,
   ACCESS_TOKEN_SECRET: process.env.ACCESS_TOKEN_SECRET,
@@ -20,6 +20,9 @@ const config = {
   NODE_ENV: process.env.NODE_ENV || "development",
   EMAIL_USER: process.env.EMAIL_USER,
   EMAIL_PASS: process.env.EMAIL_PASS,
+  GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
+  GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
+  BACKEND_URL: process.env.BACKEND_URL || "http://localhost:3000",
 };
 
 export default config;

@@ -257,3 +257,55 @@ export const resetPassword = asyncHandler(async (req, res) => {
 
   return res.status(200).json(new ApiResponse(200, {}, "Password reset successful."));
 });
+
+// GET /api/v1/auth/google/callback
+export const googleAuth = asyncHandler(async (req, res) => {
+  const { googleId, name, email, avatar } = req.user;
+
+  if (!email) {
+    throw new ApiError(400, "Google account must have an email associated.");
+  }
+
+  let user = await User.findOne({ email });
+
+  if (!user) {
+    // 🔹 Create new OAuth user
+    user = await User.create({
+      name,
+      email,
+      googleId,
+      avatar: { url: avatar },
+      authProvider: "google",
+      isVerified: true, // Google emails are pre-verified
+      phone: "Not Provided", // Temporarily handle mandatory phone for OAuth
+    });
+  } else {
+    // 🔹 Update existing user with OAuth info if not already linked
+    let updated = false;
+    if (!user.googleId) {
+      user.googleId = googleId;
+      user.authProvider = user.authProvider === "local" ? "local+google" : user.authProvider;
+      updated = true;
+    }
+    if (!user.avatar?.url) {
+      user.avatar = { ...user.avatar, url: avatar };
+      updated = true;
+    }
+    if (!user.isVerified) {
+      user.isVerified = true;
+      updated = true;
+    }
+
+    if (updated) {
+      await user.save({ validateBeforeSave: false });
+    }
+  }
+
+  const { accessToken, refreshToken } = await generateTokens(user._id);
+
+  return res
+    .status(200)
+    .cookie("accessToken", accessToken, cookieOptions)
+    .cookie("refreshToken", refreshToken, cookieOptions)
+    .redirect(`${config.CLIENT_URL}/`);
+});

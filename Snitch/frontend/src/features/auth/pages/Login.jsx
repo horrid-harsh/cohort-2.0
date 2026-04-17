@@ -132,10 +132,13 @@ const Login = () => {
 
           <div className={styles.divider}>or</div>
 
-          <button type="button" className={styles.btnGoogle}>
+          <a 
+            href="http://localhost:3000/api/v1/auth/google"
+            className={styles.btnGoogle}
+          >
             <GoogleIcon />
             Continue with Google
-          </button>
+          </a>
         </form>
 
         <p className={styles.switchAuth}>

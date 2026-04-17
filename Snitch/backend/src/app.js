@@ -6,12 +6,14 @@ import cookieParser from "cookie-parser";
 import config from "./config/config.js";
 import authRoutes from "./routes/auth.routes.js";
 import { globalLimiter } from "./middlewares/rateLimit.middleware.js";
+import passport from "./config/passport.js";
 
 const app = express();
 
 // ─── Security ────────────────────────────────────────────────────────
 app.use(helmet());
 app.use(globalLimiter);
+app.use(passport.initialize());
 app.use(
   cors({
     origin: config.CLIENT_URL || "http://localhost:5173",

@@ -1,4 +1,5 @@
 import { Router } from "express";
+import config from "../config/config.js";
 import {
   register,
   login,
@@ -9,7 +10,9 @@ import {
   resendVerification,
   forgotPassword,
   resetPassword,
+  googleAuth,
 } from "../controllers/auth.controller.js";
+import passport from "../config/passport.js";
 import { authenticate } from "../middlewares/auth.middleware.js";
 import { validate } from "../middlewares/validate.middleware.js";
 import { registerSchema, loginSchema, resetPasswordSchema } from "../validators/auth.schema.js";
@@ -86,5 +89,26 @@ router.post("/forgot-password", forgotPasswordLimiter, forgotPassword);
  * @access public
  */
 router.post("/reset-password", validate(resetPasswordSchema), resetPassword);
+
+/**
+ * @description Initiate Google OAuth flow
+ * @route GET /api/v1/auth/google
+ * @access public
+ */
+router.get("/google", passport.authenticate("google", { scope: ["profile", "email"], session: false }));
+
+/**
+ * @description Handle Google OAuth callback
+ * @route GET /api/v1/auth/google/callback
+ * @access public
+ */
+router.get(
+  "/google/callback", 
+  passport.authenticate("google", { 
+    session: false, 
+    failureRedirect: `${config.CLIENT_URL}/login?error=google_auth_failed` 
+  }), 
+  googleAuth
+);
 
 export default router;
