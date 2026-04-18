@@ -5,6 +5,7 @@ import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import config from "./config/config.js";
 import authRoutes from "./routes/auth.routes.js";
+import productRoutes from "./routes/product.routes.js";
 import { globalLimiter } from "./middlewares/rateLimit.middleware.js";
 import passport from "./config/passport.js";
 
@@ -43,6 +44,7 @@ app.get("/api/health", (req, res) => {
 
 // ─── API Routes (uncomment as you build) ─────────────────────────────
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/product", productRoutes); 
 
 // ─── 404 Handler ─────────────────────────────────────────────────────
 app.use((req, res) => {

@@ -277,7 +277,6 @@ export const googleAuth = asyncHandler(async (req, res) => {
       avatar: { url: avatar },
       authProvider: "google",
       isVerified: true, // Google emails are pre-verified
-      phone: "Not Provided", // Temporarily handle mandatory phone for OAuth
     });
   } else {
     // 🔹 Update existing user with OAuth info if not already linked

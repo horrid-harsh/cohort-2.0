@@ -1,4 +1,4 @@
-import { rateLimit } from "express-rate-limit";
+import { rateLimit, ipKeyGenerator } from "express-rate-limit";
 import ApiError from "../utils/ApiError.js";
 
 /**
@@ -17,7 +17,7 @@ const createLimiter = (windowMinutes, maxRequests, message, keyFn = null) => {
 
     // ✅ Fix #4: composite key strategy (IP + email) when keyFn provided
     // Falls back to req.ip for non-body routes
-    keyGenerator: keyFn || ((req) => req.ip),
+    keyGenerator: keyFn || ((req) => ipKeyGenerator(req)),
 
     // ✅ Fix #1: use next() not throw — handler is outside Express error chain
     handler: (req, res, next, options) => {
@@ -30,8 +30,10 @@ const createLimiter = (windowMinutes, maxRequests, message, keyFn = null) => {
 
 // For login/forgot-password: key on IP + email so rotating IPs don't bypass limits
 const ipPlusEmailKey = (req) => {
-  if (!req.body?.email) return req.ip;
-  return `${req.ip}:${req.body.email.toLowerCase().trim()}`;
+  const ip = ipKeyGenerator(req); // ✅ safe IP
+
+  if (!req.body?.email) return ip;
+  return `${ip}:${req.body.email.toLowerCase().trim()}`;
 };
 
 // ─── Route-Specific Limiters ──────────────────────────────────────────────────

@@ -35,15 +35,22 @@ const userSchema = new mongoose.Schema(
     },
     phone: {
       type: String,
-      required: [true, "Phone number is required"],
+      required: function() {
+        // Only require phone if the user is using local auth
+        return this.authProvider === "local" || !this.authProvider;
+      },
       trim: true,
       unique: true,
+      sparse: true, // allows multiple accounts to have no phone number (null)
     },
 
     // ─── Auth ────────────────────────────────────────────────────────
     password: {
       type: String,
-      required: [true, "Password is required"],
+      required: function() {
+        // Only require password if the user is using local auth
+        return this.authProvider === "local" || !this.authProvider;
+      },
       minlength: [6, "Password must be at least 6 characters"],
       select: false,
     },
