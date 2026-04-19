@@ -1,0 +1,202 @@
+@use "../../../styles/variables" as v;
+
+.container {
+  min-height: calc(100vh - 80px);
+  padding: 2rem 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background-color: v.$floral-white;
+}
+
+.card {
+  width: 100%;
+  max-width: 900px;
+  background: white;
+  border-radius: 20px;
+  padding: 3rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    padding: 1.5rem;
+  }
+}
+
+.header {
+  grid-column: 1 / -1;
+  margin-bottom: 1rem;
+
+  h1 {
+    font-size: 2.2rem;
+    color: v.$smoky-black;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    color: v.$olive-drab;
+    font-size: 1rem;
+  }
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+
+  label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: v.$smoky-black;
+  }
+
+  input, textarea, select {
+    padding: 0.8rem 1rem;
+    border: 1.5px solid rgba(0, 0, 0, 0.08);
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    background: v.$floral-white;
+
+    &:focus {
+      outline: none;
+      border-color: v.$olive-drab;
+      background: white;
+      box-shadow: 0 0 0 4px rgba(107, 123, 84, 0.1);
+    }
+  }
+
+  textarea {
+    resize: none;
+    min-height: 120px;
+  }
+}
+
+.fieldError {
+  color: #e03131;
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin-top: 0.2rem;
+}
+
+.priceRow {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1rem;
+}
+
+.imageUploadArea {
+  border: 2px dashed rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  padding: 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: v.$floral-white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+
+  &:hover {
+    border-color: v.$olive-drab;
+    background: rgba(107, 123, 84, 0.05);
+  }
+
+  svg {
+    width: 40px;
+    height: 40px;
+    color: v.$olive-drab;
+  }
+
+  p {
+    font-size: 0.9rem;
+    color: v.$smoky-black;
+    font-weight: 500;
+  }
+}
+
+.previewGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 0.8rem;
+  margin-top: 1.5rem;
+}
+
+.previewItem {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .removeBtn {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 12px;
+    color: #ff4d4d;
+    
+    &:hover {
+      background: white;
+      transform: scale(1.1);
+    }
+  }
+}
+
+.submitBtn {
+  grid-column: 1 / -1;
+  background: v.$smoky-black;
+  color: v.$floral-white;
+  padding: 1rem;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+
+  &:hover:not(:disabled) {
+    background: #000;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.error {
+  grid-column: 1 / -1;
+  background: #fff5f5;
+  color: #e03131;
+  padding: 1rem;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  border: 1px solid #ffc9c9;
+  margin-bottom: 1rem;
+}

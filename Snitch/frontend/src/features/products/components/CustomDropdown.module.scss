@@ -1,0 +1,146 @@
+@use "../../../styles/variables" as v;
+
+.dropdown {
+  border: 1.5px solid rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  transition: all 300ms;
+  display: flex;
+  flex-direction: column;
+  min-height: 50px;
+  background-color: v.$floral-white;
+  position: relative;
+  width: 100%;
+  z-index: 10;
+
+  // ── Open state or focus-within ──────────────────────────────────────
+  &:focus-within,
+  &.isOpen {
+    z-index: 2000;
+    border-color: v.$olive-drab;
+    box-shadow: 0 0 0 4px rgba(107, 123, 84, 0.1);
+  }
+}
+
+// ── Trigger (was: label for checkbox) ────────────────────────────────────────
+.trigger {
+  cursor: pointer;
+  user-select: none;
+  font-weight: 600;
+  color: v.$smoky-black;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.8rem 1.2rem;
+  height: max-content;
+  position: relative;
+  z-index: 99;
+  background-color: transparent;
+  border: none;
+  border-radius: 12px;
+  font-size: inherit;
+  text-align: left;
+  transition: all 0.3s ease;
+
+  // Chevron — was ::before on label
+  &::before {
+    content: "›";
+    rotate: 90deg;
+    width: 17px;
+    height: 17px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: v.$olive-drab;
+    font-size: 22px;
+    transition: all 350ms ease;
+  }
+
+  &:focus-visible {
+    outline: none; // focus handled at .dropdown level via :focus-within
+  }
+}
+
+// ── Open trigger state (was: .input:checked + .trigger) ──────────────────────
+.triggerOpen {
+  background-color: rgba(0, 0, 0, 0.02);
+
+  &::before {
+    rotate: -90deg;
+  }
+}
+
+// ── Options list ──────────────────────────────────────────────────────────────
+.list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  margin-top: 5px;
+  max-height: 200px;
+  width: 100%;
+  display: grid;
+  grid-auto-flow: row;
+  overflow-y: auto;
+  gap: 0;
+  padding: 0;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  transition: all 400ms cubic-bezier(0.23, 1, 0.32, 1);
+
+  // ── Closed state (was: .input:not(:checked) ~ .list) ──────────────
+  opacity: 0;
+  height: 0;
+  pointer-events: none;
+  transform: translateY(-10px);
+}
+
+// ── Open list state (was: .input:checked ~ .list) ────────────────────────────
+.listOpen {
+  opacity: 1;
+  height: auto;
+  padding: 0.5rem;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.listItem {
+  list-style: none;
+  padding: 0.7rem 1rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  color: v.$smoky-black;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: v.$floral-white;
+    color: v.$olive-drab;
+    padding-left: 1.5rem;
+  }
+
+  &.active {
+    background-color: rgba(107, 123, 84, 0.1);
+    color: v.$olive-drab;
+  }
+}
+
+// ── Custom Scrollbar ──────────────────────────────────────────────────────────
+.webkitScrollbar {
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: transparent;
+    border-radius: 10px;
+  }
+  &:hover::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.1);
+  }
+}

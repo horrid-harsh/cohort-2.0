@@ -5,6 +5,7 @@ import EmailSent from "../features/auth/pages/EmailSent";
 import VerifyEmail from "../features/auth/pages/VerifyEmail";
 import ForgotPassword from "../features/auth/pages/ForgotPassword";
 import ResetPassword from "../features/auth/pages/ResetPassword";
+import AddProduct from "../features/products/pages/AddProduct";
 
 export const routes = createBrowserRouter([
   {
@@ -34,5 +35,9 @@ export const routes = createBrowserRouter([
   {
     path: "/reset-password",
     element: <ResetPassword />,
+  },
+  {
+    path: "/seller/add-product",
+    element: <AddProduct />,
   },
 ]);

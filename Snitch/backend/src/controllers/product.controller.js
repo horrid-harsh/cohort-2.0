@@ -64,3 +64,11 @@ export const createProduct = asyncHandler(async (req, res) => {
     .status(201)
     .json(new ApiResponse(201, product, "Product created successfully"));
 });
+
+export const getSellerProducts = asyncHandler(async (req, res) => {
+  const seller = req.user;
+  const products = await Product.find({ seller: seller._id });
+  return res
+    .status(200)
+    .json(new ApiResponse(200, products, "Products fetched successfully"));
+});
