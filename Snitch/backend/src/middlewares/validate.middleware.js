@@ -5,7 +5,7 @@ import ApiError from "../utils/ApiError.js";
  */
 export const validate = (schema) => (req, res, next) => {
   try {
-    schema.parse(req.body);
+    req.body = schema.parse(req.body);
     next();
   } catch (error) {
     const formattedErrors = {};

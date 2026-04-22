@@ -9,7 +9,7 @@ $floral-white:   #FFFBF4;
 // ─── Neutrals ─────────────────────────────────────────────────────────────────
 $white:          #FFFFFF;
 $off-white:      $floral-white;
-$input-bg:       color.adjust($floral-white, $lightness: -2%);
+$input-bg:       $white; // Pure white for popping contrast
 $border-color:   $bone;
 $text-muted:     $bone;
 $text-body:      $olive-drab;
@@ -62,10 +62,10 @@ $space-20: 5rem;      // 80px
 $form-max-width:   580px;
 $panel-width:      50%;   // right image panel
 $form-panel-width: 50%;   // left form panel
-$border-radius-sm: 4px;
-$border-radius-md: 8px;
-$border-radius-lg: 12px;
-$border-radius-xl: 20px;
+$border-radius-sm: 0; // Sharp-edge minimalist UI
+$border-radius-md: 0;
+$border-radius-lg: 0;
+$border-radius-xl: 0;
 
 // ─── Shadows ──────────────────────────────────────────────────────────────────
 $shadow-input:   0 0 0 3px rgba($color-primary, 0.08);

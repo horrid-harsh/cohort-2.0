@@ -2,12 +2,13 @@
 
 .dropdown {
   border: 1.5px solid rgba(0, 0, 0, 0.08);
-  border-radius: 12px;
+  border-radius: 0; // Sharp-edge minimalist UI
   transition: all 300ms;
   display: flex;
   flex-direction: column;
   min-height: 50px;
-  background-color: v.$floral-white;
+  min-height: 50px;
+  background-color: white; // Pure white for popping contrast
   position: relative;
   width: 100%;
   z-index: 10;
@@ -15,7 +16,7 @@
   // ── Open state or focus-within ──────────────────────────────────────
   &:focus-within,
   &.isOpen {
-    z-index: 2000;
+    z-index: 900; // Below navbar (1000)
     border-color: v.$olive-drab;
     box-shadow: 0 0 0 4px rgba(107, 123, 84, 0.1);
   }
@@ -28,7 +29,10 @@
   font-weight: 600;
   color: v.$smoky-black;
   width: 100%;
+  min-width: max-content;
+  white-space: nowrap;
   display: flex;
+  justify-content: space-between;
   align-items: center;
   gap: 1rem;
   padding: 0.8rem 1.2rem;
@@ -37,13 +41,13 @@
   z-index: 99;
   background-color: transparent;
   border: none;
-  border-radius: 12px;
+  border-radius: 0; // Sharp-edge minimalist UI
   font-size: inherit;
   text-align: left;
   transition: all 0.3s ease;
 
-  // Chevron — was ::before on label
-  &::before {
+  // Chevron — moved to right via order or ::after
+  &::after {
     content: "›";
     rotate: 90deg;
     width: 17px;
@@ -56,6 +60,10 @@
     transition: all 350ms ease;
   }
 
+  &::before {
+    display: none; // Disable the old left chevron
+  }
+
   &:focus-visible {
     outline: none; // focus handled at .dropdown level via :focus-within
   }
@@ -65,7 +73,7 @@
 .triggerOpen {
   background-color: rgba(0, 0, 0, 0.02);
 
-  &::before {
+  &::after {
     rotate: -90deg;
   }
 }
@@ -77,15 +85,16 @@
   left: 0;
   z-index: 1000;
   margin-top: 5px;
-  max-height: 200px;
-  width: 100%;
+  max-height: 250px;
+  width: max-content;
+  min-width: 100%;
   display: grid;
   grid-auto-flow: row;
   overflow-y: auto;
   gap: 0;
   padding: 0;
   background: white;
-  border-radius: 12px;
+  border-radius: 0; // Sharp-edge minimalist UI
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   border: 1px solid rgba(0, 0, 0, 0.08);
   transition: all 400ms cubic-bezier(0.23, 1, 0.32, 1);
@@ -109,16 +118,18 @@
 .listItem {
   list-style: none;
   padding: 0.7rem 1rem;
-  border-radius: 8px;
+  border-radius: 0; // Sharp-edge minimalist UI
   font-size: 0.95rem;
   font-weight: 500;
   cursor: pointer;
   color: v.$smoky-black;
   transition: all 0.2s ease;
+  white-space: nowrap; // Prevent wrapping in the list
+
 
   &:hover {
-    background-color: v.$floral-white;
-    color: v.$olive-drab;
+    background: v.$floral-white; // floral-white
+    color: v.$smoky-black;
     padding-left: 1.5rem;
   }
 

@@ -6,6 +6,7 @@ import VerifyEmail from "../features/auth/pages/VerifyEmail";
 import ForgotPassword from "../features/auth/pages/ForgotPassword";
 import ResetPassword from "../features/auth/pages/ResetPassword";
 import AddProduct from "../features/products/pages/AddProduct";
+import SellerDashboard from "../features/products/pages/SellerDashboard";
 
 export const routes = createBrowserRouter([
   {
@@ -39,5 +40,9 @@ export const routes = createBrowserRouter([
   {
     path: "/seller/add-product",
     element: <AddProduct />,
+  },
+  {
+    path: "/seller/dashboard",
+    element: <SellerDashboard />,
   },
 ]);
