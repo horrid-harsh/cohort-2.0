@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router";
 import { selectIsAuthenticated, selectUser, selectAuthLoading } from "../state/auth.slice";
+import Loader from "../../shared/Loader";
 
 const PublicRoute = ({ children }) => {
   const isAuthenticated = useSelector(selectIsAuthenticated);
@@ -11,7 +12,7 @@ const PublicRoute = ({ children }) => {
   if (isLoading) {
     return (
       <div style={{ height: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
-        <p>Loading session...</p>
+        <Loader />
       </div>
     );
   }
