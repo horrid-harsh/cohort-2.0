@@ -4,6 +4,7 @@ import { useForm, Controller } from "react-hook-form";
 import { useProducts } from "../hooks/useProducts";
 import styles from "./AddProduct.module.scss";
 import CustomDropdown from "../components/CustomDropdown";
+import Button from "../../shared/Button";
 
 const MAX_IMAGES = 7;
 
@@ -279,13 +280,13 @@ const AddProduct = () => {
           </div>
         </div>
 
-        <button
+        <Button
           type="submit"
-          className={styles.submitBtn}
-          disabled={isLoading}
+          fullWidth
+          isLoading={isLoading}
         >
-          {isLoading ? "Uploading Product..." : "List Product Now"}
-        </button>
+          List Product Now
+        </Button>
       </form>
     </div>
   );

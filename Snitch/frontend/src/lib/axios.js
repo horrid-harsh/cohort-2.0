@@ -26,7 +26,12 @@ axiosInstance.interceptors.response.use(
     const originalRequest = error.config
 
     // Only attempt refresh on 401 and if we haven't already retried
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    // Also, DON'T attempt refresh for the refresh-token endpoint itself!
+    if (
+      error.response?.status === 401 && 
+      !originalRequest._retry &&
+      !originalRequest.url.includes('/auth/refresh-token')
+    ) {
 
       if (isRefreshing) {
         // Queue this request while refresh is in progress

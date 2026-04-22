@@ -1,0 +1,121 @@
+@use "../../styles/variables" as v;
+@use "../../styles/mixins" as m;
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  border: none;
+  cursor: pointer;
+  font-family: v.$font-body;
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.15rem;
+  text-transform: uppercase;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+  padding: 1.2rem 2rem;
+  
+  // Enforce sharp edges globally
+  border-radius: 0 !important;
+
+  &:disabled {
+    cursor: not-allowed;
+    filter: grayscale(0.5);
+    opacity: 0.6;
+  }
+}
+
+.primary {
+  background: v.$smoky-black;
+  color: v.$white;
+
+  &:hover:not(:disabled) {
+    background: lighten(v.$smoky-black, 10%);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+}
+
+.outline {
+  background: transparent;
+  color: v.$smoky-black;
+  border: 1.5px solid v.$smoky-black;
+
+  &:hover:not(:disabled) {
+    background: rgba(v.$smoky-black, 0.05); // Subtle tint instead of full inversion
+    transform: translateY(-2px);
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  gap: inherit;
+  flex-shrink: 0; // Prevent content from squeezing
+  white-space: nowrap;
+}
+
+.ghost {
+  background: transparent;
+  color: v.$smoky-black;
+  padding: 0.8rem 1.2rem;
+  font-size: 0.75rem;
+
+  &:hover:not(:disabled) {
+    background: rgba(v.$smoky-black, 0.05);
+  }
+}
+
+.danger {
+  background: transparent;
+  color: #CC0000;
+  border: 1.5px solid #CC0000;
+  padding: 0.8rem 1.2rem;
+  font-size: 0.75rem;
+
+  &:hover:not(:disabled) {
+    background: #CC0000;
+    color: white;
+    transform: translateY(-2px);
+  }
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+// Loading state overlay
+.loading {
+  pointer-events: none;
+  opacity: 1; // Keep it fully visible
+
+  .loader {
+    width: 14px;
+    height: 14px;
+    border: 2px solid currentColor;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    flex-shrink: 0;
+  }
+
+  .content {
+    opacity: 0.7; // Subtly dim the text instead of the whole button
+  }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

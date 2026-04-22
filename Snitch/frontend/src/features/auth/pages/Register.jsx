@@ -5,7 +5,7 @@ import AuthLayout from "../components/AuthLayout";
 import { useAuth } from "../hooks/useAuth";
 import authImage from "../../../assets/auth-modal.png";
 import styles from "./Register.module.scss";
-
+import Button from "../../shared/Button";
 import { GoogleIcon, EyeIcon, EyeOffIcon } from "../components/AuthIcons";
 
 const Register = () => {
@@ -204,25 +204,28 @@ const Register = () => {
           </div>
 
           {/* Submit */}
-          <button
+          <Button
             type="submit"
-            className={styles.btnPrimary}
-            disabled={isLoading}
+            fullWidth
+            isLoading={isLoading}
           >
-            {isLoading ? "Creating account..." : "Sign Up"}
-          </button>
+            Sign Up
+          </Button>
 
           {/* Divider */}
           <div className={styles.divider}>or</div>
 
           {/* Google */}
-          <a 
+          <Button
+            as="a"
+            variant="outline"
+            fullWidth
             href="http://localhost:3000/api/v1/auth/google"
             className={styles.btnGoogle}
           >
             <GoogleIcon />
             Continue with Google
-          </a>
+          </Button>
         </form>
 
         {/* Footer link */}

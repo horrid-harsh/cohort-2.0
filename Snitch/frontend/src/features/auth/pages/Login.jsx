@@ -5,6 +5,7 @@ import AuthLayout from "../components/AuthLayout";
 import { useAuth } from "../hooks/useAuth";
 import authImage from "../../../assets/auth-modal.png";
 import styles from "./Login.module.scss";
+import Button from "../../shared/Button";
 import { GoogleIcon, EyeIcon, EyeOffIcon } from "../components/AuthIcons";
 
 const Login = () => {
@@ -122,23 +123,25 @@ const Login = () => {
             )}
           </div>
 
-          <button
+          <Button
             type="submit"
-            className={styles.btnPrimary}
-            disabled={isLoading}
+            fullWidth
+            isLoading={isLoading}
           >
-            {isLoading ? "Signing in..." : "Sign In"}
-          </button>
+            Sign In
+          </Button>
 
           <div className={styles.divider}>or</div>
 
-          <a 
+          <Button
+            as="a"
+            variant="outline"
+            fullWidth
             href="http://localhost:3000/api/v1/auth/google"
-            className={styles.btnGoogle}
           >
             <GoogleIcon />
             Continue with Google
-          </a>
+          </Button>
         </form>
 
         <p className={styles.switchAuth}>

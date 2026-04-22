@@ -40,23 +40,8 @@
   }
 
   .actions {
-    button {
-      background: v.$smoky-black;
-      color: v.$floral-white;
-      padding: 0.8rem 1.8rem;
-      border: none;
-      border-radius: 0; // Sharp-edge minimalist UI
-      font-weight: 700;
-      cursor: pointer;
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12rem;
-      transition: opacity 0.3s ease;
-
-      &:hover {
-        opacity: 0.85;
-      }
-    }
+    display: flex;
+    align-items: center;
   }
 
   @media (max-width: 768px) {
@@ -345,42 +330,18 @@
     position: absolute;
     top: 100%;
     right: 0;
-    width: 160px;
+    width: 180px;
     background: white;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
     border: 1px solid v.$bone;
-    border-radius: 0; // Sharp-edge minimalist UI
+    border-radius: 0;
     z-index: 1010;
     display: flex;
     flex-direction: column;
     padding: 0.5rem;
     margin-top: 0.5rem;
+    gap: 0.2rem;
     animation: menuFadeIn 0.2s ease-out;
-
-    button {
-      background: transparent;
-      border: none;
-      padding: 0.7rem 1rem;
-      text-align: left;
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: v.$smoky-black;
-      cursor: pointer;
-      border-radius: 0; // Sharp-edge minimalist UI
-      transition: all 0.2s ease;
-
-      &:hover {
-        background-color: v.$floral-white;
-        color: v.$olive-drab;
-      }
-
-      &.deleteAction {
-        color: #ef4444;
-        &:hover {
-          background-color: #fff5f5;
-        }
-      }
-    }
   }
 }
 

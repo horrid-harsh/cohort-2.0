@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router";
 import { useProducts } from "../hooks/useProducts";
 import CustomDropdown from "../components/CustomDropdown";
+import Button from "../../shared/Button";
 import styles from "./SellerDashboard.module.scss";
 
 const ProductActionMenu = ({ product, onEdit, onDelete }) => {
@@ -32,23 +33,24 @@ const ProductActionMenu = ({ product, onEdit, onDelete }) => {
 
       {isOpen && (
         <div className={styles.menuDropdown}>
-          <button
+          <Button
+            variant="ghost"
             onClick={() => {
               onEdit(product);
               setIsOpen(false);
             }}
           >
             Edit Product
-          </button>
-          <button
-            className={styles.deleteAction}
+          </Button>
+          <Button
+            variant="danger"
             onClick={() => {
               onDelete(product._id);
               setIsOpen(false);
             }}
           >
             Delete
-          </button>
+          </Button>
         </div>
       )}
     </div>
@@ -124,9 +126,9 @@ const SellerDashboard = () => {
           <p>Curating your collection at SNITCH.</p>
         </div>
         <div className={styles.actions}>
-          <button onClick={() => navigate("/seller/add-product")}>
+          <Button onClick={() => navigate("/seller/add-product")}>
             Add Product
-          </button>
+          </Button>
         </div>
       </header>
 

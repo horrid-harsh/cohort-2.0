@@ -7,6 +7,8 @@ import ForgotPassword from "../features/auth/pages/ForgotPassword";
 import ResetPassword from "../features/auth/pages/ResetPassword";
 import AddProduct from "../features/products/pages/AddProduct";
 import SellerDashboard from "../features/products/pages/SellerDashboard";
+import ProtectedRoute from "../features/auth/components/ProtectedRoute";
+import PublicRoute from "../features/auth/components/PublicRoute";
 
 export const routes = createBrowserRouter([
   {
@@ -15,11 +17,19 @@ export const routes = createBrowserRouter([
   },
   {
     path: "/register",
-    element: <Register />,
+    element: (
+      <PublicRoute>
+        <Register />
+      </PublicRoute>
+    ),
   },
   {
     path: "/login",
-    element: <Login />,
+    element: (
+      <PublicRoute>
+        <Login />
+      </PublicRoute>
+    ),
   },
   {
     path: "/verify-email-sent",
@@ -39,10 +49,18 @@ export const routes = createBrowserRouter([
   },
   {
     path: "/seller/add-product",
-    element: <AddProduct />,
+    element: (
+      <ProtectedRoute allowedRoles={["seller"]}>
+        <AddProduct />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/seller/dashboard",
-    element: <SellerDashboard />,
+    element: (
+      <ProtectedRoute allowedRoles={["seller"]}>
+        <SellerDashboard />
+      </ProtectedRoute>
+    ),
   },
 ]);

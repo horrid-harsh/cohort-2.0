@@ -165,60 +165,27 @@
 
   .removeBtn {
     position: absolute;
-    top: 0;
-    right: 0;
-    background: rgba(255, 255, 255, 0.9);
-    border: none;
-    width: 28px; // Better sizing
-    height: 28px;
+    top: 6px;
+    right: 6px;
+    background: v.$smoky-black;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    width: 22px;
+    height: 22px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    color: v.$smoky-black;
+    color: white;
     z-index: 10;
+    font-size: 0.9rem;
+    font-weight: 700;
     transition: all 0.2s ease;
-    
-    &::before, &::after {
-      content: '';
-      position: absolute;
-      width: 12px;
-      height: 1px;
-      background: currentColor;
-    }
-    &::before { transform: rotate(45deg); }
-    &::after { transform: rotate(-45deg); }
 
     &:hover {
-      background: v.$smoky-black;
-      color: white;
+      background: white;
+      color: v.$smoky-black;
+      border-color: v.$smoky-black;
     }
-  }
-}
-
-.submitBtn {
-  grid-column: 1 / -1;
-  background: v.$smoky-black;
-  color: white;
-  padding: 1.25rem;
-  border: none;
-  border-radius: 0; // Sharp edges
-  font-size: 0.85rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.2rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  margin-top: 2rem;
-
-  &:hover:not(:disabled) {
-    background: #000;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-  }
-
-  &:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
   }
 }
 
