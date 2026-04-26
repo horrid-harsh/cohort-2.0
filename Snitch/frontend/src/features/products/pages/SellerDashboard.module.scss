@@ -2,66 +2,15 @@
 
 .container {
   min-height: 100vh;
-  padding-top: 100px;
   background-color: v.$floral-white;
 }
 
-.header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 100px;
-  background: rgba(255, 251, 244, 0.9);
-  backdrop-filter: blur(20px);
-  z-index: 1000;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 4rem;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
-
-  .titleSection {
-    h1 {
-      font-family: v.$font-display;
-      font-size: 2rem;
-      color: v.$smoky-black;
-      letter-spacing: 0.2rem;
-      font-weight: 900;
-      margin: 0;
-    }
-    p {
-      color: v.$olive-drab;
-      font-size: 0.8rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.1rem;
-    }
-  }
-
-  .actions {
-    display: flex;
-    align-items: center;
-  }
-
-  @media (max-width: 768px) {
-    padding: 0 1.5rem;
-    height: 80px;
-    .titleSection h1 {
-      font-size: 1.5rem;
-    }
-    .titleSection p {
-      display: none;
-    }
-  }
-}
-
 .contentBody {
-  padding: 3rem 4rem;
+  padding: 4rem 4rem;
   max-width: 1400px;
   margin: 0 auto;
   @media (max-width: 768px) {
-    padding: 1.5rem;
+    padding: 2rem 1.5rem;
   }
 }
 
@@ -72,21 +21,22 @@
   align-items: center;
   gap: 3rem;
 
-  .searchWrapper {
-    flex: 1;
-    input {
-      width: 100%;
-      padding: 1rem 0;
-      border: none;
-      border-bottom: 1px solid v.$bone;
-      background: v.$floral-white;
-      font-size: 0.95rem;
+  .dashboardMeta {
+    h1 {
+      font-family: v.$font-display;
+      font-size: 2.8rem;
       color: v.$smoky-black;
-      font-weight: 500;
-      &:focus {
-        outline: none;
-        border-color: v.$smoky-black;
-      }
+      font-weight: 800;
+      margin: 0 0 0.5rem 0;
+      letter-spacing: -0.02em;
+    }
+    p {
+      color: v.$olive-drab;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1rem;
+      margin: 0;
     }
   }
 
@@ -94,6 +44,7 @@
     display: flex;
     align-items: center;
     gap: 1.5rem;
+    flex-wrap: wrap; // Allow wrapping on small screens
 
     .filterLabel {
       font-size: 0.75rem;
@@ -103,6 +54,8 @@
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      white-space: nowrap; // Keep label on one line
+
       svg {
         width: 14px;
       }
@@ -111,12 +64,24 @@
     .dropdowns {
       display: flex;
       gap: 0.8rem;
+      flex-wrap: wrap; // Allow dropdowns to wrap among themselves
+      flex: 1;
+
+      @media (max-width: 576px) {
+        width: 100%;
+        flex: none;
+        
+        & > * {
+          flex: 1;
+          min-width: 140px; // Ensure they don't get too narrow
+        }
+      }
     }
   }
 
   @media (max-width: 1024px) {
     flex-direction: column;
-    align-items: stretch;
+    align-items: flex-start;
     gap: 2rem;
   }
 }
@@ -369,3 +334,10 @@
     margin-top: 1rem;
   }
 }
+
+.hideMobile {
+  @media (max-width: 576px) {
+    display: none;
+  }
+}
+

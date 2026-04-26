@@ -8,13 +8,14 @@ import ResetPassword from "../features/auth/pages/ResetPassword";
 import AddProduct from "../features/products/pages/AddProduct";
 import SellerDashboard from "../features/products/pages/SellerDashboard";
 import Logout from "../features/auth/pages/Logout";
+import Home from "../features/home/pages/Home";
 import ProtectedRoute from "../features/auth/components/ProtectedRoute";
 import PublicRoute from "../features/auth/components/PublicRoute";
 
 export const routes = createBrowserRouter([
   {
     path: "/",
-    element: <h1>Home</h1>,
+    element: <Home />,
   },
   {
     path: "/logout",

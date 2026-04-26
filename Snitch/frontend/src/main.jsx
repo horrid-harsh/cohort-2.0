@@ -5,6 +5,7 @@ import { store } from './app/app.store'
 import App from './app/App'
 import AuthInitializer from './app/AuthInitializer'
 import './styles/global.scss'
+import 'remixicon/fonts/remixicon.css'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

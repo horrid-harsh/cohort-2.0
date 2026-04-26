@@ -72,3 +72,16 @@ export const getSellerProducts = asyncHandler(async (req, res) => {
     .status(200)
     .json(new ApiResponse(200, products, "Products fetched successfully"));
 });
+
+// ─── @route  GET /api/v1/product/latest ──────────────────────────────────────
+// @access  Public
+export const getLatestProducts = asyncHandler(async (req, res) => {
+  const products = await Product.find({})
+    .sort({ createdAt: -1 })
+    .limit(20)
+    .select("-seller -__v"); // Exclude seller details and version key for the public feed
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, products, "Latest products fetched successfully"));
+});

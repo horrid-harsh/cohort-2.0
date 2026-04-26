@@ -1,0 +1,468 @@
+@use "../../styles/variables" as v;
+
+.navbar {
+  width: 100%;
+  background: white;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+}
+
+// ── Sidebar System ─────────────────────────────────────────────────────────
+.sidebarOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  z-index: 2000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+
+  &.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 350px;
+  height: 100vh;
+  background: white;
+  z-index: 2001;
+  transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 20px 0 50px rgba(0,0,0,0.1);
+
+  &.open {
+    left: 0;
+  }
+
+  @media (max-width: 480px) {
+    width: 85%;
+  }
+}
+
+.sidebarHeader {
+  background: v.$smoky-black;
+  color: white;
+  padding: 2rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; // Push user info and close button apart
+  gap: 1.5rem;
+  position: relative;
+
+  .sidebarUser {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    flex: 1;
+    overflow: hidden;
+
+    svg {
+      width: 28px;
+      height: 28px;
+      stroke-width: 1.5;
+      flex-shrink: 0;
+    }
+
+    span {
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis; // Handle extremely long names
+    }
+  }
+
+  .closeSidebar {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 2.5rem;
+    cursor: pointer;
+    line-height: 1;
+    opacity: 0.7;
+    font-weight: 300;
+    transition: opacity 0.2s ease;
+    flex-shrink: 0;
+
+    &:hover { opacity: 1; }
+  }
+}
+
+.sidebarContent {
+  flex: 1;
+  overflow-y: auto;
+  padding: 2.5rem 2rem;
+}
+
+.sidebarSection {
+  margin-bottom: 3rem;
+
+  h3 {
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: v.$smoky-black;
+    letter-spacing: 0.2rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1.5px solid v.$bone;
+    padding-bottom: 0.8rem;
+  }
+
+  a, .sideLogout {
+    display: block;
+    padding: 0.9rem 0;
+    text-decoration: none;
+    color: v.$olive-drab;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+
+    &:hover {
+      color: v.$smoky-black;
+      padding-left: 0.6rem;
+    }
+  }
+
+  .sideLogout {
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    color: #CC0000;
+    cursor: pointer;
+    font-weight: 700;
+    padding-top: 1.5rem;
+    border-top: 1px dashed v.$bone;
+    margin-top: 1rem;
+
+    &:hover {
+      color: #990000;
+    }
+  }
+}
+
+// ── Main Header ─────────────────────────────────────────────────────────────
+.mainHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 4rem;
+  max-width: 1440px;
+  margin: 0 auto;
+  gap: 2rem;
+  flex-wrap: wrap;
+
+  @media (max-width: 992px) {
+    padding: 1rem;
+    gap: 1rem;
+  }
+}
+
+.leftGroup {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.burgerMenu {
+  display: none; // Hidden on desktop
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  align-items: center;
+  margin-left: -0.5rem;
+
+  svg {
+    width: 24px;
+    height: 24px;
+    color: v.$smoky-black;
+  }
+
+  @media (max-width: 768px) {
+    display: flex; // Show on mobile
+  }
+}
+
+.logo {
+  font-family: v.$font-display;
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: v.$smoky-black;
+  letter-spacing: 0.2rem;
+  text-decoration: none;
+
+  @media (max-width: 480px) {
+    font-size: 1.4rem;
+    letter-spacing: 0.1rem;
+  }
+}
+
+.searchBar {
+  flex: 1;
+  max-width: 600px;
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  @media (max-width: 768px) {
+    order: 3;
+    min-width: 100%;
+  }
+
+  svg {
+    position: absolute;
+    left: 1rem;
+    width: 16px;
+    height: 16px;
+    color: v.$text-muted;
+  }
+
+  input {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 2.8rem;
+    border: 1.5px solid v.$bone;
+    background: v.$floral-white;
+    font-size: 0.85rem;
+    border-radius: 0;
+
+    &:focus {
+      outline: none;
+      border-color: v.$smoky-black;
+      background: white;
+    }
+  }
+}
+
+.userActions {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+
+  @media (max-width: 480px) {
+    gap: 1.2rem;
+  }
+}
+
+.dashboardActionWrapper {
+  display: flex;
+  align-items: center;
+  
+  button {
+    padding: 0.8rem 1.5rem !important;
+    font-size: 0.75rem !important;
+  }
+}
+
+.loginLink {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: v.$smoky-black;
+  text-decoration: none;
+}
+
+// ── Dropdown System ────────────────────────────────────────────────────────
+.userProfile {
+  position: relative;
+  padding: 0.5rem 0;
+  cursor: pointer;
+}
+
+.userTrigger {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  .greeting {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: v.$smoky-black;
+
+    @media (max-width: 480px) {
+      font-size: 0.7rem;
+    }
+  }
+
+  svg {
+    width: 14px;
+    height: 14px;
+    transition: transform 0.3s ease;
+
+    @media (max-width: 480px) {
+      width: 12px;
+      height: 12px;
+    }
+    
+    &.rotated {
+      transform: rotate(180deg);
+    }
+  }
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 220px;
+  background: white;
+  border: 1px solid v.$bone;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.12);
+  padding: 1rem 0;
+  z-index: 1010;
+  animation: dropdownSlide 0.2s ease;
+
+  @media (max-width: 480px) {
+    width: 200px;
+  }
+
+  .dropdownHeader {
+    padding: 0.5rem 1.5rem;
+    font-size: 0.65rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: v.$text-muted;
+    margin-bottom: 0.5rem;
+
+    @media (max-width: 480px) {
+      padding: 0.5rem 1rem;
+      font-size: 0.6rem;
+    }
+  }
+
+  .dropdownItem {
+    padding: 0.8rem 1.5rem;
+    font-size: 0.85rem;
+    color: v.$smoky-black;
+    text-decoration: none;
+    display: block;
+
+    @media (max-width: 480px) {
+      padding: 0.7rem 1rem;
+      font-size: 0.75rem;
+    }
+
+    &:hover {
+      background: v.$floral-white;
+    }
+  }
+
+  .divider {
+    height: 1px;
+    background: v.$bone;
+    margin: 0.5rem 0;
+  }
+
+  .logoutBtn {
+    background: none;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    text-align: left;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #CC0000;
+    cursor: pointer;
+    width: 100%;
+
+    &:hover { background: #FFF5F5; }
+  }
+}
+
+@keyframes dropdownSlide {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+// ── Secondary Header / Categories ──────────────────────────────────────────
+.secondaryHeader {
+  border-top: 1px solid v.$bone;
+  background: white;
+  padding: 0.6rem 4rem;
+  display: block;
+
+  @media (max-width: 768px) {
+    display: none; // Hides specifically on mobile
+  }
+}
+
+.categoryNav {
+  display: flex;
+  align-items: center;
+  justify-content: center; // Horizontally center the bar
+  gap: 2rem;
+  max-width: 1440px;
+  margin: 0 auto;
+
+  .shopByLabel {
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: v.$text-muted;
+    white-space: nowrap;
+  }
+
+  ul {
+    display: flex;
+    justify-content: center; // Center items within the list
+    gap: 2.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      white-space: nowrap;
+      
+      a {
+        text-decoration: none;
+        color: v.$smoky-black;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        transition: color 0.3s ease;
+
+        &:hover {
+          color: v.$olive-drab;
+        }
+      }
+    }
+  }
+}
+
+.cartIcon {
+  position: relative;
+  cursor: pointer;
+
+  svg {
+    width: 24px;
+    height: 24px;
+    color: v.$smoky-black;
+  }
+
+  .badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: v.$smoky-black;
+    color: white;
+    font-size: 0.65rem;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-weight: 800;
+  }
+}

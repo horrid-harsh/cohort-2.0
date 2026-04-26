@@ -48,3 +48,8 @@ export const getProductById = async (id) => {
   const response = await api.get(`/product/${id}`);
   return response.data;
 };
+
+export const getLatestProducts = async () => {
+  const response = await api.get("/product/latest");
+  return response.data;
+};

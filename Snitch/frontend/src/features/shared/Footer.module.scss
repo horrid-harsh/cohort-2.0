@@ -1,0 +1,233 @@
+@use "../../styles/variables" as v;
+
+.footer {
+  background: white;
+  border-top: 1px solid v.$bone;
+  padding-top: 5rem;
+}
+
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 4rem;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr 1.5fr;
+  gap: 4rem;
+  margin-bottom: 5rem;
+
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    padding: 0 2rem;
+    gap: 3rem;
+  }
+}
+
+.brandCol {
+  .logo {
+    display: inline-block;
+    font-family: v.$font-display;
+    font-size: 1.8rem;
+    font-weight: 800;
+    letter-spacing: 0.2rem;
+    color: v.$smoky-black;
+    text-decoration: none;
+    margin-bottom: 1.5rem;
+  }
+
+  p {
+    font-size: 0.85rem;
+    color: v.$olive-drab;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    max-width: 250px;
+  }
+
+  .socials {
+    display: flex;
+    gap: 1.5rem;
+    
+    a {
+      font-size: 1.2rem;
+      color: v.$smoky-black;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      
+      &:hover {
+        opacity: 0.6;
+        transform: translateY(-3px);
+      }
+    }
+  }
+}
+
+.linkCol {
+  h3 {
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.15rem;
+    color: v.$smoky-black;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: default;
+
+    i {
+      display: none; // Hidden on desktop
+      font-size: 1.2rem;
+      transition: transform 0.3s ease;
+    }
+
+    @media (max-width: 768px) {
+      margin-bottom: 0;
+      padding: 1.5rem 0;
+      cursor: pointer;
+      border-bottom: 1px solid v.$bone;
+
+      i { display: block; }
+    }
+  }
+
+  &.active h3 {
+    @media (max-width: 768px) {
+      border-bottom: none;
+      i { transform: rotate(180deg); }
+    }
+  }
+
+  .list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    transition: all 0.3s ease;
+
+    @media (max-width: 768px) {
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      padding-bottom: 0;
+    }
+
+    li {
+      margin-bottom: 1rem;
+      
+      a {
+        text-decoration: none;
+        color: v.$olive-drab;
+        font-size: 0.8rem;
+        font-weight: 500;
+        transition: color 0.3s ease;
+        
+        &:hover {
+          color: v.$smoky-black;
+        }
+      }
+    }
+  }
+
+  &.active .list {
+    @media (max-width: 768px) {
+      max-height: 500px;
+      opacity: 1;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid v.$bone;
+    }
+  }
+}
+
+.newsletterCol {
+  h3 {
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.15rem;
+    color: v.$smoky-black;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+  }
+
+  p {
+    font-size: 0.8rem;
+    color: v.$olive-drab;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+  }
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    input {
+      width: 100%;
+      padding: 1rem;
+      border: 1.5px solid v.$bone;
+      font-size: 0.8rem;
+      border-radius: 0;
+      
+      &:focus {
+        outline: none;
+        border-color: v.$smoky-black;
+      }
+    }
+
+    button {
+      background: v.$smoky-black;
+      color: white;
+      padding: 1rem;
+      border: none;
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.15rem;
+      cursor: pointer;
+      transition: opacity 0.3s ease;
+      
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+  }
+}
+
+.bottomBar {
+  padding: 2rem 4rem;
+  border-top: 1px solid v.$bone;
+  
+  .bottomContent {
+    max-width: 1440px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    p {
+      font-size: 0.75rem;
+      color: v.$olive-drab;
+    }
+
+    .legal {
+      display: flex;
+      gap: 2rem;
+      
+      a {
+        font-size: 0.75rem;
+        color: v.$olive-drab;
+        text-decoration: none;
+        
+        &:hover {
+          color: v.$smoky-black;
+        }
+      }
+    }
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      gap: 1.5rem;
+      text-align: center;
+    }
+  }
+}

@@ -1,5 +1,9 @@
 import { Router } from "express";
-import { createProduct, getSellerProducts } from "../controllers/product.controller.js";
+import {
+  createProduct,
+  getSellerProducts,
+  getLatestProducts,
+} from "../controllers/product.controller.js";
 import { authenticate, authorize } from "../middlewares/auth.middleware.js";
 import { upload } from "../middlewares/multer.middleware.js";
 import { validate } from "../middlewares/validate.middleware.js";
@@ -20,6 +24,13 @@ router.post(
   validate(createProductSchema), 
   createProduct
 );
+
+/**
+ * @description Get latest products for homepage
+ * @route GET /api/v1/product/latest
+ * @access public
+ */
+router.get("/latest", getLatestProducts);
 
 /**
  * @description Get seller's products

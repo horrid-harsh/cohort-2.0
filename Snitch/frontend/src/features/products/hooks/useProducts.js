@@ -1,7 +1,8 @@
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createProduct, getSellerProducts } from "../services/product.api";
+import { createProduct, getSellerProducts, getLatestProducts } from "../services/product.api";
 import {
+  setProducts,
   setSellerProducts,
   setLoading,
   setError,
@@ -53,9 +54,27 @@ export const useProducts = () => {
     }
   }, [dispatch]);
 
+  // ─── Fetch latest products for homepage ────────────────────────────
+  const handleFetchLatestProducts = useCallback(async () => {
+    dispatch(setLoading(true));
+    dispatch(clearProductError());
+    try {
+      const response = await getLatestProducts();
+      dispatch(setProducts(response.data));
+      return response.data;
+    } catch (err) {
+      const errMsg = err?.message || err?.data?.message || "Failed to fetch latest products";
+      dispatch(setError(errMsg));
+      throw err;
+    } finally {
+      dispatch(setLoading(false));
+    }
+  }, [dispatch]);
+
   return {
     handleCreateProduct,
     handleFetchSellerProducts,
+    handleFetchLatestProducts,
     products,
     sellerProducts,
     isLoading: loading,

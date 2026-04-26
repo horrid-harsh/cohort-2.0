@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import { useProducts } from "../hooks/useProducts";
 import CustomDropdown from "../components/CustomDropdown";
 import Button from "../../shared/Button";
+import Navbar from "../../shared/Navbar";
 import styles from "./SellerDashboard.module.scss";
 
 const ProductActionMenu = ({ product, onEdit, onDelete }) => {
@@ -120,27 +121,24 @@ const SellerDashboard = () => {
 
   return (
     <div className={styles.container}>
-      <header className={styles.header}>
-        <div className={styles.titleSection}>
-          <h1>SNITCH</h1>
-          <p>Curating your collection at SNITCH.</p>
-        </div>
-        <div className={styles.actions}>
-          <Button onClick={() => navigate("/seller/add-product")}>
-            Add Product
+      <Navbar 
+        variant="seller" 
+        dashboardAction={
+          <Button variant="primary" onClick={() => navigate("/seller/add-product")}>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ width: '18px', marginRight: '8px' }}>
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            <span>Add<span className={styles.hideMobile}> New Product</span></span>
           </Button>
-        </div>
-      </header>
+        }
+      />
 
       <main className={styles.contentBody}>
         <div className={styles.controls}>
-          <div className={styles.searchWrapper}>
-            <input
-              type="text"
-              placeholder="Search reference or title..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
+          <div className={styles.dashboardMeta}>
+            <h1>Showroom Inventory</h1>
+            <p>Curating your collection at SNITCH.</p>
           </div>
 
           <div className={styles.filterBar}>
@@ -200,8 +198,6 @@ const SellerDashboard = () => {
         </section>
 
         <section className={styles.productSection}>
-          <h2>Showroom Inventory</h2>
-
           {isLoading && sellerProducts.length === 0 ? (
             <div className={styles.emptyState}>
               <p>Fetching your collection...</p>
