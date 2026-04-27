@@ -92,6 +92,7 @@ export const selectListingProducts = (state) => state.product.listingProducts;
 export const selectListingPagination = (state) => state.product.listingPagination;
 export const selectIsLoading = (state) => state.product.loading;
 export const selectProductError = (state) => state.product.error;
+export const selectCurrentProduct = (state) => state.product.currentProduct;
 
 
 export default productSlice.reducer;

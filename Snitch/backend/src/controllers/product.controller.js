@@ -175,3 +175,22 @@ export const getAllProducts = asyncHandler(async (req, res) => {
     )
   );
 });
+
+// ─── @route  GET /api/v1/product/:productId ──────────────────────────────────
+// @access  Public
+export const getProductById = asyncHandler(async (req, res) => {
+  const { productId } = req.params;
+
+  const product = await Product.findById(productId).populate(
+    "seller",
+    "name email"
+  );
+
+  if (!product) {
+    throw new ApiError(404, "Product not found");
+  }
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, product, "Product details fetched successfully"));
+});

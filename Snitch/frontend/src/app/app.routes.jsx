@@ -11,6 +11,7 @@ import Logout from "../features/auth/pages/Logout";
 import Home from "../features/home/pages/Home";
 import NewArrivals from "../features/products/pages/NewArrivals";
 import ProductListing from "../features/products/pages/ProductListing";
+import ProductDetails from "../features/products/pages/ProductDetails";
 import ProtectedRoute from "../features/auth/components/ProtectedRoute";
 import PublicRoute from "../features/auth/components/PublicRoute";
 
@@ -26,6 +27,10 @@ export const routes = createBrowserRouter([
   {
     path: "/shop",
     element: <ProductListing />,
+  },
+  {
+    path: "/product/:productId",
+    element: <ProductDetails />,
   },
   {
     path: "/logout",

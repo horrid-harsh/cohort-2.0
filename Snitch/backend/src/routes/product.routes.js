@@ -5,6 +5,7 @@ import {
   getLatestProducts,
   getExploreProducts,
   getAllProducts,
+  getProductById,
 } from "../controllers/product.controller.js";
 import { authenticate, authorize } from "../middlewares/auth.middleware.js";
 import { upload } from "../middlewares/multer.middleware.js";
@@ -59,5 +60,12 @@ router.get(
   authorize("seller"),
   getSellerProducts
 );
+
+/**
+ * @description Get product details by ID
+ * @route GET /api/v1/product/:productId
+ * @access public
+ */
+router.get("/:productId", getProductById);
 
 export default router;

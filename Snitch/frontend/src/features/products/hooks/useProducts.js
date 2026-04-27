@@ -7,7 +7,8 @@ import {
   getSellerProducts, 
   getLatestProducts, 
   getExploreProducts,
-  getAllProducts
+  getAllProducts,
+  getProductById
 } from "../services/product.api";
 import {
   setProducts,
@@ -24,6 +25,8 @@ import {
   appendListingProducts,
   selectListingProducts,
   selectListingPagination,
+  setCurrentProduct,
+  selectCurrentProduct,
 } from "../state/product.slice";
 
 export const useProducts = () => {
@@ -36,6 +39,7 @@ export const useProducts = () => {
   const explorePagination = useSelector(selectExplorePagination);
   const listingProducts = useSelector(selectListingProducts);
   const listingPagination = useSelector(selectListingPagination);
+  const currentProduct = useSelector(selectCurrentProduct);
 
   // ─── Create product ────────────────────────────────────────────────
   const handleCreateProduct = async (productData) => {
@@ -140,18 +144,38 @@ export const useProducts = () => {
     }
   }, [dispatch]);
 
+  // ─── Fetch single product by ID ─────────────────────────────────────
+  const handleFetchProductById = useCallback(async (id) => {
+    dispatch(setLoading(true));
+    dispatch(clearProductError());
+    try {
+      const response = await getProductById(id);
+      dispatch(setCurrentProduct(response.data));
+      return response.data;
+    } catch (err) {
+      const errMsg = err?.message || err?.data?.message || "Failed to fetch product details";
+      dispatch(setError(errMsg));
+      toast.error(errMsg);
+      throw err;
+    } finally {
+      dispatch(setLoading(false));
+    }
+  }, [dispatch]);
+
   return {
     handleCreateProduct,
     handleFetchSellerProducts,
     handleFetchLatestProducts,
     handleFetchExploreProducts,
     handleFetchListingProducts,
+    handleFetchProductById,
     products,
     sellerProducts,
     exploreProducts,
     explorePagination,
     listingProducts,
     listingPagination,
+    currentProduct,
     isLoading: loading,
     error,
   };
