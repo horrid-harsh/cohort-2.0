@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+import toast from "react-hot-toast";
 import {
   setUser,
   setLoading,
@@ -44,16 +45,18 @@ export const useAuth = () => {
     dispatch(setLoading(true));
     try {
       await registerUser(data);
+      toast.success("Registration successful! Please check your email.");
       // Registration doesn't log in — user must verify email first
       navigate("/verify-email-sent", { state: { email: data.email } });
     } catch (err) {
       const res = err.response?.data;
       if (res?.statusCode === 422 && res?.errors) {
         applyServerFieldErrors(res.errors, setError);
+        toast.error("Please fix the errors in the form.");
       } else {
-        setServerError(
-          res?.message || "Something went wrong. Please try again.",
-        );
+        const msg = res?.message || "Something went wrong. Please try again.";
+        setServerError(msg);
+        toast.error(msg);
       }
     } finally {
       dispatch(setLoading(false));
@@ -67,15 +70,17 @@ export const useAuth = () => {
     try {
       const res = await loginUser(data);
       dispatch(setUser(res.data.user));
+      toast.success(`Welcome back, ${res.data.user.name || "User"}!`);
       navigate("/");
     } catch (err) {
       const res = err.response?.data;
       if (res?.statusCode === 422 && res?.errors) {
         applyServerFieldErrors(res.errors, setError);
+        toast.error("Invalid input. Please check the form.");
       } else {
-        setServerError(
-          res?.message || "Invalid credentials. Please try again.",
-        );
+        const msg = res?.message || "Invalid credentials. Please try again.";
+        setServerError(msg);
+        toast.error(msg);
       }
     } finally {
       dispatch(setLoading(false));
@@ -87,6 +92,7 @@ export const useAuth = () => {
     dispatch(setLoading(true));
     try {
       await logoutUser();
+      toast.success("Logged out successfully.");
     } catch {
       // Even if API call fails, clear local state
     } finally {
@@ -101,12 +107,14 @@ export const useAuth = () => {
     setServerError(null);
     try {
       const res = await verifyEmail(token);
+      toast.success(res.message || "Email verified successfully!");
       return { success: true, message: res.message };
     } catch (err) {
       const msg =
         err.response?.data?.message ||
         "Verification failed. Link may be expired.";
       setServerError(msg);
+      toast.error(msg);
       return { success: false, message: msg };
     } finally {
       dispatch(setLoading(false));
@@ -119,10 +127,12 @@ export const useAuth = () => {
     setServerError(null);
     try {
       const res = await resendVerification(email);
+      toast.success(res.message || "Verification email sent!");
       return { success: true, message: res.message };
     } catch (err) {
       const msg = err.response?.data?.message || "Failed to resend email.";
       setServerError(msg);
+      toast.error(msg);
       return { success: false, message: msg };
     } finally {
       dispatch(setLoading(false));
@@ -135,10 +145,12 @@ export const useAuth = () => {
     setServerError(null);
     try {
       const res = await forgotPassword(email);
+      toast.success(res.message || "Password reset link sent to your email.");
       return { success: true, message: res.message };
     } catch (err) {
       const msg = err.response?.data?.message || "Failed to send reset link.";
       setServerError(msg);
+      toast.error(msg);
       return { success: false, message: msg };
     } finally {
       dispatch(setLoading(false));
@@ -151,15 +163,18 @@ export const useAuth = () => {
     setServerError(null);
     try {
       const res = await resetPassword(data);
+      toast.success(res.message || "Password reset successful! You can now login.");
       return { success: true, message: res.message };
     } catch (err) {
       const res = err.response?.data;
       if (res?.statusCode === 422 && res?.errors) {
         applyServerFieldErrors(res.errors, setError);
+        toast.error("Please check the form for errors.");
       } else {
         const msg =
           res?.message || "Failed to reset password. Link may be expired.";
         setServerError(msg);
+        toast.error(msg);
       }
       return { success: false };
     } finally {
@@ -184,6 +199,7 @@ export const useAuth = () => {
   useEffect(() => {
     const handleExpiry = () => {
       dispatch(clearAuth());
+      toast.error("Session expired. Please login again.");
       // We DO NOT navigate to login here. 
       // AuthInitializer handles setting state to null, 
       // and ProtectedRoute will handle redirecting only if the user 

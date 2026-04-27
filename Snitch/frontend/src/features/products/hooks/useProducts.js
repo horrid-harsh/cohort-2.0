@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router"; // Added for consistency
+import { useNavigate } from "react-router";
+import toast from "react-hot-toast";
 import { 
   createProduct, 
   getSellerProducts, 
@@ -43,12 +44,14 @@ export const useProducts = () => {
     try {
       const response = await createProduct(productData);
       dispatch(addProductToState(response.data));
+      toast.success("Product listed successfully!");
       return response;
     } catch (err) {
       // ✅ Preserve full error object so callers can access err.errors for RHF
       const errMsg =
         err?.message || err?.data?.message || "Failed to create product";
       dispatch(setError(errMsg));
+      toast.error(errMsg);
       throw err; // re-throw so page-level catch can handle navigation guard
     } finally {
       // ✅ Always reset loading — even on failure
@@ -68,6 +71,7 @@ export const useProducts = () => {
       const errMsg =
         err?.message || err?.data?.message || "Failed to fetch products";
       dispatch(setError(errMsg));
+      toast.error(errMsg);
       throw err;
     } finally {
       dispatch(setLoading(false));
@@ -85,6 +89,7 @@ export const useProducts = () => {
     } catch (err) {
       const errMsg = err?.message || err?.data?.message || "Failed to fetch latest products";
       dispatch(setError(errMsg));
+      toast.error(errMsg);
       throw err;
     } finally {
       dispatch(setLoading(false));
@@ -106,6 +111,7 @@ export const useProducts = () => {
     } catch (err) {
       const errMsg = err?.message || err?.data?.message || "Failed to fetch explore products";
       dispatch(setError(errMsg));
+      toast.error(errMsg);
       throw err;
     } finally {
       if (isInitial) dispatch(setLoading(false));
@@ -127,6 +133,7 @@ export const useProducts = () => {
     } catch (err) {
       const errMsg = err?.message || err?.data?.message || "Failed to fetch products";
       dispatch(setError(errMsg));
+      toast.error(errMsg);
       throw err;
     } finally {
       if (isInitial) dispatch(setLoading(false));
