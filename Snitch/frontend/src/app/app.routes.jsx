@@ -9,6 +9,8 @@ import AddProduct from "../features/products/pages/AddProduct";
 import SellerDashboard from "../features/products/pages/SellerDashboard";
 import Logout from "../features/auth/pages/Logout";
 import Home from "../features/home/pages/Home";
+import NewArrivals from "../features/products/pages/NewArrivals";
+import ProductListing from "../features/products/pages/ProductListing";
 import ProtectedRoute from "../features/auth/components/ProtectedRoute";
 import PublicRoute from "../features/auth/components/PublicRoute";
 
@@ -16,6 +18,14 @@ export const routes = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
+  },
+  {
+    path: "/new-arrivals",
+    element: <NewArrivals />,
+  },
+  {
+    path: "/shop",
+    element: <ProductListing />,
   },
   {
     path: "/logout",

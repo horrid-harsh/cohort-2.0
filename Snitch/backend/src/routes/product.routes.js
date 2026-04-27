@@ -3,6 +3,8 @@ import {
   createProduct,
   getSellerProducts,
   getLatestProducts,
+  getExploreProducts,
+  getAllProducts,
 } from "../controllers/product.controller.js";
 import { authenticate, authorize } from "../middlewares/auth.middleware.js";
 import { upload } from "../middlewares/multer.middleware.js";
@@ -10,6 +12,13 @@ import { validate } from "../middlewares/validate.middleware.js";
 import { createProductSchema } from "../validators/product.schema.js";
 
 const router = Router();
+
+/**
+ * @description Get all products (with filters & pagination)
+ * @route GET /api/v1/product
+ * @access public
+ */
+router.get("/", getAllProducts);
 
 /**
  * @description Create a new product
@@ -26,11 +35,18 @@ router.post(
 );
 
 /**
- * @description Get latest products for homepage
+ * @description Get latest products for homepage (Top 8 New Arrivals)
  * @route GET /api/v1/product/latest
  * @access public
  */
 router.get("/latest", getLatestProducts);
+
+/**
+ * @description Get explore products (skip top 8, paginated)
+ * @route GET /api/v1/product/explore
+ * @access public
+ */
+router.get("/explore", getExploreProducts);
 
 /**
  * @description Get seller's products

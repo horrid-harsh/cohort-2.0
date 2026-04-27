@@ -184,7 +184,10 @@ export const useAuth = () => {
   useEffect(() => {
     const handleExpiry = () => {
       dispatch(clearAuth());
-      navigate("/login");
+      // We DO NOT navigate to login here. 
+      // AuthInitializer handles setting state to null, 
+      // and ProtectedRoute will handle redirecting only if the user 
+      // is on a restricted page. This allows guests to visit the Home page.
     };
     window.addEventListener("auth:session-expired", handleExpiry);
     return () =>

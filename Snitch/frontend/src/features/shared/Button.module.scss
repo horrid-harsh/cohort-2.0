@@ -1,5 +1,6 @@
 @use "../../styles/variables" as v;
 @use "../../styles/mixins" as m;
+@use "sass:color";
 
 .btn {
   display: inline-flex;
@@ -34,7 +35,7 @@
   color: v.$white;
 
   &:hover:not(:disabled) {
-    background: lighten(v.$smoky-black, 10%);
+    background: color.adjust(v.$smoky-black, $lightness: 10%);
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
     transform: translateY(-2px);
   }

@@ -414,7 +414,8 @@
 
   ul {
     display: flex;
-    justify-content: center; // Center items within the list
+    justify-content: center; 
+    align-items: center; // Vertically center all items
     gap: 2.5rem;
     list-style: none;
     margin: 0;
@@ -422,6 +423,8 @@
 
     li {
       white-space: nowrap;
+      display: flex; // Ensure li itself centers content
+      align-items: center;
       
       a {
         text-decoration: none;
@@ -431,11 +434,91 @@
         text-transform: uppercase;
         letter-spacing: 0.05em;
         transition: color 0.3s ease;
+        line-height: 1; // Prevent line-height variations
 
         &:hover {
           color: v.$olive-drab;
         }
       }
+    }
+  }
+}
+
+.moreDropdownWrapper {
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.moreTrigger {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  line-height: 1;
+  
+  span {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: v.$smoky-black;
+    line-height: 1;
+  }
+
+  svg {
+    width: 12px;
+    height: 12px;
+    transition: transform 0.3s ease;
+  }
+}
+
+.moreDropdownWrapper:hover .moreTrigger svg {
+  transform: rotate(180deg);
+  color: v.$olive-drab;
+}
+
+.moreDropdownWrapper:hover .moreTrigger span {
+  color: v.$olive-drab;
+}
+
+.moreDropdown {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: -1rem;
+  width: 200px;
+  background: white;
+  border: 1px solid v.$bone;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+  padding: 1rem 0;
+  z-index: 1010;
+  animation: dropdownSlide 0.2s ease;
+  display: flex;
+  flex-direction: column;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 0;
+    width: 100%;
+    height: 10px;
+    background: transparent; // Invisible bridge for hover
+  }
+
+  .moreItem {
+    padding: 0.8rem 1.5rem;
+    font-size: 0.75rem;
+    color: v.$smoky-black;
+    text-decoration: none;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: v.$floral-white;
+      color: v.$olive-drab;
+      padding-left: 1.8rem;
     }
   }
 }

@@ -78,10 +78,100 @@ export const getSellerProducts = asyncHandler(async (req, res) => {
 export const getLatestProducts = asyncHandler(async (req, res) => {
   const products = await Product.find({})
     .sort({ createdAt: -1 })
-    .limit(20)
-    .select("-seller -__v"); // Exclude seller details and version key for the public feed
+    .limit(8)
+    .select("-seller -__v");
 
   return res
     .status(200)
     .json(new ApiResponse(200, products, "Latest products fetched successfully"));
+});
+
+// ─── @route  GET /api/v1/product/explore ─────────────────────────────────────
+// @access  Public
+const NEW_ARRIVALS_LIMIT = 8;
+
+export const getExploreProducts = asyncHandler(async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 8;
+
+  const skipCount = NEW_ARRIVALS_LIMIT + (page - 1) * limit;
+
+  const [products, totalProductsCount] = await Promise.all([
+    Product.find({})
+      .sort({ createdAt: -1 })
+      .skip(skipCount)
+      .limit(limit)
+      .select("-seller -__v"),
+    Product.countDocuments()
+  ]);
+
+  const remainingCount =
+    totalProductsCount > NEW_ARRIVALS_LIMIT
+      ? totalProductsCount - NEW_ARRIVALS_LIMIT
+      : 0;
+
+  const totalPages = Math.ceil(remainingCount / limit);
+
+  return res.status(200).json(
+    new ApiResponse(
+      200,
+      {
+        products,
+        pagination: {
+          page,
+          limit,
+          totalPages,
+          totalProducts: remainingCount,
+          hasNextPage: page < totalPages,
+        },
+      },
+      "Explore products fetched successfully"
+  )
+)});
+
+// ─── @route  GET /api/v1/product ─────────────────────────────────────────────
+// @access  Public
+// General product listing with support for filters (category, gender, search) and pagination
+export const getAllProducts = asyncHandler(async (req, res) => {
+  const { category, gender, search, page = 1, limit = 12 } = req.query;
+
+  const query = {};
+  
+  if (category) query.category = category;
+  if (gender) query.gender = gender;
+  if (search) {
+    query.title = { $regex: search, $options: "i" };
+  }
+
+  const pageNum = Math.max(1, parseInt(page) || 1);
+  const limitNum = Math.min(50, Math.max(1, parseInt(limit) || 12));
+  const skip = (pageNum - 1) * limitNum;
+
+  const [products, totalProducts] = await Promise.all([
+    Product.find(query)
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limitNum)
+      .select("-seller -__v"),
+    Product.countDocuments(query),
+  ]);
+
+  const totalPages = Math.ceil(totalProducts / limitNum);
+
+  return res.status(200).json(
+    new ApiResponse(
+      200,
+      {
+        products,
+        pagination: {
+          page: pageNum,
+          limit: limitNum,
+          totalPages,
+          totalProducts,
+          hasNextPage: pageNum < totalPages,
+        },
+      },
+      "Products fetched successfully"
+    )
+  );
 });

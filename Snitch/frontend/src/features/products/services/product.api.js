@@ -53,3 +53,10 @@ export const getLatestProducts = async () => {
   const response = await api.get("/product/latest");
   return response.data;
 };
+
+export const getExploreProducts = async (page = 1, limit = 8) => {
+  const response = await api.get("/product/explore", {
+    params: { page, limit },
+  });
+  return response.data;
+};

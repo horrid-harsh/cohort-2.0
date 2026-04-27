@@ -1,0 +1,111 @@
+@use "../../../styles/variables" as v;
+
+.container {
+  background: white;
+  min-height: 100vh;
+}
+
+.main {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 6rem 4rem 10rem;
+
+  @media (max-width: 768px) {
+    padding: 3rem 1.5rem 6rem;
+  }
+}
+
+.header {
+  margin-bottom: 6rem;
+  border-bottom: 1.5px solid v.$bone;
+  padding-bottom: 3rem;
+
+  h1 {
+    font-family: v.$font-display;
+    font-size: 4.5rem;
+    color: v.$smoky-black;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+
+    @media (max-width: 768px) {
+      font-size: 2.8rem;
+    }
+  }
+
+  p {
+    font-size: 1.1rem;
+    color: v.$olive-drab;
+    font-weight: 500;
+  }
+}
+
+.loader {
+  padding: 10rem 0;
+  display: flex;
+  justify-content: center;
+}
+
+.productGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4rem 2.5rem;
+
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem 1.2rem;
+  }
+}
+
+.productCard {
+  text-decoration: none;
+  display: block;
+
+  .imgWrapper {
+    aspect-ratio: 3/4;
+    overflow: hidden;
+    background: v.$floral-white;
+    margin-bottom: 1.5rem;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+  }
+
+  &:hover .imgWrapper img {
+    transform: scale(1.1);
+  }
+
+  .info {
+    h3 {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: v.$smoky-black;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+
+    .price {
+      font-size: 1rem;
+      font-weight: 800;
+      color: v.$smoky-black;
+    }
+  }
+}
+
+.empty {
+  text-align: center;
+  padding: 10rem 0;
+  color: v.$olive-drab;
+  font-weight: 500;
+  font-size: 1.2rem;
+}

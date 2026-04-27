@@ -143,16 +143,24 @@
   position: relative;
   overflow: hidden;
   cursor: pointer;
+  display: block; // Ensure Link fills space
+  text-decoration: none; // Remove Link underline
 
   img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  &:hover img {
-    transform: scale(1.08);
+  &:hover {
+    img {
+      transform: scale(1.08);
+    }
+
+    .tileLink {
+      text-decoration: underline;
+    }
   }
 }
 
@@ -194,17 +202,13 @@
     text-shadow: 0 2px 10px rgba(0,0,0,0.2);
   }
 
-  a {
+  .tileLink {
     color: white;
     text-decoration: none;
     font-size: 0.85rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.1rem;
-    
-    &:hover {
-      text-decoration: underline;
-    }
   }
 }
 
@@ -229,68 +233,99 @@
 
 .sectionHeader {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  margin-bottom: 3rem;
+  flex-direction: column; // Stack title and subtitle
+  align-items: flex-start;
+  margin-bottom: 4rem;
   border-bottom: 1.5px solid v.$bone;
-  padding-bottom: 1.5rem;
+  padding-bottom: 2rem;
 
   h2 {
     font-family: v.$font-display;
-    font-size: 2.2rem;
+    font-size: 2.8rem;
     color: v.$smoky-black;
     font-weight: 500;
     margin: 0;
+    letter-spacing: -0.02em;
   }
 
-  .viewAll {
-    font-size: 0.8rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    color: v.$smoky-black;
-    text-decoration: none;
-    letter-spacing: 0.1rem;
+  .sectionSubtitle {
+    font-size: 0.95rem;
+    color: v.$olive-drab;
+    margin-top: 0.8rem;
+    font-weight: 500;
   }
 }
 
-.productCarousel {
+.loaderContainer {
+  padding: 5rem 0;
+  display: flex;
+  justify-content: center;
+}
+
+.productGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 3rem 2rem;
+
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
 
   @media (max-width: 768px) {
     grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
+    gap: 2rem 1.2rem;
   }
+}
+
+.loadMoreContainer {
+  margin-top: 6rem;
+  display: flex;
+  justify-content: center;
+
+  button {
+    padding: 1.2rem 4rem !important;
+    font-size: 0.8rem !important;
+    letter-spacing: 0.2rem !important;
+  }
+}
+
+.noProducts {
+  text-align: center;
+  padding: 5rem 0;
+  color: v.$olive-drab;
+  font-weight: 500;
 }
 
 .productCard {
   cursor: pointer;
+  text-decoration: none; // Link styling
+  display: block;
 
   .imgWrapper {
     aspect-ratio: 3/4;
     overflow: hidden;
-    margin-bottom: 1.2rem;
+    margin-bottom: 1.5rem;
     background: v.$floral-white;
 
     img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.6s ease;
+      transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
   }
 
   &:hover img {
-    transform: scale(1.05);
+    transform: scale(1.1);
   }
 
   h3 {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     font-weight: 700;
     color: v.$smoky-black;
-    margin-bottom: 0.5rem;
-    text-transform: capitalize;
+    margin-bottom: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
   }
 
   .priceRow {
@@ -301,13 +336,13 @@
     .price {
       font-weight: 800;
       color: v.$smoky-black;
-      font-size: 0.95rem;
+      font-size: 1rem;
     }
 
     .oldPrice {
       color: v.$text-muted;
       text-decoration: line-through;
-      font-size: 0.8rem;
+      font-size: 0.85rem;
     }
   }
 }

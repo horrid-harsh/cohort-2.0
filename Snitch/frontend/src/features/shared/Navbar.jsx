@@ -15,16 +15,28 @@ const Navbar = ({ variant = 'default', dashboardAction }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  // Categories list for reuse
-  const categories = [
-    { name: "Shirts", path: "/category/shirts" },
-    { name: "T-Shirts", path: "/category/t-shirts" },
-    { name: "Jeans", path: "/category/jeans" },
-    { name: "Pants", path: "/category/pants" },
-    { name: "Men", path: "/category/men" },
-    { name: "Women", path: "/category/women" },
-    { name: "Accessories", path: "/category/accessories" },
+  // Focus navigation on gender-based categories
+  const genderCategories = [
+    { name: "Men", path: "/shop?gender=men" },
+    { name: "Women", path: "/shop?gender=women" },
+    { name: "Kids", path: "/shop?gender=kids" },
+    { name: "Unisex", path: "/shop?gender=unisex" },
   ];
+
+  // Specific product categories (primarily for sidebar/discovery)
+  const productCategories = [
+    { name: "Shirts", path: "/shop?category=shirts" },
+    { name: "T-Shirts", path: "/shop?category=t-shirts" },
+    { name: "Jeans", path: "/shop?category=jeans" },
+    { name: "Trousers", path: "/shop?category=trousers" },
+    { name: "Jackets", path: "/shop?category=jackets" },
+    { name: "Co-ords", path: "/shop?category=co-ords" },
+    { name: "Accessories", path: "/shop?category=accessories" },
+    { name: "Shorts", path: "/shop?category=shorts" },
+  ];
+
+  // Combined for sidebar
+  const allCategories = [...genderCategories, ...productCategories];
 
   return (
     <>
@@ -51,7 +63,7 @@ const Navbar = ({ variant = 'default', dashboardAction }) => {
 
           <div className={styles.sidebarSection}>
             <h3>Shop By Category</h3>
-            {categories.map((cat) => (
+            {allCategories.map((cat) => (
               <Link key={cat.name} to={cat.path} onClick={() => setIsSidebarOpen(false)}>
                 {cat.name}
               </Link>
@@ -153,8 +165,8 @@ const Navbar = ({ variant = 'default', dashboardAction }) => {
           <div className={styles.secondaryHeader}>
             <div className={styles.categoryNav}>
               <span className={styles.shopByLabel}>Shop By</span>
-              <ul>
-                {categories.slice(0, 6).map(cat => (
+              <ul className={styles.categoryList}>
+                {genderCategories.map(cat => (
                   <li key={cat.name}><Link to={cat.path}>{cat.name}</Link></li>
                 ))}
               </ul>

@@ -25,7 +25,7 @@ const AuthInitializer = ({ children }) => {
       } finally {
         setTimeout(() => {
           dispatch(setLoading(false));
-        }, 1000); // Small delay to appreciate the animation :)
+        }, 300); // Shorter delay for a snappier feel
       }
     };
 
