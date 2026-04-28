@@ -33,7 +33,6 @@ const ProductListing = () => {
     { label: "T-Shirts", value: "t-shirts" },
     { label: "Co-ords", value: "co-ords" },
     { label: "Shorts", value: "shorts" },
-    { label: "Accessories", value: "accessories" },
   ];
 
   // Determine title and active filters based on URL

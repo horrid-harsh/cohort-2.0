@@ -24,7 +24,6 @@ const productSchema = new mongoose.Schema(
         "t-shirts",
         "co-ords",
         "shorts",
-        "accessories",
       ],
       lowercase: true,
     },
@@ -43,6 +42,20 @@ const productSchema = new mongoose.Schema(
         fileId: { type: String, required: true },
       },
     ],
+    // ─── Grouping Variant Logic ──────────────────────────────────────────
+    groupId: {
+      type: String, // Can be a UUID or a unique string
+      required: true,
+      index: true,
+    },
+    attributes: {
+      type: mongoose.Schema.Types.Mixed,
+      default: {},
+    },
+    stock: {
+      type: Number,
+      default: 0,
+    }
   },
   { timestamps: true },
 );

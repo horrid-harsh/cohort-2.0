@@ -6,6 +6,7 @@ import {
   getExploreProducts,
   getAllProducts,
   getProductById,
+  deleteProduct,
 } from "../controllers/product.controller.js";
 import { authenticate, authorize } from "../middlewares/auth.middleware.js";
 import { upload } from "../middlewares/multer.middleware.js";
@@ -67,5 +68,17 @@ router.get(
  * @access public
  */
 router.get("/:productId", getProductById);
+
+/**
+ * @description Delete a product
+ * @route DELETE /api/v1/product/:productId
+ * @access private (seller only)
+ */
+router.delete(
+  "/:productId",
+  authenticate,
+  authorize("seller"),
+  deleteProduct
+);
 
 export default router;

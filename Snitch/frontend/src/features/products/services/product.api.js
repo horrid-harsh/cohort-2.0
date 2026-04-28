@@ -22,6 +22,18 @@ export const createProduct = async (productData) => {
     formData.append("tags", JSON.stringify([]));
   }
 
+  if (productData.groupId) {
+    formData.append("groupId", productData.groupId);
+  }
+
+  if (productData.stock) {
+    formData.append("stock", productData.stock);
+  }
+
+  if (productData.attributes) {
+    formData.append("attributes", productData.attributes);
+  }
+
   // Images — each file appended individually under the "images" key
   if (productData.images?.length) {
     productData.images.forEach((file) => {
@@ -58,5 +70,10 @@ export const getExploreProducts = async (page = 1, limit = 8) => {
   const response = await api.get("/product/explore", {
     params: { page, limit },
   });
+  return response.data;
+};
+
+export const deleteProduct = async (id) => {
+  const response = await api.delete(`/product/${id}`);
   return response.data;
 };

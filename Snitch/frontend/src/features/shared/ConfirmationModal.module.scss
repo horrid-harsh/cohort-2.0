@@ -1,0 +1,127 @@
+@use "../../styles/variables" as v;
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 1.5rem;
+}
+
+.backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+}
+
+.modalContent {
+  position: relative;
+  background: white;
+  width: 100%;
+  max-width: 440px;
+  padding: 2.5rem;
+  border-radius: 0; // Keeping it sharp for the Snitch aesthetic
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+  z-index: 1001;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+
+  h2 {
+    font-family: v.$font-display;
+    font-size: 1.8rem;
+    color: v.$smoky-black;
+    font-weight: 500;
+    margin: 0;
+  }
+
+  .closeIcon {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: v.$smoky-black;
+    cursor: pointer;
+    padding: 0.2rem 0.5rem;
+    line-height: 1;
+    opacity: 0.8;
+    transition: all 0.2s;
+    border-radius: 4px;
+
+    &:hover {
+      opacity: 1;
+      background: v.$bone;
+    }
+  }
+}
+
+.message {
+  color: v.$olive-drab;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  margin-bottom: 2.5rem;
+
+  .highlight {
+    font-weight: 800;
+    color: #b91c1c; // Dark red highlight
+    background-color: #fef2f2; // Subtle red background
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    display: inline-block;
+    margin: 0 0.2rem;
+  }
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+
+  @media (max-width: 400px) {
+    flex-direction: column;
+  }
+
+  button {
+    flex: 1; // Make both buttons equal width
+    min-height: 48px; // Ensure equal height
+    padding: 0 1rem !important;
+    font-size: 0.8rem !important;
+    letter-spacing: 0.08rem !important;
+  }
+
+  .cancelBtn {
+    border: 2px solid v.$bone !important;
+    color: v.$smoky-black !important;
+    font-weight: 600 !important;
+    background: transparent !important;
+    
+    &:hover {
+      background: v.$floral-white !important;
+      border-color: v.$olive-drab !important;
+    }
+  }
+
+  .confirmBtn {
+    background: #ef4444 !important; // Red for delete action
+    border: none !important;
+    color: white !important;
+    font-weight: 600 !important;
+
+    &:hover {
+      background: #dc2626 !important;
+      box-shadow: 0 10px 20px rgba(239, 68, 68, 0.2);
+    }
+  }
+}

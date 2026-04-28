@@ -3,6 +3,7 @@ import ApiError from "../utils/ApiError.js";
 import ApiResponse from "../utils/ApiResponse.js";
 import { uploadFile, deleteFile } from "../services/storage.service.js";
 import Product from "../models/product.model.js";
+import crypto from "crypto";
 
 // ─── Helper: rollback already-uploaded images if something fails ──────────────
 const rollbackUploads = async (uploadedImages) => {
@@ -15,8 +16,18 @@ const rollbackUploads = async (uploadedImages) => {
 // ─── @route  POST /api/v1/product ─────────────────────────────────────────────
 // @access  Private — seller only
 export const createProduct = asyncHandler(async (req, res) => {
-  const { title, description, priceAmount, priceCurrency, category, gender } =
-    req.body;
+  const { 
+    title, 
+    description, 
+    priceAmount, 
+    priceCurrency, 
+    category, 
+    gender, 
+    groupId, 
+    attributes, 
+    stock 
+  } = req.body;
+  
   const seller = req.user;
 
   if (!req.files || req.files.length === 0) {
@@ -44,6 +55,9 @@ export const createProduct = asyncHandler(async (req, res) => {
 
   let product;
   try {
+    // If no groupId provided, this is a new base product, generate a new groupId
+    const finalGroupId = groupId || crypto.randomUUID();
+
     product = await Product.create({
       title,
       description,
@@ -55,6 +69,9 @@ export const createProduct = asyncHandler(async (req, res) => {
       gender,
       images,
       seller: seller._id,
+      groupId: finalGroupId,
+      attributes: attributes ? JSON.parse(attributes) : {}, // attributes usually come as stringified JSON in multipart
+      stock: parseInt(stock) || 0,
     });
   } catch (error) {
     await rollbackUploads(images);
@@ -131,7 +148,6 @@ export const getExploreProducts = asyncHandler(async (req, res) => {
 
 // ─── @route  GET /api/v1/product ─────────────────────────────────────────────
 // @access  Public
-// General product listing with support for filters (category, gender, search) and pagination
 export const getAllProducts = asyncHandler(async (req, res) => {
   const { category, gender, search, page = 1, limit = 12 } = req.query;
 
@@ -190,7 +206,51 @@ export const getProductById = asyncHandler(async (req, res) => {
     throw new ApiError(404, "Product not found");
   }
 
+  // Fetch all variants (products with the same groupId)
+  const variants = await Product.find({
+    groupId: product.groupId,
+    _id: { $ne: product._id }
+  }).select("attributes price stock images");
+
   return res
     .status(200)
-    .json(new ApiResponse(200, product, "Product details fetched successfully"));
+    .json(new ApiResponse(
+      200, 
+      { ...product.toObject(), variants }, 
+      "Product details with variants fetched successfully"
+    ));
+});
+
+// ─── @route  DELETE /api/v1/product/:productId ───────────────────────────────
+// @access  Private — seller only (owner)
+export const deleteProduct = asyncHandler(async (req, res) => {
+  const { productId } = req.params;
+  const sellerId = req.user._id;
+
+  const product = await Product.findById(productId);
+
+  if (!product) {
+    throw new ApiError(404, "Product not found");
+  }
+
+  if (product.seller.toString() !== sellerId.toString()) {
+    throw new ApiError(403, "You do not have permission to delete this product");
+  }
+
+  const fileIdsToDelete = [];
+  if (product.images?.length) {
+    product.images.forEach(img => {
+      if (img.fileId) fileIdsToDelete.push(img.fileId);
+    });
+  }
+
+  if (fileIdsToDelete.length) {
+    await Promise.all(fileIdsToDelete.map(id => deleteFile(id)));
+  }
+
+  await product.deleteOne();
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, null, "Product deleted successfully"));
 });

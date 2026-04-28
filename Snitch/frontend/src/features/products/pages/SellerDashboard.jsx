@@ -4,9 +4,10 @@ import { useProducts } from "../hooks/useProducts";
 import CustomDropdown from "../components/CustomDropdown";
 import Button from "../../shared/Button";
 import Navbar from "../../shared/Navbar";
+import ConfirmationModal from "../../shared/ConfirmationModal";
 import styles from "./SellerDashboard.module.scss";
 
-const ProductActionMenu = ({ product, onEdit, onDelete }) => {
+const ProductActionMenu = ({ product, onEdit, onDelete, onAddVariant }) => {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef(null);
 
@@ -44,9 +45,18 @@ const ProductActionMenu = ({ product, onEdit, onDelete }) => {
             Edit Product
           </Button>
           <Button
+            variant="ghost"
+            onClick={() => {
+              onAddVariant(product);
+              setIsOpen(false);
+            }}
+          >
+            Add Variant
+          </Button>
+          <Button
             variant="danger"
             onClick={() => {
-              onDelete(product._id);
+              onDelete(product);
               setIsOpen(false);
             }}
           >
@@ -60,12 +70,21 @@ const ProductActionMenu = ({ product, onEdit, onDelete }) => {
 
 const SellerDashboard = () => {
   const navigate = useNavigate();
-  const { handleFetchSellerProducts, sellerProducts, isLoading, error } =
-    useProducts();
+  const { 
+    handleFetchSellerProducts, 
+    handleDeleteProduct,
+    sellerProducts, 
+    isLoading, 
+    error 
+  } = useProducts();
 
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedGender, setSelectedGender] = useState("all");
+  
+  // Modal State
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [productToDelete, setProductToDelete] = useState(null);
 
   useEffect(() => {
     handleFetchSellerProducts();
@@ -92,7 +111,6 @@ const SellerDashboard = () => {
     { label: "T-Shirts", value: "t-shirts" },
     { label: "Co-ords", value: "co-ords" },
     { label: "Shorts", value: "shorts" },
-    { label: "Accessories", value: "accessories" },
   ];
 
   const genderOptions = [
@@ -111,11 +129,36 @@ const SellerDashboard = () => {
   const handleEdit = (product) => {
     navigate(`/seller/edit-product/${product._id}`);
   };
+  
+  const handleAddVariant = (product) => {
+    navigate("/seller/add-product", { 
+      state: { 
+        groupId: product.groupId,
+        baseProduct: {
+          title: product.title,
+          description: product.description,
+          category: product.category,
+          gender: product.gender,
+          tags: product.tags?.join(", ") || ""
+        }
+      } 
+    });
+  };
 
-  const handleDelete = (id) => {
-    if (window.confirm("Are you sure you want to remove this item?")) {
-      // Logic for delete will go here in next steps
-      console.log("Deleting product:", id);
+  const initiateDelete = (product) => {
+    setProductToDelete(product);
+    setIsModalOpen(true);
+  };
+
+  const confirmDelete = async () => {
+    if (productToDelete) {
+      try {
+        await handleDeleteProduct(productToDelete._id);
+        setIsModalOpen(false);
+        setProductToDelete(null);
+      } catch (err) {
+        console.error("Delete failed:", err);
+      }
     }
   };
 
@@ -232,7 +275,8 @@ const SellerDashboard = () => {
                         <ProductActionMenu
                           product={product}
                           onEdit={handleEdit}
-                          onDelete={handleDelete}
+                          onDelete={initiateDelete}
+                          onAddVariant={handleAddVariant}
                         />
                       </div>
 
@@ -265,6 +309,35 @@ const SellerDashboard = () => {
           )}
         </section>
       </main>
+
+      <ConfirmationModal
+        isOpen={isModalOpen}
+        title="Remove Product"
+        message={
+          <>
+            Are you sure you want to remove{" "}
+            <span style={{
+              fontWeight: 800,
+              color: "#b91c1c",
+              backgroundColor: "#fef2f2",
+              padding: "0.2rem 0.4rem",
+              borderRadius: "4px",
+              display: "inline-block",
+              margin: "0 0.2rem"
+            }}>
+              '{productToDelete?.title}'
+            </span>
+            ? This will permanently delete the product and its associated images from our system.
+          </>
+        }
+        onConfirm={confirmDelete}
+        onCancel={() => {
+          setIsModalOpen(false);
+          setProductToDelete(null);
+        }}
+        confirmText="Delete Product"
+        isLoading={isLoading}
+      />
     </div>
   );
 };

@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { Link } from "react-router";
 import AuthLayout from "../components/AuthLayout";
 import { useAuth } from "../hooks/useAuth";
-import authImage from "../../../assets/auth-modal.png";
+import authImage from "../../../assets/auth-model.avif";
 import styles from "./Login.module.scss"; // Reusing Login styles for consistent form look
 
 const ForgotPassword = () => {

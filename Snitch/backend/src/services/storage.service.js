@@ -22,10 +22,11 @@ export const uploadFile = async (fileBuffer, fileName, folder = "snitch") => {
 
 export const deleteFile = async (fileId) => {
   try {
-    return await client.deleteFile(fileId);
+    const res = await client.files.delete(fileId);
+    return res;
   } catch (error) {
-    console.error("ImageKit Delete Error:", error.message);
-    // Don't throw here, as this is usually called during rollbacks
+    console.error("ImageKit Delete Error:", error.message, fileId);
+    throw error;
   }
 };
 

@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { Link, useLocation } from "react-router";
 import AuthLayout from "../components/AuthLayout";
 import { useAuth } from "../hooks/useAuth";
-import authImage from "../../../assets/auth-modal.png";
+import authImage from "../../../assets/auth-model.avif";
 import styles from "./Login.module.scss";
 import Button from "../../shared/Button";
 import { GoogleIcon, EyeIcon, EyeOffIcon } from "../components/AuthIcons";

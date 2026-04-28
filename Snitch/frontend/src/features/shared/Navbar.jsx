@@ -31,7 +31,6 @@ const Navbar = ({ variant = 'default', dashboardAction }) => {
     { name: "Trousers", path: "/shop?category=trousers" },
     { name: "Jackets", path: "/shop?category=jackets" },
     { name: "Co-ords", path: "/shop?category=co-ords" },
-    { name: "Accessories", path: "/shop?category=accessories" },
     { name: "Shorts", path: "/shop?category=shorts" },
   ];
 

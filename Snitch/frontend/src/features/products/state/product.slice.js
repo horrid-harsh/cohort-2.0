@@ -66,6 +66,12 @@ const productSlice = createSlice({
       state.products = [action.payload, ...state.products];
       state.sellerProducts = [action.payload, ...state.sellerProducts];
     },
+    removeProductFromState: (state, action) => {
+      state.products = state.products.filter(p => p._id !== action.payload);
+      state.sellerProducts = state.sellerProducts.filter(p => p._id !== action.payload);
+      state.exploreProducts = state.exploreProducts.filter(p => p._id !== action.payload);
+      state.listingProducts = state.listingProducts.filter(p => p._id !== action.payload);
+    },
     clearProductError: (state) => {
       state.error = null;
     },
@@ -81,6 +87,7 @@ export const {
   setLoading,
   setError,
   addProductToState,
+  removeProductFromState,
   clearProductError,
   setListingProducts,
   appendListingProducts,

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useLocation, Link } from "react-router";
 import AuthLayout from "../components/AuthLayout";
 import { useAuth } from "../hooks/useAuth";
-import authImage from "../../../assets/auth-modal.png";
+import authImage from "../../../assets/auth-model.avif";
 import styles from "./AuthFeedback.module.scss";
 
 const MailIcon = () => (

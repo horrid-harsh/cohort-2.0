@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router";
+import { useParams, Link, useNavigate } from "react-router";
 import { useProducts } from "../hooks/useProducts";
 import Navbar from "../../shared/Navbar";
 import Footer from "../../shared/Footer";
@@ -9,11 +9,12 @@ import { ChevronLeft, ChevronRight, ChevronDown } from "lucide-react";
 
 const ProductDetails = () => {
   const { productId } = useParams();
+  const navigate = useNavigate();
   const { handleFetchProductById, currentProduct, isLoading, error } = useProducts();
   
   const [activeImageIdx, setActiveImageIdx] = useState(0);
-  const [selectedSize, setSelectedSize] = useState("M");
   const [openAccordion, setOpenAccordion] = useState(null);
+  const [selectedSize, setSelectedSize] = useState("");
 
   useEffect(() => {
     if (productId) {
@@ -21,10 +22,21 @@ const ProductDetails = () => {
     }
   }, [productId, handleFetchProductById]);
 
-  // Reset active image when product changes
   useEffect(() => {
     setActiveImageIdx(0);
   }, [currentProduct]);
+
+  const currentAttributes = currentProduct?.attributes || {};
+  const availableSizes = Array.isArray(currentAttributes.sizes) 
+    ? currentAttributes.sizes 
+    : (currentAttributes.size ? [currentAttributes.size] : []);
+
+  // Set default selected size when sizes load
+  useEffect(() => {
+    if (availableSizes.length > 0 && !selectedSize) {
+      setSelectedSize(availableSizes[0]);
+    }
+  }, [availableSizes, selectedSize]);
 
   if (isLoading) {
     return (
@@ -45,7 +57,29 @@ const ProductDetails = () => {
   }
 
   const images = currentProduct.images || [];
-  const sizes = ["S", "M", "L", "XL"];
+  
+  // Combine current product and variants into one list
+  const allVariants = [
+    { 
+      _id: currentProduct._id, 
+      attributes: currentProduct.attributes || {}, 
+      price: currentProduct.price,
+      images: currentProduct.images 
+    },
+    ...(currentProduct.variants || [])
+  ].map(v => ({
+    ...v,
+    attributes: v.attributes || {}
+  }));
+
+  // 1. Logic for "VARIANTS" images: 
+  // We want to show unique products in the group as images (max 6).
+  // The user wants to see EVERY variant as an image.
+  const displayVariants = allVariants.slice(0, 6);
+
+  // 2. Logic for "SELECT SIZE":
+  // We read the sizes array directly from the current product's attributes.
+  // We use local state to track the user's selected size.
 
   const handlePrev = () => {
     setActiveImageIdx((prev) => (prev === 0 ? images.length - 1 : prev - 1));
@@ -59,17 +93,21 @@ const ProductDetails = () => {
     setOpenAccordion(openAccordion === id ? null : id);
   };
 
+  const handleVariantSwitch = (targetId) => {
+    if (targetId !== currentProduct._id) {
+      navigate(`/product/${targetId}`);
+    }
+  };
+
   return (
     <div className={styles.productPage}>
       <Navbar />
       <div className={styles.pageContainer}>
-        {/* Breadcrumbs */}
         <nav className={styles.breadcrumbs}>
           <Link to="/">HOME</Link> / <Link to="/shop">COLLECTIONS</Link> / <span>{currentProduct.title?.toUpperCase()}</span>
         </nav>
 
         <div className={styles.productLayout}>
-          {/* Left: Thumbnails */}
           <div className={styles.thumbnailColumn}>
             {images.map((img, idx) => (
               <div 
@@ -82,7 +120,6 @@ const ProductDetails = () => {
             ))}
           </div>
 
-          {/* Center: Main Image */}
           <div className={styles.mainImageColumn}>
             <div className={styles.imageViewer}>
               <AnimatePresence mode="wait">
@@ -106,7 +143,6 @@ const ProductDetails = () => {
             </div>
           </div>
 
-          {/* Right: Info */}
           <div className={styles.infoColumn}>
             <div className={styles.stickyContent}>
               <p className={styles.editionTag}>EDITION 01</p>
@@ -119,18 +155,43 @@ const ProductDetails = () => {
 
               <p className={styles.description}>{currentProduct.description}</p>
 
+              {/* Variants Section (Images) */}
+              {displayVariants.length > 1 && (
+                <div className={styles.variantSelector}>
+                  <p className={styles.sectionLabel}>VARIANTS</p>
+                  <div className={styles.colorGrid}>
+                    {displayVariants.map((v) => (
+                      <button
+                        key={v._id}
+                        className={`${styles.colorBtn} ${currentProduct._id === v._id || (v.attributes.color && v.attributes.color === currentAttributes.color) ? styles.activeColor : ""}`}
+                        onClick={() => handleVariantSwitch(v._id)}
+                      >
+                        <img src={v.images?.[0]?.url} alt="Variant" />
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Size Selector */}
               <div className={styles.sizeSelector}>
                 <p className={styles.sectionLabel}>SELECT SIZE</p>
                 <div className={styles.sizeGrid}>
-                  {sizes.map((size) => (
-                    <button
-                      key={size}
-                      className={`${styles.sizeBtn} ${selectedSize === size ? styles.activeSize : ""}`}
-                      onClick={() => setSelectedSize(size)}
-                    >
-                      {size}
+                  {availableSizes.length > 0 ? (
+                    availableSizes.map((sizeOption) => (
+                      <button
+                        key={sizeOption}
+                        className={`${styles.sizeBtn} ${selectedSize === sizeOption ? styles.activeSize : ""}`}
+                        onClick={() => setSelectedSize(sizeOption)}
+                      >
+                        {sizeOption}
+                      </button>
+                    ))
+                  ) : (
+                    <button className={`${styles.sizeBtn} ${styles.activeSize}`} disabled>
+                      ONE SIZE
                     </button>
-                  ))}
+                  )}
                 </div>
               </div>
 
@@ -152,7 +213,7 @@ const ProductDetails = () => {
                         exit={{ height: 0, opacity: 0 }}
                         className={styles.accordionContent}
                       >
-                        <p>100% Pure Linen. Dry clean only. Iron at medium temperature.</p>
+                        <p>100% Cotton / Premium Blend. Machine wash cold. Tumble dry low.</p>
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -170,7 +231,7 @@ const ProductDetails = () => {
                         exit={{ height: 0, opacity: 0 }}
                         className={styles.accordionContent}
                       >
-                        <p>Free standard shipping on orders over INR 2,000. Returns accepted within 15 days.</p>
+                        <p>Standard delivery in 3-5 business days. Free returns within 7 days.</p>
                       </motion.div>
                     )}
                   </AnimatePresence>

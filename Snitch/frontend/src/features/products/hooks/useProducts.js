@@ -8,7 +8,8 @@ import {
   getLatestProducts, 
   getExploreProducts,
   getAllProducts,
-  getProductById
+  getProductById,
+  deleteProduct
 } from "../services/product.api";
 import {
   setProducts,
@@ -18,6 +19,7 @@ import {
   setLoading,
   setError,
   addProductToState,
+  removeProductFromState,
   clearProductError,
   selectExploreProducts,
   selectExplorePagination,
@@ -51,14 +53,35 @@ export const useProducts = () => {
       toast.success("Product listed successfully!");
       return response;
     } catch (err) {
-      // ✅ Preserve full error object so callers can access err.errors for RHF
-      const errMsg =
-        err?.message || err?.data?.message || "Failed to create product";
-      dispatch(setError(errMsg));
-      toast.error(errMsg);
-      throw err; // re-throw so page-level catch can handle navigation guard
+      const status = err?.response?.status || err?.status;
+      const errorData = err?.response?.data || err?.data;
+      const errMsg = errorData?.message || err?.message || "Failed to create product";
+      
+      // Only show global toast/error if it's NOT a validation error (422)
+      if (status !== 422) {
+        dispatch(setError(errMsg));
+        toast.error(errMsg);
+      }
+      
+      throw err;
     } finally {
       // ✅ Always reset loading — even on failure
+      dispatch(setLoading(false));
+    }
+  };
+
+  // ─── Delete product ────────────────────────────────────────────────
+  const handleDeleteProduct = async (id) => {
+    dispatch(setLoading(true));
+    try {
+      await deleteProduct(id);
+      dispatch(removeProductFromState(id));
+      toast.success("Product removed from inventory.");
+    } catch (err) {
+      const errMsg = err?.response?.data?.message || err?.message || "Failed to delete product";
+      toast.error(errMsg);
+      throw err;
+    } finally {
       dispatch(setLoading(false));
     }
   };
@@ -164,6 +187,7 @@ export const useProducts = () => {
 
   return {
     handleCreateProduct,
+    handleDeleteProduct,
     handleFetchSellerProducts,
     handleFetchLatestProducts,
     handleFetchExploreProducts,

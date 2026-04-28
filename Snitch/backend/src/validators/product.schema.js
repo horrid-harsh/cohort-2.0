@@ -6,7 +6,7 @@ export const createProductSchema = z.object({
     .trim()
     .min(3, "Title must be at least 3 characters")
     .max(100, "Title cannot exceed 100 characters")
-    .regex(/^[a-zA-Z0-9\s\-.,']+$/, "Title contains invalid characters")
+    .regex(/^[a-zA-Z0-9\s\-.,':&()\/!]+$/, "Title contains invalid characters")
     .refine((val) => /[a-zA-Z]/.test(val), {
       message: "Title must contain at least one letter",
     })
@@ -43,12 +43,17 @@ export const createProductSchema = z.object({
       "t-shirts",
       "co-ords",
       "shorts",
-      "accessories",
     ],
     { required_error: "Category is required" },
   ),
 
-  gender: z.enum(["men", "women", "unisex"], {
+  gender: z.enum(["men", "women", "kids", "unisex"], {
     required_error: "Gender is required",
   }),
+
+  groupId: z.string().optional(),
+
+  stock: z.coerce.number().optional().default(0),
+
+  attributes: z.string().optional(), // Received as stringified JSON in multipart
 });
