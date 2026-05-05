@@ -6,6 +6,7 @@ import Footer from "../../shared/Footer";
 import styles from "./ProductDetails.module.scss";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, ChevronDown } from "lucide-react";
+import ImageZoomModal from "../components/ImageZoomModal";
 
 const ProductDetails = () => {
   const { productId } = useParams();
@@ -15,6 +16,7 @@ const ProductDetails = () => {
   const [activeImageIdx, setActiveImageIdx] = useState(0);
   const [openAccordion, setOpenAccordion] = useState(null);
   const [selectedSize, setSelectedSize] = useState("");
+  const [isZoomModalOpen, setIsZoomModalOpen] = useState(false);
 
   useEffect(() => {
     if (productId) {
@@ -121,7 +123,14 @@ const ProductDetails = () => {
           </div>
 
           <div className={styles.mainImageColumn}>
-            <div className={styles.imageViewer}>
+            <div 
+              className={styles.imageViewer}
+              onClick={() => {
+                if (window.innerWidth >= 768) {
+                  setIsZoomModalOpen(true);
+                }
+              }}
+            >
               <AnimatePresence mode="wait">
                 <motion.img
                   key={activeImageIdx}
@@ -134,10 +143,22 @@ const ProductDetails = () => {
                 />
               </AnimatePresence>
               
-              <button className={`${styles.navBtn} ${styles.prev}`} onClick={handlePrev}>
+              <button 
+                className={`${styles.navBtn} ${styles.prev}`} 
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handlePrev();
+                }}
+              >
                 <ChevronLeft />
               </button>
-              <button className={`${styles.navBtn} ${styles.next}`} onClick={handleNext}>
+              <button 
+                className={`${styles.navBtn} ${styles.next}`} 
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleNext();
+                }}
+              >
                 <ChevronRight />
               </button>
             </div>
@@ -241,6 +262,12 @@ const ProductDetails = () => {
           </div>
         </div>
       </div>
+      <ImageZoomModal
+        isOpen={isZoomModalOpen}
+        onClose={() => setIsZoomModalOpen(false)}
+        images={images}
+        initialIdx={activeImageIdx}
+      />
       <Footer />
     </div>
   );
