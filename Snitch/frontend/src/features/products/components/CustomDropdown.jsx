@@ -1,9 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
 import styles from "./CustomDropdown.module.scss";
 
-const CustomDropdown = ({ label, options, value, onChange, name }) => {
+const CustomDropdown = ({ label, options, value, onChange, name, variant }) => {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef(null);
+
+  const isCompact = variant === "compact";
 
   // Close on outside click
   useEffect(() => {
@@ -35,13 +37,13 @@ const CustomDropdown = ({ label, options, value, onChange, name }) => {
 
   return (
     <div
-      className={`${styles.dropdown} ${isOpen ? styles.isOpen : ""}`}
+      className={`${styles.dropdown} ${isOpen ? styles.isOpen : ""} ${isCompact ? styles.compact : ""}`}
       ref={containerRef}
     >
       {/* ── Trigger: button instead of checkbox label ── */}
       <button
         type="button"
-        className={`${styles.trigger} ${isOpen ? styles.triggerOpen : ""}`}
+        className={`${styles.trigger} ${isOpen ? styles.triggerOpen : ""} ${isCompact ? styles.triggerCompact : ""}`}
         onClick={() => setIsOpen((prev) => !prev)}
         aria-haspopup="listbox"
         aria-expanded={isOpen}
@@ -52,7 +54,7 @@ const CustomDropdown = ({ label, options, value, onChange, name }) => {
 
       {/* ── Options list ── */}
       <ul
-        className={`${styles.list} ${styles.webkitScrollbar} ${isOpen ? styles.listOpen : ""}`}
+        className={`${styles.list} ${styles.webkitScrollbar} ${isOpen ? styles.listOpen : ""} ${isCompact ? styles.listCompact : ""}`}
         role="listbox"
         aria-label={name}
       >

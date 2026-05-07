@@ -1,26 +1,38 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router";
 import { useProducts } from "../hooks/useProducts";
+import { useCart } from "../../cart/hooks/useCart";
+import toast from "react-hot-toast";
 import Navbar from "../../shared/Navbar";
 import Footer from "../../shared/Footer";
 import styles from "./ProductDetails.module.scss";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, ChevronDown } from "lucide-react";
 import ImageZoomModal from "../components/ImageZoomModal";
+import CustomDropdown from "../components/CustomDropdown";
 
 const ProductDetails = () => {
   const { productId } = useParams();
   const navigate = useNavigate();
   const { handleFetchProductById, currentProduct, isLoading, error } = useProducts();
+  const { handleAddCart, cartItems } = useCart();
   
   const [activeImageIdx, setActiveImageIdx] = useState(0);
   const [openAccordion, setOpenAccordion] = useState(null);
   const [selectedSize, setSelectedSize] = useState("");
+  const [selectedQuantity, setSelectedQuantity] = useState(1);
   const [isZoomModalOpen, setIsZoomModalOpen] = useState(false);
+
+  // Check if current item + size is already in cart
+  const isInCart = cartItems.some(
+    (item) => (item.product.id || item.product).toString() === productId && item.size === selectedSize
+  );
 
   useEffect(() => {
     if (productId) {
       handleFetchProductById(productId);
+      setSelectedSize(""); // Reset size on product change
+      setSelectedQuantity(1); // Reset quantity on product change
     }
   }, [productId, handleFetchProductById]);
 
@@ -32,13 +44,6 @@ const ProductDetails = () => {
   const availableSizes = Array.isArray(currentAttributes.sizes) 
     ? currentAttributes.sizes 
     : (currentAttributes.size ? [currentAttributes.size] : []);
-
-  // Set default selected size when sizes load
-  useEffect(() => {
-    if (availableSizes.length > 0 && !selectedSize) {
-      setSelectedSize(availableSizes[0]);
-    }
-  }, [availableSizes, selectedSize]);
 
   if (isLoading) {
     return (
@@ -63,7 +68,7 @@ const ProductDetails = () => {
   // Combine current product and variants into one list
   const allVariants = [
     { 
-      _id: currentProduct._id, 
+      id: currentProduct.id, 
       attributes: currentProduct.attributes || {}, 
       price: currentProduct.price,
       images: currentProduct.images 
@@ -96,8 +101,30 @@ const ProductDetails = () => {
   };
 
   const handleVariantSwitch = (targetId) => {
-    if (targetId !== currentProduct._id) {
+    if (targetId !== currentProduct.id) {
       navigate(`/product/${targetId}`);
+    }
+  };
+
+  const onAddToCart = async () => {
+    if (!selectedSize) {
+      toast.error("Please select a size first.");
+      return;
+    }
+
+    if (isInCart) {
+        navigate('/cart');
+        return;
+    }
+
+    const result = await handleAddCart(currentProduct.id, selectedSize, selectedQuantity);
+    
+    if (result.success) {
+      toast.success("Added to bag!");
+      return { success: true };
+    } else {
+      toast.error(result.message || "Failed to add to bag");
+      return { success: false };
     }
   };
 
@@ -183,9 +210,9 @@ const ProductDetails = () => {
                   <div className={styles.colorGrid}>
                     {displayVariants.map((v) => (
                       <button
-                        key={v._id}
-                        className={`${styles.colorBtn} ${currentProduct._id === v._id || (v.attributes.color && v.attributes.color === currentAttributes.color) ? styles.activeColor : ""}`}
-                        onClick={() => handleVariantSwitch(v._id)}
+                        key={v.id}
+                        className={`${styles.colorBtn} ${currentProduct.id === v.id || (v.attributes.color && v.attributes.color === currentAttributes.color) ? styles.activeColor : ""}`}
+                        onClick={() => handleVariantSwitch(v.id)}
                       >
                         <img src={v.images?.[0]?.url} alt="Variant" />
                       </button>
@@ -216,9 +243,40 @@ const ProductDetails = () => {
                 </div>
               </div>
 
+              {/* Quantity Selector */}
+              <div className={styles.quantitySelector}>
+                <p className={styles.sectionLabel}>SELECT QUANTITY</p>
+                <div style={{ width: '100px' }}>
+                  <CustomDropdown
+                    name="quantity"
+                    value={selectedQuantity}
+                    options={[...Array(10)].map((_, i) => ({ label: (i + 1).toString(), value: i + 1 }))}
+                    onChange={(e) => setSelectedQuantity(Number(e.target.value))}
+                    variant="compact"
+                  />
+                </div>
+              </div>
+
               <div className={styles.actions}>
-                <button className={styles.addToCart}>ADD TO CART</button>
-                <button className={styles.buyNow}>BUY NOW</button>
+                <button 
+                  className={`${styles.addToCart} ${isInCart ? styles.goTocart : ""}`} 
+                  onClick={onAddToCart}
+                >
+                  {isInCart ? "GO TO BAG" : "ADD TO BAG"}
+                </button>
+                <button 
+                  className={styles.buyNow}
+                  onClick={async () => {
+                    if (isInCart) {
+                        navigate('/cart');
+                    } else {
+                        const res = await onAddToCart();
+                        if (res?.success) navigate('/cart');
+                    }
+                  }}
+                >
+                  BUY NOW
+                </button>
               </div>
 
               <div className={styles.accordions}>

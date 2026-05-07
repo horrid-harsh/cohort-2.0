@@ -6,12 +6,15 @@
   transition: all 300ms;
   display: flex;
   flex-direction: column;
-  min-height: 50px;
-  min-height: 50px;
-  background-color: white; // Pure white for popping contrast
+  background-color: white; 
   position: relative;
   width: 100%;
   z-index: 10;
+
+  &.compact {
+    min-height: unset;
+    border: 1px solid #e0e0e0;
+  }
 
   // ── Open state or focus-within ──────────────────────────────────────
   &:focus-within,
@@ -69,6 +72,18 @@
   }
 }
 
+.triggerCompact {
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  
+  &::after {
+    font-size: 18px;
+    width: 14px;
+    height: 14px;
+  }
+}
+
 // ── Open trigger state (was: .input:checked + .trigger) ──────────────────────
 .triggerOpen {
   background-color: rgba(0, 0, 0, 0.02);
@@ -104,6 +119,19 @@
   height: 0;
   pointer-events: none;
   transform: translateY(-10px);
+
+  &.listCompact {
+    max-height: unset;
+    overflow-y: hidden;
+    padding: 0;
+    margin-top: 2px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+    .listItem {
+      padding: 6px 12px;
+      font-size: 12px;
+    }
+  }
 }
 
 // ── Open list state (was: .input:checked ~ .list) ────────────────────────────

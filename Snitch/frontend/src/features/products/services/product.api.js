@@ -1,4 +1,4 @@
-import api from "../../../lib/axios";
+import axiosInstance from "../../../lib/axios";
 
 export const createProduct = async (productData) => {
   const formData = new FormData();
@@ -42,38 +42,38 @@ export const createProduct = async (productData) => {
   }
 
   // ✅ Don't set Content-Type manually — axios sets it with the correct boundary
-  const response = await api.post("/product", formData);
+  const response = await axiosInstance.post("/product", formData);
   return response.data;
 };
 
 export const getSellerProducts = async () => {
-  const response = await api.get("/product/seller");
+  const response = await axiosInstance.get("/product/seller");
   return response.data;
 };
 
 export const getAllProducts = async (params = {}) => {
-  const response = await api.get("/product", { params });
+  const response = await axiosInstance.get("/product", { params });
   return response.data;
 };
 
 export const getProductById = async (id) => {
-  const response = await api.get(`/product/${id}`);
+  const response = await axiosInstance.get(`/product/${id}`);
   return response.data;
 };
 
 export const getLatestProducts = async () => {
-  const response = await api.get("/product/latest");
+  const response = await axiosInstance.get("/product/latest");
   return response.data;
 };
 
 export const getExploreProducts = async (page = 1, limit = 8) => {
-  const response = await api.get("/product/explore", {
+  const response = await axiosInstance.get("/product/explore", {
     params: { page, limit },
   });
   return response.data;
 };
 
 export const deleteProduct = async (id) => {
-  const response = await api.delete(`/product/${id}`);
+  const response = await axiosInstance.delete(`/product/${id}`);
   return response.data;
 };

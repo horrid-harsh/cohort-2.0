@@ -109,7 +109,39 @@ const userSchema = new mongoose.Schema(
       },
     },
   },
-  { timestamps: true }
+  { 
+    timestamps: true,
+    toJSON: {
+      transform: function (doc, ret) {
+        delete ret.__v;
+        delete ret.password;
+        delete ret.refreshToken;
+        delete ret.resetPasswordToken;
+        delete ret.resetPasswordTokenExpires;
+        delete ret.verificationToken;
+        delete ret.verificationTokenExpires;
+        delete ret.googleId;
+        ret.id = ret._id;
+        delete ret._id;
+        return ret;
+      },
+    },
+    toObject: {
+      transform: function (doc, ret) {
+        delete ret.__v;
+        delete ret.password;
+        delete ret.refreshToken;
+        delete ret.resetPasswordToken;
+        delete ret.resetPasswordTokenExpires;
+        delete ret.verificationToken;
+        delete ret.verificationTokenExpires;
+        delete ret.googleId;
+        ret.id = ret._id;
+        delete ret._id;
+        return ret;
+      },
+    },
+  }
 );
 
 // ─── Indexes ──────────────────────────────────────────────────────────
@@ -132,7 +164,7 @@ userSchema.methods.generateAccessToken = function () {
   return jwt.sign(
     { _id: this._id, email: this.email, role: this.role },
     config.ACCESS_TOKEN_SECRET,
-    { expiresIn: "15m" }
+    { expiresIn: config.ACCESS_TOKEN_EXPIRY }
   );
 };
 
@@ -140,7 +172,7 @@ userSchema.methods.generateRefreshToken = function () {
   return jwt.sign(
     { _id: this._id },
     config.REFRESH_TOKEN_SECRET,
-    { expiresIn: "7d" }
+    { expiresIn: config.REFRESH_TOKEN_EXPIRY }
   );
 };
 

@@ -293,6 +293,10 @@
 }
 
 .sizeSelector {
+  margin-bottom: 2rem;
+}
+
+.quantitySelector {
   margin-bottom: 2.5rem;
 }
 
@@ -367,6 +371,13 @@
 
     &:hover {
       background: #222;
+    }
+  }
+
+  .goTocart {
+    background: #5b7c99; // A premium blue/gray shade consistent with the theme
+    &:hover {
+      background: #4a667e;
     }
   }
 

@@ -59,3 +59,30 @@ export const authorize = (...roles) =>
     }
     next();
 });
+
+/**
+ * Optional Authenticate: populates req.user if token is present, else continues
+ */
+export const optionalAuthenticate = asyncHandler(async (req, res, next) => {
+    const authHeader = req.headers?.authorization;
+    const token =
+        req.cookies?.accessToken ||
+        (authHeader && authHeader.startsWith("Bearer ")
+            ? authHeader.split(" ")[1]
+            : null);
+
+    if (!token) return next();
+
+    try {
+        const decoded = jwt.verify(token, config.ACCESS_TOKEN_SECRET);
+        if (decoded?._id) {
+            const user = await User.findById(decoded._id).select("-password -refreshToken");
+            if (user && user.isActive) {
+                req.user = user;
+            }
+        }
+    } catch (err) {
+        req.user = null;
+    }
+    next();
+});

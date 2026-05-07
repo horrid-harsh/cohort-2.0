@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { useSelector } from 'react-redux';
-import { selectUser, selectIsAuthenticated } from '../auth/state/auth.slice';
+import { selectUser, selectIsAuthenticated, selectAuthLoading } from '../auth/state/auth.slice';
 import { useAuth } from '../auth/hooks/useAuth';
+import { useCart } from '../cart/hooks/useCart';
 import styles from './Navbar.module.scss';
 import Button from './Button';
 
 const Navbar = ({ variant = 'default', dashboardAction }) => {
   const user = useSelector(selectUser);
   const isAuthenticated = useSelector(selectIsAuthenticated);
+  const isAuthLoading = useSelector(selectAuthLoading);
   const { handleLogout } = useAuth();
+  const { itemCount } = useCart();
   const navigate = useNavigate();
   
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -117,7 +120,9 @@ const Navbar = ({ variant = 'default', dashboardAction }) => {
               </div>
             ) : (
               <>
-                {isAuthenticated ? (
+                {isAuthLoading ? (
+                  <div style={{ width: '60px' }}></div>
+                ) : isAuthenticated ? (
                   <div 
                     className={styles.userProfile}
                     onMouseEnter={() => setIsDropdownOpen(true)}
@@ -147,14 +152,14 @@ const Navbar = ({ variant = 'default', dashboardAction }) => {
                   <Link to="/login" className={styles.loginLink}>Login</Link>
                 )}
                 
-                <div className={styles.cartIcon}>
+                <Link to="/cart" className={styles.cartIcon}>
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
                     <line x1="3" y1="6" x2="21" y2="6"></line>
                     <path d="M16 10a4 4 0 0 1-8 0"></path>
                   </svg>
-                  <span className={styles.badge}>0</span>
-                </div>
+                  {itemCount > 0 && <span className={styles.badge}>{itemCount}</span>}
+                </Link>
               </>
             )}
           </div>

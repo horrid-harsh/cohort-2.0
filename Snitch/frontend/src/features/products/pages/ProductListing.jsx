@@ -131,7 +131,7 @@ const ProductListing = () => {
           <>
             <div className={styles.productGrid}>
               {listingProducts.map((product) => (
-                <Link to={`/product/${product._id}`} key={product._id} className={styles.productCard}>
+                <Link to={`/product/${product.id}`} key={product.id} className={styles.productCard}>
                   <div className={styles.imgWrapper}>
                     <img src={product.images[0]?.url} alt={product.title} />
                   </div>

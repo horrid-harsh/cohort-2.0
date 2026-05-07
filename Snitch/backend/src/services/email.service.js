@@ -2,7 +2,9 @@ import nodemailer from "nodemailer";
 import config from "../config/config.js";
 
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  host: config.EMAIL_HOST,
+  port: config.EMAIL_PORT,
+  secure: config.EMAIL_SECURE,
   auth: {
     user: config.EMAIL_USER,
     pass: config.EMAIL_PASS,
@@ -16,7 +18,7 @@ export const sendVerificationEmail = async (email, name, token) => {
   const verificationUrl = `${config.CLIENT_URL}/verify-email?token=${token}`;
   
   const mailOptions = {
-    from: `"Snitch Support" <${config.EMAIL_USER}>`,
+    from: config.EMAIL_FROM,
     to: email,
     subject: "Verify Your Email - Snitch",
     html: `
@@ -34,7 +36,6 @@ export const sendVerificationEmail = async (email, name, token) => {
     await transporter.sendMail(mailOptions);
   } catch (error) {
     console.error("❌ Error sending verification email:", error.message);
-    // Note: In production, you might want to throw this error so the controller can handle it
   }
 };
 
@@ -45,7 +46,7 @@ export const sendPasswordResetEmail = async (email, name, token) => {
   const resetUrl = `${config.CLIENT_URL}/reset-password?token=${token}`;
 
   const mailOptions = {
-    from: `"Snitch Support" <${config.EMAIL_USER}>`,
+    from: config.EMAIL_FROM,
     to: email,
     subject: "Reset Your Password - Snitch",
     html: `

@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import config from "./config/config.js";
 import authRoutes from "./routes/auth.routes.js";
 import productRoutes from "./routes/product.routes.js";
+import cartRoutes from "./routes/cart.routes.js";
 import { globalLimiter } from "./middlewares/rateLimit.middleware.js";
 import passport from "./config/passport.js";
 
@@ -17,7 +18,7 @@ app.use(globalLimiter);
 app.use(passport.initialize());
 app.use(
   cors({
-    origin: config.CLIENT_URL || "http://localhost:5173",
+    origin: config.CORS_ORIGIN || config.CLIENT_URL || "http://localhost:5173",
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
   })
@@ -45,6 +46,7 @@ app.get("/api/health", (req, res) => {
 // ─── API Routes (uncomment as you build) ─────────────────────────────
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/product", productRoutes); 
+app.use("/api/v1/cart", cartRoutes); 
 
 // ─── 404 Handler ─────────────────────────────────────────────────────
 app.use((req, res) => {

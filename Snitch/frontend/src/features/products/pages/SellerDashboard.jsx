@@ -127,7 +127,7 @@ const SellerDashboard = () => {
   };
 
   const handleEdit = (product) => {
-    navigate(`/seller/edit-product/${product._id}`);
+    navigate(`/seller/edit-product/${product.id}`);
   };
   
   const handleAddVariant = (product) => {
@@ -153,7 +153,7 @@ const SellerDashboard = () => {
   const confirmDelete = async () => {
     if (productToDelete) {
       try {
-        await handleDeleteProduct(productToDelete._id);
+        await handleDeleteProduct(productToDelete.id);
         setIsModalOpen(false);
         setProductToDelete(null);
       } catch (err) {
@@ -255,7 +255,7 @@ const SellerDashboard = () => {
               {filteredProducts.map((product) => {
                 const status = getStatusInfo(product.inventory);
                 return (
-                  <div key={product._id} className={styles.productCard}>
+                  <div key={product.id} className={styles.productCard}>
                     <div className={styles.imageWrapper}>
                       {product.images?.[0] ? (
                         <img src={product.images[0].url} alt={product.title} />
