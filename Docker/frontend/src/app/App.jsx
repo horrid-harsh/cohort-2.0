@@ -26,7 +26,7 @@ function App() {
 
   return (
     <div className="app">
-      <h1>Friends' List</h1>
+      <h1>Teammates List</h1>
       {error && <p className="error">{error}</p>}
       <ul>
         {Array.isArray(users) && users.map(user => (
